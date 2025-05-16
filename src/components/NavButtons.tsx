@@ -50,6 +50,8 @@ const styles = StyleSheet.create({
     scrollContainer: {
         paddingHorizontal: 16,
         paddingVertical: 12,
+        marginBottom: 1,
+        marginLeft: 1,
     },
     button: {
         flexDirection: 'row',
