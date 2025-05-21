@@ -1,26 +1,36 @@
 // src/components/CategorySection.tsx
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { Category, CategorySectionProps } from '../types/product';
+import { useTheme } from '../theme/ThemeContext';
+import { createStyles } from '../styles/CategorySectionStyles';
 
-const CategoryItem: React.FC<{ category: Category; onPress?: (category: Category) => void }> = ({
+const CategoryItem: React.FC<{
+    category: Category;
+    onPress?: (category: Category) => void;
+    styles: any; // Pass styles as prop
+}> = ({
     category,
-    onPress
+    onPress,
+    styles
 }) => {
-    return (
-        <TouchableOpacity
-            style={styles.categoryItem}
-            onPress={() => onPress && onPress(category)}
-        >
-            <View style={styles.imageContainer}>
-                <Image source={{ uri: category.image }} style={styles.categoryImage} />
-            </View>
-            <Text style={styles.categoryName}>{category.name}</Text>
-        </TouchableOpacity>
-    );
-};
+        return (
+            <TouchableOpacity
+                style={styles.categoryItem}
+                onPress={() => onPress && onPress(category)}
+            >
+                <View style={styles.imageContainer}>
+                    <Image source={{ uri: category.image }} style={styles.categoryImage} />
+                </View>
+                <Text style={styles.categoryName}>{category.name}</Text>
+            </TouchableOpacity>
+        );
+    };
 
 const CategorySection: React.FC<CategorySectionProps> = ({ categories, onCategoryPress }) => {
+    const { theme } = useTheme();
+    const styles = createStyles(theme);
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -40,59 +50,12 @@ const CategorySection: React.FC<CategorySectionProps> = ({ categories, onCategor
                         key={category.id}
                         category={category}
                         onPress={onCategoryPress}
+                        styles={styles} // Pass styles to CategoryItem
                     />
                 ))}
             </ScrollView>
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        marginVertical: 12,
-    },
-    header: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        paddingHorizontal: 16,
-        marginBottom: 12,
-    },
-    title: {
-        fontSize: 22,
-        fontWeight: 'bold',
-    },
-    seeAll: {
-        fontSize: 14,
-        color: '#666',
-    },
-    categoriesContainer: {
-        paddingHorizontal: 16,
-    },
-    categoryItem: {
-        alignItems: 'center',
-        marginRight: 16,
-        width: 80,
-    },
-    imageContainer: {
-        width: 80,
-        height: 80,
-        borderRadius: 40,
-        backgroundColor: '#f0f0f0',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 8,
-        overflow: 'hidden',
-    },
-    categoryImage: {
-        width: '100%',
-        height: '100%',
-        resizeMode: 'cover',
-    },
-    categoryName: {
-        fontSize: 14,
-        textAlign: 'center',
-    },
-});
 
 export default CategorySection;

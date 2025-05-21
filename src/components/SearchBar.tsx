@@ -1,17 +1,28 @@
+// src/components/SearchBar.tsx
 import React, { useState } from 'react';
-import { View, TextInput, StyleSheet } from 'react-native';
+import { View, TextInput } from 'react-native';
+import { useTheme } from '../theme/ThemeContext';
+import { createStyles } from '../styles/SearchBarStyles';
 
 interface SearchBarProps {
   placeholder?: string;
+  onSearch?: (query: string) => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ placeholder = 'Search...' }) => {
+const SearchBar: React.FC<SearchBarProps> = ({
+  placeholder = 'Search...',
+  onSearch
+}) => {
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
   const [query, setQuery] = useState('');
 
-  // In the future, you can use this function to trigger search logic
+  // Handle search input
   const handleSearch = (text: string) => {
     setQuery(text);
-    // TODO: Add search logic here (e.g., API call or filtering)
+    if (onSearch) {
+      onSearch(text);
+    }
   };
 
   return (
@@ -19,6 +30,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ placeholder = 'Search...' }) => {
       <TextInput
         style={styles.input}
         placeholder={placeholder}
+        placeholderTextColor={theme.secondaryColor} // Use secondary color for placeholder
         value={query}
         onChangeText={handleSearch}
         autoCapitalize="none"
@@ -29,18 +41,5 @@ const SearchBar: React.FC<SearchBarProps> = ({ placeholder = 'Search...' }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    marginVertical: 10,
-    paddingHorizontal: 16,
-  },
-  input: {
-    backgroundColor: '#F0F0F0',
-    borderRadius: 8,
-    padding: 10,
-    fontSize: 16,
-  },
-});
 
 export default SearchBar;

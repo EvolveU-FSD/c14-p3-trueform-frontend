@@ -1,9 +1,14 @@
 // src/components/NavButtons.tsx
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { NavButtonProps } from '../types/product';
+import { useTheme } from '../theme/ThemeContext';
+import { createStyles } from '../styles/NavButtonsStyles';
 
 const NavButton: React.FC<NavButtonProps> = ({ icon, label, onPress, isActive }) => {
+    const { theme } = useTheme();
+    const styles = createStyles(theme);
+
     return (
         <TouchableOpacity
             style={[styles.button, isActive && styles.activeButton]}
@@ -16,6 +21,15 @@ const NavButton: React.FC<NavButtonProps> = ({ icon, label, onPress, isActive })
 };
 
 const NavButtons: React.FC = () => {
+    const { theme } = useTheme();
+    const styles = createStyles(theme);
+    const [activeButton, setActiveButton] = useState<string | null>(null);
+
+    const handleButtonPress = (buttonName: string) => {
+        setActiveButton(buttonName);
+        console.log(`${buttonName} pressed`);
+    };
+
     return (
         <ScrollView
             horizontal
@@ -23,56 +37,31 @@ const NavButtons: React.FC = () => {
             contentContainerStyle={styles.scrollContainer}
         >
             <NavButton
-                icon={<Text style={styles.icon}>♥</Text>}
+                icon={<Text>♥</Text>}
                 label="Favorites"
-                onPress={() => console.log('Favorites pressed')}
+                onPress={() => handleButtonPress('Favorites')}
+                isActive={activeButton === 'Favorites'}
             />
             <NavButton
-                icon={<Text style={styles.icon}>⏱</Text>}
+                icon={<Text>⏱</Text>}
                 label="History"
-                onPress={() => console.log('History pressed')}
+                onPress={() => handleButtonPress('History')}
+                isActive={activeButton === 'History'}
             />
             <NavButton
-                icon={<Text style={styles.icon}>👥</Text>}
+                icon={<Text>👥</Text>}
                 label="Following"
-                onPress={() => console.log('Following pressed')}
+                onPress={() => handleButtonPress('Following')}
+                isActive={activeButton === 'Following'}
             />
             <NavButton
-                icon={<Text style={styles.icon}>≡</Text>}
+                icon={<Text>≡</Text>}
                 label="Menu"
-                onPress={() => console.log('Menu pressed')}
+                onPress={() => handleButtonPress('Menu')}
+                isActive={activeButton === 'Menu'}
             />
         </ScrollView>
     );
 };
-
-const styles = StyleSheet.create({
-    scrollContainer: {
-        paddingHorizontal: 16,
-        paddingVertical: 12,
-        marginBottom: 1,
-        marginLeft: 1,
-    },
-    button: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingHorizontal: 16,
-        paddingVertical: 8,
-        borderRadius: 20,
-        backgroundColor: '#f5f5f5',
-        marginRight: 12, // Added spacing between buttons
-    },
-    activeButton: {
-        backgroundColor: '#e0e0e0',
-    },
-    icon: {
-        fontSize: 18,
-        marginRight: 6,
-    },
-    label: {
-        fontSize: 14,
-        fontWeight: '500',
-    },
-});
 
 export default NavButtons;
