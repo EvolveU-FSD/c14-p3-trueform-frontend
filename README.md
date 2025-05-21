@@ -23,8 +23,7 @@ Before you begin, make sure you have:
 Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/TrueFormTSFE.git
-cd TrueFormTSFE
+git clone https://github.com/EvolveU-FSD/c14-p3-true-form-backend
 ```
 
 Install dependencies:
