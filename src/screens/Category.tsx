@@ -3,11 +3,14 @@ import { View, Text, SafeAreaView, StatusBar, ScrollView } from 'react-native';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from 'types/navigation';
 import { useTheme } from '../theme/ThemeContext';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { createCategoryStyles } from '../styles/CategoryStyles';
 import SearchBar from '../components/SearchBar';
 import BottomNavBar from '../components/BottomNavBar';
 
 type CategoryScreenRouteProp = RouteProp<RootStackParamList, 'Category'>;
+type CategoryScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Category'>;
 
 export default function CategoryScreen() {
   const [activeTab, setActiveTab] = useState('home');
@@ -15,6 +18,16 @@ export default function CategoryScreen() {
   const { categoryId, categoryName } = route.params;
   const { theme } = useTheme();
   const styles = createCategoryStyles(theme);
+
+  const navigation = useNavigation<CategoryScreenNavigationProp>();
+
+  const handleTabChange = (tabName: string) => {
+    setActiveTab(tabName);
+
+    if (tabName === 'home') {
+      navigation.navigate('Home');
+    }
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -40,7 +53,7 @@ export default function CategoryScreen() {
 
       <BottomNavBar
         activeTab={activeTab}
-        onTabChange={(tabName) => setActiveTab(tabName)}
+        onTabChange={handleTabChange}
       />
     </SafeAreaView>
   );
