@@ -1,10 +1,15 @@
 // src/components/FeaturedItems.tsx
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { FeaturedItemsProps } from '../types/product';
 import ItemCard from './ItemCard';
+import { useTheme } from '../theme/ThemeContext';
+import { createStyles } from '../styles/FeaturedItemsStyles';
 
 const FeaturedItems: React.FC<FeaturedItemsProps> = ({ title, items, seeAllLink }) => {
+    const { theme } = useTheme();
+    const styles = createStyles(theme);
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -31,30 +36,5 @@ const FeaturedItems: React.FC<FeaturedItemsProps> = ({ title, items, seeAllLink 
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        marginVertical: 16,
-    },
-    header: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        paddingHorizontal: 16,
-        marginBottom: 12,
-    },
-    title: {
-        fontSize: 22,
-        fontWeight: 'bold',
-    },
-    seeAll: {
-        fontSize: 14,
-        color: '#666',
-    },
-    scrollContent: {
-        paddingHorizontal: 16,
-        paddingBottom: 8,
-    },
-});
 
 export default FeaturedItems;
