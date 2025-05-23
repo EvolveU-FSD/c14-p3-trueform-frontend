@@ -1,9 +1,14 @@
 // src/components/BottomNavBar.tsx
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { BottomNavBarProps } from '../types/product';
+import { useTheme } from '../theme/ThemeContext';
+import { createStyles } from '../styles/BottomNavBarStyles';
 
 const BottomNavBar: React.FC<BottomNavBarProps> = ({ activeTab, onTabChange }) => {
+    const { theme } = useTheme();
+    const styles = createStyles(theme);
+
     const tabs = [
         { name: 'home', icon: '🏠', label: 'Home' },
         { name: 'discover', icon: '🔍', label: 'Discover' },
@@ -37,37 +42,5 @@ const BottomNavBar: React.FC<BottomNavBarProps> = ({ activeTab, onTabChange }) =
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        backgroundColor: '#fff',
-        borderTopWidth: 1,
-        borderTopColor: '#eee',
-        paddingVertical: 8,
-        paddingHorizontal: 4,
-    },
-    tabButton: {
-        flex: 1,
-        alignItems: 'center',
-        paddingVertical: 8,
-    },
-    tabIcon: {
-        fontSize: 24,
-        marginBottom: 2,
-        color: '#888',
-    },
-    activeTabIcon: {
-        color: '#000',
-    },
-    tabLabel: {
-        fontSize: 12,
-        color: '#888',
-    },
-    activeTabLabel: {
-        color: '#000',
-        fontWeight: '500',
-    },
-});
 
 export default BottomNavBar;
