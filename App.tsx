@@ -1,6 +1,6 @@
 // App.tsx
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, LinkingOptions } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './src/screens/HomeScreen';
 import CategoryScreen from './src/screens/Category';
@@ -9,16 +9,21 @@ import { ThemeProvider } from './src/theme/ThemeContext';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-// Define linking configuration
+// Custom linking configuration to prevent query parameters
+// App.tsx
 const linking = {
   prefixes: ['http://localhost:19006'],
   config: {
     screens: {
-      Home: 'home',
-      Category: 'category/:categoryId',
+      Home: '',
+      Category: {
+        path: 'category/:slug',
+        parse: {
+          slug: (slug: string) => slug,
+        },
+      },
     },
   },
-  // This helps with initial URL handling
   enabled: true,
 };
 
@@ -36,7 +41,7 @@ const App: React.FC = () => {
             name="Category"
             component={CategoryScreen}
             options={({ route }) => ({
-              title: route.params.categoryName,
+              title: route.params.slug,
               headerShown: false
             })}
           />
