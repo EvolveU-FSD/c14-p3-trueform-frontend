@@ -1,5 +1,6 @@
 // src/types/navigation.ts
 export type RootStackParamList = {
-    Home: undefined;
-    // Add other screen names and their parameter types here
+  Home: undefined;
+  Category: { categoryId: string; categoryName: string };
+  // Add other screen names and their parameter types here
 };
