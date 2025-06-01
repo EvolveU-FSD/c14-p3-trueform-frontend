@@ -6,9 +6,15 @@
     "description": "A wrinkle free shirt with diamond check pattern.",
     "price": 89,
     "image": "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80"
+    ],
     "color": "Grey",
     "pattern": "Checks",
-    "style": "Formal"
+    "style": "Formal",
+    "fabric": "100% Egyptian cotton, 2-ply 80s, wrinkle-resistant, soft hand feel, 120 GSM."
   },
   {
     "id": "item2",
@@ -17,9 +23,15 @@
     "description": "Classic wrinkle free white twill shirt.",
     "price": 89,
     "image": "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1469398715555-76331a6c7c9b?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1526178613658-3f1622045557?auto=format&fit=crop&w=400&q=80"
+    ],
     "color": "White",
     "pattern": "Solid",
-    "style": "Formal"
+    "style": "Formal",
+    "fabric": "Premium 100% cotton twill, 2-ply 100s, natural stretch, 125 GSM."
   },
   {
     "id": "item3",
@@ -28,9 +40,15 @@
     "description": "Blue and orange check wrinkle free shirt.",
     "price": 89,
     "image": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1469398715555-76331a6c7c9b?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80"
+    ],
     "color": "Blue",
     "pattern": "Checks",
-    "style": "Casual"
+    "style": "Casual",
+    "fabric": "100% cotton, 60s single, lightweight, soft finish, 110 GSM."
   },
   {
     "id": "item4",
@@ -39,9 +57,15 @@
     "description": "Soft rose pink shirt for a fresh look.",
     "price": 69,
     "image": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1469398715555-76331a6c7c9b?auto=format&fit=crop&w=400&q=80"
+    ],
     "color": "Pink",
     "pattern": "Solid",
-    "style": "Casual"
+    "style": "Casual",
+    "fabric": "100% cotton, poplin weave, lightweight, smooth touch, 105 GSM."
   },
   {
     "id": "item5",
@@ -50,9 +74,15 @@
     "description": "Bright lime green shirt for bold style.",
     "price": 89,
     "image": "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1526178613658-3f1622045557?auto=format&fit=crop&w=400&q=80"
+    ],
     "color": "Green",
     "pattern": "Solid",
-    "style": "Casual"
+    "style": "Casual",
+    "fabric": "100% cotton, Oxford weave, durable, soft touch, 130 GSM."
   },
   {
     "id": "item6",
@@ -61,8 +91,14 @@
     "description": "Magenta shirt for a vibrant look.",
     "price": 69,
     "image": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1469398715555-76331a6c7c9b?auto=format&fit=crop&w=400&q=80"
+    ],
     "color": "Magenta",
     "pattern": "Solid",
-    "style": "Casual"
+    "style": "Casual",
+    "fabric": "100% cotton, dobby weave, soft and textured, 115 GSM."
   }
 ]
