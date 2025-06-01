@@ -4,6 +4,7 @@ import { NavigationContainer, LinkingOptions } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './src/screens/HomeScreen';
 import CategoryScreen from './src/screens/Category';
+import ItemDetails from './src/components/ItemDetails';
 import { RootStackParamList } from './src/types/navigation';
 import { ThemeProvider } from './src/theme/ThemeContext';
 
@@ -44,6 +45,11 @@ const App: React.FC = () => {
               title: route.params.slug,
               headerShown: false
             })}
+          />
+          <Stack.Screen
+            name="ItemDetails"
+            component={ItemDetails}
+            options={{ title: 'Item Details' }}
           />
         </Stack.Navigator>
       </NavigationContainer>

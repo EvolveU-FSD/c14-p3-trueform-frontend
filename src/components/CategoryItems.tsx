@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, Image, ScrollView, Dimensions, TextInput } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 // If you haven't installed @react-native-picker/picker, run:
 // npm install @react-native-picker/picker
@@ -44,6 +45,7 @@ export default function CategoryItems({ categoryId }: CategoryItemsProps) {
     name: 'all'
   });
   const [sortOption, setSortOption] = useState('name_asc');
+  const navigation = useNavigation();
 
   // Get items for this category
   const categoryItems = useMemo(
@@ -154,7 +156,11 @@ export default function CategoryItems({ categoryId }: CategoryItemsProps) {
         numColumns={2}
         columnWrapperStyle={styles.columnWrapper}
         renderItem={({ item }) => (
-          <View style={styles.itemCard}>
+          <TouchableOpacity
+            style={styles.itemCard}
+            onPress={() => navigation.navigate('ItemDetails', { itemId: item.id })}
+            activeOpacity={0.8}
+          >
             <Image
               source={{ uri: item.image }}
               style={styles.itemImage}
@@ -171,7 +177,7 @@ export default function CategoryItems({ categoryId }: CategoryItemsProps) {
                 {item.style ? `Style: ${item.style}` : ''}
               </Text>
             </View>
-          </View>
+          </TouchableOpacity>
         )}
         ListEmptyComponent={<Text style={styles.emptyText}>No items found.</Text>}
         horizontal={false}
