@@ -1,6 +1,6 @@
 // Category.tsx
 import React, { useState, useEffect } from 'react';
-import { View, Text, SafeAreaView, StatusBar, ScrollView } from 'react-native';
+import { View, Text, SafeAreaView, StatusBar, ScrollView, TouchableOpacity } from 'react-native';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from 'types/navigation';
 import { useTheme } from '../theme/ThemeContext';
@@ -9,6 +9,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { createCategoryStyles } from '../styles/CategoryStyles';
 import SearchBar from '../components/SearchBar';
 import BottomNavBar from '../components/BottomNavBar';
+import CategoryItems from '../components/CategoryItems';
 
 // Sample categories data - replace with your actual data source
 const CATEGORIES = [
@@ -73,6 +74,21 @@ export default function CategoryScreen() {
       <StatusBar barStyle={theme.isDarkMode ? "light-content" : "dark-content"} />
 
       <ScrollView>
+        {/* Back Button */}
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={{ padding: 10, alignSelf: 'flex-start' }}
+        >
+          <Text
+            style={{
+              fontSize: 18,
+              color: theme.colors?.primary || '#007bff' // fallback to blue if undefined
+            }}
+          >
+            {"← Back"}
+          </Text>
+        </TouchableOpacity>
+
         <SearchBar />
 
         <View style={styles.headerContainer}>
@@ -80,6 +96,9 @@ export default function CategoryScreen() {
           <Text style={styles.subtitle}>{categoryDetails.description}</Text>
         </View>
 
+        <CategoryItems categoryId={categoryDetails.id} />
+
+        {/* 
         <View style={styles.placeholderContainer}>
           <Text style={styles.placeholderText}>
             This is the {categoryDetails.name} category page.
@@ -91,6 +110,7 @@ export default function CategoryScreen() {
             Category ID: {categoryDetails.id}
           </Text>
         </View>
+        */}
       </ScrollView>
 
       <BottomNavBar

@@ -1,0 +1,68 @@
+[
+  {
+    "id": "item1",
+    "categoryId": "1",
+    "name": "Wrinkle Free Diamond Checks",
+    "description": "A wrinkle free shirt with diamond check pattern.",
+    "price": 89,
+    "image": "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
+    "color": "Grey",
+    "pattern": "Checks",
+    "style": "Formal"
+  },
+  {
+    "id": "item2",
+    "categoryId": "1",
+    "name": "Wrinkle Free White Twill",
+    "description": "Classic wrinkle free white twill shirt.",
+    "price": 89,
+    "image": "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
+    "color": "White",
+    "pattern": "Solid",
+    "style": "Formal"
+  },
+  {
+    "id": "item3",
+    "categoryId": "1",
+    "name": "Wrinkle Free Blue-Orange Check",
+    "description": "Blue and orange check wrinkle free shirt.",
+    "price": 89,
+    "image": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
+    "color": "Blue",
+    "pattern": "Checks",
+    "style": "Casual"
+  },
+  {
+    "id": "item4",
+    "categoryId": "1",
+    "name": "Rose Pink",
+    "description": "Soft rose pink shirt for a fresh look.",
+    "price": 69,
+    "image": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
+    "color": "Pink",
+    "pattern": "Solid",
+    "style": "Casual"
+  },
+  {
+    "id": "item5",
+    "categoryId": "1",
+    "name": "Lime Green",
+    "description": "Bright lime green shirt for bold style.",
+    "price": 89,
+    "image": "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
+    "color": "Green",
+    "pattern": "Solid",
+    "style": "Casual"
+  },
+  {
+    "id": "item6",
+    "categoryId": "1",
+    "name": "Magenta",
+    "description": "Magenta shirt for a vibrant look.",
+    "price": 69,
+    "image": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
+    "color": "Magenta",
+    "pattern": "Solid",
+    "style": "Casual"
+  }
+]
