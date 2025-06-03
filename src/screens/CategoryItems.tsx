@@ -2,8 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, Image, ScrollView, Dimensions, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-// If you haven't installed @react-native-picker/picker, run:
-// npm install @react-native-picker/picker
+
 let Picker: any;
 try {
   Picker = require('@react-native-picker/picker').Picker;
@@ -188,8 +187,11 @@ export default function CategoryItems({ categoryId }: CategoryItemsProps) {
 }
 
 const styles = StyleSheet.create({
-  container: { marginVertical: 16 },
-  filterSortRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 8 },
+  container: { 
+    marginVertical: 16,
+    paddingHorizontal: 20 
+  },
+  filterSortRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12 },
   filters: { flexDirection: 'row', marginRight: 12 },
   filterBtn: { padding: 6, marginRight: 6, borderRadius: 6, backgroundColor: '#eee' },
   filterBtnActive: { backgroundColor: '#333' },
@@ -199,7 +201,7 @@ const styles = StyleSheet.create({
   pickerContainer: { minWidth: 120, flex: 1, maxWidth: 180, marginRight: 12, justifyContent: 'center' },
   picker: { height: 36, width: '100%' },
   sorts: { flexDirection: 'row', marginLeft: 12 },
-  sortBtn: { padding: 6, marginLeft: 6, borderRadius: 6, backgroundColor: '#eee' },
+  sortBtn: { padding: 6, marginLeft: 8, borderRadius: 8, backgroundColor: '#eee' },
   sortBtnActive: { backgroundColor: '#333' },
   sortText: { color: '#333' },
   sortTextActive: { color: '#fff' },

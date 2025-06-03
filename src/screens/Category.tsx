@@ -9,7 +9,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { createCategoryStyles } from '../styles/CategoryStyles';
 import SearchBar from '../components/SearchBar';
 import BottomNavBar from '../components/BottomNavBar';
-import CategoryItems from '../components/CategoryItems';
+import CategoryItems from '../screens/CategoryItems';
 
 // Sample categories data - replace with your actual data source
 const CATEGORIES = [
@@ -82,7 +82,7 @@ export default function CategoryScreen() {
           <Text
             style={{
               fontSize: 18,
-              color: theme.colors?.primary || '#007bff' // fallback to blue if undefined
+              color: theme.colors?.primary || '#000' // fallback to black if undefined
             }}
           >
             {"← Back"}

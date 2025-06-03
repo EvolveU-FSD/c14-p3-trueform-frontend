@@ -90,7 +90,7 @@ export default function ItemDetails(props: ItemDetailsProps) {
           <Text style={styles.fabricDetail}>
             {item.fabric
               ? item.fabric
-              : 'Premium 100% cotton, soft finish, breathable, and durable. Machine washable.'}
+              : 'fabric details not available'}
           </Text>
         </View>
       )}
@@ -122,7 +122,7 @@ export default function ItemDetails(props: ItemDetailsProps) {
               </ScrollView>
             </View>
           ))}
-          <Text style={styles.customHint}>Add it to your cart to begin customizing.</Text>
+          <Text style={styles.customHint}></Text>
         </View>
       )}
       {/* Add to Cart Button */}
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   customSection: { width: '100%', marginTop: 20, marginBottom: 8, backgroundColor: '#f8f8f8', borderRadius: 8, padding: 12 },
-  customTitle: { fontWeight: 'bold', fontSize: 16, marginBottom: 8, color: '#222' },
+  // customTitle: { fontWeight: 'bold', fontSize: 16, marginBottom: 8, color: '#222' },
   customRow: { marginBottom: 10 },
   customLabel: { fontSize: 15, color: '#333', marginBottom: 4 },
   customOptionBtn: { paddingVertical: 6, paddingHorizontal: 12, borderRadius: 16, backgroundColor: '#eee', marginRight: 8 },
