@@ -25,7 +25,7 @@ const FILTERABLE_FIELDS = [
 
 const SORT_OPTIONS = [
   { label: 'Name (A-Z)', value: 'name_asc' },
-  { label: 'Name (Z-A)', value: 'name_desc' },
+  // { label: 'Name (Z-A)', value: 'name_desc' },
   { label: 'Price (Low-High)', value: 'price_asc' },
   { label: 'Price (High-Low)', value: 'price_desc' }
 ];
@@ -132,14 +132,20 @@ export default function CategoryItems({ categoryId }: CategoryItemsProps) {
         </View>
       ))}
       {/* Sort Options */}
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginBottom: 8 }}>
-        <View style={styles.sorts}>
-          {SORT_OPTIONS.map(s => (
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={{ marginBottom: 8 }}
+        contentContainerStyle={{ paddingLeft: 0, paddingRight: 20 }}
+      >
+        <View style={[styles.sorts, { marginLeft: 0 }]}>
+          {SORT_OPTIONS.map((s, idx) => (
             <TouchableOpacity
               key={s.value}
               style={[
                 styles.sortBtn,
-                sortOption === s.value && styles.sortBtnActive
+                sortOption === s.value && styles.sortBtnActive,
+                idx === 0 && { marginLeft: 0 } // Remove left margin for the first button
               ]}
               onPress={() => setSortOption(s.value)}
             >
@@ -182,6 +188,7 @@ export default function CategoryItems({ categoryId }: CategoryItemsProps) {
         ListEmptyComponent={<Text style={styles.emptyText}>No items found.</Text>}
         horizontal={false}
       />
+
     </View>
   );
 }

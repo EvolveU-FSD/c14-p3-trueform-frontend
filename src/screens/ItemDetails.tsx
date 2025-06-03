@@ -3,6 +3,8 @@ import { View, Text, Image, StyleSheet, ScrollView, Dimensions, TouchableOpacity
 import { useRoute } from '@react-navigation/native';
 import itemsData from '../data/categoryItems.json';
 
+
+
 type ItemDetailsProps = {
   itemId?: string;
 };

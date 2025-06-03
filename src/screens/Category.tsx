@@ -10,6 +10,7 @@ import { createCategoryStyles } from '../styles/CategoryStyles';
 import SearchBar from '../components/SearchBar';
 import BottomNavBar from '../components/BottomNavBar';
 import CategoryItems from '../screens/CategoryItems';
+import BackButton from '../components/BackButton';
 
 // Sample categories data - replace with your actual data source
 const CATEGORIES = [
@@ -75,19 +76,12 @@ export default function CategoryScreen() {
 
       <ScrollView>
         {/* Back Button */}
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={{ padding: 10, alignSelf: 'flex-start' }}
-        >
-          <Text
-            style={{
-              fontSize: 18,
-              color: theme.colors?.primary || '#000' // fallback to black if undefined
-            }}
-          >
-            {"← Back"}
-          </Text>
-        </TouchableOpacity>
+        <BackButton
+          style={{ marginBottom: 8 }}
+          color={theme.colors?.primary || '#000'}
+          size={28}
+          label="Back"
+        />
 
         <SearchBar />
 
