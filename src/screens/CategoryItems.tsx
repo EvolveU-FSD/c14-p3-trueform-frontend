@@ -17,7 +17,6 @@ type CategoryItemsProps = {
   categoryId: string;
 };
 
-// Updated filterable fields: remove gender, add color, pattern, style, name
 const FILTERABLE_FIELDS = [
   { label: 'Color', value: 'color' },
   { label: 'Pattern', value: 'pattern' },
@@ -68,7 +67,9 @@ export default function CategoryItems({ categoryId }: CategoryItemsProps) {
     FILTERABLE_FIELDS.forEach(f => {
       const val = filterValuesState[f.value];
       if (val && val !== 'all') {
-        items = items.filter(item => item[f.value] === val);
+        items = items.filter(item =>
+          String(item[f.value] || '').toLowerCase().includes(String(val).toLowerCase())
+        );
       }
     });
     switch (sortOption) {
