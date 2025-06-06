@@ -27,7 +27,7 @@ const linking = {
   enabled: true,
 };
 
-const App: React.FC = () => {
+export default function App() {
   return (
     <ThemeProvider>
       <NavigationContainer linking={linking}>
@@ -50,5 +50,3 @@ const App: React.FC = () => {
     </ThemeProvider>
   );
 };
-
-export default App;

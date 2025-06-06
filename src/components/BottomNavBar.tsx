@@ -5,7 +5,7 @@ import { BottomNavBarProps } from '../types/product';
 import { useTheme } from '../theme/ThemeContext';
 import { createStyles } from '../styles/BottomNavBarStyles';
 
-const BottomNavBar: React.FC<BottomNavBarProps> = ({ activeTab, onTabChange }) => {
+export default function BottomNavBar({ activeTab, onTabChange }: BottomNavBarProps) {
     const { theme } = useTheme();
     const styles = createStyles(theme);
 
@@ -42,5 +42,3 @@ const BottomNavBar: React.FC<BottomNavBarProps> = ({ activeTab, onTabChange }) =
         </View>
     );
 };
-
-export default BottomNavBar;
