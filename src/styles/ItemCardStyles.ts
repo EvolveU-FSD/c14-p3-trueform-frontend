@@ -1,6 +1,6 @@
-// src/styles/ItemCardStyles.ts
 import { StyleSheet } from 'react-native';
 import { Theme } from '../theme/ThemeContext';
+import { spacing, fontSizes, borderRadius } from '../utils/sizes';
 
 export function createStyles(theme: Theme) {
     return StyleSheet.create({
@@ -12,27 +12,27 @@ export function createStyles(theme: Theme) {
         image: {
             width: '100%',
             height: 180,
-            borderRadius: 8,
-            backgroundColor: theme.borderColor, // Placeholder background
+            borderRadius: borderRadius.md,
+            backgroundColor: theme.borderColor,
         },
         detailsContainer: {
-            marginTop: 8,
+            marginTop: spacing.sm,
         },
         category: {
-            fontSize: 14,
+            fontSize: fontSizes.sm,
             color: theme.secondaryColor,
-            marginBottom: 2,
+            marginBottom: spacing.xs,
         },
         name: {
-            fontSize: 16,
+            fontSize: fontSizes.md,
             fontWeight: 'bold',
-            marginBottom: 4,
+            marginBottom: spacing.xs,
             color: theme.textColor,
         },
         price: {
-            fontSize: 16,
+            fontSize: fontSizes.md,
             fontWeight: '600',
             color: theme.primaryColor,
         },
     });
-};
+}
