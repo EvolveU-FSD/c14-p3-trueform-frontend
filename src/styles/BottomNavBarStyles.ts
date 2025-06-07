@@ -1,6 +1,6 @@
-// src/styles/BottomNavBarStyles.ts
 import { StyleSheet } from 'react-native';
-import { Theme } from '../theme/ThemeContext'; // Make sure to export Theme interface
+import { Theme } from '../theme/ThemeContext';
+import { spacing, fontSizes, iconSizes } from '../utils/sizes';
 
 export function createStyles(theme: Theme) {
     return StyleSheet.create({
@@ -9,24 +9,24 @@ export function createStyles(theme: Theme) {
             backgroundColor: theme.backgroundColor,
             borderTopWidth: 1,
             borderTopColor: theme.borderColor,
-            paddingVertical: 8,
-            paddingHorizontal: 4,
+            paddingVertical: spacing.sm,
+            paddingHorizontal: spacing.xs,
         },
         tabButton: {
             flex: 1,
             alignItems: 'center',
-            paddingVertical: 8,
+            paddingVertical: spacing.sm,
         },
         tabIcon: {
-            fontSize: 24,
-            marginBottom: 2,
+            fontSize: iconSizes.md,
+            marginBottom: spacing.xs / 2,
             color: theme.iconColorInactive,
         },
         activeTabIcon: {
             color: theme.iconColorActive,
         },
         tabLabel: {
-            fontSize: 12,
+            fontSize: fontSizes.xs,
             color: theme.iconColorInactive,
         },
         activeTabLabel: {
@@ -34,4 +34,4 @@ export function createStyles(theme: Theme) {
             fontWeight: '500',
         },
     });
-};
+}

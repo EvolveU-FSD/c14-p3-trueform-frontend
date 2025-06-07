@@ -1,12 +1,12 @@
-// src/styles/NavButtonsStyles.ts
 import { StyleSheet } from 'react-native';
 import { Theme } from '../theme/ThemeContext';
+import { spacing, fontSizes, borderRadius } from '../utils/sizes';
 
 export function createStyles(theme: Theme) {
     return StyleSheet.create({
         scrollContainer: {
-            paddingHorizontal: 16,
-            paddingVertical: 12,
+            paddingHorizontal: spacing.md,
+            paddingVertical: spacing.md,
             marginBottom: 1,
             marginLeft: 1,
             backgroundColor: theme.backgroundColor,
@@ -14,30 +14,30 @@ export function createStyles(theme: Theme) {
         button: {
             flexDirection: 'row',
             alignItems: 'center',
-            paddingHorizontal: 16,
-            paddingVertical: 8,
-            borderRadius: 20,
-            backgroundColor: theme.borderColor, // Light background for buttons
-            marginRight: 12,
+            paddingHorizontal: spacing.md,
+            paddingVertical: spacing.sm,
+            borderRadius: spacing.lg,
+            backgroundColor: theme.borderColor,
+            marginRight: spacing.md,
         },
         activeButton: {
-            backgroundColor: theme.primaryColor, // Primary color for active state
+            backgroundColor: theme.primaryColor,
         },
         icon: {
-            fontSize: 18,
-            marginRight: 6,
+            fontSize: fontSizes.lg,
+            marginRight: spacing.xs + 2,
             color: theme.textColor,
         },
         activeIcon: {
-            color: '#FFFFFF', // White text for active button
+            color: '#FFFFFF',
         },
         label: {
-            fontSize: 14,
+            fontSize: fontSizes.sm,
             fontWeight: '500',
             color: theme.textColor,
         },
         activeLabel: {
-            color: '#FFFFFF', // White text for active button
+            color: '#FFFFFF',
         },
     });
-};
+}
