@@ -57,7 +57,7 @@ const categories: Category[] = [
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
-const HomeScreen = () => {
+export default function HomeScreen() {
     const [activeTab, setActiveTab] = useState('home');
     const navigation = useNavigation<HomeScreenNavigationProp>();
 
@@ -113,5 +113,3 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
 });
-
-export default HomeScreen;

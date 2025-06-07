@@ -9,10 +9,10 @@ interface SearchBarProps {
   onSearch?: (query: string) => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({
+export default function SearchBar({
   placeholder = 'Search...',
   onSearch
-}) => {
+}: SearchBarProps) {
   const { theme } = useTheme();
   const styles = createStyles(theme);
   const [query, setQuery] = useState('');
@@ -41,5 +41,3 @@ const SearchBar: React.FC<SearchBarProps> = ({
     </View>
   );
 };
-
-export default SearchBar;
