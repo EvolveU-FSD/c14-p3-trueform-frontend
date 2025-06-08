@@ -4,4 +4,5 @@ export type RootStackParamList = {
   Category: {
     slug: string;  // Will contain the category ID
   };
+  BodyScan: undefined;
 };

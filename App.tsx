@@ -6,13 +6,14 @@ import HomeScreen from './src/screens/HomeScreen';
 import CategoryScreen from './src/screens/Category';
 import { RootStackParamList } from './src/types/navigation';
 import { ThemeProvider } from './src/theme/ThemeContext';
+import  BodyScanScreen  from './src/screens/BodyScanScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 // Custom linking configuration to prevent query parameters
 // App.tsx
 const linking = {
-  prefixes: ['http://localhost:19006'],
+  prefixes: ['http://localhost:19006','myapp://'],
   config: {
     screens: {
       Home: '',
@@ -45,6 +46,7 @@ export default function App() {
               headerShown: false
             })}
           />
+          <Stack.Screen name="BodyScan" component={BodyScanScreen} options={{ title: 'Body Measurements' }} />
         </Stack.Navigator>
       </NavigationContainer>
     </ThemeProvider>

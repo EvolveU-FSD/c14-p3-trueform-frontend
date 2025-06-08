@@ -4,18 +4,29 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { BottomNavBarProps } from '../types/product';
 import { useTheme } from '../theme/ThemeContext';
 import { createStyles } from '../styles/BottomNavBarStyles';
+import { useNavigation } from '@react-navigation/native';
 
 export default function BottomNavBar({ activeTab, onTabChange }: BottomNavBarProps) {
     const { theme } = useTheme();
     const styles = createStyles(theme);
+    const navigation = useNavigation();
 
     const tabs = [
         { name: 'home', icon: '🏠', label: 'Home' },
         { name: 'discover', icon: '🔍', label: 'Discover' },
+        { name: 'bodyscan', icon: '📏', label: 'Body Scan' },
         { name: 'cart', icon: '🛒', label: 'Cart' },
         { name: 'notifications', icon: '🔔', label: 'Alerts' },
         { name: 'profile', icon: '👤', label: 'Profile' },
     ];
+
+    const handleTabPress = (tabName: string) => {
+        if (tabName === 'bodyscan') {
+            navigation.navigate('BodyScan' as never);
+        } else {
+            onTabChange(tabName);
+        }
+    };
 
     return (
         <View style={styles.container}>
@@ -23,7 +34,7 @@ export default function BottomNavBar({ activeTab, onTabChange }: BottomNavBarPro
                 <TouchableOpacity
                     key={tab.name}
                     style={styles.tabButton}
-                    onPress={() => onTabChange(tab.name)}
+                    onPress={() => handleTabPress(tab.name)}
                 >
                     <Text style={[
                         styles.tabIcon,
@@ -39,6 +50,7 @@ export default function BottomNavBar({ activeTab, onTabChange }: BottomNavBarPro
                     </Text>
                 </TouchableOpacity>
             ))}
+            
         </View>
     );
 };
