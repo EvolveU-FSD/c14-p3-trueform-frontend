@@ -1,108 +1,158 @@
 // src/screens/HomeScreen.tsx
 import React, { useState } from 'react';
-import { View, ScrollView, SafeAreaView, StyleSheet, StatusBar } from 'react-native';
+import { View, ScrollView, SafeAreaView, StyleSheet, StatusBar, Text, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/navigation';
-import SearchBar from '../components/SearchBar';
-import NavButtons from '../components/NavButtons';
-import HeroBanner from '../components/HeroBanner';
-import CategorySection from '../components/CategorySection';
-import FeaturedItems from '../components/FeaturedItems';
-import BottomNavBar from '../components/BottomNavBar';
-import { Product, Category } from '../types/product';
-import { slugify } from '../utils/slugify';
+import { FontAwesome5 } from '@expo/vector-icons';
 
-const apparelImage = require('../../assets/images/categories/apparel.jpg');
-const itemOneImage = require('../../assets/images/products/item1.jpg');
-const itemTwoImage = require('../../assets/images/products/item2.jpg');
-const itemThreeImage = require('../../assets/images/products/item3.jpg');
 const heroBannerImage = require('../../assets/images/banners/hero-banner.jpg');
-
-// Sample data for demonstration
-const popularItems: Product[] = [
-    {
-        id: '1',
-        image: itemOneImage,
-        category: 'Polo',
-        name: 'Polo Design 1',
-        price: 80,
-        isPopular: true,
-    },
-    {
-        id: '2',
-        image: itemTwoImage,
-        category: 'Polo',
-        name: 'Polo Button Up',
-        price: 79,
-        isPopular: true,
-    },
-    {
-        id: '3',
-        image: itemThreeImage,
-        category: 'Polo',
-        name: 'Polo Design 2',
-        price: 59,
-        isPopular: true,
-    },
-];
-
-const categories: Category[] = [
-    { id: '1', name: 'Shirts', image: apparelImage },
-    { id: '2', name: 'Pants', image: apparelImage },
-    { id: '3', name: 'Jackets', image: apparelImage },
-    { id: '4', name: 'Apparel', image: apparelImage },
-    { id: '5', name: 'Accessories', image: apparelImage },
-];
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
 const HomeScreen = () => {
-    const [activeTab, setActiveTab] = useState('home');
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isSubmenuOpen, setIsSubmenuOpen] = useState(false);  // Add this state
     const navigation = useNavigation<HomeScreenNavigationProp>();
 
-    // In HomeScreen.tsx
-    // HomeScreen.tsx
-    const handleCategoryPress = (category: Category) => {
-        // Use the category ID as the slug
-        navigation.navigate('Category', {
-            slug: category.id
-        });
+    const handleCategorySelect = (category: string) => {
+        navigation.navigate('Category', { slug: category.toLowerCase() });
+        setIsMenuOpen(false);
     };
 
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar barStyle="dark-content" />
 
+            {/* Header */}
+            <View style={styles.header}>
+                <TouchableOpacity 
+                    style={styles.menuButton}
+                    onPress={() => setIsMenuOpen(!isMenuOpen)}
+                >
+                    <Text style={styles.menuIcon}>☰</Text>
+                </TouchableOpacity>
+                
+                {/* Dropdown Menu - simplified */}
+                {isMenuOpen && (
+                    <View style={styles.dropdown}>
+                        {/* Shirt Category Menu Item */}
+                        <View style={styles.menuItem}>
+                            <TouchableOpacity 
+                                style={styles.categoryHeader}
+                                onPress={() => setIsSubmenuOpen(!isSubmenuOpen)}
+                            >
+                                <Text style={styles.menuItemText}>
+                                    Shirt Category {isSubmenuOpen ? '-' : '+'}
+                                </Text>
+                            </TouchableOpacity>
+                            {isSubmenuOpen && (
+                                <View style={styles.submenu}>
+                                    <TouchableOpacity 
+                                        style={styles.submenuItem}
+                                        onPress={() => handleCategorySelect('casual')}
+                                    >
+                                        <Text>Casual</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity 
+                                        style={styles.submenuItem}
+                                        onPress={() => handleCategorySelect('work')}
+                                    >
+                                        <Text>Work</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity 
+                                        style={styles.submenuItem}
+                                        onPress={() => handleCategorySelect('party')}
+                                    >
+                                        <Text>Party</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            )}
+                        </View>
+
+                        {/* Additional Menu Items */}
+                        <TouchableOpacity style={styles.menuItem}>
+                            <Text style={styles.menuItemText}>About True Form Tailors</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.menuItem}>
+                            <Text style={styles.menuItemText}>Contact Us</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.menuItem}>
+                            <Text style={styles.menuItemText}>FAQ</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.menuItem}>
+                            <Text style={styles.menuItemText}>Why True Form Tailor</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.menuItem}>
+                            <Text style={styles.menuItemText}>Reviews</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.menuItem}>
+                            <Text style={styles.menuItemText}>How It Works</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.menuItem}>
+                            <Text style={styles.menuItemText}>Quality</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.menuItem}>
+                            <Text style={styles.menuItemText}>Fit Guarantee</Text>
+                        </TouchableOpacity>
+
+                        {/* Social Media Icons */}
+                        <View style={styles.socialContainer}>
+                            <TouchableOpacity style={styles.socialIcon}>
+                                <FontAwesome5 name="facebook" size={20} color="#1877F2" />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.socialIcon}>
+                                <FontAwesome5 name="instagram" size={20} color="#E4405F" />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.socialIcon}>
+                                <FontAwesome5 name="linkedin" size={20} color="#0A66C2" />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.socialIcon}>
+                                <FontAwesome5 name="youtube" size={20} color="#FF0000" />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                )}
+                
+                {/* Remove headerCenter View completely */}
+
+                <View style={styles.headerRight}>
+                    <TouchableOpacity style={styles.loginButton}>
+                        <Text style={styles.loginText}>Login</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.iconButton}>
+                        <FontAwesome5 name="shopping-cart" size={20} color="#333" />
+                    </TouchableOpacity>
+                </View>
+            </View>
+
             <ScrollView>
-                <SearchBar />
+                <View style={styles.headerTitleContainer}>
+                    <Text style={styles.mainTitle}>True Form Tailors</Text>
+                    <Text style={styles.mainSubtitle}>Custom Made Shirts</Text>
+                </View>
 
-                <NavButtons />
+                {/* Main Banner */}
+                <View style={styles.bannerContainer}>
+                    <Image 
+                        source={heroBannerImage}
+                        style={styles.bannerImage}
+                        resizeMode="cover"
+                    />
+                </View>
+                
+                <TouchableOpacity 
+                    style={styles.startShoppingButton}
+                    onPress={() => navigation.navigate('Category', { slug: '1' })}
+                >
+                    <Text style={styles.startShoppingText}>Start Shopping</Text>
+                </TouchableOpacity>
 
-                <HeroBanner
-                    title="Tailor Made For You"
-                    image={heroBannerImage}
-                    onPress={() => console.log('Banner pressed')}
-                />
-
-                <CategorySection
-                    categories={categories}
-                    onCategoryPress={handleCategoryPress}
-                />
-
-                <FeaturedItems
-                    title="Popular"
-                    items={popularItems}
-                    seeAllLink="/popular"
-                />
-
-                {/* You could add more FeaturedItems sections for different categories */}
+                <View style={styles.footerTitleContainer}>
+                    <Text style={styles.mainTitle}>True Form Tailors</Text>
+                    <Text style={styles.mainSubtitle}>Custom Made Shirts</Text>
+                </View>
             </ScrollView>
-
-            <BottomNavBar
-                activeTab={activeTab}
-                onTabChange={(tabName) => setActiveTab(tabName)}
-            />
         </SafeAreaView>
     );
 };
@@ -111,6 +161,141 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
+    },
+    header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingHorizontal: 16,
+        paddingVertical: 12,
+        borderBottomWidth: 1,
+        borderBottomColor: '#eee',
+        backgroundColor: '#fff',
+        zIndex: 1000, // Add this
+        elevation: 1000, // Add this for Android
+    },
+    menuButton: {
+        padding: 8,
+    },
+    menuIcon: {
+        fontSize: 24,
+    },
+    headerRight: {
+        flexDirection: 'row',
+    },
+    loginButton: {
+        padding: 8,
+        marginLeft: 8,
+    },
+    loginText: {
+        fontSize: 16,
+        color: '#333',
+        fontWeight: '500',
+    },
+    iconButton: {
+        padding: 8,
+        marginLeft: 8,
+    },
+    icon: {
+        fontSize: 24,
+    },
+    bannerContainer: {
+        width: '100%',
+        height: 400,
+        padding: 10,  // Add padding around banner
+    },
+    bannerImage: {
+        width: '100%',
+        height: '100%',
+        borderRadius: 8,  // Optional: add rounded corners to match padding
+    },
+    startShoppingButton: {
+        backgroundColor: '#4caf50',  // Changed to a lighter green color
+        paddingVertical: 12,
+        paddingHorizontal: 24,
+        borderRadius: 8,
+        marginTop: 20,
+        marginHorizontal: 20,
+        alignItems: 'center',
+    },
+    startShoppingText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    dropdown: {
+        position: 'absolute',
+        top: 60,
+        left: 16,
+        backgroundColor: '#fff',
+        padding: 12,
+        borderRadius: 8,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 1000,
+        zIndex: 1000,
+        minWidth: 200,
+        borderWidth: 1,
+        borderColor: '#eee',
+    },
+    menuItem: {
+        backgroundColor: '#fff',
+        borderBottomWidth: 1,
+        borderBottomColor: '#eee',
+    },
+    menuItemText: {
+        fontSize: 14,
+        color: '#333',
+        padding: 12,  // Match padding with other menu items
+    },
+    categoryHeader: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: 0,  // Remove extra padding
+    },
+    submenu: {
+        marginLeft: 16,
+        backgroundColor: '#fff',
+    },
+    submenuItem: {
+        padding: 12,
+        borderBottomWidth: 1,
+        borderBottomColor: '#eee',
+    },
+    socialContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        paddingVertical: 16,
+        borderTopWidth: 1,
+        borderTopColor: '#eee',
+        marginTop: 8,
+    },
+    socialIcon: {
+        padding: 12,
+        borderRadius: 20,
+        backgroundColor: '#f5f5f5',
+    },
+    headerTitleContainer: {
+        alignItems: 'center',
+        paddingVertical: 20,
+    },
+    footerTitleContainer: {
+        alignItems: 'center',
+        paddingVertical: 40,
+        marginTop: 20,
+    },
+    mainTitle: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: '#333',
+    },
+    mainSubtitle: {
+        fontSize: 16,
+        color: '#666',
+        marginTop: 4,
     },
 });
 
