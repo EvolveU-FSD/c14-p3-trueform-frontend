@@ -132,7 +132,6 @@ const HomeScreen = () => {
                     <Text style={styles.mainSubtitle}>Custom Made Shirts</Text>
                 </View>
 
-                {/* Main Banner */}
                 <View style={styles.bannerContainer}>
                     <Image 
                         source={heroBannerImage}
@@ -147,11 +146,6 @@ const HomeScreen = () => {
                 >
                     <Text style={styles.startShoppingText}>Start Shopping</Text>
                 </TouchableOpacity>
-
-                <View style={styles.footerTitleContainer}>
-                    <Text style={styles.mainTitle}>True Form Tailors</Text>
-                    <Text style={styles.mainSubtitle}>Custom Made Shirts</Text>
-                </View>
             </ScrollView>
         </SafeAreaView>
     );
@@ -202,7 +196,8 @@ const styles = StyleSheet.create({
     bannerContainer: {
         width: '100%',
         height: 400,
-        padding: 10,  // Add padding around banner
+        padding: 10,
+        marginBottom: 20,  // Added margin bottom
     },
     bannerImage: {
         width: '100%',
@@ -210,12 +205,12 @@ const styles = StyleSheet.create({
         borderRadius: 8,  // Optional: add rounded corners to match padding
     },
     startShoppingButton: {
-        backgroundColor: '#4caf50',  // Changed to a lighter green color
+        backgroundColor: '#4caf50',
         paddingVertical: 12,
         paddingHorizontal: 24,
         borderRadius: 8,
-        marginTop: 20,
         marginHorizontal: 20,
+        marginBottom: 30,  // Added margin bottom
         alignItems: 'center',
     },
     startShoppingText: {
@@ -280,12 +275,8 @@ const styles = StyleSheet.create({
     },
     headerTitleContainer: {
         alignItems: 'center',
-        paddingVertical: 20,
-    },
-    footerTitleContainer: {
-        alignItems: 'center',
-        paddingVertical: 40,
-        marginTop: 20,
+        paddingVertical: 24,  // Increased padding
+        marginBottom: 10,  // Added margin bottom
     },
     mainTitle: {
         fontSize: 24,
