@@ -1,8 +1,9 @@
 import { StyleSheet, Dimensions } from "react-native";
 
 const { width } = Dimensions.get('window');
-const SPACING = 16;
-const CARD_WIDTH = (width - SPACING * 3) / 2;
+const ITEM_SPACING = 16;
+const ITEMS_PER_ROW = 2;
+const ITEM_WIDTH = (width - (ITEM_SPACING * (ITEMS_PER_ROW + 1))) / ITEMS_PER_ROW;
 
 export const styles = StyleSheet.create({
     container: {
@@ -10,34 +11,33 @@ export const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     gridContainer: {
-        padding: SPACING,
+        padding: ITEM_SPACING,
     },
     columnWrapper: {
         justifyContent: 'space-between',
+        marginBottom: ITEM_SPACING,
     },
     itemCard: {
-        width: CARD_WIDTH,
+        width: ITEM_WIDTH,
         backgroundColor: '#fff',
-        borderRadius: 12,
-        marginBottom: SPACING,
+        borderRadius: 8,
+        overflow: 'hidden',
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
         elevation: 3,
-        overflow: 'hidden',
     },
     imageContainer: {
         width: '100%',
-        height: CARD_WIDTH * 1.2,
-        backgroundColor: '#f5f5f5',
+        aspectRatio: 1,
     },
     itemImage: {
         width: '100%',
         height: '100%',
     },
     itemContent: {
-        padding: 12,
+        padding: 8,
     },
     itemName: {
         fontSize: 16,

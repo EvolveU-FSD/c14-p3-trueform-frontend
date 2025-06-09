@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     notFound: { fontSize: 18, color: 'red', marginTop: 40 },
     cartBtn: {
         marginTop: 24,
-        backgroundColor: '#007b55',
+        backgroundColor: '#4caf50', // Updated to match HomeScreen button color
         borderRadius: 8,
         paddingVertical: 12,
         paddingHorizontal: 32,

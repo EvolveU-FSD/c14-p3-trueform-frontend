@@ -225,11 +225,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         padding: 12,
         borderRadius: 8,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 1000,
+        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.25)',
+        elevation: 5, // Keep elevation for Android
         zIndex: 1000,
         minWidth: 200,
         borderWidth: 1,

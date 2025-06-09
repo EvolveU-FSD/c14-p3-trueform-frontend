@@ -40,21 +40,12 @@ export default function CategoryItems({ categoryId }: CategoryItemsProps) {
               />
             </View>
             <View style={styles.itemContent}>
-              <Text style={styles.itemName} numberOfLines={1}>
-                {item.name}
-              </Text>
-              <Text style={styles.itemDescription} numberOfLines={1}>
-                {item.description.split(' ').slice(0, 4).join(' ')}
-              </Text>
-              <Text style={styles.itemPrice}>
-                ${parseFloat(item.price).toFixed(2)}
-              </Text>
+              <Text style={styles.itemName} numberOfLines={1}>{item.name}</Text>
+              <Text style={styles.itemPrice}>${item.price}</Text>
             </View>
           </TouchableOpacity>
         )}
-        ListEmptyComponent={
-          <Text style={styles.emptyText}>No items found.</Text>
-        }
+        ListEmptyComponent={<Text style={styles.emptyText}>No items found.</Text>}
       />
     </View>
   );
