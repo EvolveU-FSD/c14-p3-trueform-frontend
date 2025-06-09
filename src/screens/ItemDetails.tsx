@@ -38,7 +38,7 @@ export default function ItemDetails(props: ItemDetailsProps) {
   const [showFabric, setShowFabric] = React.useState(false);
 
   const handleCustomization = () => {
-    navigation.navigate('Customization');
+    navigation.navigate('CollarStyle');
   };
 
   return (

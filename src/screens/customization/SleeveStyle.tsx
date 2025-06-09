@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import CustomizationScreenWrapper from '../../components/CustomizationScreenWrapper';
 import CustomizationOptionGrid from '../../components/CustomizationOptionGrid';
-import CustomizationNavigation from '../../components/CustomizationNavigation';
 import { useCustomization } from '../../context/CustomizationContext';
 
 const SLEEVE_OPTIONS = [
@@ -21,20 +20,12 @@ export default function SleeveStyle() {
   const { state, updateOption } = useCustomization();
   
   return (
-    <View style={styles.container}>
+    <CustomizationScreenWrapper currentStep="SleeveStyle">
       <CustomizationOptionGrid
         options={SLEEVE_OPTIONS}
         selected={state.sleeveStyle}
         onSelect={(value) => updateOption('sleeveStyle', value)}
       />
-      <CustomizationNavigation currentStep="SleeveStyle" />
-    </View>
+    </CustomizationScreenWrapper>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-});

@@ -3,7 +3,6 @@ import React from 'react';
 import { NavigationContainer, LinkingOptions } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './src/screens/HomeScreen';
-import CategoryScreen from './src/screens/Category';
 import ItemDetails from './src/screens/ItemDetails';
 import CustomizationScreen from './src/screens/customization/CustomizationScreen';
 import CollarStyle from './src/screens/customization/CollarStyle';
@@ -17,6 +16,7 @@ import Measurement from './src/screens/customization/Measurement';
 import { RootStackParamList } from './src/types/navigation';
 import { ThemeProvider } from './src/theme/ThemeContext';
 import { CustomizationProvider } from './src/context/CustomizationContext';
+import Items from './src/screens/Items';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -51,7 +51,7 @@ const App: React.FC = () => {
             />
             <Stack.Screen
               name="Category"
-              component={CategoryScreen}
+              component={Items}
               options={({ route }) => ({
                 title: route.params.slug,
                 headerShown: false

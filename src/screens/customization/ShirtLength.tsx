@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import CustomizationScreenWrapper from '../../components/CustomizationScreenWrapper';
 import CustomizationOptionGrid from '../../components/CustomizationOptionGrid';
-import CustomizationNavigation from '../../components/CustomizationNavigation';
 import { useCustomization } from '../../context/CustomizationContext';
 
 const LENGTH_OPTIONS = [
@@ -23,20 +22,12 @@ export default function ShirtLength() {
   const { state, updateOption } = useCustomization();
   
   return (
-    <View style={styles.container}>
+    <CustomizationScreenWrapper currentStep="ShirtLength">
       <CustomizationOptionGrid
         options={LENGTH_OPTIONS}
         selected={state.shirtLength}
         onSelect={(value) => updateOption('shirtLength', value)}
       />
-      <CustomizationNavigation currentStep="ShirtLength" />
-    </View>
+    </CustomizationScreenWrapper>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-});

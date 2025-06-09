@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import CustomizationScreenWrapper from '../../components/CustomizationScreenWrapper';
 import CustomizationOptionGrid from '../../components/CustomizationOptionGrid';
-import CustomizationNavigation from '../../components/CustomizationNavigation';
 import { useCustomization } from '../../context/CustomizationContext';
 
 const MEASUREMENT_OPTIONS = [
@@ -23,20 +22,12 @@ export default function Measurement() {
   const { state, updateOption } = useCustomization();
   
   return (
-    <View style={styles.container}>
+    <CustomizationScreenWrapper currentStep="Measurement">
       <CustomizationOptionGrid
         options={MEASUREMENT_OPTIONS}
         selected={state.measurementType}
         onSelect={(value) => updateOption('measurementType', value)}
       />
-      <CustomizationNavigation currentStep="Measurement" />
-    </View>
+    </CustomizationScreenWrapper>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-});

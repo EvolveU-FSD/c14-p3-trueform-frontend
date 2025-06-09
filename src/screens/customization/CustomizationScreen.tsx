@@ -1,52 +1,48 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { CustomizationProvider } from '../../context/CustomizationContext';
-import CustomizationProgress from '../../components/CustomizationProgress';
-import CollarStyle from './CollarStyle';
-import CuffStyle from './CuffStyle';
-import PocketStyle from './PocketStyle';
-import SleeveStyle from './SleeveStyle';
-import ShirtLength from './ShirtLength';
-import Monogram from './Monogram';
-import Buttons from './Buttons';
-import Measurement from './Measurement';
-
-const Tab = createMaterialTopTabNavigator();
 
 const CUSTOMIZATION_STEPS = [
-  { id: 'collar', title: 'Collar Style', component: CollarStyle },
-  { id: 'cuff', title: 'Cuff Style', component: CuffStyle },
-  { id: 'pocket', title: 'Pocket Style', component: PocketStyle },
-  { id: 'sleeve', title: 'Sleeve Style', component: SleeveStyle },
-  { id: 'length', title: 'Shirt Length', component: ShirtLength },
-  { id: 'monogram', title: 'Monogram', component: Monogram },
-  { id: 'buttons', title: 'Buttons', component: Buttons },
-  { id: 'measurement', title: 'Measurement', component: Measurement }
+  { id: 'CollarStyle', title: 'Collar' },
+  { id: 'CuffStyle', title: 'Cuff' },
+  { id: 'PocketStyle', title: 'Pocket' },
+  { id: 'SleeveStyle', title: 'Sleeve' },
+  { id: 'ShirtLength', title: 'Length' },
+  { id: 'Monogram', title: 'Monogram' },
+  { id: 'Buttons', title: 'Buttons' },
+  { id: 'Measurement', title: 'Measurement' }
 ];
 
 export default function CustomizationScreen() {
+  const navigation = useNavigation();
+
   return (
     <CustomizationProvider>
       <View style={styles.container}>
-        <CustomizationProgress currentStep={0} />
-        <Tab.Navigator
-          screenOptions={{
-            tabBarScrollEnabled: true,
-            tabBarItemStyle: styles.tabItem,
-            tabBarStyle: styles.tabBar,
-            tabBarIndicatorStyle: { backgroundColor: '#4caf50' },
-          }}
-        >
-          {CUSTOMIZATION_STEPS.map(step => (
-            <Tab.Screen
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.stepsContainer}>
+          {CUSTOMIZATION_STEPS.map((step, index) => (
+            <TouchableOpacity
               key={step.id}
-              name={step.id}
-              component={step.component}
-              options={{ title: step.title }}
-            />
+              style={styles.stepItem}
+              onPress={() => navigation.navigate(step.id as never)}
+            >
+              <View style={styles.stepNumber}>
+                <Text style={styles.stepNumberText}>{index + 1}</Text>
+              </View>
+              <Text style={styles.stepTitle}>{step.title}</Text>
+            </TouchableOpacity>
           ))}
-        </Tab.Navigator>
+        </ScrollView>
+        <View style={styles.content}>
+          <Text style={styles.startText}>Select collar style to begin customization</Text>
+          <TouchableOpacity 
+            style={styles.startButton}
+            onPress={() => navigation.navigate('CollarStyle')}
+          >
+            <Text style={styles.startButtonText}>Start Customization</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </CustomizationProvider>
   );
@@ -55,15 +51,58 @@ export default function CustomizationScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FAF9F6', // Light cream color directly in styles
+    backgroundColor: '#FAF9F6',
   },
-  tabBar: {
-    elevation: 0,
-    shadowOpacity: 0,
-    backgroundColor: '#f8f8f8',
+  stepsContainer: {
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
   },
-  tabItem: {
-    width: 'auto',
-    paddingHorizontal: 16,
+  stepItem: {
+    alignItems: 'center',
+    marginRight: 24,
+    opacity: 0.7,
+  },
+  stepNumber: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: '#4A3419',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 4,
+  },
+  stepNumberText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  stepTitle: {
+    fontSize: 12,
+    color: '#4A3419',
+    fontWeight: '500',
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  startText: {
+    fontSize: 16,
+    color: '#666',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  startButton: {
+    backgroundColor: '#4A3419',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+  },
+  startButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
   },
 });

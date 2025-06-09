@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView, TouchableOpacity, Text } from 'react-native';
-import CustomizationNavigation from '../../components/CustomizationNavigation';
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import CustomizationScreenWrapper from '../../components/CustomizationScreenWrapper';
 import { useCustomization } from '../../context/CustomizationContext';
 
 const MONOGRAM_OPTIONS = [
@@ -50,34 +50,27 @@ export default function Monogram() {
   const { state, updateOption } = useCustomization();
   
   return (
-    <View style={styles.container}>
-      <ScrollView>
-        <Text style={styles.title}>CHOOSE YOUR MONOGRAM POSITION</Text>
-        <View style={styles.gridContainer}>
-          {MONOGRAM_OPTIONS.map((option) => (
-            <TouchableOpacity
-              key={option.id}
-              style={[
-                styles.gridItem,
-                state.monogram === option.id && styles.selectedItem
-              ]}
-              onPress={() => updateOption('monogram', option.id)}
-            >
-              <Text style={styles.itemText}>{option.title}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-      </ScrollView>
-      <CustomizationNavigation currentStep="Monogram" />
-    </View>
+    <CustomizationScreenWrapper currentStep="Monogram">
+      <Text style={styles.title}>CHOOSE YOUR MONOGRAM POSITION</Text>
+      <View style={styles.gridContainer}>
+        {MONOGRAM_OPTIONS.map((option) => (
+          <TouchableOpacity
+            key={option.id}
+            style={[
+              styles.gridItem,
+              state.monogram === option.id && styles.selectedItem
+            ]}
+            onPress={() => updateOption('monogram', option.id)}
+          >
+            <Text style={styles.itemText}>{option.title}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+    </CustomizationScreenWrapper>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
   title: {
     fontSize: 18,
     fontWeight: '600',

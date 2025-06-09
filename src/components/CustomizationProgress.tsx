@@ -1,75 +1,107 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { CUSTOMIZATION_STEPS } from '../utils/customizationSteps';
+import React, { useRef, useEffect } from 'react';
+import { ScrollView, View, Text, StyleSheet } from 'react-native';
+
+export const CUSTOMIZATION_STEPS = [
+  { id: 'CollarStyle', title: 'Collar' },
+  { id: 'CuffStyle', title: 'Cuff' },
+  { id: 'PocketStyle', title: 'Pocket' },
+  { id: 'SleeveStyle', title: 'Sleeve' },
+  { id: 'ShirtLength', title: 'Length' },
+  { id: 'Monogram', title: 'Monogram' },
+  { id: 'Buttons', title: 'Buttons' },
+  { id: 'Measurement', title: 'Measurement' }
+];
 
 type Props = {
   currentStep: string;
 };
 
 export default function CustomizationProgress({ currentStep }: Props) {
+  const scrollViewRef = useRef<ScrollView>(null);
+  const currentStepIndex = CUSTOMIZATION_STEPS.findIndex(step => step.id === currentStep);
+
+  useEffect(() => {
+    // Auto scroll to current step with offset
+    if (scrollViewRef.current && currentStepIndex >= 0) {
+      scrollViewRef.current.scrollTo({
+        x: currentStepIndex * 80, // Approximate width of each step
+        animated: true
+      });
+    }
+  }, [currentStep]);
+
   return (
-    <View style={styles.container}>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {CUSTOMIZATION_STEPS.map((step, index) => (
-          <View 
-            key={step} 
-            style={[
-              styles.stepContainer,
-              currentStep === step && styles.activeStep
-            ]}
-          >
-            <Text style={[
-              styles.stepNumber,
-              currentStep === step && styles.activeText
-            ]}>
-              {index + 1}
-            </Text>
-            <Text style={[
-              styles.stepText,
-              currentStep === step && styles.activeText
-            ]}>
-              {step.replace(/([A-Z])/g, ' $1').trim()}
-            </Text>
+    <ScrollView 
+      ref={scrollViewRef}
+      horizontal 
+      showsHorizontalScrollIndicator={false} 
+      style={styles.container}
+      contentContainerStyle={styles.contentContainer}
+    >
+      {CUSTOMIZATION_STEPS.map((step, index) => (
+        <View
+          key={step.id}
+          style={[
+            styles.stepItem,
+            currentStep === step.id && styles.activeStep
+          ]}
+        >
+          <View style={[styles.stepNumber, currentStep === step.id && styles.activeStepNumber]}>
+            <Text style={styles.stepNumberText}>{index + 1}</Text>
           </View>
-        ))}
-      </ScrollView>
-    </View>
+          <Text style={[styles.stepTitle, currentStep === step.id && styles.activeStepTitle]}>
+            {step.title}
+          </Text>
+        </View>
+      ))}
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
+    paddingVertical: 8, // Reduced from 16
     borderBottomWidth: 1,
     borderBottomColor: '#eee',
+    backgroundColor: '#FAF9F6',
+    maxHeight: 60, // Add fixed height
   },
-  stepContainer: {
-    flexDirection: 'row',
+  contentContainer: {
+    paddingHorizontal: 16,
     alignItems: 'center',
-    padding: 12,
-    marginHorizontal: 4,
+  },
+  stepItem: {
+    alignItems: 'center',
+    marginRight: 20, // Reduced from 24
+    opacity: 0.7,
+    width: 80, // Fixed width for consistent spacing
   },
   activeStep: {
-    borderBottomWidth: 2,
-    borderBottomColor: '#4caf50',
+    opacity: 1,
   },
   stepNumber: {
-    width: 24,
-    height: 24,
+    width: 24, // Reduced from 28
+    height: 24, // Reduced from 28
     borderRadius: 12,
-    backgroundColor: '#eee',
-    textAlign: 'center',
-    lineHeight: 24,
-    marginRight: 8,
-    fontSize: 12,
-    color: '#666',
+    backgroundColor: '#ccc',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 2, // Reduced from 4
   },
-  stepText: {
+  activeStepNumber: {
+    backgroundColor: '#4A3419',
+  },
+  stepNumberText: {
+    color: '#fff',
     fontSize: 14,
-    color: '#666',
-  },
-  activeText: {
-    color: '#4caf50',
     fontWeight: '600',
+  },
+  stepTitle: {
+    fontSize: 11, // Reduced from 12
+    color: '#666',
+    fontWeight: '500',
+  },
+  activeStepTitle: {
+    color: '#4A3419',
   },
 });

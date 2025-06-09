@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import CustomizationScreenWrapper from '../../components/CustomizationScreenWrapper';
 import CustomizationOptionGrid from '../../components/CustomizationOptionGrid';
-import CustomizationNavigation from '../../components/CustomizationNavigation';
 
 const COLLAR_OPTIONS = [
   {
@@ -70,26 +69,12 @@ export default function CollarStyle() {
   const [selected, setSelected] = useState('');
 
   return (
-    <View style={styles.container}>
-      <ScrollView style={styles.scrollContainer}>
-        <CustomizationOptionGrid
-          options={COLLAR_OPTIONS}
-          selected={selected}
-          onSelect={setSelected}
-        />
-      </ScrollView>
-      <CustomizationNavigation currentStep="CollarStyle" />
-    </View>
+    <CustomizationScreenWrapper currentStep="CollarStyle">
+      <CustomizationOptionGrid
+        options={COLLAR_OPTIONS}
+        selected={selected}
+        onSelect={setSelected}
+      />
+    </CustomizationScreenWrapper>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  scrollContainer: {
-    flex: 1,
-    paddingBottom: 16,
-  },
-});

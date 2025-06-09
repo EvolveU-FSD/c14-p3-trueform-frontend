@@ -1,4 +1,5 @@
 import React from 'react';
+import CustomizationScreenWrapper from '../../components/CustomizationScreenWrapper';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import CustomizationOptionGrid from '../../components/CustomizationOptionGrid';
 import CustomizationNavigation from '../../components/CustomizationNavigation';
@@ -56,16 +57,13 @@ export default function PocketStyle() {
   const { state, updateOption } = useCustomization();
   
   return (
-    <View style={styles.container}>
-      <ScrollView style={styles.scrollContainer}>
-        <CustomizationOptionGrid
-          options={POCKET_OPTIONS}
-          selected={state.pocketStyle}
-          onSelect={(value) => updateOption('pocketStyle', value)}
-        />
-      </ScrollView>
-      <CustomizationNavigation currentStep="PocketStyle" />
-    </View>
+    <CustomizationScreenWrapper currentStep="PocketStyle">
+      <CustomizationOptionGrid
+        options={POCKET_OPTIONS}
+        selected={state.pocketStyle}
+        onSelect={(value) => updateOption('pocketStyle', value)}
+      />
+    </CustomizationScreenWrapper>
   );
 }
 
