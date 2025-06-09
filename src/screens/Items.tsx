@@ -5,6 +5,22 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import itemsData from '../data/categoryItems.json';
 import { useTheme } from '../theme/ThemeContext';
 
+const FILTER_OPTIONS = {
+  colors: [
+    { label: 'White', value: 'white' },
+    { label: 'Navy', value: 'navy' },
+    { label: 'Beige', value: 'beige' },
+    { label: 'Red', value: 'red' },
+    { label: 'Blue', value: 'blue' },
+  ],
+  patterns: [
+    { label: 'Solid', value: 'solid' },
+    { label: 'Check', value: 'check' },
+    { label: 'Stripe', value: 'stripe' },
+    { label: 'Printed', value: 'printed' },
+  ]
+};
+
 export default function Items() {
   const navigation = useNavigation();
   const route = useRoute<any>();
@@ -14,6 +30,12 @@ export default function Items() {
   // States
   const [showSort, setShowSort] = useState(false);
   const [selectedSort, setSelectedSort] = useState('recommended');
+  const [showFilter, setShowFilter] = useState(false);
+  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+  const [collapsedSections, setCollapsedSections] = useState({
+    colors: true,
+    patterns: true
+  });
 
   // Filter items for this category
   const categoryItems = useMemo(
@@ -23,6 +45,13 @@ export default function Items() {
 
   const handleBackPress = () => {
     navigation.navigate('Home');
+  };
+
+  const toggleSection = (section: 'colors' | 'patterns') => {
+    setCollapsedSections(prev => ({
+      ...prev,
+      [section]: !prev[section]
+    }));
   };
 
   React.useEffect(() => {
@@ -45,13 +74,20 @@ export default function Items() {
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" />
       
-      {/* Header with Sort */}
+      {/* Header with Sort and Filter */}
       <View style={styles.header}>
         <TouchableOpacity 
           style={styles.headerButton}
           onPress={() => setShowSort(!showSort)}
         >
           <Text style={styles.headerButtonText}>Sort By: {selectedSort}</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+          style={styles.headerButton}
+          onPress={() => setShowFilter(!showFilter)}
+        >
+          <FontAwesome5 name="sliders-h" size={20} color="#333" />
         </TouchableOpacity>
       </View>
 
@@ -73,6 +109,81 @@ export default function Items() {
               <Text style={styles.sortOptionText}>{option.label}</Text>
             </TouchableOpacity>
           ))}
+        </View>
+      )}
+
+      {/* Add Filter Dropdown */}
+      {showFilter && (
+        <View style={styles.filterDropdown}>
+          {/* Colors Section */}
+          <TouchableOpacity 
+            style={styles.filterHeader}
+            onPress={() => toggleSection('colors')}
+          >
+            <Text style={styles.filterTitle}>Fabric Color</Text>
+            <FontAwesome5 
+              name={collapsedSections.colors ? 'plus' : 'minus'} 
+              size={16} 
+              color="#333" 
+            />
+          </TouchableOpacity>
+          {!collapsedSections.colors && (
+            <View style={styles.filterOptions}>
+              {FILTER_OPTIONS.colors.map((color) => (
+                <TouchableOpacity
+                  key={`color-${color.value}`}
+                  style={[
+                    styles.filterOption,
+                    selectedFilters.includes(color.value) && styles.filterOptionSelected
+                  ]}
+                  onPress={() => {
+                    setSelectedFilters(prev => 
+                      prev.includes(color.value)
+                        ? prev.filter(v => v !== color.value)
+                        : [...prev, color.value]
+                    );
+                  }}
+                >
+                  <Text style={styles.filterOptionText}>{color.label}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          )}
+
+          {/* Patterns Section */}
+          <TouchableOpacity 
+            style={[styles.filterHeader, { marginTop: 16 }]}
+            onPress={() => toggleSection('patterns')}
+          >
+            <Text style={styles.filterTitle}>Pattern</Text>
+            <FontAwesome5 
+              name={collapsedSections.patterns ? 'plus' : 'minus'} 
+              size={16} 
+              color="#333" 
+            />
+          </TouchableOpacity>
+          {!collapsedSections.patterns && (
+            <View style={styles.filterOptions}>
+              {FILTER_OPTIONS.patterns.map((pattern) => (
+                <TouchableOpacity
+                  key={`pattern-${pattern.value}`}
+                  style={[
+                    styles.filterOption,
+                    selectedFilters.includes(pattern.value) && styles.filterOptionSelected
+                  ]}
+                  onPress={() => {
+                    setSelectedFilters(prev => 
+                      prev.includes(pattern.value)
+                        ? prev.filter(v => v !== pattern.value)
+                        : [...prev, pattern.value]
+                    );
+                  }}
+                >
+                  <Text style={styles.filterOptionText}>{pattern.label}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          )}
         </View>
       )}
 
@@ -196,6 +307,48 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f5f5',
   },
   sortOptionText: {
+    fontSize: 14,
+    color: '#333',
+  },
+  filterDropdown: {
+    position: 'absolute',
+    top: 50,
+    right: 16,
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 5,
+    zIndex: 1000,
+    minWidth: 200,
+    padding: 16,
+  },
+  filterHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 8,
+  },
+  filterTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#333',
+  },
+  filterOptions: {
+    flexDirection: 'column',
+  },
+  filterOption: {
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+  },
+  filterOptionSelected: {
+    backgroundColor: '#f5f5f5',
+  },
+  filterOptionText: {
     fontSize: 14,
     color: '#333',
   },
