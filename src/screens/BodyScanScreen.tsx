@@ -5,6 +5,9 @@ import * as ImagePicker from 'expo-image-picker';
 import { bodyScanStyles } from '../styles/BodyScanStyles';
 import { endpoints } from '../config/constants';
 import { CrossImage } from '../components/CrossImage';
+import { showAlert } from '../utils/showAlerts';
+import { api } from '../services/api.service';
+import { BodyScanResponse } from '../types/bodyScanResponse';
 
 export default function BodyScanScreen() {
   // User information state
@@ -12,7 +15,6 @@ export default function BodyScanScreen() {
   const [weight, setWeight] = useState('');
   const [gender, setGender] = useState('male');
   const [age, setAge] = useState('');
-  const [userId, setUserId] = useState('');
 
   // Image state
   const [frontImage, setFrontImage] = useState<string | null>(null);
@@ -31,7 +33,7 @@ export default function BodyScanScreen() {
   const requestCameraPermission = async () => {
     const { status } = await ImagePicker.requestCameraPermissionsAsync();
     if (status !== 'granted') {
-      Alert.alert('Permission Denied', 'We need camera permissions to take photos');
+      showAlert('Permission Denied', 'We need camera permissions to take photos');
       return false;
     }
     return true;
@@ -41,7 +43,7 @@ export default function BodyScanScreen() {
   const requestGalleryPermission = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (status !== 'granted') {
-      Alert.alert('Permission Denied', 'We need gallery permissions to select photos');
+      showAlert('Permission Denied', 'We need gallery permissions to select photos');
       return false;
     }
     return true;
@@ -56,6 +58,7 @@ export default function BodyScanScreen() {
         allowsEditing: true,
         aspect: [9, 16],
         quality: 0.8,
+        base64: true, // Request base64 data
       });
 
       if (!result.canceled) {
@@ -63,7 +66,7 @@ export default function BodyScanScreen() {
       }
     } catch (error) {
       console.error('Error picking image:', error);
-      Alert.alert('Error', 'Failed to pick image. Please try again.');
+      showAlert('Error', 'Failed to pick image. Please try again.');
     }
   };
 
@@ -76,6 +79,7 @@ export default function BodyScanScreen() {
         allowsEditing: true,
         aspect: [9, 16],
         quality: 0.8,
+        base64: true, // Request base64 data
       });
 
       if (!result.canceled) {
@@ -83,7 +87,7 @@ export default function BodyScanScreen() {
       }
     } catch (error) {
       console.error('Error picking image:', error);
-      Alert.alert('Error', 'Failed to pick image. Please try again.');
+      showAlert('Error', 'Failed to pick image. Please try again.');
     }
   };
 
@@ -96,6 +100,7 @@ export default function BodyScanScreen() {
         allowsEditing: true,
         aspect: [9, 16],
         quality: 0.8,
+        base64: true, // Request base64 data
       });
 
       if (!result.canceled) {
@@ -103,7 +108,7 @@ export default function BodyScanScreen() {
       }
     } catch (error) {
       console.error('Error taking photo:', error);
-      Alert.alert('Error', 'Failed to take photo. Please try again.');
+      showAlert('Error', 'Failed to take photo. Please try again.');
     }
   };
 
@@ -116,6 +121,7 @@ export default function BodyScanScreen() {
         allowsEditing: true,
         aspect: [9, 16],
         quality: 0.8,
+        base64: true, // Request base64 data
       });
 
       if (!result.canceled) {
@@ -123,62 +129,63 @@ export default function BodyScanScreen() {
       }
     } catch (error) {
       console.error('Error taking photo:', error);
-      Alert.alert('Error', 'Failed to take photo. Please try again.');
+      showAlert('Error', 'Failed to take photo. Please try again.');
+    }
+  };
+
+  // Convert image URI to base64
+  const imageToBase64 = async (uri: string) => {
+    try {
+      const response = await fetch(uri);
+      const blob = await response.blob();
+      return new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          resolve(reader.result as string);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      });
+    } catch (error) {
+      console.error('Error converting image to base64:', error);
+      throw error;
     }
   };
 
   // Handle form submission
+  // In BodyScanScreen.tsx, modify handleSubmit:
+  // BodyScanScreen.tsx - Updated handleSubmit
   const handleSubmit = async () => {
-    // Validate inputs
     if (!height || !weight || !frontImage || !profileImage) {
-      Alert.alert('Missing Information', 'Please provide height, weight, and both photos');
+      showAlert('Missing Information', 'Please provide height, weight, and both photos');
       return;
     }
 
     try {
       setIsLoading(true);
 
-      // Prepare form data
+      // Convert images to base64
+      const frontImageBase64 = await imageToBase64(frontImage);
+      const profileImageBase64 = await imageToBase64(profileImage);
+
+      // Create FormData and append everything as text fields
       const formData = new FormData();
-      formData.append('user_id', userId || 'anonymous');
       formData.append('height', height);
       formData.append('weight', weight);
       formData.append('gender', gender);
       if (age) formData.append('age', age);
 
-      // Append images
-      formData.append('front_image', {
-        uri: frontImage,
-        type: 'image/jpeg',
-        name: 'front.jpg'
-      } as any);
+      // Append base64 strings as regular form fields
+      formData.append('front_image_base64', frontImageBase64);
+      formData.append('profile_image_base64', profileImageBase64);
 
-      formData.append('profile_image', {
-        uri: profileImage,
-        type: 'image/jpeg',
-        name: 'profile.jpg'
-      } as any);
+      // Send FormData (will be multipart/form-data but with text fields only)
+      const result: BodyScanResponse = await api.post(endpoints.bodyScan, formData);
+      setMeasurements(result.measurements);
 
-      // Call the API
-      const response = await fetch(endpoints.bodyScan, {
-        method: 'POST',
-        body: formData,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
-      const result: any = await response.json();
-
-      if (response.ok) {
-        setMeasurements(result.measurements);
-        console.log('Measurements received:', result.measurements);
-      } else {
-        Alert.alert('Error', result.message || 'Failed to process scan');
-      }
     } catch (error) {
       console.error('Error submitting scan:', error);
-      Alert.alert('Error', 'Failed to submit scan. Please try again.');
+      showAlert('Error', 'Failed to submit scan. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -224,24 +231,14 @@ export default function BodyScanScreen() {
     </View>
   );
 
-  // Rest of the component remains the same...
+  // JSX remains the same
   return (
     <ScrollView style={bodyScanStyles.container}>
-      {/* Same JSX content as before */}
       <Text style={bodyScanStyles.title}>Body Measurements Scan</Text>
 
       <View style={bodyScanStyles.formSection}>
+        {/* Rest of the JSX remains unchanged */}
         <Text style={bodyScanStyles.sectionTitle}>Personal Information</Text>
-
-        <View style={bodyScanStyles.inputContainer}>
-          <Text style={bodyScanStyles.label}>User ID (optional)</Text>
-          <TextInput
-            style={bodyScanStyles.input}
-            value={userId}
-            onChangeText={setUserId}
-            placeholder="For your reference"
-          />
-        </View>
 
         <View style={bodyScanStyles.inputContainer}>
           <Text style={bodyScanStyles.label}>Height (cm)</Text>
