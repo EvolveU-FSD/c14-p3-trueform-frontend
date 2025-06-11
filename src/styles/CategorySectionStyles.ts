@@ -1,35 +1,35 @@
-// src/styles/CategorySectionStyles.ts
 import { StyleSheet } from 'react-native';
 import { Theme } from '../theme/ThemeContext';
+import { spacing, fontSizes, borderRadius } from '../utils/sizes';
 
 export function createStyles(theme: Theme) {
     return StyleSheet.create({
         container: {
-            marginVertical: 12,
+            marginVertical: spacing.md,
             backgroundColor: theme.backgroundColor,
         },
         header: {
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
-            paddingHorizontal: 16,
-            marginBottom: 12,
+            paddingHorizontal: spacing.md,
+            marginBottom: spacing.md,
         },
         title: {
-            fontSize: 22,
+            fontSize: fontSizes.xl,
             fontWeight: 'bold',
             color: theme.textColor,
         },
         seeAll: {
-            fontSize: 14,
+            fontSize: fontSizes.sm,
             color: theme.secondaryColor,
         },
         categoriesContainer: {
-            paddingHorizontal: 16,
+            paddingHorizontal: spacing.md,
         },
         categoryItem: {
             alignItems: 'center',
-            marginRight: 16,
+            marginRight: spacing.md,
             width: 80,
         },
         imageContainer: {
@@ -39,7 +39,7 @@ export function createStyles(theme: Theme) {
             backgroundColor: theme.borderColor,
             justifyContent: 'center',
             alignItems: 'center',
-            marginBottom: 8,
+            marginBottom: spacing.sm,
             overflow: 'hidden',
         },
         categoryImage: {
@@ -48,9 +48,9 @@ export function createStyles(theme: Theme) {
             resizeMode: 'cover',
         },
         categoryName: {
-            fontSize: 14,
+            fontSize: fontSizes.sm,
             textAlign: 'center',
             color: theme.textColor,
         },
     });
-};
+}
