@@ -5,7 +5,7 @@ import { HeroBannerProps } from '../types/product';
 import { useTheme } from '../theme/ThemeContext';
 import { createStyles } from '../styles/HeroBannerStyles';
 
-const HeroBanner: React.FC<HeroBannerProps> = ({ title, image, onPress }) => {
+export default function HeroBanner({ title, image, onPress }: HeroBannerProps) {
     const { theme } = useTheme();
     const styles = createStyles(theme);
 
@@ -23,5 +23,3 @@ const HeroBanner: React.FC<HeroBannerProps> = ({ title, image, onPress }) => {
         </TouchableOpacity>
     );
 };
-
-export default HeroBanner;

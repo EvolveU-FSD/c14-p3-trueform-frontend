@@ -45,7 +45,7 @@ const ThemeContext = createContext({
 });
 
 // Theme Provider Component
-export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export function ThemeProvider({ children }: {children: React.ReactNode }) {
     const [isDarkMode, setIsDarkMode] = useState(false);
     const [theme, setTheme] = useState<Theme>(lightTheme);
 
@@ -62,4 +62,6 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 };
 
 // Custom hook for using theme
-export const useTheme = () => useContext(ThemeContext);
+export function useTheme() {
+    return useContext(ThemeContext);
+}

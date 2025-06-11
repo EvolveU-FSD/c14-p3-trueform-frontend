@@ -5,29 +5,25 @@ import { Category, CategorySectionProps } from '../types/product';
 import { useTheme } from '../theme/ThemeContext';
 import { createStyles } from '../styles/CategorySectionStyles';
 
-const CategoryItem: React.FC<{
+function CategoryItem({ category, onPress, styles }: {
     category: Category;
     onPress?: (category: Category) => void;
     styles: any; // Pass styles as prop
-}> = ({
-    category,
-    onPress,
-    styles
-}) => {
-        return (
-            <TouchableOpacity
-                style={styles.categoryItem}
-                onPress={() => onPress && onPress(category)}
-            >
-                <View style={styles.imageContainer}>
-                    <Image source={{ uri: category.image }} style={styles.categoryImage} />
-                </View>
-                <Text style={styles.categoryName}>{category.name}</Text>
-            </TouchableOpacity>
-        );
-    };
+}) {
+    return (
+        <TouchableOpacity
+            style={styles.categoryItem}
+            onPress={() => onPress && onPress(category)}
+        >
+            <View style={styles.imageContainer}>
+                <Image source={{ uri: category.image }} style={styles.categoryImage} />
+            </View>
+            <Text style={styles.categoryName}>{category.name}</Text>
+        </TouchableOpacity>
+    );
+};
 
-const CategorySection: React.FC<CategorySectionProps> = ({ categories, onCategoryPress }) => {
+export default function CategorySection({ categories, onCategoryPress }: CategorySectionProps) {
     const { theme } = useTheme();
     const styles = createStyles(theme);
 
@@ -57,5 +53,3 @@ const CategorySection: React.FC<CategorySectionProps> = ({ categories, onCategor
         </View>
     );
 };
-
-export default CategorySection;

@@ -5,7 +5,7 @@ import { NavButtonProps } from '../types/product';
 import { useTheme } from '../theme/ThemeContext';
 import { createStyles } from '../styles/NavButtonsStyles';
 
-const NavButton: React.FC<NavButtonProps> = ({ icon, label, onPress, isActive }) => {
+function NavButton({ icon, label, onPress, isActive }: NavButtonProps) {
     const { theme } = useTheme();
     const styles = createStyles(theme);
 
@@ -20,7 +20,7 @@ const NavButton: React.FC<NavButtonProps> = ({ icon, label, onPress, isActive })
     );
 };
 
-const NavButtons: React.FC = () => {
+export default function NavButtons() {
     const { theme } = useTheme();
     const styles = createStyles(theme);
     const [activeButton, setActiveButton] = useState<string | null>(null);
@@ -63,5 +63,3 @@ const NavButtons: React.FC = () => {
         </ScrollView>
     );
 };
-
-export default NavButtons;
