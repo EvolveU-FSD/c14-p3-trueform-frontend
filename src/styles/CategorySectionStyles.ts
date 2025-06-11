@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { Theme } from '../theme/ThemeContext';
-import { spacing, fontSizes, borderRadius } from '../utils/sizes';
+import { spacing, fontSizes } from '../utils/sizes';
 
 export function createStyles(theme: Theme) {
 	return StyleSheet.create({
@@ -35,7 +35,6 @@ export function createStyles(theme: Theme) {
 		imageContainer: {
 			width: 80,
 			height: 80,
-			borderRadius: 40,
 			backgroundColor: theme.borderColor,
 			justifyContent: 'center',
 			alignItems: 'center',

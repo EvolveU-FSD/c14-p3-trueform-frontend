@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { Theme } from '../theme/ThemeContext';
-import { spacing, fontSizes, borderRadius } from '../utils/sizes';
+import { spacing, fontSizes } from '../utils/sizes';
 
 export function createStyles(theme: Theme) {
 	return StyleSheet.create({
@@ -16,7 +16,6 @@ export function createStyles(theme: Theme) {
 			alignItems: 'center',
 			paddingHorizontal: spacing.md,
 			paddingVertical: spacing.sm,
-			borderRadius: spacing.lg,
 			backgroundColor: theme.borderColor,
 			marginRight: spacing.md,
 		},
