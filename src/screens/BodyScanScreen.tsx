@@ -13,14 +13,14 @@ export default function BodyScanScreen() {
   const [gender, setGender] = useState('male');
   const [age, setAge] = useState('');
   const [userId, setUserId] = useState('');
-  
+
   // Image state
   const [frontImage, setFrontImage] = useState<string | null>(null);
   const [profileImage, setProfileImage] = useState<string | null>(null);
-  
+
   // Loading state
   const [isLoading, setIsLoading] = useState(false);
-  
+
   // Measurements state
   const [measurements, setMeasurements] = useState<any>(null);
 
@@ -50,14 +50,14 @@ export default function BodyScanScreen() {
   // Image picker function for front view from gallery
   const pickFrontImageFromGallery = async () => {
     if (!(await requestGalleryPermission())) return;
-    
+
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
         allowsEditing: true,
         aspect: [9, 16],
         quality: 0.8,
       });
-      
+
       if (!result.canceled) {
         setFrontImage(result.assets[0].uri);
       }
@@ -70,14 +70,14 @@ export default function BodyScanScreen() {
   // Image picker function for profile view from gallery
   const pickProfileImageFromGallery = async () => {
     if (!(await requestGalleryPermission())) return;
-    
+
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
         allowsEditing: true,
         aspect: [9, 16],
         quality: 0.8,
       });
-      
+
       if (!result.canceled) {
         setProfileImage(result.assets[0].uri);
       }
@@ -90,14 +90,14 @@ export default function BodyScanScreen() {
   // Take front photo with camera
   const takeFrontPhotoWithCamera = async () => {
     if (!(await requestCameraPermission())) return;
-    
+
     try {
       const result = await ImagePicker.launchCameraAsync({
         allowsEditing: true,
         aspect: [9, 16],
         quality: 0.8,
       });
-      
+
       if (!result.canceled) {
         setFrontImage(result.assets[0].uri);
       }
@@ -110,14 +110,14 @@ export default function BodyScanScreen() {
   // Take profile photo with camera
   const takeProfilePhotoWithCamera = async () => {
     if (!(await requestCameraPermission())) return;
-    
+
     try {
       const result = await ImagePicker.launchCameraAsync({
         allowsEditing: true,
         aspect: [9, 16],
         quality: 0.8,
       });
-      
+
       if (!result.canceled) {
         setProfileImage(result.assets[0].uri);
       }
@@ -134,10 +134,10 @@ export default function BodyScanScreen() {
       Alert.alert('Missing Information', 'Please provide height, weight, and both photos');
       return;
     }
-    
+
     try {
       setIsLoading(true);
-      
+
       // Prepare form data
       const formData = new FormData();
       formData.append('user_id', userId || 'anonymous');
@@ -145,20 +145,20 @@ export default function BodyScanScreen() {
       formData.append('weight', weight);
       formData.append('gender', gender);
       if (age) formData.append('age', age);
-      
+
       // Append images
       formData.append('front_image', {
         uri: frontImage,
         type: 'image/jpeg',
         name: 'front.jpg'
       } as any);
-      
+
       formData.append('profile_image', {
         uri: profileImage,
         type: 'image/jpeg',
         name: 'profile.jpg'
       } as any);
-      
+
       // Call the API
       const response = await fetch(endpoints.bodyScan, {
         method: 'POST',
@@ -167,9 +167,9 @@ export default function BodyScanScreen() {
           'Content-Type': 'multipart/form-data',
         },
       });
-      
-      const result = await response.json();
-      
+
+      const result: any = await response.json();
+
       if (response.ok) {
         setMeasurements(result.measurements);
         console.log('Measurements received:', result.measurements);
@@ -186,8 +186,8 @@ export default function BodyScanScreen() {
 
   // Render photo selection section with both options on mobile
   const renderPhotoSection = (
-    label: string, 
-    photoUri: string | null, 
+    label: string,
+    photoUri: string | null,
     galleryPickFn: () => Promise<void>,
     cameraPickFn: () => Promise<void>
   ) => (
@@ -200,17 +200,17 @@ export default function BodyScanScreen() {
           <Text>{label}</Text>
         </View>
       )}
-      
+
       {isMobile ? (
         <View style={bodyScanStyles.photoButtonsRow}>
-          <TouchableOpacity 
-            style={[bodyScanStyles.photoButton, bodyScanStyles.halfWidthButton]} 
+          <TouchableOpacity
+            style={[bodyScanStyles.photoButton, bodyScanStyles.halfWidthButton]}
             onPress={galleryPickFn}
           >
             <Text style={bodyScanStyles.photoButtonText}>Gallery</Text>
           </TouchableOpacity>
-          <TouchableOpacity 
-            style={[bodyScanStyles.photoButton, bodyScanStyles.halfWidthButton]} 
+          <TouchableOpacity
+            style={[bodyScanStyles.photoButton, bodyScanStyles.halfWidthButton]}
             onPress={cameraPickFn}
           >
             <Text style={bodyScanStyles.photoButtonText}>Camera</Text>
@@ -229,10 +229,10 @@ export default function BodyScanScreen() {
     <ScrollView style={bodyScanStyles.container}>
       {/* Same JSX content as before */}
       <Text style={bodyScanStyles.title}>Body Measurements Scan</Text>
-      
+
       <View style={bodyScanStyles.formSection}>
         <Text style={bodyScanStyles.sectionTitle}>Personal Information</Text>
-        
+
         <View style={bodyScanStyles.inputContainer}>
           <Text style={bodyScanStyles.label}>User ID (optional)</Text>
           <TextInput
@@ -242,7 +242,7 @@ export default function BodyScanScreen() {
             placeholder="For your reference"
           />
         </View>
-        
+
         <View style={bodyScanStyles.inputContainer}>
           <Text style={bodyScanStyles.label}>Height (cm)</Text>
           <TextInput
@@ -253,7 +253,7 @@ export default function BodyScanScreen() {
             keyboardType="numeric"
           />
         </View>
-        
+
         <View style={bodyScanStyles.inputContainer}>
           <Text style={bodyScanStyles.label}>Weight (kg)</Text>
           <TextInput
@@ -264,7 +264,7 @@ export default function BodyScanScreen() {
             keyboardType="numeric"
           />
         </View>
-        
+
         <View style={bodyScanStyles.inputContainer}>
           <Text style={bodyScanStyles.label}>Gender</Text>
           <View style={bodyScanStyles.pickerContainer}>
@@ -278,7 +278,7 @@ export default function BodyScanScreen() {
             </Picker>
           </View>
         </View>
-        
+
         <View style={bodyScanStyles.inputContainer}>
           <Text style={bodyScanStyles.label}>Age (optional)</Text>
           <TextInput
@@ -290,33 +290,33 @@ export default function BodyScanScreen() {
           />
         </View>
       </View>
-      
+
       <View style={bodyScanStyles.formSection}>
         <Text style={bodyScanStyles.sectionTitle}>Photos</Text>
         <Text style={bodyScanStyles.photoInstructions}>
           Please provide two full-body photos: one front-facing and one right-side profile.
           Wear tight-fitting clothes for best results.
         </Text>
-        
+
         <View style={bodyScanStyles.photoSection}>
           {renderPhotoSection(
-            "Front Photo", 
-            frontImage, 
-            pickFrontImageFromGallery, 
+            "Front Photo",
+            frontImage,
+            pickFrontImageFromGallery,
             takeFrontPhotoWithCamera
           )}
-          
+
           {renderPhotoSection(
-            "Profile Photo", 
-            profileImage, 
-            pickProfileImageFromGallery, 
+            "Profile Photo",
+            profileImage,
+            pickProfileImageFromGallery,
             takeProfilePhotoWithCamera
           )}
         </View>
       </View>
-      
-      <TouchableOpacity 
-        style={bodyScanStyles.submitButton} 
+
+      <TouchableOpacity
+        style={bodyScanStyles.submitButton}
         onPress={handleSubmit}
         disabled={isLoading}
       >
@@ -326,11 +326,11 @@ export default function BodyScanScreen() {
           <Text style={bodyScanStyles.submitButtonText}>Get Measurements</Text>
         )}
       </TouchableOpacity>
-      
+
       {measurements && (
         <View style={bodyScanStyles.resultsSection}>
           <Text style={bodyScanStyles.sectionTitle}>Your Measurements</Text>
-          {Object.entries(measurements).map(([key, value]:[any,any]) => (
+          {Object.entries(measurements).map(([key, value]: [any, any]) => (
             <View key={key} style={bodyScanStyles.measurementRow}>
               <Text style={bodyScanStyles.measurementLabel}>{key}</Text>
               <Text style={bodyScanStyles.measurementValue}>{value}</Text>
