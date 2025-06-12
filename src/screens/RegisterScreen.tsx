@@ -15,6 +15,8 @@ import {
 import { useAuth } from '../context/AuthContext';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/navigation';
+import { showAlert } from 'utils/showAlerts';
+
 
 type RegisterScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Register'>;
 
@@ -31,25 +33,25 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) => {
 
     const validateForm = () => {
         if (!email || !password || !confirmPassword) {
-            Alert.alert('Error', 'Please fill in all fields');
+            showAlert('Error', 'Please fill in all fields');
             return false;
         }
 
         if (password !== confirmPassword) {
-            Alert.alert('Error', 'Passwords do not match');
+            showAlert('Error', 'Passwords do not match');
             return false;
         }
 
         // Basic email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
-            Alert.alert('Error', 'Please enter a valid email address');
+            showAlert('Error', 'Please enter a valid email address');
             return false;
         }
 
         // Password strength validation
         if (password.length < 6) {
-            Alert.alert('Error', 'Password must be at least 6 characters long');
+            showAlert('Error', 'Password must be at least 6 characters long');
             return false;
         }
 
@@ -62,13 +64,10 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) => {
         setIsLoading(true);
         try {
             await register(email, password);
-            Alert.alert(
+            showAlert(
                 'Registration Successful',
                 'Your account has been created successfully!',
-                [{
-                    text: 'OK',
-                    onPress: () => navigation.navigate('Login', { email: email })
-                }]
+                () => navigation.navigate('Login', { email: email }) // Simple onOk callback
             );
         } catch (error: any) {
             let errorMessage = 'Registration failed. Please try again.';
@@ -82,7 +81,7 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) => {
                 errorMessage = 'The password is too weak.';
             }
 
-            Alert.alert('Registration Error', errorMessage);
+            showAlert('Registration Error', errorMessage);
         } finally {
             setIsLoading(false);
         }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 import { LoginScreenNavigationProp, LoginScreenRouteProp } from '../types/navigation';
+import { showAlert } from 'utils/showAlerts';
 
 interface LoginScreenProps {
     navigation: LoginScreenNavigationProp;
@@ -24,7 +25,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, route }) => {
 
     const handleLogin = async () => {
         if (!email || !password) {
-            Alert.alert('Error', 'Please enter both email and password');
+            showAlert('Error', 'Please enter both email and password');
             return;
         }
 
@@ -35,7 +36,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, route }) => {
             navigation.navigate('Home');
 
         } catch (error: any) {
-            Alert.alert('Login Failed', error.message);
+            showAlert('Login Failed', error.message);
         } finally {
             setIsLoading(false);
         }
