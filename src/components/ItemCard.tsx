@@ -1,9 +1,10 @@
 // src/components/ItemCard.tsx
 import React from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { ItemCardProps } from '../types/product';
 import { useTheme } from '../theme/ThemeContext';
 import { createStyles } from '../styles/ItemCardStyles';
+import { CrossImage } from './CrossImage';
 
 export default function ItemCard({ product, onPress }: ItemCardProps) {
     const { theme } = useTheme();
@@ -17,7 +18,7 @@ export default function ItemCard({ product, onPress }: ItemCardProps) {
 
     return (
         <TouchableOpacity style={styles.container} onPress={handlePress}>
-            <Image source={{ uri: product.image }} style={styles.image} />
+            <CrossImage source={product.image} style={styles.image} />
             <View style={styles.detailsContainer}>
                 <Text style={styles.category}>{product.category}</Text>
                 <Text style={styles.name}>{product.name}</Text>
