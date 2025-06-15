@@ -3,8 +3,6 @@ export interface Clothing {
     name: string;
     description: string;
     price: number;
-    categoryId: string;
-    sizes: string[];
     colors: string[];
     imageUrl: string;
 }

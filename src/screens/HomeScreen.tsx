@@ -1,5 +1,5 @@
 // src/screens/HomeScreen.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, ScrollView, SafeAreaView, StyleSheet, StatusBar } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -12,6 +12,7 @@ import FeaturedItems from '../components/FeaturedItems';
 import BottomNavBar from '../components/BottomNavBar';
 import { Product, Category } from '../types/product';
 import { slugify } from '../utils/slugify';
+import { ClothingService } from '../services/clothing.service';
 
 const apparelImage = require('../../assets/images/categories/apparel.jpg');
 const itemOneImage = require('../../assets/images/products/item1.jpg');
@@ -58,8 +59,37 @@ const categories: Category[] = [
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
 export default function HomeScreen() {
+    const [popularItems, setPopularItems] = useState<Product[]>([]);
+    const [loading, setLoading] = useState(false);
     const [activeTab, setActiveTab] = useState('home');
     const navigation = useNavigation<HomeScreenNavigationProp>();
+
+    useEffect(() => {
+        const fetchClothing = async () => {
+            try {
+                setLoading(true);
+                const response = await ClothingService.getAll();
+                console.log(response);
+                // TODO: Currently set all items to be popular. Needs to be filtered.
+                const items = response.map(clothing => ({
+                    id: clothing.id,
+                    image: clothing.imageUrl,
+                    category: 'shirt',
+                    name: clothing.name,
+                    price: clothing.price,
+                    description: clothing.description,
+                    isPopular: true
+                }));
+                setPopularItems(items);
+            } catch (error) {
+                console.error('Failed to fetch clothing:', error);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        fetchClothing();
+    }, []);
 
     // In HomeScreen.tsx
     // HomeScreen.tsx

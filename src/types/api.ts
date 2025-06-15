@@ -4,6 +4,12 @@ export interface ApiResponse<T> {
     message?: string;
 }
 
+export interface ApiResult<T> {
+    data: T,
+    status: number,
+    message?: string;
+}
+
 export interface ApiError {
     status: number;
     message: string;
