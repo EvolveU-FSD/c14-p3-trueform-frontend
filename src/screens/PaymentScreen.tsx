@@ -6,18 +6,37 @@ import {
   TouchableOpacity,
   Alert,
   ActivityIndicator,
+  ScrollView,
+  SafeAreaView,
 } from 'react-native';
 import { StripeProvider, CardField, useStripe } from '@stripe/stripe-react-native';
 import type { CardFieldInput } from '@stripe/stripe-react-native';
 import { showAlert } from 'utils/showAlerts';
+import { Ionicons } from '@expo/vector-icons';
+import { paymentScreenStyles as styles } from 'styles/PaymentScreenStyles'; // Adjust the import path as necessary
 
-// Replace with your backend API URL
-const API_URL = 'http://10.0.0.183:4000/api';
+
+// Mock order data - replace with actual props/navigation params
+const ORDER_DETAILS = {
+  items: [
+    { name: 'Custom Tailored Suit', price: 899.00, quantity: 1 },
+    { name: 'Silk Tie', price: 79.00, quantity: 2 },
+    { name: 'Alterations', price: 45.00, quantity: 1 },
+  ],
+  subtotal: 1102.00,
+  tax: 88.16,
+  shipping: 0.00,
+  total: 1190.16,
+};
 
 const PaymentScreen = () => {
   const [cardDetails, setCardDetails] = useState<CardFieldInput.Details | null>(null);
   const [loading, setLoading] = useState(false);
   const { confirmPayment } = useStripe();
+
+  const formatCurrency = (amount: number) => {
+    return `$${amount.toFixed(2)}`;
+  };
 
   const handlePayment = async () => {
     if (!cardDetails?.complete) {
@@ -28,38 +47,37 @@ const PaymentScreen = () => {
     try {
       setLoading(true);
       
-      // Step 1: Create payment intent on your backend
-      console.log('api url', API_URL);
-      const response = await fetch(`${API_URL}/payment/create-intent`, {
+      // Convert dollars to cents for Stripe
+      const amountInCents = Math.round(ORDER_DETAILS.total * 100);
+      
+      const response = await fetch(`${process.env.EXPO_PUBLIC_API_BASE_URL}/payment/create-intent`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          amount: 1000, // Amount in cents (e.g., $10.00)
+          amount: amountInCents,
           currency: 'usd',
         }),
       });
+      
       const { clientSecret } = await response.json();
-      console.log('clientSecret', clientSecret);
+      
       if (!clientSecret) {
         throw new Error('Failed to create payment intent');
       }
 
-      // Step 2: Confirm the payment on the client
       const { paymentIntent, error } = await confirmPayment(clientSecret, {
         paymentMethodType: 'Card',
       });
-      console.log('paymentIntent', paymentIntent);
-      console.log('error', error);
+
       if (error) {
         showAlert('Error', error.message);
         return;
       }
 
       if (paymentIntent?.status === 'Succeeded') {
-        // Step 3: Verify payment on your backend
-        const verifyResponse = await fetch(`${API_URL}/payment/verify`, {
+        const verifyResponse = await fetch(`${process.env.EXPO_PUBLIC_API_BASE_URL}/payment/verify`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -73,7 +91,6 @@ const PaymentScreen = () => {
 
         if (verifyResult.success) {
           Alert.alert('Success', 'Payment completed successfully!');
-          // Navigate to success screen or update UI
         } else {
           Alert.alert('Error', 'Payment verification failed');
         }
@@ -91,76 +108,108 @@ const PaymentScreen = () => {
   return (
     <StripeProvider
       publishableKey={process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY || ''}
-      urlScheme="your-app-scheme" // Required for 3D Secure
+      urlScheme="your-app-scheme"
     >
-      <View style={styles.container}>
-        <Text style={styles.title}>Payment Details</Text>
-        
-        <CardField
-          postalCodeEnabled={true}
-          placeholders={{
-            number: '4242 4242 4242 4242',
-          }}
-          cardStyle={styles.card}
-          style={styles.cardContainer}
-          onCardChange={(details) => setCardDetails(details)}
-        />
+      <SafeAreaView style={styles.safeArea}>
+        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+          {/* Header */}
+          <View style={styles.header}>
+            <Ionicons name="lock-closed" size={24} color="#5469d4" />
+            <Text style={styles.headerText}>Secure Payment</Text>
+          </View>
 
-        <TouchableOpacity
-          style={[styles.button, loading && styles.buttonDisabled]}
-          onPress={handlePayment}
-          disabled={loading || !cardDetails?.complete}
-        >
-          {loading ? (
-            <ActivityIndicator color="#fff" />
-          ) : (
-            <Text style={styles.buttonText}>Pay Now</Text>
+          {/* Order Summary */}
+          <View style={styles.orderSummary}>
+            <Text style={styles.sectionTitle}>Order Summary</Text>
+            
+            {ORDER_DETAILS.items.map((item, index) => (
+              <View key={index} style={styles.orderItem}>
+                <View style={styles.itemDetails}>
+                  <Text style={styles.itemName}>{item.name}</Text>
+                  <Text style={styles.itemQuantity}>Qty: {item.quantity}</Text>
+                </View>
+                <Text style={styles.itemPrice}>{formatCurrency(item.price * item.quantity)}</Text>
+              </View>
+            ))}
+            
+            <View style={styles.divider} />
+            
+            <View style={styles.summaryRow}>
+              <Text style={styles.summaryLabel}>Subtotal</Text>
+              <Text style={styles.summaryValue}>{formatCurrency(ORDER_DETAILS.subtotal)}</Text>
+            </View>
+            
+            <View style={styles.summaryRow}>
+              <Text style={styles.summaryLabel}>Tax</Text>
+              <Text style={styles.summaryValue}>{formatCurrency(ORDER_DETAILS.tax)}</Text>
+            </View>
+            
+            <View style={styles.summaryRow}>
+              <Text style={styles.summaryLabel}>Shipping</Text>
+              <Text style={styles.summaryValue}>
+                {ORDER_DETAILS.shipping === 0 ? 'FREE' : formatCurrency(ORDER_DETAILS.shipping)}
+              </Text>
+            </View>
+            
+            <View style={styles.divider} />
+            
+            <View style={styles.totalRow}>
+              <Text style={styles.totalLabel}>Total</Text>
+              <Text style={styles.totalValue}>{formatCurrency(ORDER_DETAILS.total)}</Text>
+            </View>
+          </View>
+
+          {/* Payment Details */}
+          <View style={styles.paymentSection}>
+            <Text style={styles.sectionTitle}>Payment Details</Text>
+            
+            <CardField
+              postalCodeEnabled={true}
+              placeholders={{
+                number: '4242 4242 4242 4242',
+              }}
+              cardStyle={styles.card}
+              style={styles.cardContainer}
+              onCardChange={(details) => setCardDetails(details)}
+            />
+            
+            <View style={styles.securityNote}>
+              <Ionicons name="shield-checkmark" size={16} color="#666" />
+              <Text style={styles.securityText}>
+                Your payment information is encrypted and secure
+              </Text>
+            </View>
+          </View>
+
+          {/* Pay Button */}
+          <TouchableOpacity
+            style={[styles.button, loading && styles.buttonDisabled]}
+            onPress={handlePayment}
+            disabled={loading || !cardDetails?.complete}
+          >
+            {loading ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              <View style={styles.buttonContent}>
+                <Text style={styles.buttonText}>Pay {formatCurrency(ORDER_DETAILS.total)}</Text>
+                <Ionicons name="arrow-forward" size={20} color="#fff" />
+              </View>
+            )}
+          </TouchableOpacity>
+
+          {/* Test Mode Notice */}
+          {process.env.NODE_ENV === 'development' && (
+            <View style={styles.testNotice}>
+              <Ionicons name="information-circle" size={16} color="#ff9800" />
+              <Text style={styles.testText}>Test mode - Use card 4242 4242 4242 4242</Text>
+            </View>
           )}
-        </TouchableOpacity>
-      </View>
+        </ScrollView>
+      </SafeAreaView>
     </StripeProvider>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: '#f5f5f5',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 30,
-    textAlign: 'center',
-    color: '#333',
-  },
-  cardContainer: {
-    height: 50,
-    marginVertical: 30,
-  },
-  card: {
-    backgroundColor: '#FFFFFF',
-    textColor: '#000000',
-    borderWidth: 1,
-    borderColor: '#000000',
-    borderRadius: 8,
-  },
-  button: {
-    backgroundColor: '#5469d4',
-    borderRadius: 8,
-    padding: 15,
-    alignItems: 'center',
-    marginTop: 20,
-  },
-  buttonDisabled: {
-    backgroundColor: '#a0a0a0',
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-});
+
 
 export default PaymentScreen;
