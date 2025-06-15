@@ -17,12 +17,15 @@ export default function BottomNavBar({ activeTab, onTabChange }: BottomNavBarPro
         { name: 'bodyscan', icon: '📏', label: 'Body Scan' },
         { name: 'cart', icon: '🛒', label: 'Cart' },
         { name: 'notifications', icon: '🔔', label: 'Alerts' },
+        { name: 'payment', icon: '💳', label: 'Payment' },
         { name: 'profile', icon: '👤', label: 'Profile' },
     ];
 
     const handleTabPress = (tabName: string) => {
         if (tabName === 'bodyscan') {
             navigation.navigate('BodyScan' as never);
+        }  else if (tabName === 'payment') {  // ADD THIS CONDITION
+            navigation.navigate('Payment' as never);
         } else {
             onTabChange(tabName);
         }

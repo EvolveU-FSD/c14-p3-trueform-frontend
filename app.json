@@ -16,11 +16,13 @@
       "supportsTablet": true
     },
     "android": {
+      "permissions": [],
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.lucasferraripereira.TrueFormTSFE"
     },
     "web": {
       "favicon": "./assets/favicon.png"

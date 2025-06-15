@@ -39,3 +39,10 @@ yarn-error.*
 package-lock.json
 
 .env
+
+android/
+ios/
+build/
+*.apk
+*.aab
+*.keystore

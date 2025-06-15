@@ -14,6 +14,7 @@ import { ThemeProvider } from './src/theme/ThemeContext';
 import BodyScanScreen from './src/screens/BodyScanScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
+import PaymentScreen from './src/screens/PaymentScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -32,6 +33,7 @@ const linking: LinkingOptions<RootStackParamList> = {
       Login: 'login',
       Register: 'register',
       BodyScan: 'bodyscan',
+      Payment: 'payment',
     },
   },
   enabled: true,
@@ -90,11 +92,16 @@ function AppNavigator() {
         options={{ headerShown: false }}
       />
 
-      {/* Protected screen */}
+      {/* Protected screens */}
       <Stack.Screen
         name="BodyScan"
         component={ProtectedBodyScanScreen}
         options={{ title: 'Body Measurements' }}
+      />
+      <Stack.Screen
+        name="Payment"
+        component={PaymentScreen}
+        options={{ title: 'Payment' }}
       />
     </Stack.Navigator>
   );

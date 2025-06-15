@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 import { LoginScreenNavigationProp, LoginScreenRouteProp } from '../types/navigation';
-import { showAlert } from 'utils/showAlerts';
+import { showAlert } from '../utils/showAlerts';
 
 interface LoginScreenProps {
     navigation: LoginScreenNavigationProp;

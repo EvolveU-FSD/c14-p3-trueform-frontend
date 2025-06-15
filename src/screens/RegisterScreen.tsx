@@ -15,7 +15,7 @@ import {
 import { useAuth } from '../context/AuthContext';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/navigation';
-import { showAlert } from 'utils/showAlerts';
+import { showAlert } from '../utils/showAlerts';
 
 
 type RegisterScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Register'>;
