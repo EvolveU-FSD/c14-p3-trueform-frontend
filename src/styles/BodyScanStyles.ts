@@ -124,12 +124,12 @@ export const bodyScanStyles = StyleSheet.create({
     fontWeight: 'bold',
   },
   // Add these to your bodyScanStyles object
-photoButtonsRow: {
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  width: '100%',
-},
-halfWidthButton: {
-  width: '48%',  // Not quite half to allow for spacing
-},
+  photoButtonsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  halfWidthButton: {
+    width: '48%', // Not quite half to allow for spacing
+  },
 });

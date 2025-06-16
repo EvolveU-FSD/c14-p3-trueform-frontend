@@ -8,7 +8,7 @@ import CategoryScreen from './src/screens/Category';
 import {
   RootStackParamList,
   LoginScreenNavigationProp,
-  CategoryScreenRouteProp
+  CategoryScreenRouteProp,
 } from './src/types/navigation';
 import { ThemeProvider } from './src/theme/ThemeContext';
 import BodyScanScreen from './src/screens/BodyScanScreen';
@@ -64,35 +64,27 @@ function AppNavigator() {
   }
 
   return (
-    <Stack.Navigator initialRouteName="Home">
+    <Stack.Navigator initialRouteName='Home'>
       {/* Public screens */}
       <Stack.Screen
-        name="Home"
+        name='Home'
         component={HomeScreen}
         options={{ title: 'Home', headerShown: false }}
       />
       <Stack.Screen
-        name="Category"
+        name='Category'
         component={CategoryScreen}
         options={({ route }: { route: CategoryScreenRouteProp }) => ({
           title: route.params.slug,
-          headerShown: false
+          headerShown: false,
         })}
       />
-      <Stack.Screen
-        name="Login"
-        component={LoginScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Register"
-        component={RegisterScreen}
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen name='Login' component={LoginScreen} options={{ headerShown: false }} />
+      <Stack.Screen name='Register' component={RegisterScreen} options={{ headerShown: false }} />
 
       {/* Protected screen */}
       <Stack.Screen
-        name="BodyScan"
+        name='BodyScan'
         component={ProtectedBodyScanScreen}
         options={{ title: 'Body Measurements' }}
       />
@@ -103,7 +95,6 @@ function AppNavigator() {
 export default function App() {
   return (
     <ThemeProvider>
-<<<<<<< HEAD
       <AuthProvider>
         <NavigationContainer linking={linking}>
           <AppNavigator />
@@ -112,25 +103,3 @@ export default function App() {
     </ThemeProvider>
   );
 }
-=======
-      <NavigationContainer linking={linking}>
-        <Stack.Navigator initialRouteName='Home'>
-          <Stack.Screen
-            name='Home'
-            component={HomeScreen}
-            options={{ title: 'Home', headerShown: false }}
-          />
-          <Stack.Screen
-            name='Category'
-            component={CategoryScreen}
-            options={({ route }) => ({
-              title: route.params.slug,
-              headerShown: false,
-            })}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </ThemeProvider>
-  );
-}
->>>>>>> main

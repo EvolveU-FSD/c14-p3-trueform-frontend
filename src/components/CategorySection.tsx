@@ -15,30 +15,15 @@ function CategoryItem({
   onPress?: (category: Category) => void;
   styles: any; // Pass styles as prop
 }) {
-<<<<<<< HEAD
-    return (
-        <TouchableOpacity
-            style={styles.categoryItem}
-            onPress={() => onPress && onPress(category)}
-        >
-            <View style={styles.imageContainer}>
-                <CrossImage source={category.image} style={styles.categoryImage} />
-            </View>
-            <Text style={styles.categoryName}>{category.name}</Text>
-        </TouchableOpacity>
-    );
-};
-=======
   return (
     <TouchableOpacity style={styles.categoryItem} onPress={() => onPress && onPress(category)}>
       <View style={styles.imageContainer}>
-        <Image source={{ uri: category.image }} style={styles.categoryImage} />
+        <CrossImage source={category.image} style={styles.categoryImage} />
       </View>
       <Text style={styles.categoryName}>{category.name}</Text>
     </TouchableOpacity>
   );
 }
->>>>>>> main
 
 export default function CategorySection({ categories, onCategoryPress }: CategorySectionProps) {
   const { theme } = useTheme();

@@ -44,7 +44,7 @@ npx expo start --web
 
 This will launch the app in your browser at [http://localhost:19006](http://localhost:19006).
 
-Edit the file src/config/constants.ts 
+Edit the file src/config/constants.ts
 
 ---
 

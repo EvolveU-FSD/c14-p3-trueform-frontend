@@ -16,22 +16,9 @@ export default function ItemCard({ product, onPress }: ItemCardProps) {
     }
   };
 
-<<<<<<< HEAD
-    return (
-        <TouchableOpacity style={styles.container} onPress={handlePress}>
-            <CrossImage source={product.image} style={styles.image} />
-            <View style={styles.detailsContainer}>
-                <Text style={styles.category}>{product.category}</Text>
-                <Text style={styles.name}>{product.name}</Text>
-                <Text style={styles.price}>${product.price}</Text>
-            </View>
-        </TouchableOpacity>
-    );
-};
-=======
   return (
     <TouchableOpacity style={styles.container} onPress={handlePress}>
-      <Image source={{ uri: product.image }} style={styles.image} />
+      <CrossImage source={product.image} style={styles.image} />
       <View style={styles.detailsContainer}>
         <Text style={styles.category}>{product.category}</Text>
         <Text style={styles.name}>{product.name}</Text>
@@ -40,4 +27,3 @@ export default function ItemCard({ product, onPress }: ItemCardProps) {
     </TouchableOpacity>
   );
 }
->>>>>>> main

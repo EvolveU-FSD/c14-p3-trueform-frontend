@@ -10,34 +10,13 @@ export default function HeroBanner({ title, image, onPress }: HeroBannerProps) {
   const { theme } = useTheme();
   const styles = createStyles(theme);
 
-<<<<<<< HEAD
-    return (
-        <TouchableOpacity onPress={onPress} activeOpacity={0.9}>
-            <CrossImageBackground
-                source={image}
-                style={styles.banner}
-                imageStyle={styles.bannerImage}
-            >
-                {/* Optional overlay for better text readability */}
-                <View style={styles.overlay} />
-                <Text style={styles.title}>{title}</Text>
-            </CrossImageBackground>
-        </TouchableOpacity>
-    );
-}
-=======
   return (
     <TouchableOpacity onPress={onPress} activeOpacity={0.9}>
-      <ImageBackground
-        source={{ uri: image }}
-        style={styles.banner}
-        imageStyle={styles.bannerImage}
-      >
+      <CrossImageBackground source={image} style={styles.banner} imageStyle={styles.bannerImage}>
         {/* Optional overlay for better text readability */}
         <View style={styles.overlay} />
         <Text style={styles.title}>{title}</Text>
-      </ImageBackground>
+      </CrossImageBackground>
     </TouchableOpacity>
   );
 }
->>>>>>> main

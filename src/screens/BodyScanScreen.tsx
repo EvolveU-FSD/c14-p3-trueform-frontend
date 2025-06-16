@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView, ActivityIndicator, Alert, Platform } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+  ActivityIndicator,
+  Alert,
+  Platform,
+} from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
 import { bodyScanStyles } from '../styles/BodyScanStyles';
@@ -182,7 +191,6 @@ export default function BodyScanScreen() {
       // Send FormData (will be multipart/form-data but with text fields only)
       const result: BodyScanResponse = await api.post(endpoints.bodyScan, formData);
       setMeasurements(result.measurements);
-
     } catch (error) {
       console.error('Error submitting scan:', error);
       showAlert('Error', 'Failed to submit scan. Please try again.');
@@ -196,7 +204,7 @@ export default function BodyScanScreen() {
     label: string,
     photoUri: string | null,
     galleryPickFn: () => Promise<void>,
-    cameraPickFn: () => Promise<void>
+    cameraPickFn: () => Promise<void>,
   ) => (
     <View style={bodyScanStyles.photoContainer}>
       <Text style={bodyScanStyles.photoLabel}>{label}</Text>
@@ -246,8 +254,8 @@ export default function BodyScanScreen() {
             style={bodyScanStyles.input}
             value={height}
             onChangeText={setHeight}
-            placeholder="Enter your height in cm"
-            keyboardType="numeric"
+            placeholder='Enter your height in cm'
+            keyboardType='numeric'
           />
         </View>
 
@@ -257,8 +265,8 @@ export default function BodyScanScreen() {
             style={bodyScanStyles.input}
             value={weight}
             onChangeText={setWeight}
-            placeholder="Enter your weight in kg"
-            keyboardType="numeric"
+            placeholder='Enter your weight in kg'
+            keyboardType='numeric'
           />
         </View>
 
@@ -270,8 +278,8 @@ export default function BodyScanScreen() {
               onValueChange={(itemValue) => setGender(itemValue)}
               style={bodyScanStyles.picker}
             >
-              <Picker.Item label="Male" value="male" />
-              <Picker.Item label="Female" value="female" />
+              <Picker.Item label='Male' value='male' />
+              <Picker.Item label='Female' value='female' />
             </Picker>
           </View>
         </View>
@@ -282,8 +290,8 @@ export default function BodyScanScreen() {
             style={bodyScanStyles.input}
             value={age}
             onChangeText={setAge}
-            placeholder="Enter your age"
-            keyboardType="numeric"
+            placeholder='Enter your age'
+            keyboardType='numeric'
           />
         </View>
       </View>
@@ -291,23 +299,23 @@ export default function BodyScanScreen() {
       <View style={bodyScanStyles.formSection}>
         <Text style={bodyScanStyles.sectionTitle}>Photos</Text>
         <Text style={bodyScanStyles.photoInstructions}>
-          Please provide two full-body photos: one front-facing and one right-side profile.
-          Wear tight-fitting clothes for best results.
+          Please provide two full-body photos: one front-facing and one right-side profile. Wear
+          tight-fitting clothes for best results.
         </Text>
 
         <View style={bodyScanStyles.photoSection}>
           {renderPhotoSection(
-            "Front Photo",
+            'Front Photo',
             frontImage,
             pickFrontImageFromGallery,
-            takeFrontPhotoWithCamera
+            takeFrontPhotoWithCamera,
           )}
 
           {renderPhotoSection(
-            "Profile Photo",
+            'Profile Photo',
             profileImage,
             pickProfileImageFromGallery,
-            takeProfilePhotoWithCamera
+            takeProfilePhotoWithCamera,
           )}
         </View>
       </View>
@@ -318,7 +326,7 @@ export default function BodyScanScreen() {
         disabled={isLoading}
       >
         {isLoading ? (
-          <ActivityIndicator color="#fff" />
+          <ActivityIndicator color='#fff' />
         ) : (
           <Text style={bodyScanStyles.submitButtonText}>Get Measurements</Text>
         )}
