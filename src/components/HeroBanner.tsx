@@ -7,9 +7,10 @@ import { createStyles } from '../styles/HeroBannerStyles';
 import { CrossImageBackground } from './CrossImage';
 
 export default function HeroBanner({ title, image, onPress }: HeroBannerProps) {
-    const { theme } = useTheme();
-    const styles = createStyles(theme);
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
 
+<<<<<<< HEAD
     return (
         <TouchableOpacity onPress={onPress} activeOpacity={0.9}>
             <CrossImageBackground
@@ -24,3 +25,19 @@ export default function HeroBanner({ title, image, onPress }: HeroBannerProps) {
         </TouchableOpacity>
     );
 }
+=======
+  return (
+    <TouchableOpacity onPress={onPress} activeOpacity={0.9}>
+      <ImageBackground
+        source={{ uri: image }}
+        style={styles.banner}
+        imageStyle={styles.bannerImage}
+      >
+        {/* Optional overlay for better text readability */}
+        <View style={styles.overlay} />
+        <Text style={styles.title}>{title}</Text>
+      </ImageBackground>
+    </TouchableOpacity>
+  );
+}
+>>>>>>> main

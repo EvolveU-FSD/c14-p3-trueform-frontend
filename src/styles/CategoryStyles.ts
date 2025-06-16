@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { Theme } from '../theme/ThemeContext';
+import { spacing, fontSizes } from '../utils/sizes';
 
 export function createCategoryStyles(theme: Theme) {
   return StyleSheet.create({
@@ -8,37 +9,37 @@ export function createCategoryStyles(theme: Theme) {
       backgroundColor: theme.backgroundColor,
     },
     headerContainer: {
-      padding: 16,
-      marginTop: 10,
+      padding: spacing.md,
+      marginTop: spacing.sm,
     },
     categoryTitle: {
-      fontSize: 28,
+      fontSize: fontSizes.xxl,
       fontWeight: 'bold',
       color: theme.textColor,
-      marginBottom: 8,
+      marginBottom: spacing.sm,
     },
     subtitle: {
-      fontSize: 16,
+      fontSize: fontSizes.md,
       color: theme.secondaryColor,
     },
     placeholderContainer: {
       flex: 1,
-      padding: 20,
+      padding: spacing.lg,
       alignItems: 'center',
       justifyContent: 'center',
-      marginTop: 60,
+      marginTop: spacing.xl * 2,
     },
     placeholderText: {
-      fontSize: 18,
+      fontSize: fontSizes.lg,
       fontWeight: 'bold',
       color: theme.textColor,
       textAlign: 'center',
-      marginBottom: 12,
+      marginBottom: spacing.md,
     },
     placeholderSubtext: {
-      fontSize: 16,
+      fontSize: fontSizes.md,
       color: theme.secondaryColor,
       textAlign: 'center',
-    }
+    },
   });
-};
+}

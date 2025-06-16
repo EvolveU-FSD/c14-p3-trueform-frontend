@@ -16,7 +16,7 @@ const CATEGORIES = [
   { id: '2', name: 'Pants', description: 'Find your perfect pants' },
   { id: '3', name: 'Jackets', description: 'Stay warm with our jackets' },
   { id: '4', name: 'Apparel', description: 'Complete your wardrobe' },
-  { id: '5', name: 'Accessories', description: 'Finish your look' }
+  { id: '5', name: 'Accessories', description: 'Finish your look' },
 ];
 
 type CategoryScreenRouteProp = RouteProp<RootStackParamList, 'Category'>;
@@ -33,25 +33,25 @@ export default function CategoryScreen() {
   const [categoryDetails, setCategoryDetails] = useState({
     id: '',
     name: '',
-    description: ''
+    description: '',
   });
 
   useEffect(() => {
     // Look up category by ID
-    const category = CATEGORIES.find(cat => cat.id === categoryId);
+    const category = CATEGORIES.find((cat) => cat.id === categoryId);
 
     if (category) {
       setCategoryDetails({
         id: category.id,
         name: category.name,
-        description: category.description
+        description: category.description,
       });
     } else {
       // Fallback if no category found
       setCategoryDetails({
         id: categoryId,
         name: 'Unknown Category',
-        description: 'Category not found'
+        description: 'Category not found',
       });
     }
   }, [categoryId]);
@@ -66,11 +66,11 @@ export default function CategoryScreen() {
     if (tabName === 'home') {
       navigation.navigate('Home');
     }
-  }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle={theme.isDarkMode ? "light-content" : "dark-content"} />
+      <StatusBar barStyle={theme.isDarkMode ? 'light-content' : 'dark-content'} />
 
       <ScrollView>
         <SearchBar />
@@ -84,19 +84,12 @@ export default function CategoryScreen() {
           <Text style={styles.placeholderText}>
             This is the {categoryDetails.name} category page.
           </Text>
-          <Text style={styles.placeholderSubtext}>
-            Products will be displayed here soon.
-          </Text>
-          <Text style={styles.placeholderSubtext}>
-            Category ID: {categoryDetails.id}
-          </Text>
+          <Text style={styles.placeholderSubtext}>Products will be displayed here soon.</Text>
+          <Text style={styles.placeholderSubtext}>Category ID: {categoryDetails.id}</Text>
         </View>
       </ScrollView>
 
-      <BottomNavBar
-        activeTab={activeTab}
-        onTabChange={handleTabChange}
-      />
+      <BottomNavBar activeTab={activeTab} onTabChange={handleTabChange} />
     </SafeAreaView>
   );
 }

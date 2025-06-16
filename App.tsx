@@ -103,6 +103,7 @@ function AppNavigator() {
 export default function App() {
   return (
     <ThemeProvider>
+<<<<<<< HEAD
       <AuthProvider>
         <NavigationContainer linking={linking}>
           <AppNavigator />
@@ -111,3 +112,25 @@ export default function App() {
     </ThemeProvider>
   );
 }
+=======
+      <NavigationContainer linking={linking}>
+        <Stack.Navigator initialRouteName='Home'>
+          <Stack.Screen
+            name='Home'
+            component={HomeScreen}
+            options={{ title: 'Home', headerShown: false }}
+          />
+          <Stack.Screen
+            name='Category'
+            component={CategoryScreen}
+            options={({ route }) => ({
+              title: route.params.slug,
+              headerShown: false,
+            })}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </ThemeProvider>
+  );
+}
+>>>>>>> main

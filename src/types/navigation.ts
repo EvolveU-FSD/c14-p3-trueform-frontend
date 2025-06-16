@@ -5,8 +5,9 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 export type RootStackParamList = {
   Home: undefined;
   Category: {
-    slug: string;  // Will contain the category ID
+    slug: string; // Will contain the category ID
   };
+<<<<<<< HEAD
   BodyScan: undefined;
   Login: { email?: string } | undefined;
   Register: undefined;
@@ -25,3 +26,6 @@ export type BodyScanScreenRouteProp = RouteProp<RootStackParamList, 'BodyScan'>;
 export type HomeScreenRouteProp = RouteProp<RootStackParamList, 'Home'>;
 export type LoginScreenRouteProp = RouteProp<RootStackParamList, 'Login'>;
 export type RegisterScreenRouteProp = RouteProp<RootStackParamList, 'Register'>;
+=======
+};
+>>>>>>> main

@@ -6,8 +6,15 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
+<<<<<<< HEAD
     "web": "expo start --web ",
     "dev": "npx expo start --web "
+=======
+    "web": "expo start --web",
+    "dev": "npx expo start --web",
+    "format": "prettier . --write",
+    "lint": "eslint . --ext .ts,.tsx.js.jsx --fix"
+>>>>>>> main
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.24.0",
@@ -29,11 +36,24 @@
     "@expo/webpack-config": "^19.0.1",
     "@react-native-community/cli-server-api": "^18.0.0",
     "@types/react": "~19.0.10",
+<<<<<<< HEAD
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.1",
     "dotenv-webpack": "^8.1.0",
     "process": "^0.11.10",
     "react-dom": "^18.2.0",
+=======
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^8.10.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-native": "^5.0.0",
+    "prettier": "^2.8.8",
+    "react-dom": "^19.0.0",
+>>>>>>> main
     "react-native-web": "^0.20.0",
     "stream-browserify": "^3.0.0",
     "typescript": "^4.9.5"

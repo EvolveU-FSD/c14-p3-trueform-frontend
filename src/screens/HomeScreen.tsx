@@ -21,95 +21,85 @@ const heroBannerImage = require('../../assets/images/banners/hero-banner.jpg');
 
 // Sample data for demonstration
 const popularItems: Product[] = [
-    {
-        id: '1',
-        image: itemOneImage,
-        category: 'Polo',
-        name: 'Polo Design 1',
-        price: 80,
-        isPopular: true,
-    },
-    {
-        id: '2',
-        image: itemTwoImage,
-        category: 'Polo',
-        name: 'Polo Button Up',
-        price: 79,
-        isPopular: true,
-    },
-    {
-        id: '3',
-        image: itemThreeImage,
-        category: 'Polo',
-        name: 'Polo Design 2',
-        price: 59,
-        isPopular: true,
-    },
+  {
+    id: '1',
+    image: itemOneImage,
+    category: 'Polo',
+    name: 'Polo Design 1',
+    price: 80,
+    isPopular: true,
+  },
+  {
+    id: '2',
+    image: itemTwoImage,
+    category: 'Polo',
+    name: 'Polo Button Up',
+    price: 79,
+    isPopular: true,
+  },
+  {
+    id: '3',
+    image: itemThreeImage,
+    category: 'Polo',
+    name: 'Polo Design 2',
+    price: 59,
+    isPopular: true,
+  },
 ];
 
 const categories: Category[] = [
-    { id: '1', name: 'Shirts', image: apparelImage },
-    { id: '2', name: 'Pants', image: apparelImage },
-    { id: '3', name: 'Jackets', image: apparelImage },
-    { id: '4', name: 'Apparel', image: apparelImage },
-    { id: '5', name: 'Accessories', image: apparelImage },
+  { id: '1', name: 'Shirts', image: apparelImage },
+  { id: '2', name: 'Pants', image: apparelImage },
+  { id: '3', name: 'Jackets', image: apparelImage },
+  { id: '4', name: 'Apparel', image: apparelImage },
+  { id: '5', name: 'Accessories', image: apparelImage },
 ];
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
 export default function HomeScreen() {
-    const [activeTab, setActiveTab] = useState('home');
-    const navigation = useNavigation<HomeScreenNavigationProp>();
+  const [activeTab, setActiveTab] = useState('home');
+  const navigation = useNavigation<HomeScreenNavigationProp>();
 
-    // In HomeScreen.tsx
-    // HomeScreen.tsx
-    const handleCategoryPress = (category: Category) => {
-        // Use the category ID as the slug
-        navigation.navigate('Category', {
-            slug: category.id
-        });
-    };
+  // In HomeScreen.tsx
+  // HomeScreen.tsx
+  const handleCategoryPress = (category: Category) => {
+    // Use the category ID as the slug
+    navigation.navigate('Category', {
+      slug: category.id,
+    });
+  };
 
-    return (
-        <SafeAreaView style={styles.container}>
-            <StatusBar barStyle="dark-content" />
+  return (
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle='dark-content' />
 
-            <ScrollView>
-                <SearchBar />
+      <ScrollView>
+        <SearchBar />
 
-                <NavButtons />
+        <NavButtons />
 
-                <HeroBanner
-                    title="Tailor Made For You"
-                    image={heroBannerImage}
-                    onPress={() => console.log('Banner pressed')}
-                />
+        <HeroBanner
+          title='Tailor Made For You'
+          image={heroBannerImage}
+          onPress={() => console.log('Banner pressed')}
+        />
 
-                <CategorySection
-                    categories={categories}
-                    onCategoryPress={handleCategoryPress}
-                />
+        <CategorySection categories={categories} onCategoryPress={handleCategoryPress} />
 
-                <FeaturedItems
-                    title="Popular"
-                    items={popularItems}
-                    seeAllLink="/popular"
-                />
+        <FeaturedItems title='Popular' items={popularItems} seeAllLink='/popular' />
 
-                {/* You could add more FeaturedItems sections for different categories */}
-            </ScrollView>
+        {/* You could add more FeaturedItems sections for different categories */}
+      </ScrollView>
 
-            <BottomNavBar
-                activeTab={activeTab}
-                onTabChange={(tabName) => setActiveTab(tabName)}
-            />
-        </SafeAreaView>
-    );
-};
+      <BottomNavBar activeTab={activeTab} onTabChange={(tabName) => setActiveTab(tabName)} />
+    </SafeAreaView>
+  );
+}
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-    },
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
 });
