@@ -12,41 +12,41 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 // Custom linking configuration to prevent query parameters
 // App.tsx
 const linking = {
-	prefixes: ['http://localhost:19006'],
-	config: {
-		screens: {
-			Home: '',
-			Category: {
-				path: 'category/:slug',
-				parse: {
-					slug: (slug: string) => slug,
-				},
-			},
-		},
-	},
-	enabled: true,
+  prefixes: ['http://localhost:19006'],
+  config: {
+    screens: {
+      Home: '',
+      Category: {
+        path: 'category/:slug',
+        parse: {
+          slug: (slug: string) => slug,
+        },
+      },
+    },
+  },
+  enabled: true,
 };
 
 export default function App() {
-	return (
-		<ThemeProvider>
-			<NavigationContainer linking={linking}>
-				<Stack.Navigator initialRouteName='Home'>
-					<Stack.Screen
-						name='Home'
-						component={HomeScreen}
-						options={{ title: 'Home', headerShown: false }}
-					/>
-					<Stack.Screen
-						name='Category'
-						component={CategoryScreen}
-						options={({ route }) => ({
-							title: route.params.slug,
-							headerShown: false,
-						})}
-					/>
-				</Stack.Navigator>
-			</NavigationContainer>
-		</ThemeProvider>
-	);
+  return (
+    <ThemeProvider>
+      <NavigationContainer linking={linking}>
+        <Stack.Navigator initialRouteName='Home'>
+          <Stack.Screen
+            name='Home'
+            component={HomeScreen}
+            options={{ title: 'Home', headerShown: false }}
+          />
+          <Stack.Screen
+            name='Category'
+            component={CategoryScreen}
+            options={({ route }) => ({
+              title: route.params.slug,
+              headerShown: false,
+            })}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </ThemeProvider>
+  );
 }

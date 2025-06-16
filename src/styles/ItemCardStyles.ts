@@ -3,36 +3,36 @@ import { Theme } from '../theme/ThemeContext';
 import { spacing, fontSizes, borderRadius } from '../utils/sizes';
 
 export function createStyles(theme: Theme) {
-	return StyleSheet.create({
-		container: {
-			width: 150,
-			marginRight: 15,
-			backgroundColor: theme.backgroundColor,
-		},
-		image: {
-			width: '100%',
-			height: 180,
-			borderRadius: borderRadius.md,
-			backgroundColor: theme.borderColor,
-		},
-		detailsContainer: {
-			marginTop: spacing.sm,
-		},
-		category: {
-			fontSize: fontSizes.sm,
-			color: theme.secondaryColor,
-			marginBottom: spacing.xs,
-		},
-		name: {
-			fontSize: fontSizes.md,
-			fontWeight: 'bold',
-			marginBottom: spacing.xs,
-			color: theme.textColor,
-		},
-		price: {
-			fontSize: fontSizes.md,
-			fontWeight: '600',
-			color: theme.primaryColor,
-		},
-	});
+  return StyleSheet.create({
+    container: {
+      width: 150,
+      marginRight: 15,
+      backgroundColor: theme.backgroundColor,
+    },
+    image: {
+      width: '100%',
+      height: 180,
+      borderRadius: borderRadius.md,
+      backgroundColor: theme.borderColor,
+    },
+    detailsContainer: {
+      marginTop: spacing.sm,
+    },
+    category: {
+      fontSize: fontSizes.sm,
+      color: theme.secondaryColor,
+      marginBottom: spacing.xs,
+    },
+    name: {
+      fontSize: fontSizes.md,
+      fontWeight: 'bold',
+      marginBottom: spacing.xs,
+      color: theme.textColor,
+    },
+    price: {
+      fontSize: fontSizes.md,
+      fontWeight: '600',
+      color: theme.primaryColor,
+    },
+  });
 }
