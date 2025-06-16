@@ -21,7 +21,7 @@
   },
   "plugins": ["react", "react-native", "@typescript-eslint", "prettier"],
   "rules": {
-    "indent": ["error", 2], 
+    "indent": ["error", 2],
     "semi": ["error", "always"],
     "no-console": ["warn", { "allow": ["log", "error"] }],
     "prettier/prettier": "error",
