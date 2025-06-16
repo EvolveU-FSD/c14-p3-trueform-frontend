@@ -6,60 +6,57 @@ import { useTheme } from '../theme/ThemeContext';
 import { createStyles } from '../styles/NavButtonsStyles';
 
 function NavButton({ icon, label, onPress, isActive }: NavButtonProps) {
-    const { theme } = useTheme();
-    const styles = createStyles(theme);
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
 
-    return (
-        <TouchableOpacity
-            style={[styles.button, isActive && styles.activeButton]}
-            onPress={onPress}
-        >
-            {icon}
-            <Text style={styles.label}>{label}</Text>
-        </TouchableOpacity>
-    );
-};
+  return (
+    <TouchableOpacity style={[styles.button, isActive && styles.activeButton]} onPress={onPress}>
+      {icon}
+      <Text style={styles.label}>{label}</Text>
+    </TouchableOpacity>
+  );
+}
 
 export default function NavButtons() {
-    const { theme } = useTheme();
-    const styles = createStyles(theme);
-    const [activeButton, setActiveButton] = useState<string | null>(null);
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
+  const [activeButton, setActiveButton] = useState<string | null>(null);
 
-    const handleButtonPress = (buttonName: string) => {
-        setActiveButton(buttonName);
-        console.log(`${buttonName} pressed`);
-    };
+  const handleButtonPress = (buttonName: string) => {
+    setActiveButton(buttonName);
+    console.log(`${buttonName} pressed`);
+  };
 
-    return (
-        <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.scrollContainer}
-        >
-            <NavButton
-                icon={<Text>♥</Text>}
-                label="Favorites"
-                onPress={() => handleButtonPress('Favorites')}
-                isActive={activeButton === 'Favorites'}
-            />
-            <NavButton
-                icon={<Text>⏱</Text>}
-                label="History"
-                onPress={() => handleButtonPress('History')}
-                isActive={activeButton === 'History'}
-            />
-            <NavButton
-                icon={<Text>👥</Text>}
-                label="Following"
-                onPress={() => handleButtonPress('Following')}
-                isActive={activeButton === 'Following'}
-            />
-            <NavButton
-                icon={<Text>≡</Text>}
-                label="Menu"
-                onPress={() => handleButtonPress('Menu')}
-                isActive={activeButton === 'Menu'}
-            />
-        </ScrollView>
-    );
-};
+  return (
+    <ScrollView
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      contentContainerStyle={styles.scrollContainer}
+    >
+      <NavButton
+        icon={<Text>♥</Text>}
+        label='Favorites'
+        onPress={() => handleButtonPress('Favorites')}
+        isActive={activeButton === 'Favorites'}
+      />
+      <NavButton
+        icon={<Text>⏱</Text>}
+        label='History'
+        onPress={() => handleButtonPress('History')}
+        isActive={activeButton === 'History'}
+      />
+      <NavButton
+        icon={<Text>👥</Text>}
+        label='Following'
+        onPress={() => handleButtonPress('Following')}
+        isActive={activeButton === 'Following'}
+      />
+      <NavButton
+        icon={<Text>≡</Text>}
+        label='Menu'
+        onPress={() => handleButtonPress('Menu')}
+        isActive={activeButton === 'Menu'}
+      />
+    </ScrollView>
+  );
+}

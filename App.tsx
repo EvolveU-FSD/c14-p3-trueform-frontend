@@ -31,22 +31,22 @@ export default function App() {
   return (
     <ThemeProvider>
       <NavigationContainer linking={linking}>
-        <Stack.Navigator initialRouteName="Home">
+        <Stack.Navigator initialRouteName='Home'>
           <Stack.Screen
-            name="Home"
+            name='Home'
             component={HomeScreen}
             options={{ title: 'Home', headerShown: false }}
           />
           <Stack.Screen
-            name="Category"
+            name='Category'
             component={CategoryScreen}
             options={({ route }) => ({
               title: route.params.slug,
-              headerShown: false
+              headerShown: false,
             })}
           />
         </Stack.Navigator>
       </NavigationContainer>
     </ThemeProvider>
   );
-};
+}

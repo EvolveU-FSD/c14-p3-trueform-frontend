@@ -9,10 +9,7 @@ interface SearchBarProps {
   onSearch?: (query: string) => void;
 }
 
-export default function SearchBar({
-  placeholder = 'Search...',
-  onSearch
-}: SearchBarProps) {
+export default function SearchBar({ placeholder = 'Search...', onSearch }: SearchBarProps) {
   const { theme } = useTheme();
   const styles = createStyles(theme);
   const [query, setQuery] = useState('');
@@ -33,11 +30,11 @@ export default function SearchBar({
         placeholderTextColor={theme.secondaryColor} // Use secondary color for placeholder
         value={query}
         onChangeText={handleSearch}
-        autoCapitalize="none"
+        autoCapitalize='none'
         autoCorrect={false}
-        returnKeyType="search"
-        clearButtonMode="while-editing"
+        returnKeyType='search'
+        clearButtonMode='while-editing'
       />
     </View>
   );
-};
+}

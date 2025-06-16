@@ -7,32 +7,32 @@ import { useTheme } from '../theme/ThemeContext';
 import { createStyles } from '../styles/FeaturedItemsStyles';
 
 export default function FeaturedItems({ title, items, seeAllLink }: FeaturedItemsProps) {
-    const { theme } = useTheme();
-    const styles = createStyles(theme);
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
 
-    return (
-        <View style={styles.container}>
-            <View style={styles.header}>
-                <Text style={styles.title}>{title}</Text>
-                {seeAllLink && (
-                    <TouchableOpacity>
-                        <Text style={styles.seeAll}>See All</Text>
-                    </TouchableOpacity>
-                )}
-            </View>
-            <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.scrollContent}
-            >
-                {items.map((item) => (
-                    <ItemCard
-                        key={item.id}
-                        product={item}
-                        onPress={(product) => console.log('Product selected:', product.name)}
-                    />
-                ))}
-            </ScrollView>
-        </View>
-    );
-};
+  return (
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.title}>{title}</Text>
+        {seeAllLink && (
+          <TouchableOpacity>
+            <Text style={styles.seeAll}>See All</Text>
+          </TouchableOpacity>
+        )}
+      </View>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+      >
+        {items.map((item) => (
+          <ItemCard
+            key={item.id}
+            product={item}
+            onPress={(product) => console.log('Product selected:', product.name)}
+          />
+        ))}
+      </ScrollView>
+    </View>
+  );
+}
