@@ -36,7 +36,11 @@ export default function CustomizationOptionGrid({
           ]}
           onPress={() => onSelect(option.id)}
         >
-          <Image source={option.image} style={styles.optionImage} />
+          <Image
+            source={{ uri: option.image }}
+            style={styles.optionImage}
+            resizeMode="contain"
+          />
           <Text style={styles.optionTitle}>{option.title}</Text>
           {option.description && (
             <Text style={styles.optionDescription}>{option.description}</Text>
