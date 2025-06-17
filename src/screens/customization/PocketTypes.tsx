@@ -4,6 +4,7 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 import CustomizationOptionGrid from '../../components/CustomizationOptionGrid';
 import CustomizationNavigation from '../../components/CustomizationNavigation';
 import { useCustomization } from '../../context/CustomizationContext';
+import { styles } from '../../styles/PocketTypesStyles';
 
 const POCKET_OPTIONS = [
   {
@@ -67,13 +68,4 @@ export default function PocketStyle() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  scrollContainer: {
-    flex: 1,
-    paddingBottom: 16,
-  },
-});
+
