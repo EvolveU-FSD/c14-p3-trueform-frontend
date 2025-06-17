@@ -12,14 +12,25 @@
     "lint": "eslint . --ext .ts,.tsx.js.jsx --fix"
   },
   "dependencies": {
+    "@expo/vector-icons": "^14.1.0",
+    "@react-native-picker/picker": "^2.4.10",
+    "@react-navigation/material-top-tabs": "^7.2.14",
     "@react-navigation/native": "^7.1.9",
     "@react-navigation/native-stack": "^7.3.13",
+    "crypto-browserify": "^3.12.1",
     "expo": "~50.0.21",
     "expo-status-bar": "~2.2.3",
     "react": "^19.1.0",
     "react-native": "0.79.2",
-    "react-native-safe-area-context": "^5.4.0",
-    "react-native-screens": "^4.10.0"
+    "react-native-elements": "^3.4.3",
+    "react-native-gesture-handler": "^2.12.0",
+    "react-native-reanimated": "^3.6.2",
+    "react-native-safe-area-context": "^4.6.3",
+    "react-native-screens": "^4.11.1",
+    "react-native-svg": "^13.14.0",
+    "react-native-tab-view": "^4.1.1",
+    "react-native-vector-icons": "^9.2.0",
+    "stream-browserify": "^3.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
