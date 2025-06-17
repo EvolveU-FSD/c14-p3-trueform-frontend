@@ -2,6 +2,7 @@ import React from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { getNextStep, getPreviousStep } from '../utils/customizationSteps';
+import { styles } from '../styles/CustomizationNavigationStyles';
 
 type Props = {
   currentStep: string;
@@ -47,31 +48,3 @@ export default function CustomizationNavigation({ currentStep }: Props) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 16,
-    borderTopWidth: 1,
-    borderTopColor: '#eee',
-    backgroundColor: '#fff',
-  },
-  button: {
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#ddd',
-  },
-  primaryButton: {
-    backgroundColor: '#4caf50',
-    borderColor: '#4caf50',
-  },
-  buttonText: {
-    fontSize: 16,
-    color: '#333',
-  },
-  primaryButtonText: {
-    color: '#fff',
-  },
-});
