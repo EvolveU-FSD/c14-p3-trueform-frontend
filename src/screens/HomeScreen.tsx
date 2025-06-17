@@ -4,7 +4,6 @@ import {
   View,
   ScrollView,
   SafeAreaView,
-  StyleSheet,
   StatusBar,
   Text,
   TouchableOpacity,
@@ -14,12 +13,16 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/navigation';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { createStyles } from '../styles/HomeScreenStyles';
+import { useTheme } from '../theme/ThemeContext';
 
 const heroBannerImage = require('../../assets/images/banners/hero-banner.jpg');
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
 export default function HomeScreen() {
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSubmenuOpen, setIsSubmenuOpen] = useState(false); // Add this state
   const navigation = useNavigation<HomeScreenNavigationProp>();
@@ -150,139 +153,3 @@ export default function HomeScreen() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-    backgroundColor: '#fff',
-    zIndex: 1000, // Add this
-    elevation: 1000, // Add this for Android
-  },
-  menuButton: {
-    padding: 8,
-  },
-  menuIcon: {
-    fontSize: 24,
-  },
-  headerRight: {
-    flexDirection: 'row',
-  },
-  loginButton: {
-    padding: 8,
-    marginLeft: 8,
-  },
-  loginText: {
-    fontSize: 16,
-    color: '#333',
-    fontWeight: '500',
-  },
-  iconButton: {
-    padding: 8,
-    marginLeft: 8,
-  },
-  icon: {
-    fontSize: 24,
-  },
-  bannerContainer: {
-    width: '100%',
-    height: 400,
-    padding: 10,
-    marginBottom: 20, // Added margin bottom
-  },
-  bannerImage: {
-    width: '100%',
-    height: '100%',
-    borderRadius: 8, // Optional: add rounded corners to match padding
-  },
-  startShoppingButton: {
-    backgroundColor: '#4caf50',
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 8,
-    marginHorizontal: 20,
-    marginBottom: 30, // Added margin bottom
-    alignItems: 'center',
-  },
-  startShoppingText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  dropdown: {
-    position: 'absolute',
-    top: 60,
-    left: 16,
-    backgroundColor: '#fff',
-    padding: 12,
-    borderRadius: 8,
-    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.25)',
-    elevation: 5, // Keep elevation for Android
-    zIndex: 1000,
-    minWidth: 200,
-    borderWidth: 1,
-    borderColor: '#eee',
-  },
-  menuItem: {
-    backgroundColor: '#fff',
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-  },
-  menuItemText: {
-    fontSize: 14,
-    color: '#333',
-    padding: 12, // Match padding with other menu items
-  },
-  categoryHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: 0, // Remove extra padding
-  },
-  submenu: {
-    marginLeft: 16,
-    backgroundColor: '#fff',
-  },
-  submenuItem: {
-    padding: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-  },
-  socialContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingVertical: 16,
-    borderTopWidth: 1,
-    borderTopColor: '#eee',
-    marginTop: 8,
-  },
-  socialIcon: {
-    padding: 12,
-    borderRadius: 20,
-    backgroundColor: '#f5f5f5',
-  },
-  headerTitleContainer: {
-    alignItems: 'center',
-    paddingVertical: 24, // Increased padding
-    marginBottom: 10, // Added margin bottom
-  },
-  mainTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  mainSubtitle: {
-    fontSize: 16,
-    color: '#666',
-    marginTop: 4,
-  },
-});
