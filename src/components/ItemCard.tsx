@@ -5,7 +5,7 @@ import { ItemCardProps } from '../types/product';
 import { useTheme } from '../theme/ThemeContext';
 import { createStyles } from '../styles/ItemCardStyles';
 
-const ItemCard: React.FC<ItemCardProps> = ({ product, onPress }) => {
+export default function ItemCard({ product, onPress }: ItemCardProps) {
     const { theme } = useTheme();
     const styles = createStyles(theme);
 
@@ -26,5 +26,3 @@ const ItemCard: React.FC<ItemCardProps> = ({ product, onPress }) => {
         </TouchableOpacity>
     );
 };
-
-export default ItemCard;

@@ -6,7 +6,7 @@ import ItemCard from './ItemCard';
 import { useTheme } from '../theme/ThemeContext';
 import { createStyles } from '../styles/FeaturedItemsStyles';
 
-const FeaturedItems: React.FC<FeaturedItemsProps> = ({ title, items, seeAllLink }) => {
+export default function FeaturedItems({ title, items, seeAllLink }: FeaturedItemsProps) {
     const { theme } = useTheme();
     const styles = createStyles(theme);
 
@@ -36,5 +36,3 @@ const FeaturedItems: React.FC<FeaturedItemsProps> = ({ title, items, seeAllLink 
         </View>
     );
 };
-
-export default FeaturedItems;
