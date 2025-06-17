@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import CustomizationScreenWrapper from '../../components/CustomizationScreenWrapper';
 import { useCustomization } from '../../context/CustomizationContext';
 import { createStyles } from '../../styles/MonogramStyles';

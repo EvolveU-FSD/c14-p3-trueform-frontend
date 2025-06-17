@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { createStyles } from '../styles/CustomizationOptionGridStyles';
+import { useTheme } from '../theme/ThemeContext';
 
 export type CustomizationOption = {
   id: string;
@@ -24,7 +25,8 @@ export default function CustomizationOptionGrid({
   gridStyle,
   itemStyle,
 }: Props) {
-  const styles = createStyles();
+  const { theme } = useTheme()
+  const styles = createStyles(theme);
   return (
     <View style={[styles.container, gridStyle]}>
       {options.map((option) => (

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import CollarStyle from './customization/CollarTypes';
 import CuffStyle from './customization/CuffTypes';
@@ -9,7 +9,7 @@ import ShirtLength from './customization/ShirtLength';
 import Monogram from './customization/Monogram';
 import Buttons from './customization/Buttons';
 import Measurement from './customization/Measurement';
-import { styles } from '../styles/CustomizationScreenStyles';
+import { createStyles } from '../styles/CustomizationScreenStyles';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -25,6 +25,7 @@ export const CUSTOMIZATION_STEPS = [
 ];
 
 export default function CustomizationScreen() {
+  const styles = createStyles();
   return (
     <SafeAreaView style={styles.container}>
       <Tab.Navigator

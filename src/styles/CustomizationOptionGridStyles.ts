@@ -1,7 +1,8 @@
 import { StyleSheet } from 'react-native';
 import { spacing, fontSizes, borderRadius } from '../utils/sizes';
+import { Theme } from '../theme/ThemeContext';
 
-export function createStyles() {
+export function createStyles(theme: Theme) {
   return StyleSheet.create({
     container: {
       flexDirection: 'row',
@@ -14,14 +15,14 @@ export function createStyles() {
       marginBottom: spacing.md,
       padding: spacing.sm,
       borderRadius: borderRadius.md,
-      backgroundColor: '#f5f5f5',
+      backgroundColor: theme.borderColor,
       alignItems: 'center',
       borderWidth: 1,
-      borderColor: '#ddd',
+      borderColor: theme.secondaryColor,
     },
     selectedOption: {
-      backgroundColor: '#e8f5e9',
-      borderColor: '#4caf50',
+      backgroundColor: theme.primaryColor,
+      borderColor: theme.primaryColor,
     },
     optionImage: {
       width: '100%',
@@ -33,10 +34,11 @@ export function createStyles() {
       fontSize: fontSizes.sm,
       fontWeight: '600',
       textAlign: 'center',
+      color: theme.textColor,
     },
     optionDescription: {
       fontSize: fontSizes.xs,
-      color: '#666',
+      color: theme.secondaryColor,
       textAlign: 'center',
       marginTop: spacing.xs,
     },

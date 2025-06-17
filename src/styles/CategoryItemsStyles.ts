@@ -1,11 +1,6 @@
-import { StyleSheet, Dimensions } from 'react-native';
-import { spacing, fontSizes, borderRadius } from '../utils/sizes';
+import { StyleSheet } from 'react-native';
+import { spacing, fontSizes, borderRadius, buttonHeights } from '../utils/sizes';
 import { Theme } from '../theme/ThemeContext';
-
-const { width } = Dimensions.get('window');
-const ITEM_SPACING = spacing.md;
-const ITEMS_PER_ROW = 2;
-const ITEM_WIDTH = (width - ITEM_SPACING * (ITEMS_PER_ROW + 1)) / ITEMS_PER_ROW;
 
 export function createStyles(theme: Theme) {
   return StyleSheet.create({
@@ -14,14 +9,14 @@ export function createStyles(theme: Theme) {
       backgroundColor: theme.backgroundColor,
     },
     gridContainer: {
-      padding: ITEM_SPACING,
+      padding: spacing.md,
     },
     columnWrapper: {
       justifyContent: 'space-between',
-      marginBottom: ITEM_SPACING,
+      marginBottom: spacing.md,
     },
     itemCard: {
-      width: ITEM_WIDTH,
+      width: buttonHeights.lg, // Use predefined sizes for item width
       backgroundColor: theme.backgroundColor,
       borderRadius: borderRadius.md,
       overflow: 'hidden',
@@ -55,55 +50,55 @@ export function createStyles(theme: Theme) {
     },
     emptyText: {
       textAlign: 'center',
-      fontSize: 16,
-      color: '#666',
-      marginTop: 24,
+      fontSize: fontSizes.md,
+      color: theme.secondaryColor,
+      marginTop: spacing.md,
     },
     header: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      paddingHorizontal: 16,
-      paddingVertical: 12,
-      backgroundColor: '#fff',
+      paddingHorizontal: spacing.md,
+      paddingVertical: spacing.sm,
+      backgroundColor: theme.backgroundColor,
       borderBottomWidth: 1,
-      borderBottomColor: '#eee',
+      borderBottomColor: theme.borderColor,
     },
     headerButton: {
       flexDirection: 'row',
       alignItems: 'center',
-      padding: 8,
+      padding: spacing.sm,
     },
     headerButtonText: {
-      fontSize: 16,
-      marginRight: 4,
-      color: '#333',
+      fontSize: fontSizes.md,
+      marginRight: spacing.xs,
+      color: theme.textColor,
     },
     plusIcon: {
-      fontSize: 18,
-      color: '#333',
+      fontSize: fontSizes.lg,
+      color: theme.textColor,
     },
     sortOptionsContainer: {
-      backgroundColor: '#fff',
+      backgroundColor: theme.backgroundColor,
       borderBottomWidth: 1,
-      borderBottomColor: '#eee',
-      padding: 8,
+      borderBottomColor: theme.borderColor,
+      padding: spacing.sm,
     },
     sortOption: {
-      padding: 12,
+      padding: spacing.md,
       borderBottomWidth: 1,
-      borderBottomColor: '#eee',
+      borderBottomColor: theme.borderColor,
     },
     sortOptionActive: {
-      backgroundColor: '#f5f5f5',
+      backgroundColor: theme.secondaryColor,
     },
     sortOptionText: {
-      fontSize: 14,
-      color: '#333',
+      fontSize: fontSizes.sm,
+      color: theme.textColor,
     },
     content: {
       flex: 1,
-      marginBottom: 60, // Space for bottom nav
+      marginBottom: spacing.xxl, // Space for bottom nav
     },
     bottomNav: {
       position: 'absolute',
@@ -112,21 +107,21 @@ export function createStyles(theme: Theme) {
       right: 0,
       flexDirection: 'row',
       justifyContent: 'space-between',
-      paddingHorizontal: 20,
-      paddingVertical: 10,
-      backgroundColor: '#fff',
+      paddingHorizontal: spacing.md,
+      paddingVertical: spacing.sm,
+      backgroundColor: theme.backgroundColor,
       borderTopWidth: 1,
-      borderTopColor: '#eee',
+      borderTopColor: theme.borderColor,
     },
     navButton: {
-      paddingVertical: 8,
-      paddingHorizontal: 16,
-      backgroundColor: '#4caf50',
-      borderRadius: 8,
+      paddingVertical: spacing.sm,
+      paddingHorizontal: spacing.md,
+      backgroundColor: theme.primaryColor,
+      borderRadius: borderRadius.md,
     },
     navButtonText: {
-      color: '#fff',
-      fontSize: 16,
+      color: theme.textColorInverse,
+      fontSize: fontSizes.md,
       fontWeight: '500',
     },
   });
