@@ -10,7 +10,7 @@ const heroBannerImage = require('../../assets/images/banners/hero-banner.jpg');
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
-const HomeScreen = () => {
+export default function HomeScreen() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isSubmenuOpen, setIsSubmenuOpen] = useState(false);  // Add this state
     const navigation = useNavigation<HomeScreenNavigationProp>();
@@ -286,5 +286,3 @@ const styles = StyleSheet.create({
         marginTop: 4,
     },
 });
-
-export default HomeScreen;
