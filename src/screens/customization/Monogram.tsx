@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import CustomizationScreenWrapper from '../../components/CustomizationScreenWrapper';
 import { useCustomization } from '../../context/CustomizationContext';
 import { createStyles } from '../../styles/MonogramStyles';
-import { useTheme } from '../theme/ThemeContext';
+import { useTheme } from '../../theme/ThemeContext';
 
 const MONOGRAM_OPTIONS = [
   {

@@ -7,11 +7,11 @@ import {
   TouchableOpacity,
   FlatList,
   Image,
-  StyleSheet,
 } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import itemsData from '../data/categoryItems.json';
+import { createStyles } from '../styles/ItemStyle';
 import { useTheme } from '../theme/ThemeContext';
 
 const FILTER_OPTIONS = {
@@ -34,6 +34,7 @@ export default function Items() {
   const navigation = useNavigation();
   const route = useRoute<any>();
   const { theme } = useTheme();
+  const styles = createStyles(theme);
   const { slug: categoryId } = route.params;
 
   // States
