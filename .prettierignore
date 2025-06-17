@@ -1,0 +1,11 @@
+node_modules
+.expo
+dist
+build
+*.log
+package.json
+package-lock.json
+tsconfig.json
+app.json
+jest.config.js
+*.d.ts
