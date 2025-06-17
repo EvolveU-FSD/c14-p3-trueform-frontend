@@ -20,9 +20,9 @@ export default function HomeScreen() {
         setIsMenuOpen(false);
     };
 
-    return (
-        <SafeAreaView style={styles.container}>
-            <StatusBar barStyle="dark-content" />
+  return (
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle='dark-content' />
 
             {/* Header */}
             <View style={styles.header}>

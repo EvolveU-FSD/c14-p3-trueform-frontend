@@ -1,0 +1,7 @@
+# Enforce LF line endings for all text files
+* text= auto eol=LF
+
+# Specific overrides
+*.toml text eol=LF
+*.json text eol=LF
+*.ts text eol=LF
