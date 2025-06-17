@@ -6,7 +6,7 @@ export const CUSTOMIZATION_STEPS = [
   'ShirtLength',
   'Monogram',
   'Buttons',
-  'Measurement'
+  'Measurement',
 ] as const;
 
 export const getNextStep = (currentStep: string): string | undefined => {

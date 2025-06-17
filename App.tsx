@@ -43,67 +43,67 @@ export default function App() {
     <ThemeProvider>
       <CustomizationProvider>
         <NavigationContainer linking={linking}>
-          <Stack.Navigator initialRouteName="Home">
+          <Stack.Navigator initialRouteName='Home'>
             <Stack.Screen
-              name="Home"
+              name='Home'
               component={HomeScreen}
               options={{ title: 'Home', headerShown: false }}
             />
             <Stack.Screen
-              name="Category"
+              name='Category'
               component={Items}
               options={({ route }) => ({
                 title: route.params.slug,
-                headerShown: false
+                headerShown: false,
               })}
             />
             <Stack.Screen
-              name="ItemDetails"
+              name='ItemDetails'
               component={ItemDetails}
               options={{ title: 'Item Details' }}
             />
             <Stack.Screen
-              name="Customization"
+              name='Customization'
               component={CustomizationScreen}
               options={{ title: 'Customize Your Shirt' }}
             />
             <Stack.Screen
-              name="CollarStyle"
+              name='CollarStyle'
               component={CollarStyle}
               options={{ title: 'Select Collar Style' }}
             />
             <Stack.Screen
-              name="CuffStyle"
+              name='CuffStyle'
               component={CuffStyle}
               options={{ title: 'Select Cuff Style' }}
             />
             <Stack.Screen
-              name="PocketStyle"
+              name='PocketStyle'
               component={PocketStyle}
               options={{ title: 'Select Pocket Style' }}
             />
             <Stack.Screen
-              name="SleeveStyle"
+              name='SleeveStyle'
               component={SleeveStyle}
               options={{ title: 'Select Sleeve Style' }}
             />
             <Stack.Screen
-              name="ShirtLength"
+              name='ShirtLength'
               component={ShirtLength}
               options={{ title: 'Select Shirt Length' }}
             />
             <Stack.Screen
-              name="Monogram"
+              name='Monogram'
               component={Monogram}
               options={{ title: 'Select Monogram' }}
             />
             <Stack.Screen
-              name="Buttons"
+              name='Buttons'
               component={Buttons}
               options={{ title: 'Select Buttons' }}
             />
             <Stack.Screen
-              name="Measurement"
+              name='Measurement'
               component={Measurement}
               options={{ title: 'Select Measurement Type' }}
             />

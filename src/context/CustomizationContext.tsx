@@ -31,7 +31,7 @@ export function CustomizationProvider({ children }: { children: React.ReactNode 
   });
 
   const updateOption = (key: keyof CustomizationState, value: string) => {
-    setState(prev => ({ ...prev, [key]: value }));
+    setState((prev) => ({ ...prev, [key]: value }));
   };
 
   return (

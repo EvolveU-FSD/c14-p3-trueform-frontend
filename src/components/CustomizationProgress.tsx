@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { ScrollView, View, Text, StyleSheet } from 'react-native';
-import {styles} from '../styles/CustomizationProgressStyles';
+import { styles } from '../styles/CustomizationProgressStyles';
 
 export const CUSTOMIZATION_STEPS = [
   { id: 'CollarStyle', title: 'Collar' },
@@ -10,7 +10,7 @@ export const CUSTOMIZATION_STEPS = [
   { id: 'ShirtLength', title: 'Length' },
   { id: 'Monogram', title: 'Monogram' },
   { id: 'Buttons', title: 'Buttons' },
-  { id: 'Measurement', title: 'Measurement' }
+  { id: 'Measurement', title: 'Measurement' },
 ];
 
 type Props = {
@@ -19,34 +19,28 @@ type Props = {
 
 export default function CustomizationProgress({ currentStep }: Props) {
   const scrollViewRef = useRef<ScrollView>(null);
-  const currentStepIndex = CUSTOMIZATION_STEPS.findIndex(step => step.id === currentStep);
+  const currentStepIndex = CUSTOMIZATION_STEPS.findIndex((step) => step.id === currentStep);
 
   useEffect(() => {
     // Auto scroll to current step with offset
     if (scrollViewRef.current && currentStepIndex >= 0) {
       scrollViewRef.current.scrollTo({
         x: currentStepIndex * 80, // Approximate width of each step
-        animated: true
+        animated: true,
       });
     }
   }, [currentStep]);
 
   return (
-    <ScrollView 
+    <ScrollView
       ref={scrollViewRef}
-      horizontal 
-      showsHorizontalScrollIndicator={false} 
+      horizontal
+      showsHorizontalScrollIndicator={false}
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
     >
       {CUSTOMIZATION_STEPS.map((step, index) => (
-        <View
-          key={step.id}
-          style={[
-            styles.stepItem,
-            currentStep === step.id && styles.activeStep
-          ]}
-        >
+        <View key={step.id} style={[styles.stepItem, currentStep === step.id && styles.activeStep]}>
           <View style={[styles.stepNumber, currentStep === step.id && styles.activeStepNumber]}>
             <Text style={styles.stepNumberText}>{index + 1}</Text>
           </View>
@@ -58,4 +52,3 @@ export default function CustomizationProgress({ currentStep }: Props) {
     </ScrollView>
   );
 }
-

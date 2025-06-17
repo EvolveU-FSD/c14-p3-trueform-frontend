@@ -11,7 +11,7 @@ const CUSTOMIZATION_STEPS = [
   { id: 'ShirtLength', title: 'Length' },
   { id: 'Monogram', title: 'Monogram' },
   { id: 'Buttons', title: 'Buttons' },
-  { id: 'Measurement', title: 'Measurement' }
+  { id: 'Measurement', title: 'Measurement' },
 ];
 
 export default function CustomizationScreen() {
@@ -36,7 +36,7 @@ export default function CustomizationScreen() {
         </ScrollView>
         <View style={styles.content}>
           <Text style={styles.startText}>Select collar style to begin customization</Text>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.startButton}
             onPress={() => navigation.navigate('CollarStyle')}
           >
