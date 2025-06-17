@@ -1,25 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useAuth } from '../context/AuthContext';
-import { LoginScreenNavigationProp, LoginScreenRouteProp } from '../types/navigation';
 import { showAlert } from 'utils/showAlerts';
+import { LoginScreenProps } from '../types/loginScreenTypes';
+import { useTheme } from '../theme/ThemeContext';
+import { createStyles } from '../styles/LoginScreenStyles';
 
-interface LoginScreenProps {
-  navigation: LoginScreenNavigationProp;
-  route: LoginScreenRouteProp;
-}
+function LoginScreen({ navigation, route }: LoginScreenProps) {
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
 
-const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, route }) => {
   // Use email from params if available
   const [email, setEmail] = useState(route.params?.email || '');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
 
+  // Ref for password input with correct type
+  const passwordInputRef = useRef<TextInput>(null);
+
   // Optional: Focus on password field if email is pre-filled
   useEffect(() => {
-    if (route.params?.email) {
-      // If you're using refs for inputs, you could focus the password input here
+    if (route.params?.email && passwordInputRef.current) {
+      passwordInputRef.current.focus();
     }
   }, [route.params?.email]);
 
@@ -55,12 +58,13 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, route }) => {
       />
 
       <TextInput
+        ref={passwordInputRef}
         style={styles.input}
         placeholder='Password'
         value={password}
         onChangeText={setPassword}
         secureTextEntry
-        autoFocus={!!route.params?.email} // Auto-focus on password if email is pre-filled
+        autoFocus={false} // We'll handle focus via ref
       />
 
       <TouchableOpacity style={styles.button} onPress={handleLogin} disabled={isLoading}>
@@ -76,48 +80,5 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, route }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  input: {
-    height: 50,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    marginBottom: 15,
-    paddingHorizontal: 10,
-  },
-  button: {
-    backgroundColor: '#007bff',
-    height: 50,
-    borderRadius: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 10,
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  linkContainer: {
-    marginTop: 20,
-    alignItems: 'center',
-  },
-  link: {
-    color: '#007bff',
-    fontSize: 16,
-  },
-});
 
 export default LoginScreen;

@@ -9,7 +9,7 @@ import {
 } from 'firebase/auth';
 import { auth } from '../config/firebase';
 
-export const signUp = async (email: string, password: string): Promise<User> => {
+export async function signUp(email: string, password: string): Promise<User> {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     return userCredential.user;
@@ -26,7 +26,7 @@ export const signUp = async (email: string, password: string): Promise<User> => 
   }
 };
 
-export const signIn = async (email: string, password: string): Promise<User> => {
+export async function signIn(email: string, password: string): Promise<User> {
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     return userCredential.user;
@@ -44,7 +44,7 @@ export const signIn = async (email: string, password: string): Promise<User> => 
   }
 };
 
-export const signOut = async (): Promise<void> => {
+export async function signOut(): Promise<void> {
   try {
     await firebaseSignOut(auth);
   } catch (error) {
@@ -54,15 +54,15 @@ export const signOut = async (): Promise<void> => {
   }
 };
 
-export const getCurrentUser = (): User | null => {
+export function getCurrentUser(): User | null {
   return auth.currentUser;
 };
 
-export const onAuthStateChange = (callback: (user: User | null) => void) => {
+export function onAuthStateChange(callback: (user: User | null) => void) {
   return onAuthStateChanged(auth, callback);
 };
 
-export const getIdToken = async (): Promise<string | null> => {
+export async function getIdToken(): Promise<string | null> {
   const user = auth.currentUser;
   if (!user) return null;
 

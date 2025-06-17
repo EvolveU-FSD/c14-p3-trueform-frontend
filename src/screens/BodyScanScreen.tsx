@@ -58,87 +58,36 @@ export default function BodyScanScreen() {
     return true;
   };
 
-  // Image picker function for front view from gallery
-  const pickFrontImageFromGallery = async () => {
-    if (!(await requestGalleryPermission())) return;
+  const handleImagePick = async (
+    source: 'camera' | 'gallery',
+    setImage: React.Dispatch<React.SetStateAction<string | null>>
+  ) => {
+    const permissionGranted =
+      source === 'camera'
+        ? await requestCameraPermission()
+        : await requestGalleryPermission();
+
+    if (!permissionGranted) return;
 
     try {
-      const result = await ImagePicker.launchImageLibraryAsync({
+      const pickerFn =
+        source === 'camera'
+          ? ImagePicker.launchCameraAsync
+          : ImagePicker.launchImageLibraryAsync;
+
+      const result = await pickerFn({
         allowsEditing: true,
         aspect: [9, 16],
         quality: 0.8,
-        base64: true, // Request base64 data
+        base64: true,
       });
 
       if (!result.canceled) {
-        setFrontImage(result.assets[0].uri);
+        setImage(result.assets[0].uri);
       }
     } catch (error) {
-      console.error('Error picking image:', error);
-      showAlert('Error', 'Failed to pick image. Please try again.');
-    }
-  };
-
-  // Image picker function for profile view from gallery
-  const pickProfileImageFromGallery = async () => {
-    if (!(await requestGalleryPermission())) return;
-
-    try {
-      const result = await ImagePicker.launchImageLibraryAsync({
-        allowsEditing: true,
-        aspect: [9, 16],
-        quality: 0.8,
-        base64: true, // Request base64 data
-      });
-
-      if (!result.canceled) {
-        setProfileImage(result.assets[0].uri);
-      }
-    } catch (error) {
-      console.error('Error picking image:', error);
-      showAlert('Error', 'Failed to pick image. Please try again.');
-    }
-  };
-
-  // Take front photo with camera
-  const takeFrontPhotoWithCamera = async () => {
-    if (!(await requestCameraPermission())) return;
-
-    try {
-      const result = await ImagePicker.launchCameraAsync({
-        allowsEditing: true,
-        aspect: [9, 16],
-        quality: 0.8,
-        base64: true, // Request base64 data
-      });
-
-      if (!result.canceled) {
-        setFrontImage(result.assets[0].uri);
-      }
-    } catch (error) {
-      console.error('Error taking photo:', error);
-      showAlert('Error', 'Failed to take photo. Please try again.');
-    }
-  };
-
-  // Take profile photo with camera
-  const takeProfilePhotoWithCamera = async () => {
-    if (!(await requestCameraPermission())) return;
-
-    try {
-      const result = await ImagePicker.launchCameraAsync({
-        allowsEditing: true,
-        aspect: [9, 16],
-        quality: 0.8,
-        base64: true, // Request base64 data
-      });
-
-      if (!result.canceled) {
-        setProfileImage(result.assets[0].uri);
-      }
-    } catch (error) {
-      console.error('Error taking photo:', error);
-      showAlert('Error', 'Failed to take photo. Please try again.');
+      console.error('Error picking/taking image:', error);
+      showAlert('Error', 'Failed to get image. Please try again.');
     }
   };
 
@@ -307,15 +256,15 @@ export default function BodyScanScreen() {
           {renderPhotoSection(
             'Front Photo',
             frontImage,
-            pickFrontImageFromGallery,
-            takeFrontPhotoWithCamera,
+            () => handleImagePick('gallery', setFrontImage),
+            () => handleImagePick('camera', setFrontImage)
           )}
 
           {renderPhotoSection(
             'Profile Photo',
             profileImage,
-            pickProfileImageFromGallery,
-            takeProfilePhotoWithCamera,
+            () => handleImagePick('gallery', setProfileImage),
+            () => handleImagePick('camera', setProfileImage)
           )}
         </View>
       </View>
