@@ -1,15 +1,17 @@
 import { StyleSheet, Dimensions } from 'react-native';
+import { spacing, fontSizes, borderRadius } from '../utils/sizes';
+import { Theme } from '../theme/ThemeContext';
 
 const { width } = Dimensions.get('window');
-const ITEM_SPACING = 16;
+const ITEM_SPACING = spacing.md;
 const ITEMS_PER_ROW = 2;
 const ITEM_WIDTH = (width - ITEM_SPACING * (ITEMS_PER_ROW + 1)) / ITEMS_PER_ROW;
 
-export function createStyles() {
+export function createStyles(theme: Theme) {
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
+      backgroundColor: theme.backgroundColor,
     },
     gridContainer: {
       padding: ITEM_SPACING,
@@ -20,10 +22,10 @@ export function createStyles() {
     },
     itemCard: {
       width: ITEM_WIDTH,
-      backgroundColor: '#fff',
-      borderRadius: 8,
+      backgroundColor: theme.backgroundColor,
+      borderRadius: borderRadius.md,
       overflow: 'hidden',
-      shadowColor: '#000',
+      shadowColor: theme.textColor,
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.1,
       shadowRadius: 4,
@@ -38,24 +40,18 @@ export function createStyles() {
       height: '100%',
     },
     itemContent: {
-      padding: 8,
+      padding: spacing.sm,
     },
     itemName: {
-      fontSize: 16,
+      fontSize: fontSizes.md,
       fontWeight: '600',
-      color: '#1a1a1a',
-      marginBottom: 4,
-    },
-    itemDescription: {
-      fontSize: 14,
-      color: '#666',
-      marginBottom: 8,
-      lineHeight: 18,
+      color: theme.textColor,
+      marginBottom: spacing.xs,
     },
     itemPrice: {
-      fontSize: 18,
+      fontSize: fontSizes.lg,
       fontWeight: '700',
-      color: '#007b55',
+      color: theme.primaryColor,
     },
     emptyText: {
       textAlign: 'center',

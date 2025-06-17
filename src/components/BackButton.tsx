@@ -1,7 +1,8 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet, ViewStyle } from 'react-native';
+import { TouchableOpacity, Text, ViewStyle } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { styles } from '../styles/BackButtonStyles';
+import { createStyles } from '../styles/BackButtonStyles';
+import { useTheme } from '../theme/ThemeContext';
 
 type BackButtonProps = {
   style?: ViewStyle;
@@ -12,6 +13,9 @@ type BackButtonProps = {
 
 export default function BackButton({ style, color = '#000', size = 28, label }: BackButtonProps) {
   const navigation = useNavigation();
+
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
 
   return (
     <TouchableOpacity

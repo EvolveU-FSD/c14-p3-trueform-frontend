@@ -1,14 +1,15 @@
 import React from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { getNextStep, getPreviousStep } from '../utils/customizationSteps';
-import { styles } from '../styles/CustomizationNavigationStyles';
+import { createStyles } from '../styles/CustomizationNavigationStyles';
 
 type Props = {
   currentStep: string;
 };
 
 export default function CustomizationNavigation({ currentStep }: Props) {
+  const styles = createStyles();
   const navigation = useNavigation();
   const nextStep = getNextStep(currentStep);
   const prevStep = getPreviousStep(currentStep);
