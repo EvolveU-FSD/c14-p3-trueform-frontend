@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { CustomizationProvider } from '../../context/CustomizationContext';
+import { createStyles } from '../../styles/CustomizationScreenStyles';
 
 const CUSTOMIZATION_STEPS = [
   { id: 'CollarStyle', title: 'Collar' },
@@ -15,6 +16,7 @@ const CUSTOMIZATION_STEPS = [
 ];
 
 export default function CustomizationScreen() {
+  const styles = createStyles();
   const navigation = useNavigation();
 
   return (
@@ -47,62 +49,3 @@ export default function CustomizationScreen() {
     </CustomizationProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FAF9F6',
-  },
-  stepsContainer: {
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-  },
-  stepItem: {
-    alignItems: 'center',
-    marginRight: 24,
-    opacity: 0.7,
-  },
-  stepNumber: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: '#4A3419',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 4,
-  },
-  stepNumberText: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  stepTitle: {
-    fontSize: 12,
-    color: '#4A3419',
-    fontWeight: '500',
-  },
-  content: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  startText: {
-    fontSize: 16,
-    color: '#666',
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  startButton: {
-    backgroundColor: '#4A3419',
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 8,
-  },
-  startButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-});
