@@ -10,7 +10,7 @@ type Props = {
 };
 
 export default function CustomizationScreenWrapper({ children, currentStep }: Props) {
-  const  styles = createStyles();
+  const styles = createStyles();
   return (
     <View style={styles.container}>
       <CustomizationProgress currentStep={currentStep} />
