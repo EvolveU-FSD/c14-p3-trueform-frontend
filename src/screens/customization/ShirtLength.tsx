@@ -8,21 +8,21 @@ const LENGTH_OPTIONS = [
     id: 'tucked',
     title: 'Tucked',
     // image: require('../../../assets/images/customization/length/tucked.png'),
-    description: 'Traditional tucked length'
+    description: 'Traditional tucked length',
   },
   {
     id: 'untucked',
     title: 'Untucked',
     // image: require('../../../assets/images/customization/length/untucked.png'),
-    description: 'Casual untucked length'
-  }
+    description: 'Casual untucked length',
+  },
 ];
 
 export default function ShirtLength() {
   const { state, updateOption } = useCustomization();
-  
+
   return (
-    <CustomizationScreenWrapper currentStep="ShirtLength">
+    <CustomizationScreenWrapper currentStep='ShirtLength'>
       <CustomizationOptionGrid
         options={LENGTH_OPTIONS}
         selected={state.shirtLength}

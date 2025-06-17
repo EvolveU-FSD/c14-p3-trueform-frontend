@@ -1,13 +1,19 @@
-import { View, Text, Image, StyleSheet, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  ScrollView,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/navigation';
 import itemsData from '../data/categoryItems.json';
-import {styles} from '../styles/ItemDetailsStyles';
+import { styles } from '../styles/ItemDetailsStyles';
 import CollarType from './CollarType';
 import { useState } from 'react';
-
-
 
 type ItemDetailsProps = {
   itemId?: string;
@@ -21,7 +27,7 @@ export default function ItemDetails(props: ItemDetailsProps) {
   const route = useRoute<any>();
   const itemId = props.itemId || route.params?.itemId;
 
-  const item = itemsData.find(i => i.id === itemId);
+  const item = itemsData.find((i) => i.id === itemId);
 
   if (!item) {
     return (
@@ -31,16 +37,14 @@ export default function ItemDetails(props: ItemDetailsProps) {
     );
   }
 
-  const images: string[] = item.images && item.images.length > 0
-    ? item.images
-    : [item.image];
+  const images: string[] = item.images && item.images.length > 0 ? item.images : [item.image];
 
   const [showFabric, setShowFabric] = useState(false);
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedSize, setSelectedSize] = useState('');
   const [quantity, setQuantity] = useState(1);
   const [isCustomizing, setIsCustomizing] = useState(false);
-  
+
   const handleCustomization = () => {
     navigation.navigate('CollarStyle');
   };
@@ -55,12 +59,7 @@ export default function ItemDetails(props: ItemDetailsProps) {
         style={styles.imageGallery}
       >
         {images.map((img, idx) => (
-          <Image
-            key={img + idx}
-            source={{ uri: img }}
-            style={styles.image}
-            resizeMode="cover"
-          />
+          <Image key={img + idx} source={{ uri: img }} style={styles.image} resizeMode='cover' />
         ))}
       </ScrollView>
       <View style={styles.imageIndicatorContainer}>
@@ -72,39 +71,27 @@ export default function ItemDetails(props: ItemDetailsProps) {
       <Text style={styles.price}>${item.price}</Text>
       <Text style={styles.desc}>{item.description}</Text>
       <View style={styles.metaContainer}>
-        <Text style={styles.meta}>
-          {item.color && `Color: ${item.color}`}
-        </Text>
-        <Text style={styles.meta}>
-          {item.pattern && `Pattern: ${item.pattern}`}
-        </Text>
-        <Text style={styles.meta}>
-          {item.style && `Style: ${item.style}`}
-        </Text>
+        <Text style={styles.meta}>{item.color && `Color: ${item.color}`}</Text>
+        <Text style={styles.meta}>{item.pattern && `Pattern: ${item.pattern}`}</Text>
+        <Text style={styles.meta}>{item.style && `Style: ${item.style}`}</Text>
       </View>
       {/* Fabric Details Section (Collapsible) */}
-      <TouchableOpacity style={styles.collapseHeader} onPress={() => setShowFabric(v => !v)}>
+      <TouchableOpacity style={styles.collapseHeader} onPress={() => setShowFabric((v) => !v)}>
         <Text style={styles.collapseHeaderText}>Fabric Details</Text>
         <Text style={styles.collapseHeaderIcon}>{showFabric ? '▲' : '▼'}</Text>
       </TouchableOpacity>
       {showFabric && (
         <View style={styles.fabricSection}>
           <Text style={styles.fabricDetail}>
-            {item.fabric
-              ? item.fabric
-              : 'fabric details not available'}
+            {item.fabric ? item.fabric : 'fabric details not available'}
           </Text>
         </View>
       )}
       {/* Add to Cart Button */}
-      <TouchableOpacity 
-        style={styles.cartBtn} 
-        onPress={handleCustomization}
-      >
+      <TouchableOpacity style={styles.cartBtn} onPress={handleCustomization}>
         <Text style={styles.cartBtnText}>Start Customization</Text>
       </TouchableOpacity>
       {/* Add more details here if needed */}
     </ScrollView>
   );
 }
-

@@ -29,22 +29,15 @@ export default function CustomizationNavigation({ currentStep }: Props) {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity 
-        style={styles.button}
-        onPress={handleBack}
-      >
+      <TouchableOpacity style={styles.button} onPress={handleBack}>
         <Text style={styles.buttonText}>Back</Text>
       </TouchableOpacity>
 
       {nextStep && (
-        <TouchableOpacity 
-          style={[styles.button, styles.primaryButton]}
-          onPress={handleNext}
-        >
+        <TouchableOpacity style={[styles.button, styles.primaryButton]} onPress={handleNext}>
           <Text style={[styles.buttonText, styles.primaryButtonText]}>Next</Text>
         </TouchableOpacity>
       )}
     </View>
   );
 }
-

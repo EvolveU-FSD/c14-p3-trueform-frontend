@@ -2,6 +2,6 @@
 export type RootStackParamList = {
   Home: undefined;
   Category: {
-    slug: string;  // Will contain the category ID
+    slug: string; // Will contain the category ID
   };
 };

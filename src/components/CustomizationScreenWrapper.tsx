@@ -12,12 +12,8 @@ export default function CustomizationScreenWrapper({ children, currentStep }: Pr
   return (
     <View style={styles.container}>
       <CustomizationProgress currentStep={currentStep} />
-      <ScrollView style={styles.scrollContainer}>
-        {children}
-      </ScrollView>
+      <ScrollView style={styles.scrollContainer}>{children}</ScrollView>
       <CustomizationNavigation currentStep={currentStep} />
     </View>
   );
 }
-
-

@@ -8,21 +8,21 @@ const MEASUREMENT_OPTIONS = [
     id: 'ai',
     title: 'AI Measurement',
     // image: require('../../../assets/images/customization/measurement/ai.png'),
-    description: 'Measure with your phone camera'
+    description: 'Measure with your phone camera',
   },
   {
     id: 'manual',
     title: 'Manual Entry',
     // image: require('../../../assets/images/customization/measurement/manual.png'),
-    description: 'Enter measurements manually'
-  }
+    description: 'Enter measurements manually',
+  },
 ];
 
 export default function Measurement() {
   const { state, updateOption } = useCustomization();
-  
+
   return (
-    <CustomizationScreenWrapper currentStep="Measurement">
+    <CustomizationScreenWrapper currentStep='Measurement'>
       <CustomizationOptionGrid
         options={MEASUREMENT_OPTIONS}
         selected={state.measurementType}

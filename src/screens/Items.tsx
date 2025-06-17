@@ -1,5 +1,14 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { SafeAreaView, StatusBar, View, Text, TouchableOpacity, FlatList, Image, StyleSheet } from 'react-native';
+import {
+  SafeAreaView,
+  StatusBar,
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  Image,
+  StyleSheet,
+} from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import itemsData from '../data/categoryItems.json';
@@ -18,7 +27,7 @@ const FILTER_OPTIONS = {
     { label: 'Check', value: 'check' },
     { label: 'Stripe', value: 'stripe' },
     { label: 'Printed', value: 'printed' },
-  ]
+  ],
 };
 
 export default function Items() {
@@ -34,13 +43,13 @@ export default function Items() {
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
   const [collapsedSections, setCollapsedSections] = useState({
     colors: true,
-    patterns: true
+    patterns: true,
   });
 
   // Filter items for this category
   const categoryItems = useMemo(
-    () => itemsData.filter(item => item.categoryId === categoryId),
-    [categoryId]
+    () => itemsData.filter((item) => item.categoryId === categoryId),
+    [categoryId],
   );
 
   const handleBackPress = () => {
@@ -48,9 +57,9 @@ export default function Items() {
   };
 
   const toggleSection = (section: 'colors' | 'patterns') => {
-    setCollapsedSections(prev => ({
+    setCollapsedSections((prev) => ({
       ...prev,
-      [section]: !prev[section]
+      [section]: !prev[section],
     }));
   };
 
@@ -58,11 +67,8 @@ export default function Items() {
     navigation.setOptions({
       headerShown: true,
       headerLeft: () => (
-        <TouchableOpacity 
-          onPress={handleBackPress}
-          style={styles.backButton}
-        >
-          <FontAwesome5 name="chevron-left" size={20} color="#333" />
+        <TouchableOpacity onPress={handleBackPress} style={styles.backButton}>
+          <FontAwesome5 name='chevron-left' size={20} color='#333' />
         </TouchableOpacity>
       ),
       headerTitle: '',
@@ -72,22 +78,16 @@ export default function Items() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" />
-      
+      <StatusBar barStyle='dark-content' />
+
       {/* Header with Sort and Filter */}
       <View style={styles.header}>
-        <TouchableOpacity 
-          style={styles.headerButton}
-          onPress={() => setShowSort(!showSort)}
-        >
+        <TouchableOpacity style={styles.headerButton} onPress={() => setShowSort(!showSort)}>
           <Text style={styles.headerButtonText}>Sort By: {selectedSort}</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity 
-          style={styles.headerButton}
-          onPress={() => setShowFilter(!showFilter)}
-        >
-          <FontAwesome5 name="sliders-h" size={20} color="#333" />
+        <TouchableOpacity style={styles.headerButton} onPress={() => setShowFilter(!showFilter)}>
+          <FontAwesome5 name='sliders-h' size={20} color='#333' />
         </TouchableOpacity>
       </View>
 
@@ -99,7 +99,7 @@ export default function Items() {
               key={option.value}
               style={[
                 styles.sortOption,
-                selectedSort === option.value && styles.sortOptionSelected
+                selectedSort === option.value && styles.sortOptionSelected,
               ]}
               onPress={() => {
                 setSelectedSort(option.value);
@@ -116,15 +116,12 @@ export default function Items() {
       {showFilter && (
         <View style={styles.filterDropdown}>
           {/* Colors Section */}
-          <TouchableOpacity 
-            style={styles.filterHeader}
-            onPress={() => toggleSection('colors')}
-          >
+          <TouchableOpacity style={styles.filterHeader} onPress={() => toggleSection('colors')}>
             <Text style={styles.filterTitle}>Fabric Color</Text>
-            <FontAwesome5 
-              name={collapsedSections.colors ? 'plus' : 'minus'} 
-              size={16} 
-              color="#333" 
+            <FontAwesome5
+              name={collapsedSections.colors ? 'plus' : 'minus'}
+              size={16}
+              color='#333'
             />
           </TouchableOpacity>
           {!collapsedSections.colors && (
@@ -134,13 +131,13 @@ export default function Items() {
                   key={`color-${color.value}`}
                   style={[
                     styles.filterOption,
-                    selectedFilters.includes(color.value) && styles.filterOptionSelected
+                    selectedFilters.includes(color.value) && styles.filterOptionSelected,
                   ]}
                   onPress={() => {
-                    setSelectedFilters(prev => 
+                    setSelectedFilters((prev) =>
                       prev.includes(color.value)
-                        ? prev.filter(v => v !== color.value)
-                        : [...prev, color.value]
+                        ? prev.filter((v) => v !== color.value)
+                        : [...prev, color.value],
                     );
                   }}
                 >
@@ -151,15 +148,15 @@ export default function Items() {
           )}
 
           {/* Patterns Section */}
-          <TouchableOpacity 
+          <TouchableOpacity
             style={[styles.filterHeader, { marginTop: 16 }]}
             onPress={() => toggleSection('patterns')}
           >
             <Text style={styles.filterTitle}>Pattern</Text>
-            <FontAwesome5 
-              name={collapsedSections.patterns ? 'plus' : 'minus'} 
-              size={16} 
-              color="#333" 
+            <FontAwesome5
+              name={collapsedSections.patterns ? 'plus' : 'minus'}
+              size={16}
+              color='#333'
             />
           </TouchableOpacity>
           {!collapsedSections.patterns && (
@@ -169,13 +166,13 @@ export default function Items() {
                   key={`pattern-${pattern.value}`}
                   style={[
                     styles.filterOption,
-                    selectedFilters.includes(pattern.value) && styles.filterOptionSelected
+                    selectedFilters.includes(pattern.value) && styles.filterOptionSelected,
                   ]}
                   onPress={() => {
-                    setSelectedFilters(prev => 
+                    setSelectedFilters((prev) =>
                       prev.includes(pattern.value)
-                        ? prev.filter(v => v !== pattern.value)
-                        : [...prev, pattern.value]
+                        ? prev.filter((v) => v !== pattern.value)
+                        : [...prev, pattern.value],
                     );
                   }}
                 >
@@ -190,7 +187,7 @@ export default function Items() {
       {/* Items Grid */}
       <FlatList
         data={categoryItems}
-        keyExtractor={item => item.id}
+        keyExtractor={(item) => item.id}
         numColumns={2}
         contentContainerStyle={styles.gridContainer}
         columnWrapperStyle={styles.columnWrapper}
@@ -200,13 +197,11 @@ export default function Items() {
             onPress={() => navigation.navigate('ItemDetails', { itemId: item.id })}
             activeOpacity={0.8}
           >
-            <Image
-              source={{ uri: item.image }}
-              style={styles.itemImage}
-              resizeMode="cover"
-            />
+            <Image source={{ uri: item.image }} style={styles.itemImage} resizeMode='cover' />
             <View style={styles.itemContent}>
-              <Text style={styles.itemName} numberOfLines={1}>{item.name}</Text>
+              <Text style={styles.itemName} numberOfLines={1}>
+                {item.name}
+              </Text>
               <Text style={styles.itemPrice}>${item.price}</Text>
             </View>
           </TouchableOpacity>
