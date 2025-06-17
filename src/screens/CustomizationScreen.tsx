@@ -9,6 +9,7 @@ import ShirtLength from './customization/ShirtLength';
 import Monogram from './customization/Monogram';
 import Buttons from './customization/Buttons';
 import Measurement from './customization/Measurement';
+import { styles } from '../styles/CustomizationScreenStyles';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -46,18 +47,3 @@ export default function CustomizationScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  tabBar: {
-    elevation: 0,
-    shadowOpacity: 0,
-    backgroundColor: '#f8f8f8',
-  },
-  tabItem: {
-    width: 'auto',
-    paddingHorizontal: 16,
-  },
-});

@@ -2,7 +2,7 @@ import React from 'react';
 import { View, ScrollView, StyleSheet } from 'react-native';
 import CustomizationProgress from './CustomizationProgress';
 import CustomizationNavigation from './CustomizationNavigation';
-
+import { styles } from '../styles/CustomizationScreenWrapperStyles';
 type Props = {
   children: React.ReactNode;
   currentStep: string;
@@ -20,13 +20,4 @@ export default function CustomizationScreenWrapper({ children, currentStep }: Pr
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FAF9F6',
-  },
-  scrollContainer: {
-    flex: 1,
-    paddingVertical: 16,
-  },
-});
+
