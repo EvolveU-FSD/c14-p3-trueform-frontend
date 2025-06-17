@@ -1,6 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet, ViewStyle } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { styles} from '../styles/BackButtonStyles';
 
 type BackButtonProps = {
   style?: ViewStyle;
@@ -30,21 +31,4 @@ export default function BackButton({
   );
 }
 
-const styles = StyleSheet.create({
-  btn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 8,
-    alignSelf: 'flex-start',
-    backgroundColor: 'transparent',
-    borderRadius: 20,
-  },
-  icon: {
-    fontWeight: 'bold',
-  },
-  label: {
-    marginLeft: 6,
-    fontSize: 18,
-    fontWeight: '500',
-  },
-});
+
