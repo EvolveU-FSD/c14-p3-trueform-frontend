@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { SafeAreaView, StatusBar, View, Text, TouchableOpacity, FlatList, Image, StyleSheet } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -54,7 +54,7 @@ export default function Items() {
     }));
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     navigation.setOptions({
       headerShown: true,
       headerLeft: () => (
