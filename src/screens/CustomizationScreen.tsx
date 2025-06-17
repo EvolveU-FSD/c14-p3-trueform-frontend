@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import CollarStyle from './customization/CollarStyle';
-import CuffStyle from './customization/CuffStyle';
-import PocketStyle from './customization/PocketStyle';
-import SleeveStyle from './customization/SleeveStyle';
+import CollarStyle from './customization/CollarTypes';
+import CuffStyle from './customization/CuffTypes';
+import PocketStyle from './customization/PocketTypes';
+import SleeveStyle from './customization/SleeveTypes';
 import ShirtLength from './customization/ShirtLength';
 import Monogram from './customization/Monogram';
 import Buttons from './customization/Buttons';
