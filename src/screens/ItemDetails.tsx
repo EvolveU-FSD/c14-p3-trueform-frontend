@@ -1,4 +1,3 @@
-import React from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -6,6 +5,7 @@ import { RootStackParamList } from '../types/navigation';
 import itemsData from '../data/categoryItems.json';
 import {styles} from '../styles/ItemDetailsStyles';
 import CollarType from './CollarType';
+import { useState } from 'react';
 
 
 
@@ -35,8 +35,12 @@ export default function ItemDetails(props: ItemDetailsProps) {
     ? item.images
     : [item.image];
 
-  const [showFabric, setShowFabric] = React.useState(false);
-
+  const [showFabric, setShowFabric] = useState(false);
+  const [selectedColor, setSelectedColor] = useState('');
+  const [selectedSize, setSelectedSize] = useState('');
+  const [quantity, setQuantity] = useState(1);
+  const [isCustomizing, setIsCustomizing] = useState(false);
+  
   const handleCustomization = () => {
     navigation.navigate('CollarStyle');
   };
