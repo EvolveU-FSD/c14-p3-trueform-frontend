@@ -59,46 +59,46 @@ const categories: Category[] = [
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
 export default function HomeScreen() {
-    const [popularItems, setPopularItems] = useState<Product[]>([]);
-    const [loading, setLoading] = useState(false);
-    const [activeTab, setActiveTab] = useState('home');
-    const navigation = useNavigation<HomeScreenNavigationProp>();
+  const [popularItems, setPopularItems] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState('home');
+  const navigation = useNavigation<HomeScreenNavigationProp>();
 
-    useEffect(() => {
-        const fetchClothing = async () => {
-            try {
-                setLoading(true);
-                const response = await ClothingService.getAll();
-                console.log(response);
-                // TODO: Currently set all items to be popular. Needs to be filtered.
-                const items = response.map(clothing => ({
-                    id: clothing.id,
-                    image: clothing.imageUrl,
-                    category: 'shirt',
-                    name: clothing.name,
-                    price: clothing.price,
-                    description: clothing.description,
-                    isPopular: true
-                }));
-                setPopularItems(items);
-            } catch (error) {
-                console.error('Failed to fetch clothing:', error);
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        fetchClothing();
-    }, []);
-
-    // In HomeScreen.tsx
-    // HomeScreen.tsx
-    const handleCategoryPress = (category: Category) => {
-        // Use the category ID as the slug
-        navigation.navigate('Category', {
-            slug: category.id
-        });
+  useEffect(() => {
+    const fetchClothing = async () => {
+      try {
+        setLoading(true);
+        const response = await ClothingService.getAll();
+        console.log(response);
+        // TODO: Currently set all items to be popular. Needs to be filtered.
+        const items = response.map((clothing) => ({
+          id: clothing.id,
+          image: clothing.imageUrl,
+          category: 'shirt',
+          name: clothing.name,
+          price: clothing.price,
+          description: clothing.description,
+          isPopular: true,
+        }));
+        setPopularItems(items);
+      } catch (error) {
+        console.error('Failed to fetch clothing:', error);
+      } finally {
+        setLoading(false);
+      }
     };
+
+    fetchClothing();
+  }, []);
+
+  // In HomeScreen.tsx
+  // HomeScreen.tsx
+  const handleCategoryPress = (category: Category) => {
+    // Use the category ID as the slug
+    navigation.navigate('Category', {
+      slug: category.id,
+    });
+  };
 
   return (
     <SafeAreaView style={styles.container}>
