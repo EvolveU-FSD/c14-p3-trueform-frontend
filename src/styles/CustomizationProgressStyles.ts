@@ -1,69 +1,51 @@
 import { StyleSheet } from 'react-native';
 import { spacing, fontSizes, borderRadius } from '../utils/sizes';
+import { Theme } from '../theme/ThemeContext';
 
-export function createStyles() {
+export function createStyles(theme: Theme) {
   return StyleSheet.create({
     container: {
-      paddingVertical: spacing.sm, // Reduced from 16
+      paddingVertical: spacing.sm,
       borderBottomWidth: 1,
-      borderBottomColor: '#eee',
-      backgroundColor: '#FAF9F6',
-      maxHeight: 60, // Add fixed height
+      borderBottomColor: theme.borderColor,
+      backgroundColor: theme.backgroundColor,
     },
     contentContainer: {
-      paddingHorizontal: 16,
+      paddingHorizontal: spacing.md,
       alignItems: 'center',
     },
     stepItem: {
       alignItems: 'center',
-      marginRight: 20, // Reduced from 24
+      marginRight: spacing.md,
       opacity: 0.7,
-      width: 80, // Fixed width for consistent spacing
     },
     activeStep: {
       opacity: 1,
     },
     stepNumber: {
-      width: 24, // Reduced from 28
-      height: 24, // Reduced from 28
-      borderRadius: 12,
-      backgroundColor: '#ccc',
+      width: spacing.lg,
+      height: spacing.lg,
+      borderRadius: borderRadius.full,
+      backgroundColor: theme.secondaryColor,
       alignItems: 'center',
       justifyContent: 'center',
-      marginBottom: 2, // Reduced from 4
+      marginBottom: spacing.xs,
     },
     activeStepNumber: {
-      backgroundColor: '#4A3419',
+      backgroundColor: theme.primaryColor,
     },
     stepNumberText: {
-      color: '#fff',
-      fontSize: 14,
+      color: theme.textColorInverse,
+      fontSize: fontSizes.sm,
       fontWeight: '600',
     },
     stepTitle: {
-      fontSize: 11, // Reduced from 12
-      color: '#666',
+      fontSize: fontSizes.xs,
+      color: theme.secondaryColor,
       fontWeight: '500',
     },
     activeStepTitle: {
-      color: '#4A3419',
-    },
-    progressBar: {
-      height: spacing.xs,
-      backgroundColor: '#e0e0e0',
-      borderRadius: borderRadius.sm,
-      marginVertical: spacing.sm,
-    },
-    progress: {
-      height: '100%',
-      backgroundColor: '#4caf50',
-      borderRadius: borderRadius.sm,
-    },
-    text: {
-      fontSize: fontSizes.sm,
-      color: '#666',
-      textAlign: 'center',
-      marginTop: spacing.xs,
+      color: theme.primaryColor,
     },
   });
 }

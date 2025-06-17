@@ -1,35 +1,37 @@
 import { StyleSheet } from 'react-native';
+import { spacing, fontSizes, borderRadius } from '../utils/sizes';
+import { Theme } from '../theme/ThemeContext';
 
-export function createStyles() {
+export function createStyles(theme: Theme) {
   return StyleSheet.create({
     title: {
-      fontSize: 18,
+      fontSize: fontSizes.md,
       fontWeight: '600',
-      color: '#333',
-      padding: 16,
-      paddingBottom: 8,
+      color: theme.textColor,
+      padding: spacing.md,
+      paddingBottom: spacing.sm,
     },
     gridContainer: {
       flexDirection: 'row',
       flexWrap: 'wrap',
-      padding: 16,
-      gap: 16,
+      padding: spacing.md,
+      gap: spacing.md,
     },
     gridItem: {
       width: '47%',
-      height: 50, // Reduced from 80 to 50
-      backgroundColor: '#4A3419',
+      height: spacing.lg,
+      backgroundColor: theme.primaryColor,
       justifyContent: 'center',
       alignItems: 'center',
-      marginBottom: 12, // Reduced from 16 to 12
-      borderRadius: 4,
+      marginBottom: spacing.sm,
+      borderRadius: borderRadius.md,
     },
     selectedItem: {
-      backgroundColor: '#8B6B43',
+      backgroundColor: theme.secondaryColor,
     },
     itemText: {
-      color: '#FFFFFF',
-      fontSize: 16,
+      color: theme.textColorInverse,
+      fontSize: fontSizes.md,
       fontWeight: '600',
       textAlign: 'center',
     },

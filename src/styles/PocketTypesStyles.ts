@@ -1,14 +1,16 @@
 import { StyleSheet } from 'react-native';
+import { spacing } from '../utils/sizes';
+import { Theme } from '../theme/ThemeContext';
 
-export function createStyles() {
+export function createStyles(theme: Theme) {
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
+      backgroundColor: theme.backgroundColor,
     },
     scrollContainer: {
       flex: 1,
-      paddingBottom: 16,
+      paddingBottom: spacing.md,
     },
   });
 }

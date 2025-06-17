@@ -1,61 +1,63 @@
 import { StyleSheet } from 'react-native';
+import { spacing, fontSizes, borderRadius } from '../utils/sizes';
+import { Theme } from '../theme/ThemeContext';
 
-export function createStyles() {
+export function createStyles(theme: Theme) {
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#FAF9F6',
+      backgroundColor: theme.backgroundColor,
     },
     stepsContainer: {
-      padding: 16,
+      padding: spacing.md,
       borderBottomWidth: 1,
-      borderBottomColor: '#eee',
+      borderBottomColor: theme.borderColor,
     },
     stepItem: {
       alignItems: 'center',
-      marginRight: 24,
+      marginRight: spacing.md,
       opacity: 0.7,
     },
     stepNumber: {
-      width: 28,
-      height: 28,
-      borderRadius: 14,
-      backgroundColor: '#4A3419',
+      width: spacing.lg,
+      height: spacing.lg,
+      borderRadius: borderRadius.full,
+      backgroundColor: theme.primaryColor,
       alignItems: 'center',
       justifyContent: 'center',
-      marginBottom: 4,
+      marginBottom: spacing.xs,
     },
     stepNumberText: {
-      color: '#fff',
-      fontSize: 14,
+      color: theme.textColorInverse,
+      fontSize: fontSizes.sm,
       fontWeight: '600',
     },
     stepTitle: {
-      fontSize: 12,
-      color: '#4A3419',
+      fontSize: fontSizes.xs,
+      color: theme.primaryColor,
       fontWeight: '500',
     },
     content: {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      padding: 20,
+      padding: spacing.lg,
     },
     startText: {
-      fontSize: 16,
-      color: '#666',
-      marginBottom: 20,
+      fontSize: fontSizes.md,
+      color: theme.secondaryColor,
+      marginBottom: spacing.md,
       textAlign: 'center',
     },
     startButton: {
-      backgroundColor: '#4A3419',
-      paddingVertical: 12,
-      paddingHorizontal: 24,
-      borderRadius: 8,
+      backgroundColor: theme.primaryColor,
+      paddingVertical: spacing.md,
+      paddingHorizontal: spacing.lg,
+      borderRadius: borderRadius.md,
     },
     startButtonText: {
-      color: '#fff',
-      fontSize: 16,
+      color: theme.textColorInverse,
+      fontSize: fontSizes.md,
       fontWeight: '600',
     },
   });
