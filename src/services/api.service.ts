@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import { API_CONFIG } from '../config/api.config';
-import { ApiResponse, ApiResult } from '../types/api';
+import { ApiResponse } from '../types/api';
 
 class ApiService {
   private api: AxiosInstance;
@@ -23,58 +23,47 @@ class ApiService {
       (response: AxiosResponse) => response,
       (error: AxiosError) => {
         if (error.response?.status === 401) {
-          console.warn('Unauthorized: redirecting to login');
+          console.log('Unauthorized: redirecting to login');
         }
         return Promise.reject(error);
       },
     );
   }
 
-  async get<T>(endpoint: string, params?: object): Promise<T> {
+  async get<T>(endpoint: string, params?: object): Promise<ApiResponse<T>> {
     try {
-      const response = await this.api.get<ApiResponse<T>>(endpoint);
-      return response.data.data;
+      const response = await this.api.get<ApiResponse<T>>(endpoint, { params });
+      return response.data;
     } catch (error) {
       this.handleError(error as AxiosError);
       throw error;
     }
   }
 
-  // async get<T>(endpoint: string, params?: object): Promise<ApiResult<T>> {
-  //     try {
-  //         const response = await this.api.get<ApiResponse<T>>(endpoint);
-  //         return {
-  //             data: response.data.data,
-  //             status: response.status,
-  //             message: response.data.message,
-  //         }
-  //     } catch (error) {
-  //         this.handleError(error as AxiosError);
-  //         throw error;
-  //     }
-  // }
-
-  async post<T>(endpoint: string, data: any): Promise<AxiosResponse<T>> {
+  async post<T, D>(endpoint: string, data: D): Promise<ApiResponse<T>> {
     try {
-      return await this.api.post<T>(endpoint, data);
+      const response = await this.api.post<ApiResponse<T>>(endpoint, data);
+      return response.data;
     } catch (error) {
       this.handleError(error as AxiosError);
       throw error;
     }
   }
 
-  async put<T>(endpoint: string, data: any): Promise<AxiosResponse<T>> {
+  async put<T, D>(endpoint: string, data: D): Promise<ApiResponse<T>> {
     try {
-      return await this.api.put<T>(endpoint, data);
+      const response = await this.api.put<ApiResponse<T>>(endpoint, data);
+      return response.data;
     } catch (error) {
       this.handleError(error as AxiosError);
       throw error;
     }
   }
 
-  async delete<T>(endpoint: string): Promise<AxiosResponse<T>> {
+  async delete<T>(endpoint: string): Promise<ApiResponse<T>> {
     try {
-      return await this.api.delete<T>(endpoint);
+      const response = await this.api.delete<ApiResponse<T>>(endpoint);
+      return response.data;
     } catch (error) {
       this.handleError(error as AxiosError);
       throw error;

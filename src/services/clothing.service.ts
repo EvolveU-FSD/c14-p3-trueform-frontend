@@ -7,22 +7,52 @@ export class ClothingService {
   private static readonly endpoint = API_CONFIG.ENDPOINTS.CLOTHING;
 
   static async getAll(): Promise<Clothing[]> {
-    return apiService.get<Clothing[]>(this.endpoint);
+    try {
+      const response = await apiService.get<Clothing[]>(this.endpoint);
+      return Array.isArray(response.data) ? response.data : [];
+    } catch (error) {
+      console.error('Failed to fetch clothing items:', error);
+      return [];
+    }
   }
 
-  static async getById(id: string): Promise<ApiResponse<Clothing>> {
-    return apiService.get<ApiResponse<Clothing>>(`${this.endpoint}/${id}`);
+  static async getById(id: string): Promise<Clothing | null> {
+    try {
+      const response = await apiService.get<Clothing>(`${this.endpoint}/${id}`);
+      return response.data ?? null;
+    } catch (error) {
+      console.error(`Failed to fetch clothing item with ID ${id}:`, error);
+      return null;
+    }
   }
 
-  static async create(data: CreateClothingDTO): Promise<ApiResponse<Clothing>> {
-    return apiService.post<ApiResponse<Clothing>>(this.endpoint, data);
+  static async create(data: CreateClothingDTO): Promise<Clothing | null> {
+    try {
+      const response = await apiService.post<Clothing, CreateClothingDTO>(this.endpoint, data);
+      return response.data ?? null;
+    } catch (error) {
+      console.error('Failed to create clothing item:', error);
+      return null;
+    }
   }
 
-  static async update(id: string, data: UpdateClothingDTO): Promise<ApiResponse<Clothing>> {
-    return apiService.put<ApiResponse<Clothing>>(`${this.endpoint}/${id}`, data);
+  static async update(id: string, data: UpdateClothingDTO): Promise<Clothing | null> {
+    try {
+      const response = await apiService.put<Clothing, UpdateClothingDTO>(`${this.endpoint}/${id}`, data);
+      return response.data ?? null;
+    } catch (error) {
+      console.error(`Failed to update clothing item with ID ${id}:`, error);
+      return null;
+    }
   }
 
-  static async delete(id: string): Promise<ApiResponse<void>> {
-    return apiService.delete<ApiResponse<void>>(`${this.endpoint}/${id}`);
+  static async delete(id: string): Promise<boolean> {
+    try {
+      await apiService.delete<ApiResponse<void>>(`${this.endpoint}/${id}`);
+      return true;
+    } catch (error) {
+      console.error(`Failed to delete clothing item with ID ${id}:`, error);
+      return false;
+    }
   }
 }
