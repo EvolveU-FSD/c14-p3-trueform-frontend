@@ -23,7 +23,7 @@ class ApiService {
       (response: AxiosResponse) => response,
       (error: AxiosError) => {
         if (error.response?.status === 401) {
-          console.log('Unauthorized: redirecting to login');
+          console.warn('Unauthorized: redirecting to login');
         }
         return Promise.reject(error);
       },
