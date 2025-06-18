@@ -24,7 +24,7 @@ export async function signUp(email: string, password: string): Promise<User> {
       throw new Error('Failed to create user account: Unknown error');
     }
   }
-};
+}
 
 export async function signIn(email: string, password: string): Promise<User> {
   try {
@@ -42,7 +42,7 @@ export async function signIn(email: string, password: string): Promise<User> {
     }
     throw error;
   }
-};
+}
 
 export async function signOut(): Promise<void> {
   try {
@@ -52,19 +52,19 @@ export async function signOut(): Promise<void> {
     // Maybe show a user-friendly error message
     throw new Error('Failed to sign out. Please try again.');
   }
-};
+}
 
 export function getCurrentUser(): User | null {
   return auth.currentUser;
-};
+}
 
 export function onAuthStateChange(callback: (user: User | null) => void) {
   return onAuthStateChanged(auth, callback);
-};
+}
 
 export async function getIdToken(): Promise<string | null> {
   const user = auth.currentUser;
   if (!user) return null;
 
   return await firebaseGetIdToken(user, true); // force refresh
-};
+}

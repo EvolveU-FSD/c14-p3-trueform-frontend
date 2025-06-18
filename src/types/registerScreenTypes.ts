@@ -4,5 +4,5 @@ import { RootStackParamList } from '../types/navigation';
 type RegisterScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Register'>;
 
 export interface RegisterScreenProps {
-    navigation: RegisterScreenNavigationProp;
+  navigation: RegisterScreenNavigationProp;
 }
