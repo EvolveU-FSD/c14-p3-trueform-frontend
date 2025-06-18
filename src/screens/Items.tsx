@@ -30,6 +30,11 @@ const FILTER_OPTIONS = {
   ],
 };
 
+const imageMapping: { [key: string]: any } = {
+  'assets/images/shirtImages/Whitesolidshirt.jpeg': require('../../assets/images/shirtImages/Whitesolidshirt.jpeg'),
+  // Add all your other images here
+};
+
 export default function Items() {
   const navigation = useNavigation();
   const route = useRoute<any>();
@@ -49,7 +54,9 @@ export default function Items() {
 
   // Filter items for this category
   const categoryItems = useMemo(
-    () => itemsData.filter((item) => item.categoryId === categoryId),
+    
+    () => {console.log('itemsData', itemsData); 
+      return itemsData.filter((item) => item.categoryId === categoryId)},
     [categoryId],
   );
 
@@ -198,7 +205,7 @@ export default function Items() {
             onPress={() => navigation.navigate('ItemDetails', { itemId: item.id })}
             activeOpacity={0.8}
           >
-            <Image source={{ uri: item.image }} style={styles.itemImage} resizeMode='cover' />
+            <Image source={imageMapping[item.images[0]]}  style={styles.itemImage} resizeMode='cover' />
             <View style={styles.itemContent}>
               <Text style={styles.itemName} numberOfLines={1}>
                 {item.name}
