@@ -38,7 +38,10 @@ export class ClothingService {
 
   static async update(id: string, data: UpdateClothingDTO): Promise<Clothing | null> {
     try {
-      const response = await apiService.put<Clothing, UpdateClothingDTO>(`${this.endpoint}/${id}`, data);
+      const response = await apiService.put<Clothing, UpdateClothingDTO>(
+        `${this.endpoint}/${id}`,
+        data,
+      );
       return response.data ?? null;
     } catch (error) {
       console.error(`Failed to update clothing item with ID ${id}:`, error);
