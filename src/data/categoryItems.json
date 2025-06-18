@@ -1,0 +1,241 @@
+[
+  {
+    "id": "item1",
+    "categoryId": "1",
+    "name": "Wrinkle Free Diamond Checks",
+    "description": "A wrinkle free shirt with diamond check pattern.",
+    "price": 89,
+    "image": "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80"
+    ],
+    "color": "Grey",
+    "pattern": "Checks",
+    "style": "Formal",
+    "fabric": "100% Egyptian cotton, 2-ply 80s, wrinkle-resistant, soft hand feel, 120 GSM."
+  },
+  {
+    "id": "item2",
+    "categoryId": "1",
+    "name": "Classic White Twill Shirt",
+    "description": "Classic wrinkle free white twill shirt for men.",
+    "price": 89,
+    "image": "https://images.unsplash.com/photo-1526178613658-3f1622045557?auto=format&fit=crop&w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1526178613658-3f1622045557?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1469398715555-76331a6c7c9b?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80"
+    ],
+    "color": "White",
+    "pattern": "Solid",
+    "style": "Formal",
+    "fabric": "Premium 100% cotton twill, 2-ply 100s, natural stretch, 125 GSM."
+  },
+  {
+    "id": "item3",
+    "categoryId": "1",
+    "name": "Blue-Orange Check Shirt",
+    "description": "Blue and orange check wrinkle free shirt.",
+    "price": 89,
+    "image": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1469398715555-76331a6c7c9b?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80"
+    ],
+    "color": "Blue",
+    "pattern": "Checks",
+    "style": "Casual",
+    "fabric": "100% cotton, 60s single, lightweight, soft finish, 110 GSM."
+  },
+  {
+    "id": "item4",
+    "categoryId": "1",
+    "name": "Rose Pink Shirt",
+    "description": "Soft rose pink shirt for a fresh look.",
+    "price": 69,
+    "image": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1469398715555-76331a6c7c9b?auto=format&fit=crop&w=400&q=80"
+    ],
+    "color": "Pink",
+    "pattern": "Solid",
+    "style": "Casual",
+    "fabric": "100% cotton, poplin weave, lightweight, smooth touch, 105 GSM."
+  },
+
+  {
+    "id": "item5",
+    "categoryId": "2",
+    "name": "Slim Fit Navy Chinos",
+    "description": "Modern slim fit navy chinos for men.",
+    "price": 79,
+    "image": "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80"
+    ],
+    "color": "Navy",
+    "pattern": "Solid",
+    "style": "Slim Fit",
+    "fabric": "98% cotton, 2% elastane, stretch, 240 GSM."
+  },
+  {
+    "id": "item6",
+    "categoryId": "2",
+    "name": "Classic Black Trousers",
+    "description": "Classic black formal trousers for men.",
+    "price": 89,
+    "image": "https://images.unsplash.com/photo-1469398715555-76331a6c7c9b?auto=format&fit=crop&w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1469398715555-76331a6c7c9b?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80"
+    ],
+    "color": "Black",
+    "pattern": "Solid",
+    "style": "Formal",
+    "fabric": "100% wool, wrinkle-resistant, 260 GSM."
+  },
+  {
+    "id": "item7",
+    "categoryId": "2",
+    "name": "Khaki Stretch Pants",
+    "description": "Comfortable khaki pants with stretch for men.",
+    "price": 69,
+    "image": "https://images.unsplash.com/photo-1526178613658-3f1622045557?auto=format&fit=crop&w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1526178613658-3f1622045557?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80"
+    ],
+    "color": "Khaki",
+    "pattern": "Solid",
+    "style": "Casual",
+    "fabric": "97% cotton, 3% elastane, soft touch, 230 GSM."
+  },
+  {
+    "id": "item8",
+    "categoryId": "3",
+    "name": "Navy Bomber Jacket",
+    "description": "Trendy navy bomber jacket for men.",
+    "price": 129,
+    "image": "https://images.unsplash.com/photo-1469398715555-76331a6c7c9b?auto=format&fit=crop&w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1469398715555-76331a6c7c9b?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80"
+    ],
+    "color": "Navy",
+    "pattern": "Solid",
+    "style": "Bomber",
+    "fabric": "100% polyester shell, quilted lining, windproof."
+  },
+  {
+    "id": "item9",
+    "categoryId": "3",
+    "name": "Grey Wool Blazer",
+    "description": "Elegant grey wool blazer for men.",
+    "price": 199,
+    "image": "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1469398715555-76331a6c7c9b?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1526178613658-3f1622045557?auto=format&fit=crop&w=400&q=80"
+    ],
+    "color": "Grey",
+    "pattern": "Solid",
+    "style": "Blazer",
+    "fabric": "100% wool, half-canvas construction, 270 GSM."
+  },
+  {
+    "id": "item10",
+    "categoryId": "3",
+    "name": "Black Leather Jacket",
+    "description": "Classic black leather jacket for men.",
+    "price": 249,
+    "image": "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80"
+    ],
+    "color": "Black",
+    "pattern": "Solid",
+    "style": "Leather",
+    "fabric": "100% genuine leather, viscose lining."
+  },
+  {
+    "id": "item11",
+    "categoryId": "4",
+    "name": "Classic Crew Neck T-Shirt",
+    "description": "Soft cotton crew neck t-shirt for men.",
+    "price": 29,
+    "image": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1526178613658-3f1622045557?auto=format&fit=crop&w=400&q=80"
+    ],
+    "color": "White",
+    "pattern": "Solid",
+    "style": "T-Shirt",
+    "fabric": "100% cotton, pre-shrunk, 160 GSM."
+  },
+  {
+    "id": "item12",
+    "categoryId": "4",
+    "name": "Grey Hoodie",
+    "description": "Comfortable grey hoodie for men.",
+    "price": 59,
+    "image": "https://images.unsplash.com/photo-1526178613658-3f1622045557?auto=format&fit=crop&w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1526178613658-3f1622045557?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80"
+    ],
+    "color": "Grey",
+    "pattern": "Solid",
+    "style": "Hoodie",
+    "fabric": "80% cotton, 20% polyester, fleece lining."
+  },
+  {
+    "id": "item13",
+    "categoryId": "5",
+    "name": "Leather Belt",
+    "description": "Premium quality brown leather belt for men.",
+    "price": 39,
+    "image": "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80"
+    ],
+    "color": "Brown",
+    "pattern": "Solid",
+    "style": "Belt",
+    "fabric": "100% genuine leather."
+  },
+  {
+    "id": "item14",
+    "categoryId": "5",
+    "name": "Silk Tie",
+    "description": "Elegant navy blue silk tie for men.",
+    "price": 29,
+    "image": "https://images.unsplash.com/photo-1526178613658-3f1622045557?auto=format&fit=crop&w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1526178613658-3f1622045557?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1469398715555-76331a6c7c9b?auto=format&fit=crop&w=400&q=80"
+    ],
+    "color": "Navy",
+    "pattern": "Solid",
+    "style": "Tie",
+    "fabric": "100% silk."
+  }
+]
