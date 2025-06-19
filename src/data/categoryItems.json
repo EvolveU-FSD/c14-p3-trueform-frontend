@@ -2,101 +2,80 @@
   {
     "id": "item1",
     "categoryId": "1",
-    "name": "Wrinkle Free Diamond Checks",
-    "description": "A wrinkle free shirt with diamond check pattern.",
+    "name": "White solid shirt",
+    "description": "100 % cotton shirt.",
     "price": 89,
-    "images": ["assets/images/shirtImages/Whitesolidshirt.jpeg"],
+    "images": ["assets/images/shirtImages/White solid shirt.jpeg"],
 
-    "color": "Grey",
-    "pattern": "Checks",
+    "color": "White",
+    "pattern": "Solid",
     "style": "Formal",
-    "fabric": "100% Egyptian cotton, 2-ply 80s, wrinkle-resistant, soft hand feel, 120 GSM."
+    "fabric": "100% cotton,2-ply 80s, wrinkle-resistant, soft hand feel, 120 GSM."
   },
   {
     "id": "item2",
     "categoryId": "1",
-    "name": "Classic White Twill Shirt",
-    "description": "Classic wrinkle free white twill shirt for men.",
+    "name": "Red Solid Shirt",
+    "description": "100 % cotton shirt.",
     "price": 89,
-    "image": "https://images.unsplash.com/photo-1526178613658-3f1622045557?auto=format&fit=crop&w=400&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1526178613658-3f1622045557?auto=format&fit=crop&w=400&q=80",
-      "https://images.unsplash.com/photo-1469398715555-76331a6c7c9b?auto=format&fit=crop&w=400&q=80",
-      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80"
-    ],
-    "color": "White",
+    "images": ["assets/images/shirtImages/Red solid shirt.jpeg"],
+
+    "color": "Red",
     "pattern": "Solid",
     "style": "Formal",
-    "fabric": "Premium 100% cotton twill, 2-ply 100s, natural stretch, 125 GSM."
+    "fabric": "100% cotton, 2-ply 80s, wrinkle-resistant, soft hand feel, 120 GSM."
   },
   {
     "id": "item3",
     "categoryId": "1",
-    "name": "Blue-Orange Check Shirt",
-    "description": "Blue and orange check wrinkle free shirt.",
+    "name": "Blue solid shirt",
+    "description": "100 % cotton shirt.",
     "price": 89,
-    "image": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
-      "https://images.unsplash.com/photo-1469398715555-76331a6c7c9b?auto=format&fit=crop&w=400&q=80",
-      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80"
-    ],
+    "images": ["assets/images/shirtImages/Blue solid shirt.jpeg"],
+
     "color": "Blue",
-    "pattern": "Checks",
-    "style": "Casual",
-    "fabric": "100% cotton, 60s single, lightweight, soft finish, 110 GSM."
+    "pattern": "Solid",
+    "style": "Formal",
+    "fabric": "100% cotton,2-ply 80s, wrinkle-resistant, soft hand feel, 120 GSM."
   },
   {
     "id": "item4",
     "categoryId": "1",
-    "name": "Rose Pink Shirt",
-    "description": "Soft rose pink shirt for a fresh look.",
-    "price": 69,
-    "image": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
-      "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80",
-      "https://images.unsplash.com/photo-1469398715555-76331a6c7c9b?auto=format&fit=crop&w=400&q=80"
-    ],
-    "color": "Pink",
-    "pattern": "Solid",
-    "style": "Casual",
-    "fabric": "100% cotton, poplin weave, lightweight, smooth touch, 105 GSM."
-  },
+    "name": "Navy Solid Shirt",
+    "description": "100 % cotton shirt.",
+    "price": 89,
+    "images": ["assets/images/shirtImages/Navy solid shirt.jpeg"],
 
+    "color": "Green",
+    "pattern": "Solid",
+    "style": "Formal",
+    "fabric": "100% cotton,2-ply 80s, wrinkle-resistant, soft hand feel, 120 GSM."
+  },
   {
     "id": "item5",
-    "categoryId": "2",
-    "name": "Slim Fit Navy Chinos",
-    "description": "Modern slim fit navy chinos for men.",
-    "price": 79,
-    "image": "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80",
-      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80"
-    ],
-    "color": "Navy",
-    "pattern": "Solid",
-    "style": "Slim Fit",
-    "fabric": "98% cotton, 2% elastane, stretch, 240 GSM."
-  },
-  {
-    "id": "item6",
-    "categoryId": "2",
-    "name": "Classic Black Trousers",
-    "description": "Classic black formal trousers for men.",
+    "categoryId": "1",
+    "name": "Black Solid Shirt",
+    "description": "100 % cotton shirt.",
     "price": 89,
-    "image": "https://images.unsplash.com/photo-1469398715555-76331a6c7c9b?auto=format&fit=crop&w=400&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1469398715555-76331a6c7c9b?auto=format&fit=crop&w=400&q=80",
-      "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80",
-      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80"
-    ],
+    "images": ["assets/images/shirtImages/Black solid shirt.jpeg"],
+
     "color": "Black",
     "pattern": "Solid",
     "style": "Formal",
-    "fabric": "100% wool, wrinkle-resistant, 260 GSM."
+    "fabric": "100% cotton,2-ply 80s, wrinkle-resistant, soft hand feel, 120 GSM."
+  },
+  {
+    "id": "item6",
+    "categoryId": "1",
+    "name": "Yellow Solid Shirt",
+    "description": "100 % cotton shirt.",
+    "price": 89,
+    "images": ["assets/images/shirtImages/Yellow solid shirt.jpeg"],
+
+    "color": "Yellow",
+    "pattern": "Solid",
+    "style": "Formal",
+    "fabric": "100% cotton,2-ply 80s, wrinkle-resistant, soft hand feel, 120 GSM."
   },
   {
     "id": "item7",

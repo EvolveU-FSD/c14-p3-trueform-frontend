@@ -31,7 +31,15 @@ const FILTER_OPTIONS = {
 };
 
 const imageMapping: { [key: string]: any } = {
-  'assets/images/shirtImages/Whitesolidshirt.jpeg': require('../../assets/images/shirtImages/Whitesolidshirt.jpeg'),
+  'assets/images/shirtImages/White solid shirt.jpeg': require('../../assets/images/shirtImages/White solid shirt.jpeg'),
+   'assets/images/shirtImages/Black solid shirt.jpeg': require('../../assets/images/shirtImages/Black solid shirt.jpeg'),
+   'assets/images/shirtImages/Yellow solid shirt.jpeg': require('../../assets/images/shirtImages/Yellow solid shirt.jpeg'),
+    'assets/images/shirtImages/Red solid shirt.jpeg': require('../../assets/images/shirtImages/Red solid shirt.jpeg'),
+   'assets/images/shirtImages/Blue solid shirt.jpeg': require('../../assets/images/shirtImages/Blue solid shirt.jpeg'),
+   'assets/images/shirtImages/Navy solid shirt.jpeg': require('../../assets/images/shirtImages/Navy solid shirt.jpeg'),
+  
+  
+  
   // Add all your other images here
 };
 
