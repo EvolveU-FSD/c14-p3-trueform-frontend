@@ -45,6 +45,12 @@ const imageMapping: { [key: string]: any } = {
   'assets/images/shirtImages/Green check shirt.jpeg': require('../../assets/images/shirtImages/Green check shirt.jpeg'),
   'assets/images/shirtImages/Blue check shirt.jpeg': require('../../assets/images/shirtImages/Blue check shirt.jpeg'),
   'assets/images/shirtImages/Black check shirt.jpeg': require('../../assets/images/shirtImages/Black check shirt.jpeg'),
+  'assets/images/shirtImages/White floral print shirt.jpeg': require('../../assets/images/shirtImages/White floral print shirt.jpeg'),
+  'assets/images/shirtImages/Navy parsley printed shirt.jpeg': require('../../assets/images/shirtImages/Navy parsley printed shirt.jpeg'),
+  'assets/images/shirtImages/Blue parsley printed shirt.jpeg': require('../../assets/images/shirtImages/Blue parsley printed shirt.jpeg'),
+  'assets/images/shirtImages/Green printed shirt.jpeg': require('../../assets/images/shirtImages/Green printed shirt.jpeg'),
+  'assets/images/shirtImages/White printed shirt.jpeg': require('../../assets/images/shirtImages/White printed shirt.jpeg'),
+  'assets/images/shirtImages/Blue printed shirt.jpeg': require('../../assets/images/shirtImages/Blue printed shirt.jpeg')
 };
 
 type RootStackParamList = {
