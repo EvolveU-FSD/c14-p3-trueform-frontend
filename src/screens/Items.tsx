@@ -41,13 +41,20 @@ const imageMapping: { [key: string]: any } = {
   'assets/images/shirtImages/Red stripes shirt.jpeg': require('../../assets/images/shirtImages/Red stripes shirt.jpeg'),
   'assets/images/shirtImages/Navy stripes shirt.jpeg': require('../../assets/images/shirtImages/Navy stripes shirt.jpeg'),
   'assets/images/shirtImages/Blue stripes shirt.jpeg': require('../../assets/images/shirtImages/Blue stripes shirt.jpeg'),
-  
-  
-  
+  'assets/images/shirtImages/Red check shirt.jpeg': require('../../assets/images/shirtImages/Red check shirt.jpeg'),
+  'assets/images/shirtImages/Green check shirt.jpeg': require('../../assets/images/shirtImages/Green check shirt.jpeg'),
+  'assets/images/shirtImages/Blue check shirt.jpeg': require('../../assets/images/shirtImages/Blue check shirt.jpeg'),
+  'assets/images/shirtImages/Black check shirt.jpeg': require('../../assets/images/shirtImages/Black check shirt.jpeg'),
+};
+
+type RootStackParamList = {
+  Home: undefined;
+  ItemDetails: { itemId: string };
+  // add other routes if needed
 };
 
 export default function Items() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<import('@react-navigation/native').NavigationProp<RootStackParamList>>();
   const route = useRoute<any>();
   const { theme } = useTheme();
   const styles = createStyles(theme);

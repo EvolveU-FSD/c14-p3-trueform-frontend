@@ -131,72 +131,54 @@
   },
   {
     "id": "item11",
-    "categoryId": "4",
-    "name": "Classic Crew Neck T-Shirt",
-    "description": "Soft cotton crew neck t-shirt for men.",
-    "price": 29,
-    "image": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
-      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
-      "https://images.unsplash.com/photo-1526178613658-3f1622045557?auto=format&fit=crop&w=400&q=80"
-    ],
-    "color": "White",
-    "pattern": "Solid",
-    "style": "T-Shirt",
-    "fabric": "100% cotton, pre-shrunk, 160 GSM."
+    "categoryId": "1",
+    "name": "Red Check Shirt",
+    "description": "100% cotton gingham check formal shirt.",
+    "price": 89,
+    "images": ["assets/images/shirtImages/Red check shirt.jpeg"],
+    "color": "Red",
+    "pattern": "Check",
+    "style": "Formal",
+    "fabric": "100% cotton, 2-ply 80s, wrinkle-resistant, soft hand feel, 120 GSM."
   },
   {
     "id": "item12",
-    "categoryId": "4",
-    "name": "Grey Hoodie",
-    "description": "Comfortable grey hoodie for men.",
-    "price": 59,
-    "image": "https://images.unsplash.com/photo-1526178613658-3f1622045557?auto=format&fit=crop&w=400&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1526178613658-3f1622045557?auto=format&fit=crop&w=400&q=80",
-      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
-      "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80"
-    ],
-    "color": "Grey",
-    "pattern": "Solid",
-    "style": "Hoodie",
-    "fabric": "80% cotton, 20% polyester, fleece lining."
+    "categoryId": "1",
+    "name": "Green Check Shirt",
+    "description": "100% cotton gingham check formal shirt.",
+    "price": 89,
+    "images": ["assets/images/shirtImages/Green check shirt.jpeg"],
+    "color": "Green",
+    "pattern": "Check",
+    "style": "Formal",
+    "fabric": "100% cotton, 2-ply 80s, wrinkle-resistant, soft hand feel, 120 GSM."
   },
   {
     "id": "item13",
-    "categoryId": "5",
-    "name": "Leather Belt",
-    "description": "Premium quality brown leather belt for men.",
-    "price": 39,
-    "image": "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
-      "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80",
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80"
-    ],
-    "color": "Brown",
-    "pattern": "Solid",
-    "style": "Belt",
-    "fabric": "100% genuine leather."
+    "categoryId": "1",
+    "name": "Blue Check shirt",
+    "description": "100% cotton gingham check formal shirt.",
+    "price": 89,
+    "images": ["assets/images/shirtImages/Blue check shirt.jepg"],
+    "color": "Blue",
+    "pattern": "Check",
+    "style": "Formal",
+    "fabric": "100% cotton, 2-ply 80s, wrinkle-resistant, soft hand feel, 120 GSM."
   },
   {
     "id": "item14",
-    "categoryId": "5",
-    "name": "Silk Tie",
-    "description": "Elegant navy blue silk tie for men.",
-    "price": 29,
-    "image": "https://images.unsplash.com/photo-1526178613658-3f1622045557?auto=format&fit=crop&w=400&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1526178613658-3f1622045557?auto=format&fit=crop&w=400&q=80",
-      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
-      "https://images.unsplash.com/photo-1469398715555-76331a6c7c9b?auto=format&fit=crop&w=400&q=80"
-    ],
-    "color": "Navy",
-    "pattern": "Solid",
-    "style": "Tie",
-    "fabric": "100% silk."
+    "categoryId": "1",
+    "name": "Black Check Shirt",
+    "description": "100% cotton gingham check formal shirt.",
+    "price": 89,
+    "images": ["assets/images/shirtImages/Black check shirt.jpeg"],
+    "color": "Black",
+    "pattern": "Check",
+    "style": "Formal",
+    "fabric": "100% cotton, 2-ply 80s, wrinkle-resistant, soft hand feel, 120 GSM."
   }
 ]
-  
+
+
+
 
