@@ -37,10 +37,13 @@ const imageMapping: { [key: string]: any } = {
     'assets/images/shirtImages/Red solid shirt.jpeg': require('../../assets/images/shirtImages/Red solid shirt.jpeg'),
    'assets/images/shirtImages/Blue solid shirt.jpeg': require('../../assets/images/shirtImages/Blue solid shirt.jpeg'),
    'assets/images/shirtImages/Navy solid shirt.jpeg': require('../../assets/images/shirtImages/Navy solid shirt.jpeg'),
+   'assets/images/shirtImages/White stripes shirt.jpeg': require('../../assets/images/shirtImages/White stripes shirt.jpeg'),
+  'assets/images/shirtImages/Red stripes shirt.jpeg': require('../../assets/images/shirtImages/Red stripes shirt.jpeg'),
+  'assets/images/shirtImages/Navy stripes shirt.jpeg': require('../../assets/images/shirtImages/Navy stripes shirt.jpeg'),
+  'assets/images/shirtImages/Blue stripes shirt.jpeg': require('../../assets/images/shirtImages/Blue stripes shirt.jpeg'),
   
   
   
-  // Add all your other images here
 };
 
 export default function Items() {

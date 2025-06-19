@@ -79,71 +79,55 @@
   },
   {
     "id": "item7",
-    "categoryId": "2",
-    "name": "Khaki Stretch Pants",
-    "description": "Comfortable khaki pants with stretch for men.",
-    "price": 69,
-    "image": "https://images.unsplash.com/photo-1526178613658-3f1622045557?auto=format&fit=crop&w=400&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1526178613658-3f1622045557?auto=format&fit=crop&w=400&q=80",
-      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
-      "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80"
-    ],
-    "color": "Khaki",
-    "pattern": "Solid",
-    "style": "Casual",
-    "fabric": "97% cotton, 3% elastane, soft touch, 230 GSM."
+    "categoryId": "1",
+    "name": "White Striped Shirt",
+    "description": "100% cotton striped formal shirt.",
+    "price": 89,
+    "images": ["assets/images/shirtImages/White stripes shirt.jpeg"],
+
+    "color": "White",
+    "pattern": "Stripes",
+    "style": "Formal",
+    "fabric": "100% cotton, 2-ply 80s, wrinkle-resistant, soft hand feel, 120 GSM."
   },
   {
     "id": "item8",
-    "categoryId": "3",
-    "name": "Navy Bomber Jacket",
-    "description": "Trendy navy bomber jacket for men.",
-    "price": 129,
-    "image": "https://images.unsplash.com/photo-1469398715555-76331a6c7c9b?auto=format&fit=crop&w=400&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1469398715555-76331a6c7c9b?auto=format&fit=crop&w=400&q=80",
-      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
-      "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80"
-    ],
-    "color": "Navy",
-    "pattern": "Solid",
-    "style": "Bomber",
-    "fabric": "100% polyester shell, quilted lining, windproof."
+    "categoryId": "1",
+    "name": "Red Striped Shirt",
+    "description": "100% cotton striped formal shirt.",
+    "price": 89,
+    "images": ["assets/images/shirtImages/Red stripes shirt.jpeg"],
+
+    "color": "Red",
+    "pattern": "Stripes",
+    "style": "Formal",
+    "fabric": "100% cotton, 2-ply 80s, wrinkle-resistant, soft hand feel, 120 GSM."
   },
   {
     "id": "item9",
-    "categoryId": "3",
-    "name": "Grey Wool Blazer",
-    "description": "Elegant grey wool blazer for men.",
-    "price": 199,
-    "image": "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
-      "https://images.unsplash.com/photo-1469398715555-76331a6c7c9b?auto=format&fit=crop&w=400&q=80",
-      "https://images.unsplash.com/photo-1526178613658-3f1622045557?auto=format&fit=crop&w=400&q=80"
-    ],
-    "color": "Grey",
-    "pattern": "Solid",
-    "style": "Blazer",
-    "fabric": "100% wool, half-canvas construction, 270 GSM."
+    "categoryId": "1",
+    "name": "Navy Striped Shirt",
+    "description": "100% cotton striped formal shirt.",
+    "price": 89,
+    "images": ["assets/images/shirtImages/Navy stripes shirt.jpeg"],
+
+    "color": "Navy",
+    "pattern": "Stripes",
+    "style": "Formal",
+    "fabric": "100% cotton, 2-ply 80s, wrinkle-resistant, soft hand feel, 120 GSM."
   },
   {
     "id": "item10",
-    "categoryId": "3",
-    "name": "Black Leather Jacket",
-    "description": "Classic black leather jacket for men.",
-    "price": 249,
-    "image": "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80",
-      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80"
-    ],
-    "color": "Black",
-    "pattern": "Solid",
-    "style": "Leather",
-    "fabric": "100% genuine leather, viscose lining."
+    "categoryId": "1",
+    "name": "Blue Striped Shirt",
+    "description": "100% cotton striped formal shirt.",
+    "price": 89,
+    "images": ["assets/images/shirtImages/Blue stripes shirt.jpeg"],
+
+    "color": "Blue",
+    "pattern": "Stripes",
+    "style": "Formal",
+    "fabric": "100% cotton, 2-ply 80s, wrinkle-resistant, soft hand feel, 120 GSM."
   },
   {
     "id": "item11",
@@ -214,3 +198,5 @@
     "fabric": "100% silk."
   }
 ]
+  
+
