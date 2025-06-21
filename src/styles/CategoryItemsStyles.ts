@@ -120,7 +120,7 @@ export function createStyles(theme: Theme) {
       borderRadius: borderRadius.md,
     },
     navButtonText: {
-      color: theme.textColorInverse,
+      color: theme.textColor,
       fontSize: fontSizes.md,
       fontWeight: '500',
     },
