@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { NavigationContainer, LinkingOptions } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { AuthProvider, useAuth } from './src/context/AuthContext';
+import { AuthProvider, useAuth } from './src/context/AuthContext'; // This is the correct import
 import HomeScreen from './src/screens/HomeScreen';
 import CategoryScreen from './src/screens/Category';
 import ItemDetails from './src/screens/ItemDetails';
@@ -67,7 +67,15 @@ function ProtectedBodyScanScreen({ navigation }: ProtectedBodyScanScreenProps) {
   return isAuthenticated ? <BodyScanScreen /> : null;
 }
 
-function AppNavigator() {
+export default function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
+  );
+}
+
+function AppContent() {
   const { loading } = useAuth();
 
   if (loading) {

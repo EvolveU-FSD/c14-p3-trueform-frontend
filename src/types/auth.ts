@@ -1,4 +1,4 @@
-import { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import { User } from 'firebase/auth';
 
 export interface LoginCredentials {
   email: string;
@@ -11,7 +11,7 @@ export interface RegisterCredentials extends LoginCredentials {
 }
 
 export interface AuthState {
-  user: FirebaseAuthTypes.User | null;
+  user: User | null;
   isAuthenticated: boolean;
   loading: boolean;
   error: string | null;
