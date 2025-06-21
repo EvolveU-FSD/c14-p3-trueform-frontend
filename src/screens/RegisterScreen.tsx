@@ -13,9 +13,9 @@ import {
   ScrollView,
 } from 'react-native';
 import { useAuth } from '../context/AuthContext';
-import { showAlert } from 'utils/showAlerts';
+import { showAlert } from '../utils/showAlerts';
 import { RegisterScreenProps } from '../types/navigation';
-import createStyles from 'styles/RegisterScreenStyles';
+import createStyles from '../styles/RegisterScreenStyles';
 
 function RegisterScreen({ navigation }: RegisterScreenProps) {
   const styles = createStyles();
@@ -74,6 +74,9 @@ function RegisterScreen({ navigation }: RegisterScreenProps) {
         errorMessage = 'Invalid email address format.';
       } else if (error.code === 'auth/weak-password') {
         errorMessage = 'The password is too weak.';
+      } else if (error.message) {
+        // Use the error message if available
+        errorMessage = error.message;
       }
 
       showAlert('Registration Error', errorMessage);
