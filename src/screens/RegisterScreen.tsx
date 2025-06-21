@@ -15,12 +15,10 @@ import {
 import { useAuth } from '../context/AuthContext';
 import { showAlert } from 'utils/showAlerts';
 import { RegisterScreenProps } from '../types/navigation';
-import { createStyles } from 'styles/RegisterScreenStyles';
-import { useTheme } from 'theme/ThemeContext';
+import createStyles from 'styles/RegisterScreenStyles';
 
 function RegisterScreen({ navigation }: RegisterScreenProps) {
-  const { theme } = useTheme();
-  const styles = createStyles(theme);
+  const styles = createStyles();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

@@ -1,7 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { ScrollView, View, Text } from 'react-native';
-import { createStyles } from '../styles/CustomizationProgressStyles';
-import { useTheme } from '../theme/ThemeContext';
+import createStyles from '../styles/CustomizationProgressStyles';
 
 export const CUSTOMIZATION_STEPS = [
   { id: 'CollarStyle', title: 'Collar' },
@@ -19,8 +18,7 @@ type Props = {
 };
 
 export default function CustomizationProgress({ currentStep }: Props) {
-  const { theme } = useTheme();
-  const styles = createStyles(theme);
+  const styles = createStyles();
   const scrollViewRef = useRef<ScrollView>(null);
   const currentStepIndex = CUSTOMIZATION_STEPS.findIndex((step) => step.id === currentStep);
 

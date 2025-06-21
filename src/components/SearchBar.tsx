@@ -1,8 +1,7 @@
 // src/components/SearchBar.tsx
 import React, { useState } from 'react';
 import { View, TextInput } from 'react-native';
-import { useTheme } from '../theme/ThemeContext';
-import { createStyles } from '../styles/SearchBarStyles';
+import createStyles from '../styles/SearchBarStyles';
 
 interface SearchBarProps {
   placeholder?: string;
@@ -10,8 +9,7 @@ interface SearchBarProps {
 }
 
 export default function SearchBar({ placeholder = 'Search...', onSearch }: SearchBarProps) {
-  const { theme } = useTheme();
-  const styles = createStyles(theme);
+  const styles = createStyles();
   const [query, setQuery] = useState('');
 
   // Handle search input
@@ -27,7 +25,6 @@ export default function SearchBar({ placeholder = 'Search...', onSearch }: Searc
       <TextInput
         style={styles.input}
         placeholder={placeholder}
-        placeholderTextColor={theme.secondaryColor} // Use secondary color for placeholder
         value={query}
         onChangeText={handleSearch}
         autoCapitalize='none'

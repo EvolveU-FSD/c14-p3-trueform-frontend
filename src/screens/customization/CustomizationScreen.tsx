@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { CustomizationProvider } from '../../context/CustomizationContext';
-import { createStyles } from '../../styles/CustomizationScreenStyles';
+import createStyles from '../../styles/CustomizationScreenStyles';
 
 const CUSTOMIZATION_STEPS = [
   { id: 'CollarStyle', title: 'Collar' },
@@ -15,8 +15,8 @@ const CUSTOMIZATION_STEPS = [
 ];
 
 export default function CustomizationScreen({ navigation }: any) {
-  const styles = createStyles();
   // Note: This component needs proper typing with navigation props
+  const styles = createStyles();
 
   return (
     <CustomizationProvider>
