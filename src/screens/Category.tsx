@@ -1,7 +1,6 @@
 // Category.tsx
 import React, { useState, useEffect } from 'react';
 import { View, Text, SafeAreaView, StatusBar, ScrollView } from 'react-native';
-
 import { CategoryScreenProps } from '../types/navigation';
 import { useTheme } from '../theme/ThemeContext';
 import { createCategoryStyles } from '../styles/CategoryStyles';
