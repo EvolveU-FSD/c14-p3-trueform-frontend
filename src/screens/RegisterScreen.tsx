@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 import { showAlert } from 'utils/showAlerts';
-import { RegisterScreenProps } from 'types/registerScreenTypes';
+import { RegisterScreenProps } from '../types/navigation';
 import { createStyles } from 'styles/RegisterScreenStyles';
 import { useTheme } from 'theme/ThemeContext';
 

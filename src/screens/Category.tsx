@@ -1,11 +1,9 @@
 // Category.tsx
 import React, { useState, useEffect } from 'react';
 import { View, Text, SafeAreaView, StatusBar, ScrollView } from 'react-native';
-import { RouteProp, useRoute } from '@react-navigation/native';
-import { RootStackParamList } from 'types/navigation';
+
+import { CategoryScreenProps } from '../types/navigation';
 import { useTheme } from '../theme/ThemeContext';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { createCategoryStyles } from '../styles/CategoryStyles';
 import SearchBar from '../components/SearchBar';
 import BottomNavBar from '../components/BottomNavBar';
@@ -19,12 +17,9 @@ const CATEGORIES = [
   { id: '5', name: 'Accessories', description: 'Finish your look' },
 ];
 
-type CategoryScreenRouteProp = RouteProp<RootStackParamList, 'Category'>;
-type CategoryScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Category'>;
-
-export default function CategoryScreen() {
+export default function CategoryScreen({ navigation, route }: CategoryScreenProps) {
   const [activeTab, setActiveTab] = useState('home');
-  const route = useRoute<CategoryScreenRouteProp>();
+
 
   // Extract category ID from slug
   const { slug: categoryId } = route.params;
@@ -58,7 +53,7 @@ export default function CategoryScreen() {
 
   const { theme } = useTheme();
   const styles = createCategoryStyles(theme);
-  const navigation = useNavigation<CategoryScreenNavigationProp>();
+
 
   const handleTabChange = (tabName: string) => {
     setActiveTab(tabName);

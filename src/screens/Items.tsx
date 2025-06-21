@@ -8,7 +8,7 @@ import {
   FlatList,
   Image,
 } from 'react-native';
-import { useRoute, useNavigation } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import itemsData from '../data/categoryItems.json';
 import { createStyles } from '../styles/ItemStyle';
@@ -30,8 +30,8 @@ const FILTER_OPTIONS = {
   ],
 };
 
-export default function Items() {
-  const navigation = useNavigation();
+export default function Items({ navigation }: any) {
+  // Note: This component needs proper typing with navigation props
   const route = useRoute<any>();
   const { theme } = useTheme();
   const styles = createStyles(theme);

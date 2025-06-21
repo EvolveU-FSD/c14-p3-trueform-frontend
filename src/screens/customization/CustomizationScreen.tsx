@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { CustomizationProvider } from '../../context/CustomizationContext';
 import { createStyles } from '../../styles/CustomizationScreenStyles';
 
@@ -15,9 +14,9 @@ const CUSTOMIZATION_STEPS = [
   { id: 'Measurement', title: 'Measurement' },
 ];
 
-export default function CustomizationScreen() {
+export default function CustomizationScreen({ navigation }: any) {
   const styles = createStyles();
-  const navigation = useNavigation();
+  // Note: This component needs proper typing with navigation props
 
   return (
     <CustomizationProvider>
