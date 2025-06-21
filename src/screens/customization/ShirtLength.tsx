@@ -7,13 +7,13 @@ const LENGTH_OPTIONS = [
   {
     id: 'tucked',
     title: 'Tucked',
-    image: require('../../../assets/images/customization/length/tucked.png'),
+    image: { uri: 'https://placehold.co/600x400' },
     description: 'Traditional tucked length',
   },
   {
     id: 'untucked',
     title: 'Untucked',
-    image: require('../../../assets/images/customization/length/untucked.png'),
+    image: { uri: 'https://placehold.co/600x400' },
     description: 'Casual untucked length',
   },
 ];
