@@ -1,17 +1,9 @@
 // src/services/auth.service.ts
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut as firebaseSignOut,
-  onAuthStateChanged,
-  User,
-  getIdToken as firebaseGetIdToken,
-} from 'firebase/auth';
-import { auth } from '../config/firebase';
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 
-export async function signUp(email: string, password: string): Promise<User> {
+export async function signUp(email: string, password: string): Promise<FirebaseAuthTypes.User> {
   try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const userCredential = await auth().createUserWithEmailAndPassword(email, password);
     return userCredential.user;
   } catch (error) {
     // Log the error
@@ -26,17 +18,16 @@ export async function signUp(email: string, password: string): Promise<User> {
   }
 }
 
-export async function signIn(email: string, password: string): Promise<User> {
+export async function signIn(email: string, password: string): Promise<FirebaseAuthTypes.User> {
   try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const userCredential = await auth().signInWithEmailAndPassword(email, password);
     return userCredential.user;
-  } catch (error) {
+  } catch (error: any) {
     console.error('Login failed:', error);
-    if (typeof error === 'object' && error !== null && 'code' in error) {
-      const errorCode = (error as { code: string }).code;
-      if (errorCode === 'auth/user-not-found') {
+    if (error.code) {
+      if (error.code === 'auth/user-not-found') {
         throw new Error('No account found with this email');
-      } else if (errorCode === 'auth/wrong-password') {
+      } else if (error.code === 'auth/wrong-password') {
         throw new Error('Incorrect password');
       }
     }
@@ -46,7 +37,7 @@ export async function signIn(email: string, password: string): Promise<User> {
 
 export async function signOut(): Promise<void> {
   try {
-    await firebaseSignOut(auth);
+    await auth().signOut();
   } catch (error) {
     console.error('Sign out failed:', error);
     // Maybe show a user-friendly error message
@@ -54,17 +45,17 @@ export async function signOut(): Promise<void> {
   }
 }
 
-export function getCurrentUser(): User | null {
-  return auth.currentUser;
+export function getCurrentUser(): FirebaseAuthTypes.User | null {
+  return auth().currentUser;
 }
 
-export function onAuthStateChange(callback: (user: User | null) => void) {
-  return onAuthStateChanged(auth, callback);
+export function onAuthStateChange(callback: (user: FirebaseAuthTypes.User | null) => void) {
+  return auth().onAuthStateChanged(callback);
 }
 
 export async function getIdToken(): Promise<string | null> {
-  const user = auth.currentUser;
+  const user = auth().currentUser;
   if (!user) return null;
 
-  return await firebaseGetIdToken(user, true); // force refresh
+  return await user.getIdToken(true); // force refresh
 }

@@ -1,6 +1,6 @@
 // src/config/firebase.ts
-import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+import firebase from '@react-native-firebase/app';
+import auth from '@react-native-firebase/auth';
 
 // Your Firebase configuration
 const firebaseConfig = {
@@ -12,11 +12,10 @@ const firebaseConfig = {
   appId: process.env.EXPO_PUBLIC_FIREBASE_APP_ID || '',
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-
-// Just use getAuth for now - we'll handle persistence in the auth context
-const auth = getAuth(app);
+// Initialize Firebase if it hasn't been initialized yet
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 
 export { auth };
-export default app;
+export default firebase;
