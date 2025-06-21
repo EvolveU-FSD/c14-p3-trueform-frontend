@@ -28,7 +28,7 @@ export function createStyles(theme: Theme) {
       color: theme.textColor,
     },
     primaryButtonText: {
-      color: theme.textColorInverse,
+      color: theme.textColor,
     },
   });
 }

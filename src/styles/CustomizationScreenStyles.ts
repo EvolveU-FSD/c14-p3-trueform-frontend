@@ -28,7 +28,7 @@ export function createStyles(theme: Theme) {
       marginBottom: spacing.xs,
     },
     stepNumberText: {
-      color: theme.textColorInverse,
+      color: theme.textColor,
       fontSize: fontSizes.sm,
       fontWeight: '600',
     },
@@ -56,7 +56,7 @@ export function createStyles(theme: Theme) {
       borderRadius: borderRadius.md,
     },
     startButtonText: {
-      color: theme.textColorInverse,
+      color: theme.textColor,
       fontSize: fontSizes.md,
       fontWeight: '600',
     },
