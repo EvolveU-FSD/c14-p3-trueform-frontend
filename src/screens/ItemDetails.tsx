@@ -10,7 +10,6 @@ import {
 import { useRoute } from '@react-navigation/native';
 import itemsData from '../data/categoryItems.json';
 import { styles } from '../styles/ItemDetailsStyles';
-import CollarType from './CollarType';
 import { useState } from 'react';
 
 type ItemDetailsProps = {
