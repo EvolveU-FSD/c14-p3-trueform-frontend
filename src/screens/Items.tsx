@@ -48,7 +48,9 @@ export default function Items({ navigation }: any) {
 
   // Filter items for this category
   const categoryItems = useMemo(
-    () => itemsData.filter((item) => item.categoryId === categoryId),
+    () => categoryId === 'all' 
+      ? itemsData // Show all items when slug is 'all'
+      : itemsData.filter((item) => item.categoryId === categoryId),
     [categoryId],
   );
 

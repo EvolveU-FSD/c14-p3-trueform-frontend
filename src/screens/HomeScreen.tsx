@@ -139,7 +139,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
 
         <TouchableOpacity
           style={styles.startShoppingButton}
-          onPress={() => navigation.navigate('Category', { slug: '1' })}
+          onPress={() => navigation.navigate('Items', { slug: 'all' })}
         >
           <Text style={styles.startShoppingText}>Start Shopping</Text>
         </TouchableOpacity>
