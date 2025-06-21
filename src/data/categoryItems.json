@@ -191,7 +191,7 @@
   },
   {
     "id": "item16",
-    "categoryId": "1", 
+    "categoryId": "1",
     "name": "Navy Parsiey printed shirt",
     "description": "100% cotton printed formal shirt with traditional paisley pattern.",
     "price": 99,
@@ -245,12 +245,8 @@
     "price": 99,
     "images": ["assets/images/shirtImages/Blue printed shirt.jpeg"],
     "color": "Blue",
-    "pattern": "Printed", 
+    "pattern": "Printed",
     "style": "Formal",
     "fabric": "100% cotton, 2-ply 80s, wrinkle-resistant, soft hand feel, 120 GSM."
   }
 ]
-
-
-
-
