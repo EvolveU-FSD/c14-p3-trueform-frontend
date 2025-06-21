@@ -4,6 +4,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 export type RootStackParamList = {
   Home: undefined;
   Category: { slug: string };
+  Items: { slug: string };
   BodyScan: undefined;
   Login: { email?: string } | undefined;
   Register: undefined;

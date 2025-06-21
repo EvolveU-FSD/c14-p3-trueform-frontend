@@ -44,6 +44,7 @@ const linking: LinkingOptions<RootStackParamList> = {
       Login: 'login',
       Register: 'register',
       BodyScan: 'bodyscan',
+      Items: 'items',
     },
   },
   enabled: true,
@@ -116,6 +117,11 @@ function AppContent() {
               name='ItemDetails'
               component={ItemDetails}
               options={{ title: 'Item Details' }}
+            />
+            <Stack.Screen
+              name='Items'
+              component={Items}
+              options={{ title: 'Items' }}
             />
             <Stack.Screen
               name='Customization'
