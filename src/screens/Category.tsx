@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, SafeAreaView, StatusBar, ScrollView } from 'react-native';
 import { CategoryScreenProps } from '../types/navigation';
 import { useTheme } from '../theme/ThemeContext';
-import { createCategoryStyles } from '../styles/CategoryStyles';
+import createStyles from '../styles/CategoryStyles';
 import SearchBar from '../components/SearchBar';
 import BottomNavBar from '../components/BottomNavBar';
 
@@ -17,8 +17,8 @@ const CATEGORIES = [
 ];
 
 export default function CategoryScreen({ navigation, route }: CategoryScreenProps) {
+  const styles = createStyles();
   const [activeTab, setActiveTab] = useState('home');
-
 
   // Extract category ID from slug
   const { slug: categoryId } = route.params;
@@ -50,8 +50,6 @@ export default function CategoryScreen({ navigation, route }: CategoryScreenProp
     }
   }, [categoryId]);
 
-  const { theme } = useTheme();
-  const styles = createCategoryStyles(theme);
 
 
   const handleTabChange = (tabName: string) => {
@@ -64,7 +62,7 @@ export default function CategoryScreen({ navigation, route }: CategoryScreenProp
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle={theme.isDarkMode ? 'light-content' : 'dark-content'} />
+      <StatusBar barStyle={'light-content'} />
 
       <ScrollView>
         <SearchBar />

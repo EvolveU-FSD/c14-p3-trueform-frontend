@@ -1,10 +1,7 @@
 import React from 'react';
 import CustomizationScreenWrapper from '../../components/CustomizationScreenWrapper';
-import { View, StyleSheet, ScrollView } from 'react-native';
 import CustomizationOptionGrid from '../../components/CustomizationOptionGrid';
-import CustomizationNavigation from '../../components/CustomizationNavigation';
 import { useCustomization } from '../../context/CustomizationContext';
-import { styles } from '../../styles/PocketTypesStyles';
 
 const POCKET_OPTIONS = [
   {

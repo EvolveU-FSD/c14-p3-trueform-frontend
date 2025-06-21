@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
-import { bodyScanStyles } from '../styles/BodyScanStyles';
+import createStyles from '../styles/BodyScanStyles';
 import { endpoints } from '../config/constants';
 import { CrossImage } from '../components/CrossImage';
 import { showAlert } from '../utils/showAlerts';
@@ -25,7 +25,7 @@ export default function BodyScanScreen({ navigation }: BodyScanScreenProps) {
   const [weight, setWeight] = useState('');
   const [gender, setGender] = useState('male');
   const [age, setAge] = useState('');
-
+  const styles = createStyles();
   // Image state
   const [frontImage, setFrontImage] = useState<string | null>(null);
   const [profileImage, setProfileImage] = useState<string | null>(null);
@@ -156,34 +156,34 @@ export default function BodyScanScreen({ navigation }: BodyScanScreenProps) {
     galleryPickFn: () => Promise<void>,
     cameraPickFn: () => Promise<void>,
   ) => (
-    <View style={bodyScanStyles.photoContainer}>
-      <Text style={bodyScanStyles.photoLabel}>{label}</Text>
+    <View style={styles.photoContainer}>
+      <Text style={styles.photoLabel}>{label}</Text>
       {photoUri ? (
-        <CrossImage source={photoUri} style={bodyScanStyles.previewImage} />
+        <CrossImage source={photoUri} style={styles.previewImage} />
       ) : (
-        <View style={bodyScanStyles.placeholderImage}>
+        <View style={styles.placeholderImage}>
           <Text>{label}</Text>
         </View>
       )}
 
       {isMobile ? (
-        <View style={bodyScanStyles.photoButtonsRow}>
+        <View style={styles.photoButtonsRow}>
           <TouchableOpacity
-            style={[bodyScanStyles.photoButton, bodyScanStyles.halfWidthButton]}
+            style={[styles.photoButton, styles.halfWidthButton]}
             onPress={galleryPickFn}
           >
-            <Text style={bodyScanStyles.photoButtonText}>Gallery</Text>
+            <Text style={styles.photoButtonText}>Gallery</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[bodyScanStyles.photoButton, bodyScanStyles.halfWidthButton]}
+            style={[styles.photoButton, styles.halfWidthButton]}
             onPress={cameraPickFn}
           >
-            <Text style={bodyScanStyles.photoButtonText}>Camera</Text>
+            <Text style={styles.photoButtonText}>Camera</Text>
           </TouchableOpacity>
         </View>
       ) : (
-        <TouchableOpacity style={bodyScanStyles.photoButton} onPress={galleryPickFn}>
-          <Text style={bodyScanStyles.photoButtonText}>Select Photo</Text>
+        <TouchableOpacity style={styles.photoButton} onPress={galleryPickFn}>
+          <Text style={styles.photoButtonText}>Select Photo</Text>
         </TouchableOpacity>
       )}
     </View>
@@ -191,17 +191,17 @@ export default function BodyScanScreen({ navigation }: BodyScanScreenProps) {
 
   // JSX remains the same
   return (
-    <ScrollView style={bodyScanStyles.container}>
-      <Text style={bodyScanStyles.title}>Body Measurements Scan</Text>
+    <ScrollView style={styles.container}>
+      <Text style={styles.title}>Body Measurements Scan</Text>
 
-      <View style={bodyScanStyles.formSection}>
+      <View style={styles.formSection}>
         {/* Rest of the JSX remains unchanged */}
-        <Text style={bodyScanStyles.sectionTitle}>Personal Information</Text>
+        <Text style={styles.sectionTitle}>Personal Information</Text>
 
-        <View style={bodyScanStyles.inputContainer}>
-          <Text style={bodyScanStyles.label}>Height (cm)</Text>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Height (cm)</Text>
           <TextInput
-            style={bodyScanStyles.input}
+            style={styles.input}
             value={height}
             onChangeText={setHeight}
             placeholder='Enter your height in cm'
@@ -209,10 +209,10 @@ export default function BodyScanScreen({ navigation }: BodyScanScreenProps) {
           />
         </View>
 
-        <View style={bodyScanStyles.inputContainer}>
-          <Text style={bodyScanStyles.label}>Weight (kg)</Text>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Weight (kg)</Text>
           <TextInput
-            style={bodyScanStyles.input}
+            style={styles.input}
             value={weight}
             onChangeText={setWeight}
             placeholder='Enter your weight in kg'
@@ -220,13 +220,13 @@ export default function BodyScanScreen({ navigation }: BodyScanScreenProps) {
           />
         </View>
 
-        <View style={bodyScanStyles.inputContainer}>
-          <Text style={bodyScanStyles.label}>Gender</Text>
-          <View style={bodyScanStyles.pickerContainer}>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Gender</Text>
+          <View style={styles.pickerContainer}>
             <Picker
               selectedValue={gender}
               onValueChange={(itemValue) => setGender(itemValue)}
-              style={bodyScanStyles.picker}
+              style={styles.picker}
             >
               <Picker.Item label='Male' value='male' />
               <Picker.Item label='Female' value='female' />
@@ -234,10 +234,10 @@ export default function BodyScanScreen({ navigation }: BodyScanScreenProps) {
           </View>
         </View>
 
-        <View style={bodyScanStyles.inputContainer}>
-          <Text style={bodyScanStyles.label}>Age (optional)</Text>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Age (optional)</Text>
           <TextInput
-            style={bodyScanStyles.input}
+            style={styles.input}
             value={age}
             onChangeText={setAge}
             placeholder='Enter your age'
@@ -246,14 +246,14 @@ export default function BodyScanScreen({ navigation }: BodyScanScreenProps) {
         </View>
       </View>
 
-      <View style={bodyScanStyles.formSection}>
-        <Text style={bodyScanStyles.sectionTitle}>Photos</Text>
-        <Text style={bodyScanStyles.photoInstructions}>
+      <View style={styles.formSection}>
+        <Text style={styles.sectionTitle}>Photos</Text>
+        <Text style={styles.photoInstructions}>
           Please provide two full-body photos: one front-facing and one right-side profile. Wear
           tight-fitting clothes for best results.
         </Text>
 
-        <View style={bodyScanStyles.photoSection}>
+        <View style={styles.photoSection}>
           {renderPhotoSection(
             'Front Photo',
             frontImage,
@@ -271,24 +271,24 @@ export default function BodyScanScreen({ navigation }: BodyScanScreenProps) {
       </View>
 
       <TouchableOpacity
-        style={bodyScanStyles.submitButton}
+        style={styles.submitButton}
         onPress={handleSubmit}
         disabled={isLoading}
       >
         {isLoading ? (
           <ActivityIndicator color='#fff' />
         ) : (
-          <Text style={bodyScanStyles.submitButtonText}>Get Measurements</Text>
+          <Text style={styles.submitButtonText}>Get Measurements</Text>
         )}
       </TouchableOpacity>
 
       {measurements && (
-        <View style={bodyScanStyles.resultsSection}>
-          <Text style={bodyScanStyles.sectionTitle}>Your Measurements</Text>
+        <View style={styles.resultsSection}>
+          <Text style={styles.sectionTitle}>Your Measurements</Text>
           {Object.entries(measurements).map(([key, value]: [any, any]) => (
-            <View key={key} style={bodyScanStyles.measurementRow}>
-              <Text style={bodyScanStyles.measurementLabel}>{key}</Text>
-              <Text style={bodyScanStyles.measurementValue}>{value}</Text>
+            <View key={key} style={styles.measurementRow}>
+              <Text style={styles.measurementLabel}>{key}</Text>
+              <Text style={styles.measurementValue}>{value}</Text>
             </View>
           ))}
         </View>

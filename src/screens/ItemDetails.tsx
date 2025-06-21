@@ -6,11 +6,12 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import itemsData from '../data/categoryItems.json';
-import { styles } from '../styles/ItemDetailsStyles';
+import createStyles from '../styles/ItemDetailsStyles';
 import { useState } from 'react';
 import { ItemDetailsScreenProps } from 'types/navigation';
 
 export default function ItemDetails({ navigation, route }: ItemDetailsScreenProps) {
+  const styles = createStyles();
   const itemId = route.params?.itemId;
 
   const item = itemsData.find((i) => i.id === itemId);

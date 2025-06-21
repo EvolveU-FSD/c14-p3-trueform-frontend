@@ -2,13 +2,11 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { ItemCardProps } from '../types/product';
-import { useTheme } from '../theme/ThemeContext';
-import { createStyles } from '../styles/ItemCardStyles';
+import createStyles from '../styles/ItemCardStyles';
 import { CrossImage } from './CrossImage';
 
 export default function ItemCard({ product, onPress }: ItemCardProps) {
-  const { theme } = useTheme();
-  const styles = createStyles(theme);
+  const styles = createStyles();
 
   const handlePress = () => {
     if (onPress) {

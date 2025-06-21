@@ -3,12 +3,10 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
 import { useAuth } from '../context/AuthContext';
 import { showAlert } from 'utils/showAlerts';
 import { LoginScreenProps } from '../types/navigation';
-import { useTheme } from '../theme/ThemeContext';
-import { createStyles } from '../styles/LoginScreenStyles';
+import createStyles from '../styles/LoginScreenStyles';
 
 function LoginScreen({ navigation, route }: LoginScreenProps) {
-  const { theme } = useTheme();
-  const styles = createStyles(theme);
+  const styles = createStyles();
 
   // Use email from params if available
   const [email, setEmail] = useState(route.params?.email || '');

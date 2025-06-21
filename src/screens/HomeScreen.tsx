@@ -11,14 +11,12 @@ import {
 } from 'react-native';
 import { HomeScreenProps } from '../types/navigation';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { createStyles } from '../styles/HomeScreenStyles';
-import { useTheme } from '../theme/ThemeContext';
+import createStyles from '../styles/HomeScreenStyles';
 
 const heroBannerImage = require('../../assets/images/banners/hero-banner.jpg');
 
 export default function HomeScreen({ navigation }: HomeScreenProps) {
-  const { theme } = useTheme();
-  const styles = createStyles(theme);
+  const styles = createStyles();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSubmenuOpen, setIsSubmenuOpen] = useState(false); // Add this state
 

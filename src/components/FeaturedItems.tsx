@@ -3,12 +3,10 @@ import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { FeaturedItemsProps } from '../types/product';
 import ItemCard from './ItemCard';
-import { useTheme } from '../theme/ThemeContext';
-import { createStyles } from '../styles/FeaturedItemsStyles';
+import createStyles from '../styles/FeaturedItemsStyles';
 
 export default function FeaturedItems({ title, items, seeAllLink }: FeaturedItemsProps) {
-  const { theme } = useTheme();
-  const styles = createStyles(theme);
+  const styles = createStyles();
 
   return (
     <View style={styles.container}>
