@@ -17,8 +17,9 @@ import { CrossImage } from '../components/CrossImage';
 import { showAlert } from '../utils/showAlerts';
 import { api } from '../services/api.service';
 import { BodyScanResponse } from '../types/bodyScanResponse';
+import { BodyScanScreenProps } from '../types/navigation';
 
-export default function BodyScanScreen() {
+export default function BodyScanScreen({ navigation }: BodyScanScreenProps) {
   // User information state
   const [height, setHeight] = useState('');
   const [weight, setWeight] = useState('');

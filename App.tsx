@@ -89,7 +89,7 @@ function AppNavigator() {
             />
             <Stack.Screen
               name='Category'
-              component={Items}
+              component={CategoryScreen}
               options={({
                 route,
               }: {
