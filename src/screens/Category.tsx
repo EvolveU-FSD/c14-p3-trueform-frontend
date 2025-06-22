@@ -1,6 +1,6 @@
 // Category.tsx
 import React, { useState, useEffect } from 'react';
-import { View, Text, SafeAreaView, StatusBar, ScrollView } from 'react-native';
+import { View, Text, SafeAreaView, StatusBar, ScrollView, TouchableOpacity } from 'react-native';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from 'types/navigation';
 import { useTheme } from '../theme/ThemeContext';
@@ -9,15 +9,8 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { createCategoryStyles } from '../styles/CategoryStyles';
 import SearchBar from '../components/SearchBar';
 import BottomNavBar from '../components/BottomNavBar';
-
-// Sample categories data - replace with your actual data source
-const CATEGORIES = [
-  { id: '1', name: 'Shirts', description: 'Explore our shirt collection' },
-  { id: '2', name: 'Pants', description: 'Find your perfect pants' },
-  { id: '3', name: 'Jackets', description: 'Stay warm with our jackets' },
-  { id: '4', name: 'Apparel', description: 'Complete your wardrobe' },
-  { id: '5', name: 'Accessories', description: 'Finish your look' },
-];
+import { CategoryService } from '../services/category.service';
+import { Category as CategoryType } from '../types/category';
 
 type CategoryScreenRouteProp = RouteProp<RootStackParamList, 'Category'>;
 type CategoryScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Category'>;
@@ -25,36 +18,41 @@ type CategoryScreenNavigationProp = NativeStackNavigationProp<RootStackParamList
 export default function CategoryScreen() {
   const [activeTab, setActiveTab] = useState('home');
   const route = useRoute<CategoryScreenRouteProp>();
+  const [categories, setCategories] = useState<CategoryType[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Extract category ID from slug
-  const { slug: categoryId } = route.params;
+  // Extract category slug from route params
+  const { slug } = route.params;
 
-  // Find category details based on ID
-  const [categoryDetails, setCategoryDetails] = useState({
-    id: '',
-    name: '',
-    description: '',
-  });
+  // Find category details based on slug
+  const [categoryDetails, setCategoryDetails] = useState<CategoryType | null>(null);
 
   useEffect(() => {
-    // Look up category by ID
-    const category = CATEGORIES.find((cat) => cat.id === categoryId);
+    const fetchCategories = async () => {
+      try {
+        setLoading(true);
+        const fetchedCategories = await CategoryService.getAll();
+        console.log(fetchedCategories);
+        setCategories(fetchedCategories);
 
-    if (category) {
-      setCategoryDetails({
-        id: category.id,
-        name: category.name,
-        description: category.description,
-      });
-    } else {
-      // Fallback if no category found
-      setCategoryDetails({
-        id: categoryId,
-        name: 'Unknown Category',
-        description: 'Category not found',
-      });
-    }
-  }, [categoryId]);
+        // Find the current category by slug
+        const currentCategory = await CategoryService.getBySlug(slug);
+        if (currentCategory) {
+          setCategoryDetails(currentCategory);
+        } else {
+          setError('Category not found');
+        }
+      } catch (err) {
+        console.error('Failed to fetch categories:', err);
+        setError('Failed to load categories');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, [slug]);
 
   const { theme } = useTheme();
   const styles = createCategoryStyles(theme);
@@ -62,11 +60,30 @@ export default function CategoryScreen() {
 
   const handleTabChange = (tabName: string) => {
     setActiveTab(tabName);
-
     if (tabName === 'home') {
       navigation.navigate('Home');
     }
   };
+
+  if (loading) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.placeholderContainer}>
+          <Text>Loading...</Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  if (error || !categoryDetails) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.placeholderContainer}>
+          <Text style={styles.placeholderText}>{error || 'Category not found'}</Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -80,12 +97,17 @@ export default function CategoryScreen() {
           <Text style={styles.subtitle}>{categoryDetails.description}</Text>
         </View>
 
-        <View style={styles.placeholderContainer}>
-          <Text style={styles.placeholderText}>
-            This is the {categoryDetails.name} category page.
-          </Text>
-          <Text style={styles.placeholderSubtext}>Products will be displayed here soon.</Text>
-          <Text style={styles.placeholderSubtext}>Category ID: {categoryDetails.id}</Text>
+        {/* Categories List */}
+        <View style={styles.categoriesContainer}>
+          {categories.map((category) => (
+            <TouchableOpacity
+              key={category.id}
+              onPress={() => navigation.navigate('Category', { slug: category.slug })}
+              style={styles.categoryItem}
+            >
+              <Text style={styles.categoryName}>{category.name}</Text>
+            </TouchableOpacity>
+          ))}
         </View>
       </ScrollView>
 

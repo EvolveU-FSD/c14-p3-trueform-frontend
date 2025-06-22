@@ -1,8 +1,9 @@
 export const API_CONFIG = {
-  BASE_URL: process.env.EXPO_PUBLIC_API_BASE_URL || 'http://localhost:3000/api',
+  BASE_URL: process.env.EXPO_PUBLIC_API_BASE_URL || 'https://localhost:3000/api',
+  IMAGE_BASE_URL: 'https://localhost:3000/images',
   ENDPOINTS: {
     CLOTHING: '/clothing',
-    CATEGORIES: '/categories',
+    CATEGORIES: '/category',
     VENDORS: '/vendor',
     CUSTOMERS: '/customer',
   },

@@ -29,8 +29,25 @@ export function createStyles(theme: Theme) {
     backButton: {
       padding: spacing.sm,
     },
+    centerContent: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    errorText: {
+      fontSize: fontSizes.lg,
+      color: 'red',
+      textAlign: 'center',
+      marginHorizontal: spacing.md,
+    },
+    itemCount: {
+      fontSize: fontSizes.md,
+      color: theme.secondaryColor,
+      padding: spacing.md,
+    },
     gridContainer: {
-      padding: spacing.sm,
+      paddingHorizontal: spacing.sm,
+      paddingBottom: spacing.lg,
     },
     columnWrapper: {
       justifyContent: 'space-between',
@@ -44,31 +61,49 @@ export function createStyles(theme: Theme) {
       overflow: 'hidden',
       elevation: 2,
       shadowColor: theme.textColor,
-      shadowOffset: { width: 0, height: 1 },
-      shadowOpacity: 0.2,
-      shadowRadius: 2,
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 4,
     },
     itemImage: {
       width: '100%',
       aspectRatio: 1,
+      backgroundColor: theme.borderColor, // Placeholder color while loading
     },
     itemContent: {
       padding: spacing.sm,
     },
     itemName: {
-      fontSize: fontSizes.sm,
+      fontSize: fontSizes.md,
       fontWeight: '500',
-      marginBottom: spacing.xs,
       color: theme.textColor,
+      marginBottom: spacing.xs,
     },
     itemPrice: {
       fontSize: fontSizes.md,
       fontWeight: 'bold',
       color: theme.primaryColor,
     },
+    filterDropdown: {
+      position: 'absolute',
+      top: 60,
+      right: spacing.md,
+      backgroundColor: theme.backgroundColor,
+      borderRadius: borderRadius.md,
+      padding: spacing.md,
+      elevation: 5,
+      shadowColor: theme.textColor,
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 4,
+      zIndex: 1000,
+      minWidth: 200,
+      borderWidth: 1,
+      borderColor: theme.borderColor,
+    },
     sortDropdown: {
       position: 'absolute',
-      top: spacing.xxl,
+      top: 60,
       left: spacing.md,
       backgroundColor: theme.backgroundColor,
       borderRadius: borderRadius.md,
@@ -78,33 +113,12 @@ export function createStyles(theme: Theme) {
       shadowOpacity: 0.1,
       shadowRadius: 4,
       zIndex: 1000,
+      minWidth: 150,
+      borderWidth: 1,
+      borderColor: theme.borderColor,
     },
-    sortOption: {
-      padding: spacing.md,
-      borderBottomWidth: 1,
-      borderBottomColor: theme.borderColor,
-    },
-    sortOptionSelected: {
-      backgroundColor: theme.secondaryColor,
-    },
-    sortOptionText: {
-      fontSize: fontSizes.sm,
-      color: theme.textColor,
-    },
-    filterDropdown: {
-      position: 'absolute',
-      top: spacing.xxl,
-      right: spacing.md,
-      backgroundColor: theme.backgroundColor,
-      borderRadius: borderRadius.md,
-      shadowColor: theme.textColor,
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 4,
-      elevation: 5,
-      zIndex: 1000,
-      minWidth: 200,
-      padding: spacing.md,
+    filterSection: {
+      marginBottom: spacing.md,
     },
     filterHeader: {
       flexDirection: 'row',
@@ -118,20 +132,24 @@ export function createStyles(theme: Theme) {
       color: theme.textColor,
     },
     filterOptions: {
-      flexDirection: 'column',
+      marginTop: spacing.sm,
     },
     filterOption: {
       paddingVertical: spacing.sm,
       paddingHorizontal: spacing.md,
-      borderBottomWidth: 1,
-      borderBottomColor: theme.borderColor,
+      marginBottom: spacing.xs,
+      borderRadius: borderRadius.sm,
+      backgroundColor: theme.borderColor,
     },
     filterOptionSelected: {
-      backgroundColor: theme.secondaryColor,
+      backgroundColor: theme.primaryColor,
     },
     filterOptionText: {
       fontSize: fontSizes.sm,
       color: theme.textColor,
+    },
+    filterOptionTextSelected: {
+      color: theme.textColorInverse,
     },
   });
 }

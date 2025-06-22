@@ -4,7 +4,7 @@ export interface Clothing {
   description: string;
   price: number;
   colors: string[];
-  imageUrl: string;
+  mediaUrl: string;
 }
 
 export type CreateClothingDTO = Omit<Clothing, 'id'>;
