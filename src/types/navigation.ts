@@ -7,7 +7,7 @@ export type RootStackParamList = {
   BodyScan: undefined;
   Login: { email?: string } | undefined;
   Register: undefined;
-  ItemDetails: undefined;
+  ItemDetails: { itemId: string };
   Customization: undefined;
   CollarStyle: undefined;
   CuffStyle: undefined;
@@ -22,12 +22,14 @@ export type RootStackParamList = {
 // Navigation prop types
 export type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 export type CategoryScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Category'>;
+export type ItemDetailsScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'ItemDetails'>;
 export type BodyScanScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'BodyScan'>;
 export type LoginScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
 export type RegisterScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Register'>;
 
 // Route prop types
 export type CategoryScreenRouteProp = RouteProp<RootStackParamList, 'Category'>;
+export type ItemDetailsScreenRouteProp = RouteProp<RootStackParamList, 'ItemDetails'>;
 export type BodyScanScreenRouteProp = RouteProp<RootStackParamList, 'BodyScan'>;
 export type HomeScreenRouteProp = RouteProp<RootStackParamList, 'Home'>;
 export type LoginScreenRouteProp = RouteProp<RootStackParamList, 'Login'>;
@@ -41,6 +43,11 @@ export interface HomeScreenProps {
 export interface CategoryScreenProps {
   navigation: CategoryScreenNavigationProp;
   route: CategoryScreenRouteProp;
+}
+
+export interface ItemDetailsScreenProps {
+  navigation: ItemDetailsScreenNavigationProp;
+  route: ItemDetailsScreenRouteProp;
 }
 
 export interface BodyScanScreenProps {

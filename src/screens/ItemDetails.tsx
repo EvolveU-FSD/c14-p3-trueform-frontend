@@ -2,26 +2,16 @@ import {
   View,
   Text,
   Image,
-  StyleSheet,
   ScrollView,
-  Dimensions,
   TouchableOpacity,
 } from 'react-native';
-import { useRoute } from '@react-navigation/native';
 import itemsData from '../data/categoryItems.json';
 import { styles } from '../styles/ItemDetailsStyles';
 import { useState } from 'react';
+import { ItemDetailsScreenProps } from 'types/navigation';
 
-type ItemDetailsProps = {
-  itemId?: string;
-};
-
-export default function ItemDetails(props: ItemDetailsProps) {
-  // Note: This component doesn't follow standard navigation pattern
-  // It should be updated to receive navigation as prop when used as screen
-  // Support both navigation param and direct prop
-  const route = useRoute<any>();
-  const itemId = props.itemId || route.params?.itemId;
+export default function ItemDetails({ navigation, route }: ItemDetailsScreenProps) {
+  const itemId = route.params?.itemId;
 
   const item = itemsData.find((i) => i.id === itemId);
 
