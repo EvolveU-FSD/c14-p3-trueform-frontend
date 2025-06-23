@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 import { showAlert } from 'utils/showAlerts';
-import { LoginScreenProps } from '../types/loginScreenTypes';
+import { LoginScreenProps } from '../types/navigation';
 import { useTheme } from '../theme/ThemeContext';
 import { createStyles } from '../styles/LoginScreenStyles';
 

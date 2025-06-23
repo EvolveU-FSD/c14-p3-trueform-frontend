@@ -7,9 +7,7 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
-import { useRoute, useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../types/navigation';
+import { useRoute } from '@react-navigation/native';
 import itemsData from '../data/categoryItems.json';
 import { styles } from '../styles/ItemDetailsStyles';
 import CollarType from './CollarType';
@@ -19,10 +17,9 @@ type ItemDetailsProps = {
   itemId?: string;
 };
 
-type ItemDetailsScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'ItemDetails'>;
-
 export default function ItemDetails(props: ItemDetailsProps) {
-  const navigation = useNavigation<ItemDetailsScreenNavigationProp>();
+  // Note: This component doesn't follow standard navigation pattern
+  // It should be updated to receive navigation as prop when used as screen
   // Support both navigation param and direct prop
   const route = useRoute<any>();
   const itemId = props.itemId || route.params?.itemId;
