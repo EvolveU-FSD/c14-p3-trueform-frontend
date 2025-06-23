@@ -50,7 +50,7 @@ const imageMapping: { [key: string]: any } = {
   'assets/images/shirtImages/Blue parsley printed shirt.jpeg': require('../../assets/images/shirtImages/Blue parsley printed shirt.jpeg'),
   'assets/images/shirtImages/Green printed shirt.jpeg': require('../../assets/images/shirtImages/Green printed shirt.jpeg'),
   'assets/images/shirtImages/White printed shirt.jpeg': require('../../assets/images/shirtImages/White printed shirt.jpeg'),
-  'assets/images/shirtImages/Blue printed shirt.jpeg': require('../../assets/images/shirtImages/Blue printed shirt.jpeg')
+  'assets/images/shirtImages/Blue printed shirt.jpeg': require('../../assets/images/shirtImages/Blue printed shirt.jpeg'),
 };
 
 type RootStackParamList = {
@@ -75,14 +75,10 @@ export default function Items({ navigation }: any) {
   });
 
   // Filter items for this category
-  const categoryItems = useMemo(
-
-    () => {
-      console.log('itemsData', itemsData);
-      return itemsData.filter((item) => item.categoryId === categoryId)
-    },
-    [categoryId],
-  );
+  const categoryItems = useMemo(() => {
+    console.log('itemsData', itemsData);
+    return itemsData.filter((item) => item.categoryId === categoryId);
+  }, [categoryId]);
 
   const handleBackPress = () => {
     navigation.navigate('Home');
@@ -229,7 +225,11 @@ export default function Items({ navigation }: any) {
             onPress={() => navigation.navigate('ItemDetails', { itemId: item.id })}
             activeOpacity={0.8}
           >
-            <Image source={imageMapping[item.images[0]]} style={styles.itemImage} resizeMode='cover' />
+            <Image
+              source={imageMapping[item.images[0]]}
+              style={styles.itemImage}
+              resizeMode='cover'
+            />
             <View style={styles.itemContent}>
               <Text style={styles.itemName} numberOfLines={1}>
                 {item.name}

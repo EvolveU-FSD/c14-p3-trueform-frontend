@@ -1,11 +1,11 @@
 // src/services/auth.service.ts
-import { 
-  createUserWithEmailAndPassword, 
-  signInWithEmailAndPassword, 
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   signOut as firebaseSignOut,
   onAuthStateChanged,
   User,
-  AuthError
+  AuthError,
 } from 'firebase/auth';
 import { auth } from '../config/firebase';
 

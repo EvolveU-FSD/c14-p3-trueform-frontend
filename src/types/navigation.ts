@@ -22,11 +22,23 @@ export type RootStackParamList = {
 
 // Navigation prop types
 export type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
-export type CategoryScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Category'>;
-export type ItemDetailsScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'ItemDetails'>;
-export type BodyScanScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'BodyScan'>;
+export type CategoryScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Category'
+>;
+export type ItemDetailsScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'ItemDetails'
+>;
+export type BodyScanScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'BodyScan'
+>;
 export type LoginScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
-export type RegisterScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Register'>;
+export type RegisterScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Register'
+>;
 
 // Route prop types
 export type CategoryScreenRouteProp = RouteProp<RootStackParamList, 'Category'>;

@@ -20,7 +20,6 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSubmenuOpen, setIsSubmenuOpen] = useState(false); // Add this state
 
-
   const handleCategorySelect = (category: string) => {
     navigation.navigate('Category', { slug: category.toLowerCase() });
     setIsMenuOpen(false);

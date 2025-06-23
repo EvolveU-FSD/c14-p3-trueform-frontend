@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, SafeAreaView, StatusBar, ScrollView } from 'react-native';
 import { CategoryScreenProps } from '../types/navigation';
-import { useTheme } from '../theme/ThemeContext';
 import createStyles from '../styles/CategoryStyles';
 import SearchBar from '../components/SearchBar';
 import BottomNavBar from '../components/BottomNavBar';
@@ -49,8 +48,6 @@ export default function CategoryScreen({ navigation, route }: CategoryScreenProp
       });
     }
   }, [categoryId]);
-
-
 
   const handleTabChange = (tabName: string) => {
     setActiveTab(tabName);

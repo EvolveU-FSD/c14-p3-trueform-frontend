@@ -44,7 +44,6 @@ npx expo start --web
 
 This will launch the app in your browser at [http://localhost:19006](http://localhost:19006).
 
-
 ---
 
 ## 📁 Project Structure

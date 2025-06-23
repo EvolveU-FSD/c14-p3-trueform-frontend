@@ -1,10 +1,4 @@
-import {
-  View,
-  Text,
-  Image,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
+import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
 import itemsData from '../data/categoryItems.json';
 import createStyles from '../styles/ItemDetailsStyles';
 import { useState } from 'react';

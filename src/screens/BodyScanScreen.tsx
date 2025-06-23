@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
-  Alert,
   Platform,
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
@@ -17,7 +16,6 @@ import { CrossImage } from '../components/CrossImage';
 import { showAlert } from '../utils/showAlerts';
 import { api } from '../services/api.service';
 import { BodyScanResponse } from '../types/bodyScanResponse';
-import { BodyScanScreenProps } from '../types/navigation';
 
 export default function BodyScanScreen() {
   // User information state
@@ -61,20 +59,16 @@ export default function BodyScanScreen() {
 
   const handleImagePick = async (
     source: 'camera' | 'gallery',
-    setImage: React.Dispatch<React.SetStateAction<string | null>>
+    setImage: React.Dispatch<React.SetStateAction<string | null>>,
   ) => {
     const permissionGranted =
-      source === 'camera'
-        ? await requestCameraPermission()
-        : await requestGalleryPermission();
+      source === 'camera' ? await requestCameraPermission() : await requestGalleryPermission();
 
     if (!permissionGranted) return;
 
     try {
       const pickerFn =
-        source === 'camera'
-          ? ImagePicker.launchCameraAsync
-          : ImagePicker.launchImageLibraryAsync;
+        source === 'camera' ? ImagePicker.launchCameraAsync : ImagePicker.launchImageLibraryAsync;
 
       const result = await pickerFn({
         allowsEditing: true,
@@ -258,23 +252,19 @@ export default function BodyScanScreen() {
             'Front Photo',
             frontImage,
             () => handleImagePick('gallery', setFrontImage),
-            () => handleImagePick('camera', setFrontImage)
+            () => handleImagePick('camera', setFrontImage),
           )}
 
           {renderPhotoSection(
             'Profile Photo',
             profileImage,
             () => handleImagePick('gallery', setProfileImage),
-            () => handleImagePick('camera', setProfileImage)
+            () => handleImagePick('camera', setProfileImage),
           )}
         </View>
       </View>
 
-      <TouchableOpacity
-        style={styles.submitButton}
-        onPress={handleSubmit}
-        disabled={isLoading}
-      >
+      <TouchableOpacity style={styles.submitButton} onPress={handleSubmit} disabled={isLoading}>
         {isLoading ? (
           <ActivityIndicator color='#fff' />
         ) : (
@@ -296,5 +286,3 @@ export default function BodyScanScreen() {
     </ScrollView>
   );
 }
-
-

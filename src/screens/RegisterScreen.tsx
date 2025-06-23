@@ -147,6 +147,6 @@ function RegisterScreen({ navigation }: RegisterScreenProps) {
       </ScrollView>
     </KeyboardAvoidingView>
   );
-};
+}
 
 export default RegisterScreen;

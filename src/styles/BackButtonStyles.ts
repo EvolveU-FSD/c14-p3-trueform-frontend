@@ -25,4 +25,4 @@ export default function createStyles() {
       color: theme.textColor,
     },
   });
-};
+}

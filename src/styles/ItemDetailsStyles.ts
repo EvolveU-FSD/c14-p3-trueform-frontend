@@ -8,20 +8,49 @@ export default function createStyles() {
   const { theme } = useTheme();
 
   return StyleSheet.create({
-    container: { alignItems: 'center', padding: spacing.lg, backgroundColor: theme.backgroundColor },
+    container: {
+      alignItems: 'center',
+      padding: spacing.lg,
+      backgroundColor: theme.backgroundColor,
+    },
     imageGallery: { width: screenWidth, height: 260, marginBottom: spacing.sm },
     image: {
-      width: screenWidth - (spacing.lg * 2),
+      width: screenWidth - spacing.lg * 2,
       height: 220,
       borderRadius: borderRadius.lg,
       marginHorizontal: spacing.sm,
       backgroundColor: theme.borderColor,
     },
-    imageIndicatorContainer: { flexDirection: 'row', justifyContent: 'center', marginBottom: spacing.sm },
-    imageIndicator: { width: spacing.sm, height: spacing.sm, borderRadius: borderRadius.sm, backgroundColor: theme.borderColor, margin: 3 },
-    name: { fontSize: fontSizes.xl, fontWeight: 'bold', marginBottom: spacing.sm, color: theme.textColor },
-    price: { fontSize: fontSizes.lg, color: theme.primaryColor, fontWeight: 'bold', marginBottom: spacing.sm },
-    desc: { fontSize: fontSizes.md, color: theme.secondaryColor, marginBottom: spacing.sm, textAlign: 'center' },
+    imageIndicatorContainer: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      marginBottom: spacing.sm,
+    },
+    imageIndicator: {
+      width: spacing.sm,
+      height: spacing.sm,
+      borderRadius: borderRadius.sm,
+      backgroundColor: theme.borderColor,
+      margin: 3,
+    },
+    name: {
+      fontSize: fontSizes.xl,
+      fontWeight: 'bold',
+      marginBottom: spacing.sm,
+      color: theme.textColor,
+    },
+    price: {
+      fontSize: fontSizes.lg,
+      color: theme.primaryColor,
+      fontWeight: 'bold',
+      marginBottom: spacing.sm,
+    },
+    desc: {
+      fontSize: fontSizes.md,
+      color: theme.secondaryColor,
+      marginBottom: spacing.sm,
+      textAlign: 'center',
+    },
     metaContainer: { marginTop: spacing.sm, width: '100%' },
     meta: { fontSize: fontSizes.md, color: theme.secondaryColor, marginBottom: spacing.xs },
     notFound: { fontSize: fontSizes.lg, color: 'red', marginTop: spacing.xxl },

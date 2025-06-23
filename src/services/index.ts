@@ -5,7 +5,7 @@ export {
   signOut,
   getCurrentUser,
   onAuthStateChange,
-  getIdToken
+  getIdToken,
 } from './auth.service';
 
 // Export API service

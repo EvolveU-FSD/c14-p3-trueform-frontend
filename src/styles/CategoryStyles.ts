@@ -5,7 +5,6 @@ import { useTheme } from '../theme/ThemeContext';
 export default function createCategoryStyles() {
   const { theme } = useTheme();
 
-
   return StyleSheet.create({
     container: {
       flex: 1,

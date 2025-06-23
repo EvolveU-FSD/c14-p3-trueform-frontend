@@ -142,7 +142,7 @@ export default function createStyles() {
       width: '100%',
     },
     halfWidthButton: {
-      width: '48%'
+      width: '48%',
     },
   });
 }

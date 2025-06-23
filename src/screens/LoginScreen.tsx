@@ -77,6 +77,6 @@ function LoginScreen({ navigation, route }: LoginScreenProps) {
       </TouchableOpacity>
     </View>
   );
-};
+}
 
 export default LoginScreen;

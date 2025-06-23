@@ -1,8 +1,7 @@
 // src/components/NavButtons.tsx
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, TouchableOpacity, ScrollView } from 'react-native';
 import { NavButtonProps } from '../types/product';
-import { useTheme } from '../theme/ThemeContext';
 import createStyles from '../styles/NavButtonsStyles';
 
 function NavButton({ icon, label, onPress, isActive }: NavButtonProps) {

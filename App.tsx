@@ -90,7 +90,11 @@ function AppContent() {
         <NavigationContainer linking={linking}>
           <Stack.Navigator initialRouteName='Home'>
             <Stack.Screen name='Login' component={LoginScreen} options={{ headerShown: false }} />
-            <Stack.Screen name='Register' component={RegisterScreen} options={{ headerShown: false }} />
+            <Stack.Screen
+              name='Register'
+              component={RegisterScreen}
+              options={{ headerShown: false }}
+            />
             <Stack.Screen
               name='Home'
               component={HomeScreen}
@@ -99,11 +103,7 @@ function AppContent() {
             <Stack.Screen
               name='Category'
               component={CategoryScreen}
-              options={({
-                route,
-              }: {
-                route: CategoryScreenRouteProp;
-              }) => ({
+              options={({ route }: { route: CategoryScreenRouteProp }) => ({
                 title: route.params.slug,
                 headerShown: false,
               })}
@@ -118,11 +118,7 @@ function AppContent() {
               component={ItemDetails}
               options={{ title: 'Item Details' }}
             />
-            <Stack.Screen
-              name='Items'
-              component={Items}
-              options={{ title: 'Items' }}
-            />
+            <Stack.Screen name='Items' component={Items} options={{ title: 'Items' }} />
             <Stack.Screen
               name='Customization'
               component={CustomizationScreen}
