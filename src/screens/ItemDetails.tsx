@@ -7,6 +7,15 @@ import { ItemDetailsScreenProps } from 'types/navigation';
 export default function ItemDetails({ navigation, route }: ItemDetailsScreenProps) {
   const styles = createStyles();
   const itemId = route.params?.itemId;
+  const [showFabric, setShowFabric] = useState(false);
+  // eslint-disable-next-line
+  const [selectedColor, setSelectedColor] = useState('');
+  // eslint-disable-next-line
+  const [selectedSize, setSelectedSize] = useState('');
+  // eslint-disable-next-line
+  const [quantity, setQuantity] = useState(1);
+  // eslint-disable-next-line
+  const [isCustomizing, setIsCustomizing] = useState(false);
 
   const item = itemsData.find((i) => i.id === itemId);
 
@@ -18,13 +27,7 @@ export default function ItemDetails({ navigation, route }: ItemDetailsScreenProp
     );
   }
 
-  const images: string[] = item.images && item.images.length > 0 ? item.images : [item.image];
-
-  const [showFabric, setShowFabric] = useState(false);
-  const [selectedColor, setSelectedColor] = useState('');
-  const [selectedSize, setSelectedSize] = useState('');
-  const [quantity, setQuantity] = useState(1);
-  const [isCustomizing, setIsCustomizing] = useState(false);
+  const images: string[] = item.images && item.images.length > 0 ? item.images : [];
 
   const handleCustomization = () => {
     navigation.navigate('CollarStyle');

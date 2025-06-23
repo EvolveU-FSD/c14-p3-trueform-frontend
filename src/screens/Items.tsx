@@ -12,7 +12,6 @@ import { useRoute } from '@react-navigation/native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import itemsData from '../data/categoryItems.json';
 import createStyles from '../styles/ItemStyle';
-import { useTheme } from '../theme/ThemeContext';
 
 const FILTER_OPTIONS = {
   colors: [
@@ -51,12 +50,6 @@ const imageMapping: { [key: string]: any } = {
   'assets/images/shirtImages/Green printed shirt.jpeg': require('../../assets/images/shirtImages/Green printed shirt.jpeg'),
   'assets/images/shirtImages/White printed shirt.jpeg': require('../../assets/images/shirtImages/White printed shirt.jpeg'),
   'assets/images/shirtImages/Blue printed shirt.jpeg': require('../../assets/images/shirtImages/Blue printed shirt.jpeg'),
-};
-
-type RootStackParamList = {
-  Home: undefined;
-  ItemDetails: { itemId: string };
-  // add other routes if needed
 };
 
 export default function Items({ navigation }: any) {

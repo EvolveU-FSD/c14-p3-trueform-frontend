@@ -5,7 +5,6 @@ import {
   signOut as firebaseSignOut,
   onAuthStateChanged,
   User,
-  AuthError,
 } from 'firebase/auth';
 import { auth } from '../config/firebase';
 

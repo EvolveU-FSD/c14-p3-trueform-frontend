@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 import { showAlert } from '../utils/showAlerts';
 import { LoginScreenProps } from '../types/navigation';
@@ -73,7 +73,7 @@ function LoginScreen({ navigation, route }: LoginScreenProps) {
         onPress={() => navigation.navigate('Register')}
         style={styles.linkContainer}
       >
-        <Text style={styles.link}>Don't have an account? Register</Text>
+        <Text style={styles.link}>Don&apos;t have an account? Register</Text>
       </TouchableOpacity>
     </View>
   );

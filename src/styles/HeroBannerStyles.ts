@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import { useTheme } from '../theme/ThemeContext';
 import { spacing, fontSizes, borderRadius } from '../utils/sizes';
 
-export default function createStyles() {
+export default function useCreateStyles() {
   const { theme } = useTheme();
 
   return StyleSheet.create({
