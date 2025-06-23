@@ -19,7 +19,7 @@ import { api } from '../services/api.service';
 import { BodyScanResponse } from '../types/bodyScanResponse';
 import { BodyScanScreenProps } from '../types/navigation';
 
-export default function BodyScanScreen({ navigation }: BodyScanScreenProps) {
+export default function BodyScanScreen() {
   // User information state
   const [height, setHeight] = useState('');
   const [weight, setWeight] = useState('');
@@ -296,3 +296,5 @@ export default function BodyScanScreen({ navigation }: BodyScanScreenProps) {
     </ScrollView>
   );
 }
+
+
