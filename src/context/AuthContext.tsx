@@ -1,13 +1,13 @@
 // src/context/AuthContext.tsx
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { User } from 'firebase/auth';
-import { onAuthStateChange, signIn, signUp, signOut } from '/services';
+import { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import { onAuthStateChange, signIn, signUp, signOut } from '../services';
 
 interface AuthContextType {
-  user: User | null;
+  user: FirebaseAuthTypes.User | null;
   loading: boolean;
-  login: (email: string, password: string) => Promise<User>;
-  register: (email: string, password: string) => Promise<User>;
+  login: (email: string, password: string) => Promise<FirebaseAuthTypes.User>;
+  register: (email: string, password: string) => Promise<FirebaseAuthTypes.User>;
   logout: () => Promise<void>;
   isAuthenticated: boolean;
 }
@@ -27,7 +27,7 @@ interface AuthProviderProps {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
