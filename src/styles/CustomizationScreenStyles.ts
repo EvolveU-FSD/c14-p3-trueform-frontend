@@ -5,7 +5,7 @@ import { Theme } from '../theme/ThemeContext';
 export function createStyles(theme: Theme) {
   return StyleSheet.create({
     container: {
-      flex: 1,
+      // flex: 1,
       backgroundColor: theme.backgroundColor,
     },
     stepsContainer: {
@@ -38,7 +38,7 @@ export function createStyles(theme: Theme) {
       fontWeight: '500',
     },
     content: {
-      flex: 1,
+      // flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
       padding: spacing.lg,
