@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { Category, CategorySectionProps } from '../types/product';
-import createStyles from '../styles/CategorySectionStyles';
+import createStyles, { Styles } from '../styles/CategorySectionStyles';
 import { CrossImage } from './CrossImage';
 
 function CategoryItem({
@@ -12,7 +12,7 @@ function CategoryItem({
 }: {
   category: Category;
   onPress?: (category: Category) => void;
-  styles: any; // Pass styles as prop
+  styles: Styles;
 }) {
   return (
     <TouchableOpacity style={styles.categoryItem} onPress={() => onPress && onPress(category)}>

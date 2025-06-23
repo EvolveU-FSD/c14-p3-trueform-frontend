@@ -13,6 +13,7 @@ import { HomeScreenProps } from '../types/navigation';
 import { FontAwesome5 } from '@expo/vector-icons';
 import createStyles from '../styles/HomeScreenStyles';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const heroBannerImage = require('../../assets/images/banners/hero-banner.jpg');
 
 export default function HomeScreen({ navigation }: HomeScreenProps) {

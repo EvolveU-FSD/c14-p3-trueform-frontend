@@ -52,3 +52,5 @@ export default function useCreateStyles() {
     },
   });
 }
+
+export type Styles = ReturnType<typeof useCreateStyles>;
