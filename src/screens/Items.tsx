@@ -30,8 +30,42 @@ const FILTER_OPTIONS = {
   ],
 };
 
+<<<<<<< HEAD
 export default function Items({ navigation }: any) {
   // Note: This component needs proper typing with navigation props
+=======
+const imageMapping: { [key: string]: any } = {
+  'assets/images/shirtImages/White solid shirt.jpeg': require('../../assets/images/shirtImages/White solid shirt.jpeg'),
+   'assets/images/shirtImages/Black solid shirt.jpeg': require('../../assets/images/shirtImages/Black solid shirt.jpeg'),
+   'assets/images/shirtImages/Yellow solid shirt.jpeg': require('../../assets/images/shirtImages/Yellow solid shirt.jpeg'),
+    'assets/images/shirtImages/Red solid shirt.jpeg': require('../../assets/images/shirtImages/Red solid shirt.jpeg'),
+   'assets/images/shirtImages/Blue solid shirt.jpeg': require('../../assets/images/shirtImages/Blue solid shirt.jpeg'),
+   'assets/images/shirtImages/Navy solid shirt.jpeg': require('../../assets/images/shirtImages/Navy solid shirt.jpeg'),
+   'assets/images/shirtImages/White stripes shirt.jpeg': require('../../assets/images/shirtImages/White stripes shirt.jpeg'),
+  'assets/images/shirtImages/Red stripes shirt.jpeg': require('../../assets/images/shirtImages/Red stripes shirt.jpeg'),
+  'assets/images/shirtImages/Navy stripes shirt.jpeg': require('../../assets/images/shirtImages/Navy stripes shirt.jpeg'),
+  'assets/images/shirtImages/Blue stripes shirt.jpeg': require('../../assets/images/shirtImages/Blue stripes shirt.jpeg'),
+  'assets/images/shirtImages/Red check shirt.jpeg': require('../../assets/images/shirtImages/Red check shirt.jpeg'),
+  'assets/images/shirtImages/Green check shirt.jpeg': require('../../assets/images/shirtImages/Green check shirt.jpeg'),
+  'assets/images/shirtImages/Blue check shirt.jpeg': require('../../assets/images/shirtImages/Blue check shirt.jpeg'),
+  'assets/images/shirtImages/Black check shirt.jpeg': require('../../assets/images/shirtImages/Black check shirt.jpeg'),
+  'assets/images/shirtImages/White floral print shirt.jpeg': require('../../assets/images/shirtImages/White floral print shirt.jpeg'),
+  'assets/images/shirtImages/Navy parsley printed shirt.jpeg': require('../../assets/images/shirtImages/Navy parsley printed shirt.jpeg'),
+  'assets/images/shirtImages/Blue parsley printed shirt.jpeg': require('../../assets/images/shirtImages/Blue parsley printed shirt.jpeg'),
+  'assets/images/shirtImages/Green printed shirt.jpeg': require('../../assets/images/shirtImages/Green printed shirt.jpeg'),
+  'assets/images/shirtImages/White printed shirt.jpeg': require('../../assets/images/shirtImages/White printed shirt.jpeg'),
+  'assets/images/shirtImages/Blue printed shirt.jpeg': require('../../assets/images/shirtImages/Blue printed shirt.jpeg')
+};
+
+type RootStackParamList = {
+  Home: undefined;
+  ItemDetails: { itemId: string };
+  // add other routes if needed
+};
+
+export default function Items() {
+  const navigation = useNavigation<import('@react-navigation/native').NavigationProp<RootStackParamList>>();
+>>>>>>> main
   const route = useRoute<any>();
   const styles = createStyles();
   const { slug: categoryId } = route.params;
@@ -48,9 +82,15 @@ export default function Items({ navigation }: any) {
 
   // Filter items for this category
   const categoryItems = useMemo(
+<<<<<<< HEAD
     () => categoryId === 'all' 
       ? itemsData // Show all items when slug is 'all'
       : itemsData.filter((item) => item.categoryId === categoryId),
+=======
+    
+    () => {console.log('itemsData', itemsData); 
+      return itemsData.filter((item) => item.categoryId === categoryId)},
+>>>>>>> main
     [categoryId],
   );
 
@@ -199,7 +239,7 @@ export default function Items({ navigation }: any) {
             onPress={() => navigation.navigate('ItemDetails', { itemId: item.id })}
             activeOpacity={0.8}
           >
-            <Image source={{ uri: item.image }} style={styles.itemImage} resizeMode='cover' />
+            <Image source={imageMapping[item.images[0]]}  style={styles.itemImage} resizeMode='cover' />
             <View style={styles.itemContent}>
               <Text style={styles.itemName} numberOfLines={1}>
                 {item.name}
