@@ -1,42 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { CustomizationProvider } from '../../context/CustomizationContext';
+import { CustomizationService } from '../../services/customization.service';
+import { CustomizationCategory } from '../types/customization';
 import { createStyles } from '../../styles/CustomizationScreenStyles';
 import { useTheme } from '../../theme/ThemeContext';
-import { CategoryService } from '../../services/category.service';
-import { Category } from '../../types/category';
 
 export default function CustomizationScreen() {
   const { theme } = useTheme();
   const styles = createStyles(theme);
   const navigation = useNavigation();
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<CustomizationCategory[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchCategories = async () => {
-      try {
-        const allCategories = await CategoryService.getAll();
-        // Filter for shirt categories and sort by sortOrder
-        const shirtCategories = allCategories
-          .filter(category => category.clothingType === 'SHIRT')
-          .sort((a, b) => a.sortOrder - b.sortOrder);
-        
-        if (shirtCategories.length === 0) {
-          setError('No customization options found');
-        } else {
-          setCategories(shirtCategories);
-        }
-      } catch (err) {
-        console.error('Failed to fetch customization categories:', err);
-        setError('Failed to load customization options');
-      } finally {
-        setLoading(false);
-      }
+      const fetchedCategories = await CustomizationService.getCategories('shirt');
+      setCategories(fetchedCategories);
+      setLoading(false);
     };
-
     fetchCategories();
   }, []);
 
@@ -44,14 +27,6 @@ export default function CustomizationScreen() {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size='large' color={theme.primaryColor} />
-      </View>
-    );
-  }
-
-  if (error || categories.length === 0) {
-    return (
-      <View style={styles.errorContainer}>
-        <Text style={styles.errorText}>{error || 'No customization options available'}</Text>
       </View>
     );
   }
@@ -80,23 +55,19 @@ export default function CustomizationScreen() {
         </ScrollView>
         <View style={styles.content}>
           <Text style={styles.startText}>
-            {categories[0]
-              ? `Select ${categories[0].name.toLowerCase()} to begin customization`
-              : ''}
+            Select {categories[0]?.name.toLowerCase()} to begin customization
           </Text>
-          {categories[0] && (
-            <TouchableOpacity
-              style={styles.startButton}
-              onPress={() =>
-                navigation.navigate('CustomizationOption', {
-                  category: categories[0].id,
-                  productType: 'shirt',
-                })
-              }
-            >
-              <Text style={styles.startButtonText}>Start Customization</Text>
-            </TouchableOpacity>
-          )}
+          <TouchableOpacity
+            style={styles.startButton}
+            onPress={() =>
+              navigation.navigate('CustomizationOption', {
+                category: categories[0]?.id,
+                productType: 'shirt',
+              })
+            }
+          >
+            <Text style={styles.startButtonText}>Start Customization</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </CustomizationProvider>

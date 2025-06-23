@@ -52,7 +52,7 @@ export default function ItemDetails() {
   }, [itemId]);
 
   const handleCustomization = () => {
-    navigation.navigate('CollarStyle');
+    navigation.navigate('Customization');
   };
 
   if (loading) {
