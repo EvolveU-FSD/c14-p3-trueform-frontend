@@ -7,12 +7,12 @@ const SLEEVE_OPTIONS = [
   {
     id: 'long',
     title: 'Long Sleeve',
-    image: { uri: 'https://www.propercloth.com/media/shirts/variations/sleeve-long.jpg' },
+   image: require('../../../assets/images/Sleeve/Long Sleeve.jpeg'),
   },
   {
     id: 'short',
     title: 'Short Sleeve',
-    image: { uri: 'https://www.propercloth.com/media/shirts/variations/sleeve-short.jpg' },
+     image: require('../../../assets/images/Sleeve/Short Sleeve.jpeg'),
   },
 ];
 

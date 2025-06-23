@@ -7,13 +7,13 @@ const LENGTH_OPTIONS = [
   {
     id: 'tucked',
     title: 'Tucked',
-    // image: require('../../../assets/images/customization/length/tucked.png'),
+    image: require('../../../assets/images/length/Tucked.jpeg'),
     description: 'Traditional tucked length',
   },
   {
     id: 'untucked',
     title: 'Untucked',
-    // image: require('../../../assets/images/customization/length/untucked.png'),
+    image: require('../../../assets/images/length/Untucked.jpeg'),
     description: 'Casual untucked length',
   },
 ];

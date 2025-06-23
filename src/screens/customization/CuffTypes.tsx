@@ -7,20 +7,19 @@ const CUFF_OPTIONS = [
   {
     id: 'single',
     title: 'Single Button',
-    image: { uri: 'https://www.propercloth.com/media/shirts/variations/cuff-single.jpg' },
+    image: require('../../../assets/images/cuff/Single Button.jpeg'),
   },
   {
     id: 'double',
     title: 'Double Button',
-    image: { uri: 'https://www.propercloth.com/media/shirts/variations/cuff-double.jpg' },
+    image: require('../../../assets/images/cuff/Double Button.jpeg'),
   },
   {
     id: 'french',
     title: 'French Cuff',
-    image: { uri: 'https://www.propercloth.com/media/shirts/variations/cuff-french.jpg' },
+    image: require('../../../assets/images/cuff/French Cuff.jpeg'),
   },
 ];
-
 export default function CuffStyle() {
   const { state, updateOption } = useCustomization();
 

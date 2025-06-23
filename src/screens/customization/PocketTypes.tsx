@@ -15,42 +15,32 @@ const POCKET_OPTIONS = [
   {
     id: 'classic-round',
     title: 'Classic Round',
-    image: { uri: 'https://www.propercloth.com/pockets/classic-round.jpg' },
+    image: require('../../../assets/images/pocket/Classic Round.jpeg'),
   },
   {
     id: 'classic-angle',
     title: 'Classic Angle',
-    image: { uri: 'https://www.propercloth.com/pockets/classic-angle.jpg' },
+    image: require('../../../assets/images/pocket/Classic Angle.jpeg'),
   },
   {
     id: 'diamond-straight',
     title: 'Diamond Straight',
-    image: { uri: 'https://www.propercloth.com/pockets/diamond-straight.jpg' },
+    image: require('../../../assets/images/pocket/Diamond Straight.jpeg'),
   },
   {
     id: 'classic-square',
     title: 'Classic Square',
-    image: { uri: 'https://www.propercloth.com/pockets/classic-square.jpg' },
+    image: require('../../../assets/images/pocket/Classic Square.jpeg'),
   },
   {
     id: 'round-flap',
     title: 'Round Flap',
-    image: { uri: 'https://www.propercloth.com/pockets/round-flap.jpg' },
+    image: require('../../../assets/images/pocket/Round Flap.jpeg'),
   },
   {
     id: 'angle-flap',
     title: 'Angle Flap',
-    image: { uri: 'https://www.propercloth.com/pockets/angle-flap.jpg' },
-  },
-  {
-    id: 'diamond-flap',
-    title: 'Diamond Flap',
-    image: { uri: 'https://www.propercloth.com/pockets/diamond-flap.jpg' },
-  },
-  {
-    id: 'round-with-glass',
-    title: 'Round With Glass',
-    image: { uri: 'https://www.propercloth.com/pockets/round-with-glass.jpg' },
+    image: require('../../../assets/images/pocket/Angle Flap.jpeg'),
   },
 ];
 

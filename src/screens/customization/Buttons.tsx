@@ -7,27 +7,27 @@ const BUTTON_OPTIONS = [
   {
     id: 'white',
     title: 'White Buttons',
-    image: { uri: 'https://www.propercloth.com/media/shirts/variations/buttons-white.jpg' },
+    image: require('../../../assets/images/buttons/White Buttons.jpeg'),
   },
   {
     id: 'black',
     title: 'Black Buttons',
-    image: { uri: 'https://www.propercloth.com/media/shirts/variations/buttons-black.jpg' },
+    image: require('../../../assets/images/buttons/Black Buttons.jpeg'),
   },
   {
     id: 'blue-horn',
     title: 'Blue Horn Buttons',
-    image: { uri: 'https://www.propercloth.com/media/shirts/variations/buttons-blue-horn.jpg' },
+    image: require('../../../assets/images/buttons/Blue Horn Buttons.jpeg'),
   },
   {
     id: 'brown-horn',
     title: 'Brown Horn Buttons',
-    image: { uri: 'https://www.propercloth.com/media/shirts/variations/buttons-brown-horn.jpg' },
+    image: require('../../../assets/images/buttons/Brown Horn Buttons.jpeg'),
   },
   {
     id: 'clear',
     title: 'Clear Buttons',
-    image: { uri: 'https://www.propercloth.com/media/shirts/variations/buttons-clear.jpg' },
+    image: require('../../../assets/images/buttons/Clear Buttons.jpeg'),
   },
 ];
 
