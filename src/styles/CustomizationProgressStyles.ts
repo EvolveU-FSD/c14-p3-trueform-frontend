@@ -35,7 +35,7 @@ export function createStyles(theme: Theme) {
       backgroundColor: theme.primaryColor,
     },
     stepNumberText: {
-      color: theme.textColorInverse,
+      color: theme.textColor,
       fontSize: fontSizes.sm,
       fontWeight: '600',
     },

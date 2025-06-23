@@ -68,7 +68,7 @@ export function createStyles(theme: Theme) {
       alignItems: 'center',
     },
     startShoppingText: {
-      color: theme.textColorInverse,
+      color: theme.textColor,
       fontSize: fontSizes.md,
       fontWeight: 'bold',
     },

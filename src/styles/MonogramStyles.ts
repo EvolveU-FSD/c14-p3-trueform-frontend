@@ -30,7 +30,7 @@ export function createStyles(theme: Theme) {
       backgroundColor: theme.secondaryColor,
     },
     itemText: {
-      color: theme.textColorInverse,
+      color: theme.textColor,
       fontSize: fontSizes.md,
       fontWeight: '600',
       textAlign: 'center',
