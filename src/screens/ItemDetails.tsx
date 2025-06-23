@@ -1,53 +1,75 @@
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  ScrollView,
-  Dimensions,
-  TouchableOpacity,
-} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, Image, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/navigation';
-import itemsData from '../data/categoryItems.json';
 import { styles } from '../styles/ItemDetailsStyles';
-import CollarType from './CollarType';
-import { useState } from 'react';
-
-type ItemDetailsProps = {
-  itemId?: string;
-};
+import { ClothingService } from '../services/clothing.service';
+import { Clothing } from '../types/clothing';
+import { useTheme } from '../theme/ThemeContext';
+import { getImageUrl } from '../utils/imageHandling';
 
 type ItemDetailsScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'ItemDetails'>;
 
-export default function ItemDetails(props: ItemDetailsProps) {
+export default function ItemDetails() {
   const navigation = useNavigation<ItemDetailsScreenNavigationProp>();
-  // Support both navigation param and direct prop
   const route = useRoute<any>();
-  const itemId = props.itemId || route.params?.itemId;
+  const { theme } = useTheme();
 
-  const item = itemsData.find((i) => i.id === itemId);
-
-  if (!item) {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.notFound}>Item not found.</Text>
-      </View>
-    );
-  }
-
-  const images: string[] = item.images && item.images.length > 0 ? item.images : [item.image];
-
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [item, setItem] = useState<Clothing | null>(null);
   const [showFabric, setShowFabric] = useState(false);
-  const [selectedColor, setSelectedColor] = useState('');
-  const [selectedSize, setSelectedSize] = useState('');
-  const [quantity, setQuantity] = useState(1);
-  const [isCustomizing, setIsCustomizing] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  // Get itemId from route params
+  const itemId = route.params?.itemId;
+
+  useEffect(() => {
+    const fetchItemDetails = async () => {
+      if (!itemId) {
+        setError('No item ID provided');
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const clothingItem = await ClothingService.getById(itemId);
+        if (clothingItem) {
+          setItem(clothingItem);
+        } else {
+          setError('Item not found');
+        }
+      } catch (err) {
+        console.error('Failed to fetch item details:', err);
+        setError('Failed to load item details');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchItemDetails();
+  }, [itemId]);
 
   const handleCustomization = () => {
     navigation.navigate('CollarStyle');
   };
+
+  if (loading) {
+    return (
+      <View style={[styles.container, styles.centerContent]}>
+        <ActivityIndicator size='large' color={theme.primaryColor} />
+      </View>
+    );
+  }
+
+  if (error || !item) {
+    return (
+      <View style={[styles.container, styles.centerContent]}>
+        <Text style={styles.notFound}>{error || 'Item not found'}</Text>
+      </View>
+    );
+  }
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -57,41 +79,45 @@ export default function ItemDetails(props: ItemDetailsProps) {
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         style={styles.imageGallery}
+        onMomentumScrollEnd={(e) => {
+          const newIndex = Math.round(e.nativeEvent.contentOffset.x / styles.image.width);
+          setCurrentImageIndex(newIndex);
+        }}
       >
-        {images.map((img, idx) => (
-          <Image key={img + idx} source={{ uri: img }} style={styles.image} resizeMode='cover' />
-        ))}
+        <Image
+          source={{ uri: getImageUrl(item.mediaUrl) }}
+          style={styles.image}
+          resizeMode='cover'
+        />
       </ScrollView>
-      <View style={styles.imageIndicatorContainer}>
-        {images.map((_, idx) => (
-          <View key={idx} style={styles.imageIndicator} />
-        ))}
-      </View>
+
+      {/* Item Details */}
       <Text style={styles.name}>{item.name}</Text>
       <Text style={styles.price}>${item.price}</Text>
       <Text style={styles.desc}>{item.description}</Text>
+
       <View style={styles.metaContainer}>
-        <Text style={styles.meta}>{item.color && `Color: ${item.color}`}</Text>
-        <Text style={styles.meta}>{item.pattern && `Pattern: ${item.pattern}`}</Text>
-        <Text style={styles.meta}>{item.style && `Style: ${item.style}`}</Text>
+        {item.colors && <Text style={styles.meta}>Colors: {item.colors.join(', ')}</Text>}
       </View>
-      {/* Fabric Details Section (Collapsible) */}
-      <TouchableOpacity style={styles.collapseHeader} onPress={() => setShowFabric((v) => !v)}>
+
+      {/* Fabric Details Section */}
+      <TouchableOpacity style={styles.collapseHeader} onPress={() => setShowFabric(!showFabric)}>
         <Text style={styles.collapseHeaderText}>Fabric Details</Text>
         <Text style={styles.collapseHeaderIcon}>{showFabric ? '▲' : '▼'}</Text>
       </TouchableOpacity>
+
       {showFabric && (
         <View style={styles.fabricSection}>
           <Text style={styles.fabricDetail}>
-            {item.fabric ? item.fabric : 'fabric details not available'}
+            {item.description || 'Fabric details not available'}
           </Text>
         </View>
       )}
-      {/* Add to Cart Button */}
+
+      {/* Start Customization Button */}
       <TouchableOpacity style={styles.cartBtn} onPress={handleCustomization}>
         <Text style={styles.cartBtnText}>Start Customization</Text>
       </TouchableOpacity>
-      {/* Add more details here if needed */}
     </ScrollView>
   );
 }
