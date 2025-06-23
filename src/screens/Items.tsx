@@ -11,7 +11,7 @@ import {
 import { useRoute } from '@react-navigation/native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import itemsData from '../data/categoryItems.json';
-import { createStyles } from '../styles/ItemStyle';
+import createStyles from '../styles/ItemStyle';
 import { useTheme } from '../theme/ThemeContext';
 
 const FILTER_OPTIONS = {
@@ -33,8 +33,7 @@ const FILTER_OPTIONS = {
 export default function Items({ navigation }: any) {
   // Note: This component needs proper typing with navigation props
   const route = useRoute<any>();
-  const { theme } = useTheme();
-  const styles = createStyles(theme);
+  const styles = createStyles();
   const { slug: categoryId } = route.params;
 
   // States

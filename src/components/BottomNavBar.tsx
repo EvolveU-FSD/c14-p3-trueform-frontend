@@ -2,14 +2,12 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { BottomNavBarProps } from '../types/product';
-import { useTheme } from '../theme/ThemeContext';
-import { createStyles } from '../styles/BottomNavBarStyles';
+import createStyles from '../styles/BottomNavBarStyles';
 import { useNavigation } from '@react-navigation/native';
 
 export default function BottomNavBar({ activeTab, onTabChange }: BottomNavBarProps) {
-  const { theme } = useTheme();
-  const styles = createStyles(theme);
   const navigation = useNavigation();
+  const styles = createStyles();
 
   const tabs = [
     { name: 'home', icon: '🏠', label: 'Home' },

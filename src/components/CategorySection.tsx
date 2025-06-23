@@ -2,8 +2,7 @@
 import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { Category, CategorySectionProps } from '../types/product';
-import { useTheme } from '../theme/ThemeContext';
-import { createStyles } from '../styles/CategorySectionStyles';
+import createStyles from '../styles/CategorySectionStyles';
 import { CrossImage } from './CrossImage';
 
 function CategoryItem({
@@ -26,9 +25,7 @@ function CategoryItem({
 }
 
 export default function CategorySection({ categories, onCategoryPress }: CategorySectionProps) {
-  const { theme } = useTheme();
-  const styles = createStyles(theme);
-
+  const styles = createStyles();
   return (
     <View style={styles.container}>
       <View style={styles.header}>

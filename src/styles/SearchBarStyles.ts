@@ -1,8 +1,10 @@
 import { StyleSheet } from 'react-native';
-import { Theme } from '../theme/ThemeContext';
 import { spacing, fontSizes, borderRadius } from '../utils/sizes';
+import { useTheme } from '../theme/ThemeContext';
 
-export function createStyles(theme: Theme) {
+export default function createStyles() {
+  const { theme } = useTheme();
+
   return StyleSheet.create({
     container: {
       marginVertical: spacing.sm,

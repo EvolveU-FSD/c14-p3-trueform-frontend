@@ -1,8 +1,10 @@
 import { StyleSheet } from 'react-native';
 import { spacing, fontSizes, borderRadius, buttonHeights } from '../utils/sizes';
-import { Theme } from '../theme/ThemeContext';
+import { useTheme } from '../theme/ThemeContext';
 
-export function createStyles(theme: Theme) {
+export default function createStyles() {
+  const { theme } = useTheme();
+
   return StyleSheet.create({
     container: {
       flex: 1,
