@@ -1,11 +1,16 @@
+import { CustomizationOption } from './customization';
+
 // src/types/navigation.ts
 export type RootStackParamList = {
   Home: undefined;
   Category: { slug: string };
   ItemDetails: { itemId: string };
-  Customization: undefined;
+  Customization: {
+    itemId: string;
+  };
   CustomizationOption: {
+    itemId: string;
     category: string;
-    productType: string;
+    options: CustomizationOption[];
   };
 };

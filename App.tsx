@@ -19,25 +19,10 @@ const linking: LinkingOptions<RootStackParamList> = {
   config: {
     screens: {
       Home: '',
-      Category: {
-        path: 'category/:slug',
-        parse: {
-          slug: (slug: string) => slug,
-        },
-      },
-      ItemDetails: {
-        path: 'item/:itemId',
-        parse: {
-          itemId: (id: string) => id,
-        },
-      },
-      Customization: 'customize',
-      CustomizationOption: {
-        path: 'customize/:category',
-        parse: {
-          category: (category: string) => category,
-        },
-      },
+      Category: 'category/:slug',
+      ItemDetails: 'item/:itemId',
+      Customization: 'item/:itemId/customize',
+      CustomizationOption: 'item/:itemId/customize/:category',
     },
   },
   enabled: true,

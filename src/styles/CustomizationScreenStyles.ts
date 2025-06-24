@@ -8,6 +8,22 @@ export function createStyles(theme: Theme) {
       flex: 1,
       backgroundColor: theme.backgroundColor,
     },
+    loadingContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    errorContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: spacing.lg,
+    },
+    errorText: {
+      fontSize: fontSizes.md,
+      color: 'red',
+      textAlign: 'center',
+    },
     stepsContainer: {
       padding: spacing.md,
       borderBottomWidth: 1,
@@ -18,14 +34,20 @@ export function createStyles(theme: Theme) {
       marginRight: spacing.md,
       opacity: 0.7,
     },
+    activeStepItem: {
+      opacity: 1,
+    },
     stepNumber: {
       width: spacing.lg,
       height: spacing.lg,
       borderRadius: borderRadius.full,
-      backgroundColor: theme.primaryColor,
+      backgroundColor: theme.secondaryColor,
       alignItems: 'center',
       justifyContent: 'center',
       marginBottom: spacing.xs,
+    },
+    activeStepNumber: {
+      backgroundColor: theme.primaryColor,
     },
     stepNumberText: {
       color: theme.textColorInverse,
@@ -34,8 +56,11 @@ export function createStyles(theme: Theme) {
     },
     stepTitle: {
       fontSize: fontSizes.xs,
-      color: theme.primaryColor,
+      color: theme.secondaryColor,
       fontWeight: '500',
+    },
+    activeStepTitle: {
+      color: theme.primaryColor,
     },
     content: {
       flex: 1,
@@ -59,6 +84,16 @@ export function createStyles(theme: Theme) {
       color: theme.textColorInverse,
       fontSize: fontSizes.md,
       fontWeight: '600',
+    },
+    optionsContainer: {
+      flex: 1,
+      padding: spacing.md,
+    },
+    optionsTitle: {
+      fontSize: fontSizes.lg,
+      fontWeight: '600',
+      color: theme.textColor,
+      marginBottom: spacing.md,
     },
   });
 }

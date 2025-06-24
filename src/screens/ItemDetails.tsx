@@ -52,7 +52,12 @@ export default function ItemDetails() {
   }, [itemId]);
 
   const handleCustomization = () => {
-    navigation.navigate('Customization');
+    if (item) {
+      navigation.navigate('Customization', {
+        itemId: item.id,
+        clothingType: item.type, // Assuming you add 'type' to Clothing interface
+      });
+    }
   };
 
   if (loading) {

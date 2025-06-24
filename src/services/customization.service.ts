@@ -1,34 +1,43 @@
 import { API_CONFIG } from '../config/api.config';
 import { apiService } from './api.service';
-import { CustomizationCategory, CustomizationOption } from '../types/customization';
+import { Customization } from '../types/customization';
 
 export class CustomizationService {
   private static readonly endpoint = API_CONFIG.ENDPOINTS.CUSTOMIZATION;
 
-  static async getCategories(productType: string): Promise<CustomizationCategory[]> {
+  static async getCustomizationsByCategoryId(categoryId: string): Promise<Customization[]> {
     try {
-      const response = await apiService.get<CustomizationCategory[]>(
-        `${this.endpoint}/categories/${productType}`,
+      const response = await apiService.get<Customization[]>(
+        `${this.endpoint}/category/${categoryId}`,
       );
-      return response.data ? response.data.sort((a, b) => a.sortOrder - b.sortOrder) : [];
+
+      if (response.data) {
+        // Sort customizations by sortOrder
+        return response.data.sort((a, b) => a.sortOrder - b.sortOrder);
+      }
+
+      return [];
     } catch (error) {
-      console.error('Failed to fetch customization categories:', error);
+      console.error(`Failed to fetch customizations for ${clothingType}:`, error);
       return [];
     }
   }
 
-  static async getOptionsByCategory(
-    category: string,
-    productType: string,
-  ): Promise<CustomizationOption[]> {
+  static async createCustomization(
+    customization: Omit<Customization, 'id'>,
+  ): Promise<Customization | null> {
     try {
-      const response = await apiService.get<CustomizationOption[]>(
-        `${this.endpoint}/options/${category}/${productType}`,
-      );
-      return response.data || [];
+      const response = await apiService.post<Customization>(this.endpoint, customization);
+      return response.data || null;
     } catch (error) {
-      console.error('Failed to fetch customization options:', error);
-      return [];
+      console.error('Failed to create customization:', error);
+      return null;
     }
+  }
+
+  // Helper method to get options for a specific customization type
+  static getOptionsForType(customizations: Customization[], type: string): CustomizationOption[] {
+    const customization = customizations.find((c) => c.type === type);
+    return customization?.options.sort((a, b) => a.sortOrder - b.sortOrder) ?? [];
   }
 }

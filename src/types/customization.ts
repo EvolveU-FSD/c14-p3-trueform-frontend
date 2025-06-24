@@ -1,16 +1,28 @@
+export type ClothingType = 'SHIRT' | 'PANTS' | 'JACKET';
+
 export interface CustomizationOption {
   id: string;
-  title: string;
-  imageUrl: string;
+  name: string;
   description?: string;
-  productType: string;
+  imageUrl: string;
+  priceModifier?: number;
   sortOrder: number;
-  category: string;
 }
 
-export interface CustomizationCategory {
-  id: string;
+export interface ConditionalOn {
+  type: string;
+  value: string;
+}
+
+export interface Customization {
   name: string;
-  sortOrder: number;
+  clothingType: ClothingType;
+  description?: string;
+  type: string;
+  required: boolean;
   options: CustomizationOption[];
+  defaultValue?: string;
+  sortOrder: number;
+  priceModifier?: number;
+  conditionalOn?: ConditionalOn;
 }
