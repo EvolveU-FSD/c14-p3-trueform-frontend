@@ -37,4 +37,13 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
+
+.env
+
+android/
+ios/
+build/
+*.apk
+*.aab
+*.keystore
 debug.log

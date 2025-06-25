@@ -8,6 +8,7 @@ export type RootStackParamList = {
   BodyScan: undefined;
   Login: { email?: string } | undefined;
   Register: undefined;
+  Payment: undefined;
   ItemDetails: { itemId: string };
   Customization: undefined;
   CollarStyle: undefined;
@@ -39,6 +40,7 @@ export type RegisterScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   'Register'
 >;
+export type PaymentScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Payment'>;
 
 // Route prop types
 export type CategoryScreenRouteProp = RouteProp<RootStackParamList, 'Category'>;
@@ -47,6 +49,7 @@ export type BodyScanScreenRouteProp = RouteProp<RootStackParamList, 'BodyScan'>;
 export type HomeScreenRouteProp = RouteProp<RootStackParamList, 'Home'>;
 export type LoginScreenRouteProp = RouteProp<RootStackParamList, 'Login'>;
 export type RegisterScreenRouteProp = RouteProp<RootStackParamList, 'Register'>;
+export type PaymentScreenRouteProp = RouteProp<RootStackParamList, 'Payment'>;
 
 // Screen props interfaces
 export interface HomeScreenProps {

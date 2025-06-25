@@ -41,7 +41,7 @@ const darkTheme: Theme = {
 const ThemeContext = createContext({
   theme: lightTheme,
   // eslint-disable-next-line
-  setTheme: (theme: Theme) => { },
+  setTheme: (theme: Theme) => {},
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   toggleTheme: () => {},
   isDarkMode: false,

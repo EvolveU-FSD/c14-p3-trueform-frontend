@@ -26,6 +26,7 @@ import Items from './src/screens/Items';
 import BodyScanScreen from './src/screens/BodyScanScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
+import PaymentScreen from './src/screens/PaymentScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -44,6 +45,7 @@ const linking: LinkingOptions<RootStackParamList> = {
       Login: 'login',
       Register: 'register',
       BodyScan: 'bodyscan',
+      Payment: 'payment',
       Items: 'items',
     },
   },
@@ -89,12 +91,7 @@ function AppContent() {
       <CustomizationProvider>
         <NavigationContainer linking={linking}>
           <Stack.Navigator initialRouteName='Home'>
-            <Stack.Screen name='Login' component={LoginScreen} options={{ headerShown: false }} />
-            <Stack.Screen
-              name='Register'
-              component={RegisterScreen}
-              options={{ headerShown: false }}
-            />
+            {/* Public screens */}
             <Stack.Screen
               name='Home'
               component={HomeScreen}
@@ -108,11 +105,20 @@ function AppContent() {
                 headerShown: false,
               })}
             />
+            <Stack.Screen name='Login' component={LoginScreen} options={{ headerShown: false }} />
+            <Stack.Screen
+              name='Register'
+              component={RegisterScreen}
+              options={{ headerShown: false }}
+            />
+
+            {/* Protected screens */}
             <Stack.Screen
               name='BodyScan'
               component={ProtectedBodyScanScreen}
               options={{ title: 'Body Measurements' }}
             />
+            <Stack.Screen name='Payment' component={PaymentScreen} options={{ title: 'Payment' }} />
             <Stack.Screen
               name='ItemDetails'
               component={ItemDetails}
