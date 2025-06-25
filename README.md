@@ -46,6 +46,12 @@ Then you have to have an android emulator installed and started then press optio
 Install 'android studio' to install an emulator.
 Or some ios version might work too.
 
+To start emulator automatically by pressing 'a' after 'npx expo start' you need to add the android sdk to path. These two folders are key. Usually found in: (after android studio installation)
+
+C:\Users\<YourUsername>\AppData\Local\Android\Sdk\emulator
+C:\Users\<YourUsername>\AppData\Local\Android\Sdk\platform-tools
+
+
 ---
 
 ## 📁 Project Structure
