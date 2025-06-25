@@ -87,47 +87,38 @@ function AppContent() {
   }
 
   return (
-
     <ThemeProvider>
       <CustomizationProvider>
         <NavigationContainer linking={linking}>
           <Stack.Navigator initialRouteName='Home'>
             {/* Public screens */}
             <Stack.Screen
-              name="Home"
+              name='Home'
               component={HomeScreen}
               options={{ title: 'Home', headerShown: false }}
             />
             <Stack.Screen
-              name="Category"
+              name='Category'
               component={CategoryScreen}
               options={({ route }: { route: CategoryScreenRouteProp }) => ({
                 title: route.params.slug,
-                headerShown: false
+                headerShown: false,
               })}
             />
+            <Stack.Screen name='Login' component={LoginScreen} options={{ headerShown: false }} />
             <Stack.Screen
-              name="Login"
-              component={LoginScreen}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Register"
+              name='Register'
               component={RegisterScreen}
               options={{ headerShown: false }}
             />
 
             {/* Protected screens */}
             <Stack.Screen
-              name="BodyScan"
+              name='BodyScan'
               component={ProtectedBodyScanScreen}
               options={{ title: 'Body Measurements' }}
             />
-            <Stack.Screen
-              name="Payment"
-              component={PaymentScreen}
-              options={{ title: 'Payment' }}
-            />
+            <Stack.Screen name='Payment' component={PaymentScreen} options={{ title: 'Payment' }} />
             <Stack.Screen
               name='ItemDetails'
               component={ItemDetails}

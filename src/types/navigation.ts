@@ -36,9 +36,11 @@ export type BodyScanScreenNavigationProp = NativeStackNavigationProp<
   'BodyScan'
 >;
 export type LoginScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
-export type RegisterScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Register'>;
+export type RegisterScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Register'
+>;
 export type PaymentScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Payment'>;
-
 
 // Route prop types
 export type CategoryScreenRouteProp = RouteProp<RootStackParamList, 'Category'>;

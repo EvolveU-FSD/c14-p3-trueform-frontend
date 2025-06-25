@@ -22,7 +22,8 @@ export default function BottomNavBar({ activeTab, onTabChange }: BottomNavBarPro
   const handleTabPress = (tabName: string) => {
     if (tabName === 'bodyscan') {
       navigation.navigate('BodyScan' as never);
-    } else if (tabName === 'payment') {  // ADD THIS CONDITION
+    } else if (tabName === 'payment') {
+      // ADD THIS CONDITION
       navigation.navigate('Payment' as never);
     } else {
       onTabChange(tabName);

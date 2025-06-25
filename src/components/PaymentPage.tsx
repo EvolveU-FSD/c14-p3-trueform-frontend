@@ -56,7 +56,7 @@ const PaymentForm = () => {
     <form onSubmit={handleSubmit}>
       <CardElement />
       {error && <div style={{ color: 'red' }}>{error}</div>}
-      <button type="submit" disabled={!stripe || processing}>
+      <button type='submit' disabled={!stripe || processing}>
         {processing ? 'Processing...' : 'Pay'}
       </button>
     </form>
@@ -87,4 +87,4 @@ const PaymentPage = () => {
   }
 };
 
-export default PaymentPage; 
+export default PaymentPage;
