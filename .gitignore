@@ -32,11 +32,11 @@ yarn-error.*
 
 # local env files
 .env*.local
+.env
 
 # typescript
 *.tsbuildinfo
 
-package-lock.json
 
 .env
 
@@ -46,3 +46,4 @@ build/
 *.apk
 *.aab
 *.keystore
+debug.log

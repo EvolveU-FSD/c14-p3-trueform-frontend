@@ -1,8 +1,16 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView, ActivityIndicator, Alert, Platform } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+  ActivityIndicator,
+  Platform,
+} from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
-import { bodyScanStyles } from '../styles/BodyScanStyles';
+import createStyles from '../styles/BodyScanStyles';
 import { endpoints } from '../config/constants';
 import { CrossImage } from '../components/CrossImage';
 import { showAlert } from '../utils/showAlerts';
@@ -15,7 +23,7 @@ export default function BodyScanScreen() {
   const [weight, setWeight] = useState('');
   const [gender, setGender] = useState('male');
   const [age, setAge] = useState('');
-
+  const styles = createStyles();
   // Image state
   const [frontImage, setFrontImage] = useState<string | null>(null);
   const [profileImage, setProfileImage] = useState<string | null>(null);
@@ -49,87 +57,32 @@ export default function BodyScanScreen() {
     return true;
   };
 
-  // Image picker function for front view from gallery
-  const pickFrontImageFromGallery = async () => {
-    if (!(await requestGalleryPermission())) return;
+  const handleImagePick = async (
+    source: 'camera' | 'gallery',
+    setImage: React.Dispatch<React.SetStateAction<string | null>>,
+  ) => {
+    const permissionGranted =
+      source === 'camera' ? await requestCameraPermission() : await requestGalleryPermission();
+
+    if (!permissionGranted) return;
 
     try {
-      const result = await ImagePicker.launchImageLibraryAsync({
+      const pickerFn =
+        source === 'camera' ? ImagePicker.launchCameraAsync : ImagePicker.launchImageLibraryAsync;
+
+      const result = await pickerFn({
         allowsEditing: true,
         aspect: [9, 16],
         quality: 0.8,
-        base64: true, // Request base64 data
+        base64: true,
       });
 
       if (!result.canceled) {
-        setFrontImage(result.assets[0].uri);
+        setImage(result.assets[0].uri);
       }
     } catch (error) {
-      console.error('Error picking image:', error);
-      showAlert('Error', 'Failed to pick image. Please try again.');
-    }
-  };
-
-  // Image picker function for profile view from gallery
-  const pickProfileImageFromGallery = async () => {
-    if (!(await requestGalleryPermission())) return;
-
-    try {
-      const result = await ImagePicker.launchImageLibraryAsync({
-        allowsEditing: true,
-        aspect: [9, 16],
-        quality: 0.8,
-        base64: true, // Request base64 data
-      });
-
-      if (!result.canceled) {
-        setProfileImage(result.assets[0].uri);
-      }
-    } catch (error) {
-      console.error('Error picking image:', error);
-      showAlert('Error', 'Failed to pick image. Please try again.');
-    }
-  };
-
-  // Take front photo with camera
-  const takeFrontPhotoWithCamera = async () => {
-    if (!(await requestCameraPermission())) return;
-
-    try {
-      const result = await ImagePicker.launchCameraAsync({
-        allowsEditing: true,
-        aspect: [9, 16],
-        quality: 0.8,
-        base64: true, // Request base64 data
-      });
-
-      if (!result.canceled) {
-        setFrontImage(result.assets[0].uri);
-      }
-    } catch (error) {
-      console.error('Error taking photo:', error);
-      showAlert('Error', 'Failed to take photo. Please try again.');
-    }
-  };
-
-  // Take profile photo with camera
-  const takeProfilePhotoWithCamera = async () => {
-    if (!(await requestCameraPermission())) return;
-
-    try {
-      const result = await ImagePicker.launchCameraAsync({
-        allowsEditing: true,
-        aspect: [9, 16],
-        quality: 0.8,
-        base64: true, // Request base64 data
-      });
-
-      if (!result.canceled) {
-        setProfileImage(result.assets[0].uri);
-      }
-    } catch (error) {
-      console.error('Error taking photo:', error);
-      showAlert('Error', 'Failed to take photo. Please try again.');
+      console.error('Error picking/taking image:', error);
+      showAlert('Error', 'Failed to get image. Please try again.');
     }
   };
 
@@ -182,7 +135,6 @@ export default function BodyScanScreen() {
       // Send FormData (will be multipart/form-data but with text fields only)
       const result: BodyScanResponse = await api.post(endpoints.bodyScan, formData);
       setMeasurements(result.measurements);
-
     } catch (error) {
       console.error('Error submitting scan:', error);
       showAlert('Error', 'Failed to submit scan. Please try again.');
@@ -196,36 +148,36 @@ export default function BodyScanScreen() {
     label: string,
     photoUri: string | null,
     galleryPickFn: () => Promise<void>,
-    cameraPickFn: () => Promise<void>
+    cameraPickFn: () => Promise<void>,
   ) => (
-    <View style={bodyScanStyles.photoContainer}>
-      <Text style={bodyScanStyles.photoLabel}>{label}</Text>
+    <View style={styles.photoContainer}>
+      <Text style={styles.photoLabel}>{label}</Text>
       {photoUri ? (
-        <CrossImage source={photoUri} style={bodyScanStyles.previewImage} />
+        <CrossImage source={photoUri} style={styles.previewImage} />
       ) : (
-        <View style={bodyScanStyles.placeholderImage}>
+        <View style={styles.placeholderImage}>
           <Text>{label}</Text>
         </View>
       )}
 
       {isMobile ? (
-        <View style={bodyScanStyles.photoButtonsRow}>
+        <View style={styles.photoButtonsRow}>
           <TouchableOpacity
-            style={[bodyScanStyles.photoButton, bodyScanStyles.halfWidthButton]}
+            style={[styles.photoButton, styles.halfWidthButton]}
             onPress={galleryPickFn}
           >
-            <Text style={bodyScanStyles.photoButtonText}>Gallery</Text>
+            <Text style={styles.photoButtonText}>Gallery</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[bodyScanStyles.photoButton, bodyScanStyles.halfWidthButton]}
+            style={[styles.photoButton, styles.halfWidthButton]}
             onPress={cameraPickFn}
           >
-            <Text style={bodyScanStyles.photoButtonText}>Camera</Text>
+            <Text style={styles.photoButtonText}>Camera</Text>
           </TouchableOpacity>
         </View>
       ) : (
-        <TouchableOpacity style={bodyScanStyles.photoButton} onPress={galleryPickFn}>
-          <Text style={bodyScanStyles.photoButtonText}>Select Photo</Text>
+        <TouchableOpacity style={styles.photoButton} onPress={galleryPickFn}>
+          <Text style={styles.photoButtonText}>Select Photo</Text>
         </TouchableOpacity>
       )}
     </View>
@@ -233,104 +185,100 @@ export default function BodyScanScreen() {
 
   // JSX remains the same
   return (
-    <ScrollView style={bodyScanStyles.container}>
-      <Text style={bodyScanStyles.title}>Body Measurements Scan</Text>
+    <ScrollView style={styles.container}>
+      <Text style={styles.title}>Body Measurements Scan</Text>
 
-      <View style={bodyScanStyles.formSection}>
+      <View style={styles.formSection}>
         {/* Rest of the JSX remains unchanged */}
-        <Text style={bodyScanStyles.sectionTitle}>Personal Information</Text>
+        <Text style={styles.sectionTitle}>Personal Information</Text>
 
-        <View style={bodyScanStyles.inputContainer}>
-          <Text style={bodyScanStyles.label}>Height (cm)</Text>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Height (cm)</Text>
           <TextInput
-            style={bodyScanStyles.input}
+            style={styles.input}
             value={height}
             onChangeText={setHeight}
-            placeholder="Enter your height in cm"
-            keyboardType="numeric"
+            placeholder='Enter your height in cm'
+            keyboardType='numeric'
           />
         </View>
 
-        <View style={bodyScanStyles.inputContainer}>
-          <Text style={bodyScanStyles.label}>Weight (kg)</Text>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Weight (kg)</Text>
           <TextInput
-            style={bodyScanStyles.input}
+            style={styles.input}
             value={weight}
             onChangeText={setWeight}
-            placeholder="Enter your weight in kg"
-            keyboardType="numeric"
+            placeholder='Enter your weight in kg'
+            keyboardType='numeric'
           />
         </View>
 
-        <View style={bodyScanStyles.inputContainer}>
-          <Text style={bodyScanStyles.label}>Gender</Text>
-          <View style={bodyScanStyles.pickerContainer}>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Gender</Text>
+          <View style={styles.pickerContainer}>
             <Picker
               selectedValue={gender}
               onValueChange={(itemValue) => setGender(itemValue)}
-              style={bodyScanStyles.picker}
+              style={styles.picker}
             >
-              <Picker.Item label="Male" value="male" />
-              <Picker.Item label="Female" value="female" />
+              <Picker.Item label='Male' value='male' />
+              <Picker.Item label='Female' value='female' />
             </Picker>
           </View>
         </View>
 
-        <View style={bodyScanStyles.inputContainer}>
-          <Text style={bodyScanStyles.label}>Age (optional)</Text>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Age (optional)</Text>
           <TextInput
-            style={bodyScanStyles.input}
+            style={styles.input}
             value={age}
             onChangeText={setAge}
-            placeholder="Enter your age"
-            keyboardType="numeric"
+            placeholder='Enter your age'
+            keyboardType='numeric'
           />
         </View>
       </View>
 
-      <View style={bodyScanStyles.formSection}>
-        <Text style={bodyScanStyles.sectionTitle}>Photos</Text>
-        <Text style={bodyScanStyles.photoInstructions}>
-          Please provide two full-body photos: one front-facing and one right-side profile.
-          Wear tight-fitting clothes for best results.
+      <View style={styles.formSection}>
+        <Text style={styles.sectionTitle}>Photos</Text>
+        <Text style={styles.photoInstructions}>
+          Please provide two full-body photos: one front-facing and one right-side profile. Wear
+          tight-fitting clothes for best results.
         </Text>
 
-        <View style={bodyScanStyles.photoSection}>
+        <View style={styles.photoSection}>
           {renderPhotoSection(
-            "Front Photo",
+            'Front Photo',
             frontImage,
-            pickFrontImageFromGallery,
-            takeFrontPhotoWithCamera
+            () => handleImagePick('gallery', setFrontImage),
+            () => handleImagePick('camera', setFrontImage),
           )}
 
           {renderPhotoSection(
-            "Profile Photo",
+            'Profile Photo',
             profileImage,
-            pickProfileImageFromGallery,
-            takeProfilePhotoWithCamera
+            () => handleImagePick('gallery', setProfileImage),
+            () => handleImagePick('camera', setProfileImage),
           )}
         </View>
       </View>
 
-      <TouchableOpacity
-        style={bodyScanStyles.submitButton}
-        onPress={handleSubmit}
-        disabled={isLoading}
-      >
+      <TouchableOpacity style={styles.submitButton} onPress={handleSubmit} disabled={isLoading}>
         {isLoading ? (
-          <ActivityIndicator color="#fff" />
+          <ActivityIndicator color='#fff' />
         ) : (
-          <Text style={bodyScanStyles.submitButtonText}>Get Measurements</Text>
+          <Text style={styles.submitButtonText}>Get Measurements</Text>
         )}
       </TouchableOpacity>
 
       {measurements && (
-        <View style={bodyScanStyles.resultsSection}>
-          <Text style={bodyScanStyles.sectionTitle}>Your Measurements</Text>
+        <View style={styles.resultsSection}>
+          <Text style={styles.sectionTitle}>Your Measurements</Text>
           {Object.entries(measurements).map(([key, value]: [any, any]) => (
-            <View key={key} style={bodyScanStyles.measurementRow}>
-              <Text style={bodyScanStyles.measurementLabel}>{key}</Text>
-              <Text style={bodyScanStyles.measurementValue}>{value}</Text>
+            <View key={key} style={styles.measurementRow}>
+              <Text style={styles.measurementLabel}>{key}</Text>
+              <Text style={styles.measurementValue}>{value}</Text>
             </View>
           ))}
         </View>

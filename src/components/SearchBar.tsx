@@ -1,20 +1,15 @@
 // src/components/SearchBar.tsx
 import React, { useState } from 'react';
 import { View, TextInput } from 'react-native';
-import { useTheme } from '../theme/ThemeContext';
-import { createStyles } from '../styles/SearchBarStyles';
+import createStyles from '../styles/SearchBarStyles';
 
 interface SearchBarProps {
   placeholder?: string;
   onSearch?: (query: string) => void;
 }
 
-export default function SearchBar({
-  placeholder = 'Search...',
-  onSearch
-}: SearchBarProps) {
-  const { theme } = useTheme();
-  const styles = createStyles(theme);
+export default function SearchBar({ placeholder = 'Search...', onSearch }: SearchBarProps) {
+  const styles = createStyles();
   const [query, setQuery] = useState('');
 
   // Handle search input
@@ -30,14 +25,13 @@ export default function SearchBar({
       <TextInput
         style={styles.input}
         placeholder={placeholder}
-        placeholderTextColor={theme.secondaryColor} // Use secondary color for placeholder
         value={query}
         onChangeText={handleSearch}
-        autoCapitalize="none"
+        autoCapitalize='none'
         autoCorrect={false}
-        returnKeyType="search"
-        clearButtonMode="while-editing"
+        returnKeyType='search'
+        clearButtonMode='while-editing'
       />
     </View>
   );
-};
+}
