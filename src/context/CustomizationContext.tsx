@@ -15,7 +15,7 @@ export function CustomizationProvider({ children }: { children: React.ReactNode 
   const [selections, setSelections] = useState<Selection>({});
 
   function setSelection(customizationId: string, optionId: string): void {
-    setSelections(prev => ({
+    setSelections((prev) => ({
       ...prev,
       [customizationId]: optionId,
     }));

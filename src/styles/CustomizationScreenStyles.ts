@@ -95,5 +95,10 @@ export function createStyles(theme: Theme) {
       color: theme.textColor,
       marginBottom: spacing.md,
     },
+    line: {
+      height: 1,
+      backgroundColor: '#ddd',
+      marginVertical: 8,
+    },
   });
 }

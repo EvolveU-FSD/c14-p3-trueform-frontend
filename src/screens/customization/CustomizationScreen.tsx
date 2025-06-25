@@ -33,7 +33,11 @@ export default function CustomizationScreen() {
         {/* Top Nav */}
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.stepsContainer}>
           {customizations.map((c, idx) => (
-            <TouchableOpacity key={c.id} onPress={() => setActiveIndex(idx)} style={styles.stepItem}>
+            <TouchableOpacity
+              key={c.id}
+              onPress={() => setActiveIndex(idx)}
+              style={styles.stepItem}
+            >
               <View style={[styles.circle, idx === activeIndex && styles.activeCircle]}>
                 <Text style={styles.stepNumberText}>{idx + 1}</Text>
               </View>
@@ -41,8 +45,10 @@ export default function CustomizationScreen() {
             </TouchableOpacity>
           ))}
         </ScrollView>
+
+        {/* Line separator */}
+        <View style={styles.line} />
       </View>
     </CustomizationProvider>
-  )
-
+  );
 }
