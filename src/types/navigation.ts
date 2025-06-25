@@ -1,12 +1,13 @@
 import { CustomizationOption } from './customization';
 import type { RouteProp } from '@react-navigation/core';
-import { NativeStackNavigationPop } from '@react-navigation/native-stack';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 // src/types/navigation.ts
 export type RootStackParamList = {
   Home: undefined;
   Category: { slug: string };
   ItemDetails: { itemId: string };
+  Items: { slug: string };
   Customization: {
     itemId: string;
   };
@@ -15,7 +16,6 @@ export type RootStackParamList = {
     category: string;
     options: CustomizationOption[];
   };
-  Items: { slug: string };
   BodyScan: undefined;
   Login: { email?: string } | undefined;
   Register: undefined;

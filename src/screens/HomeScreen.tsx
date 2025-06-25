@@ -9,17 +9,24 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import { HomeScreenProps } from '../types/navigation';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../types/navigation';
 import { FontAwesome5 } from '@expo/vector-icons';
 import createStyles from '../styles/HomeScreenStyles';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const heroBannerImage = require('../../assets/images/banners/hero-banner.jpg');
 
-export default function HomeScreen({ navigation }: HomeScreenProps) {
+type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
+
+interface Props {
+  navigation: HomeScreenNavigationProp;
+}
+
+export default function HomeScreen({ navigation }: Props) {
   const styles = createStyles();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSubmenuOpen, setIsSubmenuOpen] = useState(false); // Add this state
+  const [isSubmenuOpen, setIsSubmenuOpen] = useState(false);
 
   const handleCategorySelect = (category: string) => {
     navigation.navigate('Category', { slug: category.toLowerCase() });

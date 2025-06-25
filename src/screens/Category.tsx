@@ -1,12 +1,15 @@
 // Category.tsx
 import React, { useState, useEffect } from 'react';
 import { View, Text, SafeAreaView, StatusBar, ScrollView, TouchableOpacity } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 import SearchBar from '../components/SearchBar';
 import BottomNavBar from '../components/BottomNavBar';
 import { CategoryService } from '../services/category.service';
 import { Category as CategoryType } from '../types/category';
+import { CategoryScreenProps, CategoryScreenRouteProp } from '../types/navigation';
+import createStyles from '../styles/CategoryStyles';
 
-export default function CategoryScreen({ navigation, route }: CategoryScreenProps) {
+export default function CategoryScreen({ navigation }: CategoryScreenProps) {
   const styles = createStyles();
   const [activeTab, setActiveTab] = useState('home');
   const route = useRoute<CategoryScreenRouteProp>();
