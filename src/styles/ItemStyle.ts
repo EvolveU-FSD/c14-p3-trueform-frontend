@@ -49,18 +49,22 @@ export default function useCreateStyles() {
       shadowOffset: { width: 0, height: 1 },
       shadowOpacity: 0.2,
       shadowRadius: 2,
+      height: 300,
+      paddingBottom: spacing.xxxl,
     },
     itemImage: {
       width: '100%',
-      aspectRatio: 1,
+      height: '100%',
     },
     itemContent: {
-      padding: spacing.sm,
+      flex: 1,
+      justifyContent: 'center',
+      margin: spacing.sm,
+      marginTop: spacing.xs
     },
     itemName: {
       fontSize: fontSizes.sm,
       fontWeight: '500',
-      marginBottom: spacing.xs,
       color: theme.textColor,
     },
     itemPrice: {
