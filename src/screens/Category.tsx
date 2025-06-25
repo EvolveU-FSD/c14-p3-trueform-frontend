@@ -12,10 +12,8 @@ import BottomNavBar from '../components/BottomNavBar';
 import { CategoryService } from '../services/category.service';
 import { Category as CategoryType } from '../types/category';
 
-type CategoryScreenRouteProp = RouteProp<RootStackParamList, 'Category'>;
-type CategoryScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Category'>;
-
-export default function CategoryScreen() {
+export default function CategoryScreen({ navigation, route }: CategoryScreenProps) {
+  const styles = createStyles();
   const [activeTab, setActiveTab] = useState('home');
   const route = useRoute<CategoryScreenRouteProp>();
   const [categories, setCategories] = useState<CategoryType[]>([]);
@@ -54,10 +52,6 @@ export default function CategoryScreen() {
     fetchCategories();
   }, [slug]);
 
-  const { theme } = useTheme();
-  const styles = createCategoryStyles(theme);
-  const navigation = useNavigation<CategoryScreenNavigationProp>();
-
   const handleTabChange = (tabName: string) => {
     setActiveTab(tabName);
     if (tabName === 'home') {
@@ -87,7 +81,7 @@ export default function CategoryScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle={theme.isDarkMode ? 'light-content' : 'dark-content'} />
+      <StatusBar barStyle={'light-content'} />
 
       <ScrollView>
         <SearchBar />

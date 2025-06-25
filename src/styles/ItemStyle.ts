@@ -1,8 +1,10 @@
 import { StyleSheet } from 'react-native';
 import { spacing, fontSizes, borderRadius } from '../utils/sizes';
-import { Theme } from '../theme/ThemeContext';
+import { useTheme } from '../theme/ThemeContext';
 
-export function createStyles(theme: Theme) {
+export default function useCreateStyles() {
+  const { theme } = useTheme();
+
   return StyleSheet.create({
     container: {
       flex: 1,
@@ -153,3 +155,5 @@ export function createStyles(theme: Theme) {
     },
   });
 }
+
+export type Styles = ReturnType<typeof useCreateStyles>;

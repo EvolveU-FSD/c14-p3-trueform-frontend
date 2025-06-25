@@ -1,8 +1,10 @@
 import { StyleSheet } from 'react-native';
 import { spacing, fontSizes, borderRadius } from '../utils/sizes';
-import { Theme } from '../theme/ThemeContext';
+import { useTheme } from '../theme/ThemeContext';
 
-export function createStyles(theme: Theme) {
+export default function useCreateStyles() {
+  const { theme } = useTheme();
+
   return StyleSheet.create({
     title: {
       fontSize: fontSizes.md,
@@ -30,10 +32,12 @@ export function createStyles(theme: Theme) {
       backgroundColor: theme.secondaryColor,
     },
     itemText: {
-      color: theme.textColorInverse,
+      color: theme.textColor,
       fontSize: fontSizes.md,
       fontWeight: '600',
       textAlign: 'center',
     },
   });
 }
+
+export type Styles = ReturnType<typeof useCreateStyles>;

@@ -1,8 +1,10 @@
 import { StyleSheet } from 'react-native';
-import { Theme } from '../theme/ThemeContext';
+import { useTheme } from '../theme/ThemeContext';
 import { spacing, fontSizes, borderRadius } from '../utils/sizes';
 
-export function createStyles(theme: Theme) {
+export default function useCreateStyles() {
+  const { theme } = useTheme();
+
   return StyleSheet.create({
     banner: {
       height: 200,
@@ -30,3 +32,5 @@ export function createStyles(theme: Theme) {
     },
   });
 }
+
+export type Styles = ReturnType<typeof useCreateStyles>;

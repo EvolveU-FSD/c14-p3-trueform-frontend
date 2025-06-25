@@ -9,3 +9,4 @@ tsconfig.json
 app.json
 jest.config.js
 *.d.ts
+metro.config.js

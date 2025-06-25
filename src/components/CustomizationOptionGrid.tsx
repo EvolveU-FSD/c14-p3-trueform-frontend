@@ -26,8 +26,7 @@ export default function CustomizationOptionGrid({
   gridStyle,
   itemStyle,
 }: Props) {
-  const { theme } = useTheme();
-  const styles = createStyles(theme);
+  const styles = createStyles();
   return (
     <View style={[styles.container, gridStyle]}>
       {options.map((option) => (

@@ -1,8 +1,10 @@
 import { StyleSheet } from 'react-native';
-import { Theme } from '../theme/ThemeContext';
 import { spacing, fontSizes } from '../utils/sizes';
+import { useTheme } from '../theme/ThemeContext';
 
-export function createCategoryStyles(theme: Theme) {
+export default function useCreateStyles() {
+  const { theme } = useTheme();
+
   return StyleSheet.create({
     container: {
       flex: 1,
@@ -43,3 +45,5 @@ export function createCategoryStyles(theme: Theme) {
     },
   });
 }
+
+export type Styles = ReturnType<typeof useCreateStyles>;

@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import { API_CONFIG } from '../config/api.config';
 import { ApiResponse } from '../types/api';
+import { getIdToken } from './auth.service';
 
 class ApiService {
   private api: AxiosInstance;
@@ -12,18 +13,25 @@ class ApiService {
       headers: API_CONFIG.HEADERS,
     });
 
-    // Optional request interceptor to handle auth.
-    // TODO: implement once merged with Firebase code.
+    // Request interceptor to handle authentication
     this.api.interceptors.request.use(
-      (config) => config,
+      async (config) => {
+        const token = await getIdToken();
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+      },
       (error: AxiosError) => Promise.reject(error),
     );
 
+    // Response interceptor for auth and error handling
     this.api.interceptors.response.use(
       (response: AxiosResponse) => response,
       (error: AxiosError) => {
         if (error.response?.status === 401) {
           console.warn('Unauthorized: redirecting to login');
+          // TODO: Add redirect logic or auth state handling
         }
         return Promise.reject(error);
       },

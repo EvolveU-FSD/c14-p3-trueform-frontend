@@ -1,8 +1,10 @@
 import { StyleSheet } from 'react-native';
-import { Theme } from '../theme/ThemeContext';
 import { spacing, fontSizes, iconSizes } from '../utils/sizes';
+import { useTheme } from '../theme/ThemeContext';
 
-export function createStyles(theme: Theme) {
+export default function useCreateStyles() {
+  const { theme } = useTheme();
+
   return StyleSheet.create({
     container: {
       flexDirection: 'row',
@@ -35,3 +37,5 @@ export function createStyles(theme: Theme) {
     },
   });
 }
+
+export type Styles = ReturnType<typeof useCreateStyles>;

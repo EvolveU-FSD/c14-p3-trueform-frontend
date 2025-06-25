@@ -2,7 +2,7 @@ import React from 'react';
 import { View, ScrollView } from 'react-native';
 import CustomizationProgress from './CustomizationProgress';
 import CustomizationNavigation from './CustomizationNavigation';
-import { createStyles } from '../styles/CustomizationScreenWrapperStyles';
+import createStyles from '../styles/CustomizationScreenWrapperStyles';
 
 type Props = {
   children: React.ReactNode;

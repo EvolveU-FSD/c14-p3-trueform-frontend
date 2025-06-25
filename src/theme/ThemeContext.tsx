@@ -40,6 +40,9 @@ const darkTheme: Theme = {
 // Create the theme context
 const ThemeContext = createContext({
   theme: lightTheme,
+  // eslint-disable-next-line
+  setTheme: (theme: Theme) => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   toggleTheme: () => {},
   isDarkMode: false,
 });
@@ -55,7 +58,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme, isDarkMode }}>
+    <ThemeContext.Provider value={{ theme, setTheme, toggleTheme, isDarkMode }}>
       {children}
     </ThemeContext.Provider>
   );

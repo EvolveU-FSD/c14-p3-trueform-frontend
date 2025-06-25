@@ -7,13 +7,13 @@ const MEASUREMENT_OPTIONS = [
   {
     id: 'ai',
     title: 'AI Measurement',
-    // image: require('../../../assets/images/customization/measurement/ai.png'),
+    image: { uri: 'https://www.propercloth.com/media/shirts/variations/cuff-single.jpg' },
     description: 'Measure with your phone camera',
   },
   {
     id: 'manual',
     title: 'Manual Entry',
-    // image: require('../../../assets/images/customization/measurement/manual.png'),
+    image: { uri: 'https://www.propercloth.com/media/shirts/variations/cuff-single.jpg' },
     description: 'Enter measurements manually',
   },
 ];

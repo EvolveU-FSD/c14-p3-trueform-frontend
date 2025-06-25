@@ -9,7 +9,7 @@ import {
   Image,
   ActivityIndicator,
 } from 'react-native';
-import { useRoute, useNavigation } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { createStyles } from '../styles/ItemStyle';
 import { useTheme } from '../theme/ThemeContext';
@@ -42,8 +42,7 @@ export default function Items() {
   const navigation =
     useNavigation<import('@react-navigation/native').NavigationProp<RootStackParamList>>();
   const route = useRoute<any>();
-  const { theme } = useTheme();
-  const styles = createStyles(theme);
+  const styles = createStyles();
   const { slug: categoryId } = route.params;
 
   // States

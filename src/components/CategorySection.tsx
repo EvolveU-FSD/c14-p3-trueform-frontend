@@ -1,9 +1,9 @@
 // src/components/CategorySection.tsx
 import React from 'react';
-import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { Category, CategorySectionProps } from '../types/product';
-import { useTheme } from '../theme/ThemeContext';
-import { createStyles } from '../styles/CategorySectionStyles';
+import createStyles, { Styles } from '../styles/CategorySectionStyles';
+import { CrossImage } from './CrossImage';
 
 function CategoryItem({
   category,
@@ -12,12 +12,12 @@ function CategoryItem({
 }: {
   category: Category;
   onPress?: (category: Category) => void;
-  styles: any; // Pass styles as prop
+  styles: Styles;
 }) {
   return (
     <TouchableOpacity style={styles.categoryItem} onPress={() => onPress && onPress(category)}>
       <View style={styles.imageContainer}>
-        <Image source={{ uri: category.image }} style={styles.categoryImage} />
+        <CrossImage source={category.image} style={styles.categoryImage} />
       </View>
       <Text style={styles.categoryName}>{category.name}</Text>
     </TouchableOpacity>
@@ -25,9 +25,7 @@ function CategoryItem({
 }
 
 export default function CategorySection({ categories, onCategoryPress }: CategorySectionProps) {
-  const { theme } = useTheme();
-  const styles = createStyles(theme);
-
+  const styles = createStyles();
   return (
     <View style={styles.container}>
       <View style={styles.header}>
