@@ -30,7 +30,7 @@ export default function ItemDetails({ navigation, route }: ItemDetailsScreenProp
   const images: string[] = item.images && item.images.length > 0 ? item.images : [];
 
   const handleCustomization = () => {
-    navigation.navigate('CollarStyle');
+    navigation.navigate('Customization');
   };
 
   return (
