@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { CustomizationProvider } from '../../context/CustomizationContext';
-import { createStyles } from '../../styles/CustomizationScreenStyles';
-import { useTheme } from '../../theme/ThemeContext';
+import createStyles from '../../styles/CustomizationScreenStyles';
 import { ClothingService } from '../../services/clothing.service';
 import { CustomizationService } from '../../services/customization.service';
 import { Customization } from '../../types/customization';
@@ -11,8 +10,7 @@ import { RootStackParamList } from '../../types/navigation';
 import CustomizationOptionGrid from '../../components/CustomizationOptionGrid';
 
 export default function CustomizationScreen() {
-  const { theme } = useTheme();
-  const styles = createStyles(theme);
+  const styles = createStyles();
   const navigation = useNavigation();
   const route = useRoute<RouteProp<RootStackParamList, 'Customization'>>();
   const { itemId } = route.params;

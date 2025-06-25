@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
-import { createStyles } from '../styles/CustomizationOptionGridStyles';
-import { useTheme } from '../theme/ThemeContext';
+import createStyles from '../styles/CustomizationOptionGridStyles';
 import { getImageUrl } from '../utils/imageHandling';
 
 export type CustomizationOption = {

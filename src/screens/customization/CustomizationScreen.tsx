@@ -3,13 +3,11 @@ import { ScrollView, View, Text, Image, TouchableOpacity, Button, Dimensions } f
 import { CustomizationProvider, useCustomization } from '../../context/CustomizationContext';
 import { CustomizationService } from '../../services/customization.service';
 import { useRoute } from '@react-navigation/native';
-import { createStyles } from '../../styles/CustomizationScreenStyles';
-import { useTheme } from '../../theme/ThemeContext';
+import createStyles from '../../styles/CustomizationScreenStyles';
 import { ClothingService } from '../../services/clothing.service';
 
 export default function CustomizationScreen() {
-  const { theme } = useTheme();
-  const styles = createStyles(theme);
+  const styles = createStyles();
   const route = useRoute<any>();
   const { itemId } = route.params;
 

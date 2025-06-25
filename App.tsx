@@ -8,14 +8,6 @@ import CategoryScreen from './src/screens/Category';
 import ItemDetails from './src/screens/ItemDetails';
 import CustomizationScreen from './src/screens/customization/CustomizationScreen';
 import CustomizationOptionScreen from './src/screens/customization/CustomizationOptionScreen';
-import CollarStyle from './src/screens/customization/CollarTypes';
-import CuffStyle from './src/screens/customization/CuffTypes';
-import PocketStyle from './src/screens/customization/PocketTypes';
-import SleeveStyle from './src/screens/customization/SleeveTypes';
-import ShirtLength from './src/screens/customization/ShirtLength';
-import Monogram from './src/screens/customization/Monogram';
-import Buttons from './src/screens/customization/Buttons';
-import Measurement from './src/screens/customization/Measurement';
 import {
   RootStackParamList,
   LoginScreenNavigationProp,

@@ -11,8 +11,7 @@ import {
 } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { createStyles } from '../styles/ItemStyle';
-import { useTheme } from '../theme/ThemeContext';
+import createStyles from '../styles/ItemStyle';
 import { ClothingService } from '../services/clothing.service';
 import { Clothing } from '../types/clothing';
 import { getImageUrl } from '../utils/imageHandling';
