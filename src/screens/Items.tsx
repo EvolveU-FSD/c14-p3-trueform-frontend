@@ -69,8 +69,7 @@ export default function Items({ navigation }: any) {
 
   // Filter items for this category
   const categoryItems = useMemo(() => {
-    console.log('itemsData', itemsData);
-    return itemsData.filter((item) => item.categoryId === categoryId);
+    return categoryId === 'all' ? itemsData : itemsData.filter((item) => item.categoryId === categoryId);
   }, [categoryId]);
 
   const handleBackPress = () => {
