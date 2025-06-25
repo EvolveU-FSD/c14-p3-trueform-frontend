@@ -36,13 +36,16 @@ npm install
 
 ## ▶️ Running the Application
 
-Start in **web mode** (recommended for development):
 
 ```bash
-npx expo start --web
+npx expo start 
 ```
 
-This will launch the app in your browser at [http://localhost:19006](http://localhost:19006).
+This will launch the app. 
+Then you have to have an android emulator installed and started then press option 'a' to run it in the emulator
+
+Install 'android studio' to install an emulator.
+Or some ios version might work too.
 
 ---
 
