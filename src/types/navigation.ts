@@ -19,14 +19,7 @@ export type RootStackParamList = {
   BodyScan: undefined;
   Login: { email?: string } | undefined;
   Register: undefined;
-  CollarStyle: undefined;
-  CuffStyle: undefined;
-  PocketStyle: undefined;
-  SleeveStyle: undefined;
-  ShirtLength: undefined;
-  Monogram: undefined;
-  Buttons: undefined;
-  Measurement: undefined;
+  Payment: undefined;
 };
 
 // Navigation prop types

@@ -24,21 +24,21 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 // Custom linking configuration to prevent query parameters
 const linking: LinkingOptions<RootStackParamList> = {
-  prefixes: ['http://localhost:19006', 'myapp://'],
+  prefixes: ['http://localhost:19006'],
   config: {
     screens: {
       Home: '',
       Category: 'category/:slug',
+      Items: 'items/:slug',
       ItemDetails: 'item/:itemId',
       Customization: 'item/:itemId/customize',
       CustomizationOption: 'item/:itemId/customize/:category',
+      BodyScan: 'bodyscan',
       Login: 'login',
       Register: 'register',
-      BodyScan: 'bodyscan',
-      Items: 'items',
+      Payment: 'payment',
     },
   },
-  enabled: true,
 };
 
 interface ProtectedBodyScanScreenProps {

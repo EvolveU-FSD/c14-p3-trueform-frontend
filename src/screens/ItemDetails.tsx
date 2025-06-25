@@ -3,7 +3,7 @@ import { View, Text, Image, ScrollView, TouchableOpacity, ActivityIndicator } fr
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/navigation';
-import { styles } from '../styles/ItemDetailsStyles';
+import styles from '../styles/ItemDetailsStyles';
 import { ClothingService } from '../services/clothing.service';
 import { Clothing } from '../types/clothing';
 import { useTheme } from '../theme/ThemeContext';
@@ -55,7 +55,6 @@ export default function ItemDetails() {
     if (item) {
       navigation.navigate('Customization', {
         itemId: item.id,
-        clothingType: item.type, // Assuming you add 'type' to Clothing interface
       });
     }
   };
