@@ -36,12 +36,11 @@ npm install
 
 ## ▶️ Running the Application
 
-
 ```bash
-npx expo start 
+npx expo start
 ```
 
-This will launch the app. 
+This will launch the app.
 Then you have to have an android emulator installed and started then press option 'a' to run it in the emulator
 
 Install 'android studio' to install an emulator.
