@@ -1,8 +1,10 @@
 import { StyleSheet } from 'react-native';
 import { spacing, fontSizes, borderRadius, buttonHeights } from '../utils/sizes';
-import { Theme } from '../theme/ThemeContext';
+import { useTheme } from '../theme/ThemeContext';
 
-export function createStyles(theme: Theme) {
+export default function useCreateStyles() {
+  const { theme } = useTheme();
+
   return StyleSheet.create({
     container: {
       flex: 1,
@@ -120,9 +122,11 @@ export function createStyles(theme: Theme) {
       borderRadius: borderRadius.md,
     },
     navButtonText: {
-      color: theme.textColorInverse,
+      color: theme.textColor,
       fontSize: fontSizes.md,
       fontWeight: '500',
     },
   });
 }
+
+export type Styles = ReturnType<typeof useCreateStyles>;

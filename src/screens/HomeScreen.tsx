@@ -9,23 +9,17 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../types/navigation';
+import { HomeScreenProps } from '../types/navigation';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { createStyles } from '../styles/HomeScreenStyles';
-import { useTheme } from '../theme/ThemeContext';
+import createStyles from '../styles/HomeScreenStyles';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const heroBannerImage = require('../../assets/images/banners/hero-banner.jpg');
 
-type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
-
-export default function HomeScreen() {
-  const { theme } = useTheme();
-  const styles = createStyles(theme);
+export default function HomeScreen({ navigation }: HomeScreenProps) {
+  const styles = createStyles();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSubmenuOpen, setIsSubmenuOpen] = useState(false); // Add this state
-  const navigation = useNavigation<HomeScreenNavigationProp>();
 
   const handleCategorySelect = (category: string) => {
     navigation.navigate('Category', { slug: category.toLowerCase() });
@@ -145,7 +139,7 @@ export default function HomeScreen() {
 
         <TouchableOpacity
           style={styles.startShoppingButton}
-          onPress={() => navigation.navigate('Category', { slug: '1' })}
+          onPress={() => navigation.navigate('Items', { slug: 'all' })}
         >
           <Text style={styles.startShoppingText}>Start Shopping</Text>
         </TouchableOpacity>

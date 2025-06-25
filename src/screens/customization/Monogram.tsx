@@ -2,8 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import CustomizationScreenWrapper from '../../components/CustomizationScreenWrapper';
 import { useCustomization } from '../../context/CustomizationContext';
-import { createStyles } from '../../styles/MonogramStyles';
-import { useTheme } from '../../theme/ThemeContext';
+import createStyles from '../../styles/MonogramStyles';
 
 const MONOGRAM_OPTIONS = [
   {
@@ -49,8 +48,7 @@ const MONOGRAM_OPTIONS = [
 ];
 
 export default function Monogram() {
-  const { theme } = useTheme();
-  const styles = createStyles(theme);
+  const styles = createStyles();
   const { state, updateOption } = useCustomization();
 
   return (

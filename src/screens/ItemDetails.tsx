@@ -1,31 +1,21 @@
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  ScrollView,
-  Dimensions,
-  TouchableOpacity,
-} from 'react-native';
-import { useRoute, useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../types/navigation';
+import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
 import itemsData from '../data/categoryItems.json';
-import { styles } from '../styles/ItemDetailsStyles';
-import CollarType from './CollarType';
+import createStyles from '../styles/ItemDetailsStyles';
 import { useState } from 'react';
+import { ItemDetailsScreenProps } from 'types/navigation';
 
-type ItemDetailsProps = {
-  itemId?: string;
-};
-
-type ItemDetailsScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'ItemDetails'>;
-
-export default function ItemDetails(props: ItemDetailsProps) {
-  const navigation = useNavigation<ItemDetailsScreenNavigationProp>();
-  // Support both navigation param and direct prop
-  const route = useRoute<any>();
-  const itemId = props.itemId || route.params?.itemId;
+export default function ItemDetails({ navigation, route }: ItemDetailsScreenProps) {
+  const styles = createStyles();
+  const itemId = route.params?.itemId;
+  const [showFabric, setShowFabric] = useState(false);
+  // eslint-disable-next-line
+  const [selectedColor, setSelectedColor] = useState('');
+  // eslint-disable-next-line
+  const [selectedSize, setSelectedSize] = useState('');
+  // eslint-disable-next-line
+  const [quantity, setQuantity] = useState(1);
+  // eslint-disable-next-line
+  const [isCustomizing, setIsCustomizing] = useState(false);
 
   const item = itemsData.find((i) => i.id === itemId);
 
@@ -37,13 +27,7 @@ export default function ItemDetails(props: ItemDetailsProps) {
     );
   }
 
-  const images: string[] = item.images && item.images.length > 0 ? item.images : [item.image];
-
-  const [showFabric, setShowFabric] = useState(false);
-  const [selectedColor, setSelectedColor] = useState('');
-  const [selectedSize, setSelectedSize] = useState('');
-  const [quantity, setQuantity] = useState(1);
-  const [isCustomizing, setIsCustomizing] = useState(false);
+  const images: string[] = item.images && item.images.length > 0 ? item.images : [];
 
   const handleCustomization = () => {
     navigation.navigate('CollarStyle');

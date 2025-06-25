@@ -1,13 +1,11 @@
 // src/components/NavButtons.tsx
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, TouchableOpacity, ScrollView } from 'react-native';
 import { NavButtonProps } from '../types/product';
-import { useTheme } from '../theme/ThemeContext';
-import { createStyles } from '../styles/NavButtonsStyles';
+import createStyles from '../styles/NavButtonsStyles';
 
 function NavButton({ icon, label, onPress, isActive }: NavButtonProps) {
-  const { theme } = useTheme();
-  const styles = createStyles(theme);
+  const styles = createStyles();
 
   return (
     <TouchableOpacity style={[styles.button, isActive && styles.activeButton]} onPress={onPress}>
@@ -18,8 +16,7 @@ function NavButton({ icon, label, onPress, isActive }: NavButtonProps) {
 }
 
 export default function NavButtons() {
-  const { theme } = useTheme();
-  const styles = createStyles(theme);
+  const styles = createStyles();
   const [activeButton, setActiveButton] = useState<string | null>(null);
 
   const handleButtonPress = (buttonName: string) => {
