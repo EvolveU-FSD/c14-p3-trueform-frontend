@@ -72,4 +72,27 @@ TrueFormTSFE/
 
 ## 🛠 Development Commands
 
-- `npm
+- `npm run android` - Run the app on an Android emulator or connected device
+- `npm run ios` - Run the app on an iOS simulator or connected device
+- `npm run dev` - Run the app in an Expo tunnel that can be accessed from the outside world. Join from your local Expo Go app.
+
+---
+
+## 🌐 Testing with Ngrok Tunnel
+
+To test the app on physical devices while running your backend locally, you'll need to set up an ngrok tunnel.
+
+### Setting up Ngrok on Windows
+
+1. Download and install ngrok from the official website:
+   - Visit [https://ngrok.com/download](https://ngrok.com/download)
+   - Download the Windows version
+   - Extract the ngrok.exe file
+   - Add ngrok to your Windows PATH or move it to a location like `C:\Windows`
+
+2. Open Command Prompt (cmd.exe) - **Note: Do not use Git Bash**:
+   ```cmd
+   # Start your backend server first (default port 3000)
+   # Then in a new CMD window, run:
+   ngrok http https://localhost:3000
+   ```
