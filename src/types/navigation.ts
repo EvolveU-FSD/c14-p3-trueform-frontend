@@ -35,6 +35,7 @@ export type RegisterScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   'Register'
 >;
+export type PaymentScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Payment'>;
 
 // Route prop types
 export type HomeScreenRouteProp = RouteProp<RootStackParamList, 'Home'>;
@@ -42,6 +43,7 @@ export type ItemDetailsScreenRouteProp = RouteProp<RootStackParamList, 'ItemDeta
 export type BodyScanScreenRouteProp = RouteProp<RootStackParamList, 'BodyScan'>;
 export type LoginScreenRouteProp = RouteProp<RootStackParamList, 'Login'>;
 export type RegisterScreenRouteProp = RouteProp<RootStackParamList, 'Register'>;
+export type PaymentScreenRouteProp = RouteProp<RootStackParamList, 'Payment'>;
 
 // Screen props interfaces
 export interface HomeScreenProps {

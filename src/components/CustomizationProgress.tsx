@@ -24,7 +24,7 @@ export default function CustomizationProgress({ currentStep }: Props) {
 
   useEffect(() => {
     // Auto scroll to current step with offset
-    if (scrollViewRef.current && currentStepIndex >= 0) {
+    if (scrollViewRef.current && currentStepIndex >= 5) {
       scrollViewRef.current.scrollTo({
         x: currentStepIndex * 80, // Approximate width of each step
         animated: true,

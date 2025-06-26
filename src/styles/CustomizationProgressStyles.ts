@@ -11,6 +11,8 @@ export default function useCreateStyles() {
       borderBottomWidth: 1,
       borderBottomColor: theme.borderColor,
       backgroundColor: theme.backgroundColor,
+      flexGrow: 0
+
     },
     contentContainer: {
       paddingHorizontal: spacing.md,

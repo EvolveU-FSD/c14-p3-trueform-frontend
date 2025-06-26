@@ -77,17 +77,21 @@ export default function useCreateStyles() {
       overflow: 'hidden',
       elevation: 2,
       shadowColor: theme.textColor,
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 4,
+      shadowOffset: { width: 0, height: 1 },
+      shadowOpacity: 0.2,
+      shadowRadius: 2,
+      height: 300,
+      paddingBottom: spacing.xxxl,
     },
     itemImage: {
       width: '100%',
-      aspectRatio: 1,
-      backgroundColor: theme.borderColor,
+      height: '100%',
     },
     itemContent: {
-      padding: spacing.sm,
+      flex: 1,
+      justifyContent: 'center',
+      margin: spacing.sm,
+      marginTop: spacing.xs
     },
     itemName: {
       fontSize: fontSizes.md,
