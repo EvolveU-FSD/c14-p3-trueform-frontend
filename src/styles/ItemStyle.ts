@@ -15,32 +15,6 @@ export default function useCreateStyles() {
       justifyContent: 'center',
       alignItems: 'center',
     },
-    optionsContainer: {
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      padding: spacing.md,
-      gap: spacing.md,
-    },
-    optionBox: {
-      width: '48%',
-      aspectRatio: 1,
-      backgroundColor: theme.borderColor,
-      borderRadius: borderRadius.md,
-      padding: spacing.sm,
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderWidth: 1,
-      borderColor: theme.borderColor,
-    },
-    optionBoxSelected: {
-      borderColor: theme.primaryColor,
-      backgroundColor: `${theme.primaryColor}10`,
-    },
-    optionImage: {
-      width: '80%',
-      height: '80%',
-      marginBottom: spacing.sm,
-    },
     // Header styles
     header: {
       flexDirection: 'row',
@@ -80,29 +54,98 @@ export default function useCreateStyles() {
       shadowOffset: { width: 0, height: 1 },
       shadowOpacity: 0.2,
       shadowRadius: 2,
-      height: 300,
-      paddingBottom: spacing.xxxl,
+      borderWidth: 1,
+      borderColor: theme.borderColor,
     },
     itemImage: {
       width: '100%',
-      height: '100%',
+      height: 180,
+      backgroundColor: theme.borderColor,
     },
     itemContent: {
-      flex: 1,
-      justifyContent: 'center',
-      margin: spacing.sm,
-      marginTop: spacing.xs,
+      padding: spacing.sm,
+      minHeight: 60,
+      justifyContent: 'space-between',
     },
     itemName: {
-      fontSize: fontSizes.md,
-      fontWeight: '500',
+      fontSize: fontSizes.sm,
+      fontWeight: '600',
       color: theme.textColor,
       marginBottom: spacing.xs,
+      lineHeight: fontSizes.sm * 1.2,
     },
     itemPrice: {
       fontSize: fontSizes.md,
       fontWeight: 'bold',
       color: theme.primaryColor,
+    },
+    // Sort and Filter dropdowns
+    sortDropdown: {
+      backgroundColor: theme.backgroundColor,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.borderColor,
+      elevation: 2,
+      shadowColor: theme.textColor,
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 3,
+    },
+    sortOption: {
+      padding: spacing.md,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.borderColor,
+    },
+    sortOptionSelected: {
+      backgroundColor: theme.primaryColor + '20',
+    },
+    sortOptionText: {
+      fontSize: fontSizes.md,
+      color: theme.textColor,
+    },
+    filterDropdown: {
+      backgroundColor: theme.backgroundColor,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.borderColor,
+      padding: spacing.md,
+      elevation: 2,
+      shadowColor: theme.textColor,
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 3,
+    },
+    filterHeader: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingVertical: spacing.sm,
+    },
+    filterTitle: {
+      fontSize: fontSizes.md,
+      fontWeight: '600',
+      color: theme.textColor,
+    },
+    filterOptions: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      marginTop: spacing.sm,
+    },
+    filterOption: {
+      paddingHorizontal: spacing.sm,
+      paddingVertical: spacing.xs,
+      marginRight: spacing.sm,
+      marginBottom: spacing.xs,
+      backgroundColor: theme.borderColor,
+      borderRadius: borderRadius.sm,
+      borderWidth: 1,
+      borderColor: theme.borderColor,
+    },
+    filterOptionSelected: {
+      backgroundColor: theme.primaryColor,
+      borderColor: theme.primaryColor,
+    },
+    filterOptionText: {
+      fontSize: fontSizes.sm,
+      color: theme.textColor,
     },
     // Error and loading states
     errorText: {
@@ -112,9 +155,10 @@ export default function useCreateStyles() {
       marginHorizontal: spacing.md,
     },
     itemCount: {
-      fontSize: fontSizes.md,
+      fontSize: fontSizes.sm,
       color: theme.secondaryColor,
       padding: spacing.md,
+      textAlign: 'center',
     },
     // Navigation
     backButton: {
