@@ -30,7 +30,6 @@ const linking: LinkingOptions<RootStackParamList> = {
       BodyScan: 'bodyscan',
       Login: 'login',
       Register: 'register',
-      BodyScan: 'bodyscan',
       Payment: 'payment',
     },
   },
@@ -80,14 +79,6 @@ function AppContent() {
               name='Home'
               component={HomeScreen}
               options={{ title: 'Home', headerShown: false }}
-            />
-            <Stack.Screen
-              name='Category'
-              component={CategoryScreen}
-              options={({ route }: { route: CategoryScreenRouteProp }) => ({
-                title: route.params.slug,
-                headerShown: false,
-              })}
             />
             <Stack.Screen name='Login' component={LoginScreen} options={{ headerShown: false }} />
             <Stack.Screen

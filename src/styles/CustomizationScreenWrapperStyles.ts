@@ -9,7 +9,6 @@ export default function useCreateStyles() {
     container: {
       flex: 1,
       backgroundColor: theme.backgroundColor,
-
     },
     scrollContainer: {
       flex: 1,

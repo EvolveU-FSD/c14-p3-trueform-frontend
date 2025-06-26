@@ -91,7 +91,7 @@ export default function useCreateStyles() {
       flex: 1,
       justifyContent: 'center',
       margin: spacing.sm,
-      marginTop: spacing.xs
+      marginTop: spacing.xs,
     },
     itemName: {
       fontSize: fontSizes.md,
