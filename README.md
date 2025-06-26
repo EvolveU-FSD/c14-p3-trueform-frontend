@@ -85,6 +85,7 @@ To test the app on physical devices while running your backend locally, you'll n
 ### Setting up Ngrok on Windows
 
 1. Download and install ngrok from the official website:
+
    - Visit [https://ngrok.com/download](https://ngrok.com/download)
    - Download the Windows version
    - Extract the ngrok.exe file
@@ -96,3 +97,7 @@ To test the app on physical devices while running your backend locally, you'll n
    # Then in a new CMD window, run:
    ngrok http https://localhost:3000
    ```
+3. Once ngrok is running, find the "Forwarding" line.
+
+- It will be in the format of {long url} -> https://localhost:3000
+- Copy the {long url}, and use it as the `EXPO_PUBLIC_API_BASE_URL` value in your .env file.
