@@ -4,15 +4,9 @@ import { NavigationContainer, LinkingOptions } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { AuthProvider, useAuth } from './src/context/AuthContext'; // This is the correct import
 import HomeScreen from './src/screens/HomeScreen';
-import CategoryScreen from './src/screens/Category';
 import ItemDetails from './src/screens/ItemDetails';
 import CustomizationScreen from './src/screens/customization/CustomizationScreen';
-import CustomizationOptionScreen from './src/screens/customization/CustomizationOptionScreen';
-import {
-  RootStackParamList,
-  LoginScreenNavigationProp,
-  CategoryScreenRouteProp,
-} from './src/types/navigation';
+import { RootStackParamList, LoginScreenNavigationProp } from './src/types/navigation';
 import { ThemeProvider } from './src/theme/ThemeContext';
 import { CustomizationProvider } from './src/context/CustomizationContext';
 import Items from './src/screens/Items';
@@ -28,7 +22,6 @@ const linking: LinkingOptions<RootStackParamList> = {
   config: {
     screens: {
       Home: '',
-      Category: 'category/:slug',
       Items: 'items/:slug',
       ItemDetails: 'item/:itemId',
       Customization: 'item/:itemId/customize',
@@ -78,7 +71,7 @@ function AppContent() {
   return (
     <ThemeProvider>
       <CustomizationProvider>
-        <NavigationContainer linking={linking}>
+        <NavigationContainer>
           <Stack.Navigator initialRouteName='Home'>
             <Stack.Screen name='Login' component={LoginScreen} options={{ headerShown: false }} />
             <Stack.Screen
@@ -92,17 +85,9 @@ function AppContent() {
               options={{ title: 'Home', headerShown: false }}
             />
             <Stack.Screen
-              name='Category'
-              component={CategoryScreen}
-              options={({ route }: { route: CategoryScreenRouteProp }) => ({
-                title: route.params.slug,
-                headerShown: false,
-              })}
-            />
-            <Stack.Screen
               name='BodyScan'
               component={ProtectedBodyScanScreen}
-              options={{ title: 'Body Measurements' }}
+              options={{ title: 'Automatic Body Measurements' }}
             />
             <Stack.Screen
               name='ItemDetails'
@@ -114,13 +99,6 @@ function AppContent() {
               name='Customization'
               component={CustomizationScreen}
               options={{ title: 'Customize Your Shirt' }}
-            />
-            <Stack.Screen
-              name='CustomizationOption'
-              component={CustomizationOptionScreen}
-              options={({ route }) => ({
-                title: `Select ${route.params.category}`,
-              })}
             />
           </Stack.Navigator>
         </NavigationContainer>

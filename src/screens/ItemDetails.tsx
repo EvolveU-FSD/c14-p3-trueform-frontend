@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  ActivityIndicator,
+  Dimensions,
+} from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/navigation';
@@ -10,6 +18,8 @@ import { useTheme } from '../theme/ThemeContext';
 import { getImageUrl } from '../utils/imageHandling';
 
 type ItemDetailsScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'ItemDetails'>;
+
+const screenWidth = Dimensions.get('window').width;
 
 export default function ItemDetails() {
   const navigation = useNavigation<ItemDetailsScreenNavigationProp>();
@@ -59,6 +69,12 @@ export default function ItemDetails() {
     }
   };
 
+  const handleScroll = (event: any) => {
+    const contentOffset = event.nativeEvent.contentOffset.x;
+    const newIndex = Math.round(contentOffset / screenWidth);
+    setCurrentImageIndex(newIndex);
+  };
+
   if (loading) {
     return (
       <View style={[styles.container, styles.centerContent]}>
@@ -83,14 +99,11 @@ export default function ItemDetails() {
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         style={styles.imageGallery}
-        onMomentumScrollEnd={(e) => {
-          const newIndex = Math.round(e.nativeEvent.contentOffset.x / styles.image.width);
-          setCurrentImageIndex(newIndex);
-        }}
+        onMomentumScrollEnd={handleScroll}
       >
         <Image
           source={{ uri: getImageUrl(item.mediaUrl) }}
-          style={styles.image}
+          style={[styles.image, { width: screenWidth }]}
           resizeMode='cover'
         />
       </ScrollView>

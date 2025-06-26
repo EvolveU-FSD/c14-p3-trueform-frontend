@@ -28,11 +28,6 @@ export default function HomeScreen({ navigation }: Props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSubmenuOpen, setIsSubmenuOpen] = useState(false);
 
-  const handleCategorySelect = (category: string) => {
-    navigation.navigate('Category', { slug: category.toLowerCase() });
-    setIsMenuOpen(false);
-  };
-
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle='dark-content' />

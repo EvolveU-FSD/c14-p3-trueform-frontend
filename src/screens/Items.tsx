@@ -9,12 +9,15 @@ import {
   Image,
   ActivityIndicator,
 } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
+import type { RouteProp, NavigationProp } from '@react-navigation/native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import createStyles from '../styles/ItemStyle';
 import { ClothingService } from '../services/clothing.service';
 import { Clothing } from '../types/clothing';
 import { getImageUrl } from '../utils/imageHandling';
+import { RootStackParamList } from '../types/navigation';
+import { useTheme } from '../theme/ThemeContext';
 
 const FILTER_OPTIONS = {
   colors: [
@@ -32,16 +35,12 @@ const FILTER_OPTIONS = {
   ],
 };
 
-type RootStackParamList = {
-  Home: undefined;
-  ItemDetails: { itemId: string };
-};
-
 export default function Items() {
-  const navigation =
-    useNavigation<import('@react-navigation/native').NavigationProp<RootStackParamList>>();
-  const route = useRoute<any>();
+  const theme = useTheme();
   const styles = createStyles();
+
+  const route = useRoute<RouteProp<RootStackParamList, 'Items'>>();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const { slug: categoryId } = route.params;
 
   // States
