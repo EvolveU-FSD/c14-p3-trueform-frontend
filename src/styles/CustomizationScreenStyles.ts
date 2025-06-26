@@ -27,7 +27,6 @@ export default function useCreateStyles() {
     },
     stepsContainer: {
       padding: spacing.md,
-      borderBottomWidth: 1,
       borderBottomColor: theme.borderColor,
     },
     stepItem: {
