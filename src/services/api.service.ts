@@ -1,136 +1,93 @@
+import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
+import { API_CONFIG } from '../config/api.config';
+import { ApiResponse } from '../types/api';
 import { getIdToken } from './auth.service';
 
-const API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL || '';
-
-interface FetchOptions extends RequestInit {
-  params?: Record<string, string>;
-}
-
-// Define the HeadersInit type if it's not available
-type Headers = Record<string, string>;
-
 class ApiService {
-  private async getHeaders(contentType?: string): Promise<Headers> {
-    // Get the authentication token
-    const token = await getIdToken();
+  private api: AxiosInstance;
 
-    // Start with empty headers
-    const headers: Headers = {};
-
-    // Only set Content-Type if it's provided and not undefined
-    if (contentType !== undefined) {
-      headers['Content-Type'] = contentType;
-    }
-
-    // Add auth token if available (always do this regardless of content type)
-    if (token) {
-      headers['Authorization'] = `Bearer ${token}`;
-    }
-
-    return headers;
-  }
-
-  private buildUrl(endpoint: string, params?: Record<string, string>): string {
-    // Use a full URL for React Native compatibility
-    let baseUrl = API_BASE_URL;
-    if (!baseUrl.endsWith('/') && !endpoint.startsWith('/')) {
-      baseUrl += '/';
-    }
-
-    const fullUrl = `${baseUrl}${endpoint}`;
-
-    // Handle URL params without using URL constructor (for React Native compatibility)
-    if (!params || Object.keys(params).length === 0) {
-      return fullUrl;
-    }
-
-    const queryString = Object.entries(params)
-      .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
-      .join('&');
-
-    return fullUrl.includes('?') ? `${fullUrl}&${queryString}` : `${fullUrl}?${queryString}`;
-  }
-
-  async get<T>(endpoint: string, options: FetchOptions = {}): Promise<T> {
-    const { params, ...fetchOptions } = options;
-    const url = this.buildUrl(endpoint, params);
-
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: await this.getHeaders(),
-      ...fetchOptions,
+  constructor() {
+    this.api = axios.create({
+      baseURL: API_CONFIG.BASE_URL,
+      timeout: API_CONFIG.TIMEOUT,
+      headers: API_CONFIG.HEADERS,
     });
 
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status} ${response.statusText}`);
-    }
+    // Request interceptor to handle authentication
+    this.api.interceptors.request.use(
+      async (config) => {
+        const token = await getIdToken();
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+      },
+      (error: AxiosError) => Promise.reject(error),
+    );
 
-    return response.json();
+    // Response interceptor for auth and error handling
+    this.api.interceptors.response.use(
+      (response: AxiosResponse) => response,
+      (error: AxiosError) => {
+        if (error.response?.status === 401) {
+          console.warn('Unauthorized: redirecting to login');
+          // TODO: Add redirect logic or auth state handling
+        }
+        return Promise.reject(error);
+      },
+    );
   }
 
-  async post<T>(endpoint: string, data: any, options: FetchOptions = {}): Promise<T> {
-    const { params, ...fetchOptions } = options;
-    const url = this.buildUrl(endpoint, params);
-
-    const isFormData = data instanceof FormData;
-
-    // For FormData, we explicitly pass undefined for contentType
-    // This means "don't set a Content-Type header" but we STILL get the Auth header
-    const headers = await this.getHeaders(isFormData ? undefined : 'application/json');
-
-    // The above will give us:
-    // FormData: { 'Authorization': 'Bearer xyz' }  // No Content-Type
-    // JSON: { 'Content-Type': 'application/json', 'Authorization': 'Bearer xyz' }
-
-    const body = isFormData ? data : JSON.stringify(data);
-
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: headers,
-      body: body,
-      ...fetchOptions,
-    });
-
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status} ${response.statusText}`);
+  async get<T>(endpoint: string, params?: object): Promise<ApiResponse<T>> {
+    try {
+      const response = await this.api.get<ApiResponse<T>>(endpoint, { params });
+      return response.data;
+    } catch (error) {
+      this.handleError(error as AxiosError);
+      throw error;
     }
-
-    return response.json();
-  }
-  async put<T>(endpoint: string, data: any, options: FetchOptions = {}): Promise<T> {
-    const { params, ...fetchOptions } = options;
-    const url = this.buildUrl(endpoint, params);
-
-    const response = await fetch(url, {
-      method: 'PUT',
-      headers: await this.getHeaders(),
-      body: JSON.stringify(data),
-      ...fetchOptions,
-    });
-
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status} ${response.statusText}`);
-    }
-
-    return response.json();
   }
 
-  async delete<T>(endpoint: string, options: FetchOptions = {}): Promise<T> {
-    const { params, ...fetchOptions } = options;
-    const url = this.buildUrl(endpoint, params);
-
-    const response = await fetch(url, {
-      method: 'DELETE',
-      headers: await this.getHeaders(),
-      ...fetchOptions,
-    });
-
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status} ${response.statusText}`);
+  async post<T, D>(endpoint: string, data: D): Promise<ApiResponse<T>> {
+    try {
+      const response = await this.api.post<ApiResponse<T>>(endpoint, data);
+      return response.data;
+    } catch (error) {
+      this.handleError(error as AxiosError);
+      throw error;
     }
+  }
 
-    return response.json();
+  async put<T, D>(endpoint: string, data: D): Promise<ApiResponse<T>> {
+    try {
+      const response = await this.api.put<ApiResponse<T>>(endpoint, data);
+      return response.data;
+    } catch (error) {
+      this.handleError(error as AxiosError);
+      throw error;
+    }
+  }
+
+  async delete<T>(endpoint: string): Promise<ApiResponse<T>> {
+    try {
+      const response = await this.api.delete<ApiResponse<T>>(endpoint);
+      return response.data;
+    } catch (error) {
+      this.handleError(error as AxiosError);
+      throw error;
+    }
+  }
+
+  private handleError(error: AxiosError) {
+    if (error.response) {
+      console.error('api error:', error.response.data);
+      console.error('status:', error.response.status);
+    } else if (error.request) {
+      console.error('no response received:', error.request);
+    } else {
+      console.error('error:', error.message);
+    }
   }
 }
 
-export const api = new ApiService();
+export const apiService = new ApiService();

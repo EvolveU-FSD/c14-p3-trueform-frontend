@@ -1,11 +1,12 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import createStyles from '../styles/CustomizationOptionGridStyles';
+import { getImageUrl } from '../utils/imageHandling';
 
 export type CustomizationOption = {
   id: string;
   title: string;
-  image: any;
+  image: string;
   description?: string;
 };
 
@@ -33,7 +34,11 @@ export default function CustomizationOptionGrid({
           style={[styles.option, itemStyle, selected === option.id && styles.selectedOption]}
           onPress={() => onSelect(option.id)}
         >
-          <Image source={option.image} style={styles.optionImage} resizeMode="contain" />
+          <Image
+            source={{ uri: getImageUrl(option.image) }}
+            style={styles.optionImage}
+            resizeMode='contain'
+          />
           <Text style={styles.optionTitle}>{option.title}</Text>
           {option.description && <Text style={styles.optionDescription}>{option.description}</Text>}
         </TouchableOpacity>
