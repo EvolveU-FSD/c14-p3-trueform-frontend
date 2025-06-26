@@ -10,6 +10,38 @@ export default function useCreateStyles() {
       flex: 1,
       backgroundColor: theme.backgroundColor,
     },
+    centerContent: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    optionsContainer: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      padding: spacing.md,
+      gap: spacing.md,
+    },
+    optionBox: {
+      width: '48%',
+      aspectRatio: 1,
+      backgroundColor: theme.borderColor,
+      borderRadius: borderRadius.md,
+      padding: spacing.sm,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderWidth: 1,
+      borderColor: theme.borderColor,
+    },
+    optionBoxSelected: {
+      borderColor: theme.primaryColor,
+      backgroundColor: `${theme.primaryColor}10`,
+    },
+    optionImage: {
+      width: '80%',
+      height: '80%',
+      marginBottom: spacing.sm,
+    },
+    // Header styles
     header: {
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -28,25 +60,7 @@ export default function useCreateStyles() {
       fontSize: fontSizes.md,
       color: theme.textColor,
     },
-    backButton: {
-      padding: spacing.sm,
-    },
-    centerContent: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    errorText: {
-      fontSize: fontSizes.lg,
-      color: 'red',
-      textAlign: 'center',
-      marginHorizontal: spacing.md,
-    },
-    itemCount: {
-      fontSize: fontSizes.md,
-      color: theme.secondaryColor,
-      padding: spacing.md,
-    },
+    // Grid styles
     gridContainer: {
       paddingHorizontal: spacing.sm,
       paddingBottom: spacing.lg,
@@ -70,7 +84,7 @@ export default function useCreateStyles() {
     itemImage: {
       width: '100%',
       aspectRatio: 1,
-      backgroundColor: theme.borderColor, // Placeholder color while loading
+      backgroundColor: theme.borderColor,
     },
     itemContent: {
       padding: spacing.sm,
@@ -86,72 +100,21 @@ export default function useCreateStyles() {
       fontWeight: 'bold',
       color: theme.primaryColor,
     },
-    filterDropdown: {
-      position: 'absolute',
-      top: 60,
-      right: spacing.md,
-      backgroundColor: theme.backgroundColor,
-      borderRadius: borderRadius.md,
-      padding: spacing.md,
-      elevation: 5,
-      shadowColor: theme.textColor,
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 4,
-      zIndex: 1000,
-      minWidth: 200,
-      borderWidth: 1,
-      borderColor: theme.borderColor,
+    // Error and loading states
+    errorText: {
+      fontSize: fontSizes.lg,
+      color: 'red',
+      textAlign: 'center',
+      marginHorizontal: spacing.md,
     },
-    sortDropdown: {
-      position: 'absolute',
-      top: 60,
-      left: spacing.md,
-      backgroundColor: theme.backgroundColor,
-      borderRadius: borderRadius.md,
-      elevation: 5,
-      shadowColor: theme.textColor,
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 4,
-      zIndex: 1000,
-      minWidth: 150,
-      borderWidth: 1,
-      borderColor: theme.borderColor,
-    },
-    filterSection: {
-      marginBottom: spacing.md,
-    },
-    filterHeader: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      paddingVertical: spacing.sm,
-    },
-    filterTitle: {
+    itemCount: {
       fontSize: fontSizes.md,
-      fontWeight: '600',
-      color: theme.textColor,
+      color: theme.secondaryColor,
+      padding: spacing.md,
     },
-    filterOptions: {
-      marginTop: spacing.sm,
-    },
-    filterOption: {
-      paddingVertical: spacing.sm,
-      paddingHorizontal: spacing.md,
-      marginBottom: spacing.xs,
-      borderRadius: borderRadius.sm,
-      backgroundColor: theme.borderColor,
-    },
-    filterOptionSelected: {
-      backgroundColor: theme.primaryColor,
-    },
-    filterOptionText: {
-      fontSize: fontSizes.sm,
-      color: theme.textColor,
-    },
-    filterOptionTextSelected: {
-      color: theme.textColorInverse,
+    // Navigation
+    backButton: {
+      padding: spacing.sm,
     },
   });
 }

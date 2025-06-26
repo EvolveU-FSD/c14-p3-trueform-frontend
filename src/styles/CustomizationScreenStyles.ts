@@ -13,7 +13,6 @@ export default function useCreateStyles() {
     loadingContainer: {
       flex: 1,
       justifyContent: 'center',
-      alignItems: 'center',
     },
     errorContainer: {
       flex: 1,
@@ -33,7 +32,7 @@ export default function useCreateStyles() {
     },
     stepItem: {
       alignItems: 'center',
-      marginRight: spacing.md,
+      marginRight: spacing.lg,
       opacity: 0.7,
     },
     activeStepItem: {
@@ -58,7 +57,7 @@ export default function useCreateStyles() {
     },
     stepTitle: {
       fontSize: fontSizes.xs,
-      color: theme.secondaryColor,
+      color: theme.textColor,
       fontWeight: '500',
     },
     activeStepTitle: {

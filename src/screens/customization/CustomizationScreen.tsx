@@ -5,6 +5,7 @@ import { CustomizationService } from '../../services/customization.service';
 import { useRoute } from '@react-navigation/native';
 import createStyles from '../../styles/CustomizationScreenStyles';
 import { ClothingService } from '../../services/clothing.service';
+import { getImageUrl } from '../../utils/imageHandling';
 
 export default function CustomizationScreen() {
   const styles = createStyles();
@@ -46,6 +47,23 @@ export default function CustomizationScreen() {
 
         {/* Line separator */}
         <View style={styles.line} />
+
+        {/* Customization Options */}
+        <ScrollView contentContainerStyle={styles.optionsContainer}>
+          {activeCustomization?.options.map((opt: any) => (
+            <TouchableOpacity
+              key={opt.id}
+              onPress={() => setSelection(activeCustomization.id, opt.id)}
+              style={[
+                styles.optionBox,
+                selections[activeCustomization.id] === opt.id && styles.optionBoxSelected,
+              ]}
+            >
+              <Image source={{ uri: getImageUrl(opt.mediaUrl) }} style={styles.optionImage} />
+              <Text>{opt.title}</Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
       </View>
     </CustomizationProvider>
   );

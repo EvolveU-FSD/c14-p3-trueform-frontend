@@ -11,7 +11,7 @@ import {
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/navigation';
-import styles from '../styles/ItemDetailsStyles';
+import createStyles from '../styles/ItemDetailsStyles';
 import { ClothingService } from '../services/clothing.service';
 import { Clothing } from '../types/clothing';
 import { useTheme } from '../theme/ThemeContext';
@@ -24,6 +24,7 @@ const screenWidth = Dimensions.get('window').width;
 export default function ItemDetails() {
   const navigation = useNavigation<ItemDetailsScreenNavigationProp>();
   const route = useRoute<any>();
+  const styles = createStyles();
   const { theme } = useTheme();
 
   const [loading, setLoading] = useState(true);
@@ -132,8 +133,8 @@ export default function ItemDetails() {
       )}
 
       {/* Start Customization Button */}
-      <TouchableOpacity style={styles.cartBtn} onPress={handleCustomization}>
-        <Text style={styles.cartBtnText}>Start Customization</Text>
+      <TouchableOpacity style={styles.customizeBtn} onPress={handleCustomization}>
+        <Text style={styles.customizeBtnText}>Start Customization</Text>
       </TouchableOpacity>
     </ScrollView>
   );
