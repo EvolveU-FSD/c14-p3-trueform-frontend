@@ -1,6 +1,6 @@
 // App.tsx
 import React, { useEffect } from 'react';
-import { NavigationContainer, LinkingOptions } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { AuthProvider, useAuth } from './src/context/AuthContext'; // This is the correct import
 import HomeScreen from './src/screens/HomeScreen';
@@ -16,24 +16,6 @@ import RegisterScreen from './src/screens/RegisterScreen';
 import PaymentScreen from './src/screens/PaymentScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
-
-// Custom linking configuration to prevent query parameters
-const linking: LinkingOptions<RootStackParamList> = {
-  prefixes: ['http://localhost:19006'],
-  config: {
-    screens: {
-      Home: '',
-      Items: 'items/:slug',
-      ItemDetails: 'item/:itemId',
-      Customization: 'item/:itemId/customize',
-      CustomizationOption: 'item/:itemId/customize/:category',
-      BodyScan: 'bodyscan',
-      Login: 'login',
-      Register: 'register',
-      Payment: 'payment',
-    },
-  },
-};
 
 interface ProtectedBodyScanScreenProps {
   navigation: LoginScreenNavigationProp;

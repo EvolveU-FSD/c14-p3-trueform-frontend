@@ -31,7 +31,8 @@ export default function ItemDetails() {
   const [error, setError] = useState<string | null>(null);
   const [item, setItem] = useState<Clothing | null>(null);
   const [showFabric, setShowFabric] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  // TODO: Allow for multiple images on the ItemDetails page.
+  // const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // Get itemId from route params
   const itemId = route.params?.itemId;

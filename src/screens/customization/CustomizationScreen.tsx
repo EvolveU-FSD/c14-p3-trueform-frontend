@@ -45,10 +45,6 @@ export default function CustomizationScreen() {
           return;
         }
 
-        // Calculate if the active step is visible
-        const currentScrollPosition = activeStepPosition;
-        const stepEndPosition = activeStepPosition + STEP_ITEM_WIDTH;
-
         // Determine scroll position to keep active step visible
         let targetScrollX = 0;
 
