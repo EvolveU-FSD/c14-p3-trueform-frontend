@@ -73,8 +73,8 @@ export default function ItemDetails() {
 
   const handleScroll = (event: any) => {
     const contentOffset = event.nativeEvent.contentOffset.x;
-    const newIndex = Math.round(contentOffset / screenWidth);
     // TODO: Implement once multiple images are allowed for each item.
+    // const newIndex = Math.round(contentOffset / screenWidth);
     // setCurrentImageIndex(newIndex);
   };
 
