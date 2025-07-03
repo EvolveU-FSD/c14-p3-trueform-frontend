@@ -3,10 +3,10 @@ export type ClothingType = 'SHIRT' | 'PANTS' | 'JACKET';
 export interface CustomizationOption {
   id: string;
   name: string;
-  description?: string;
   imageUrl: string;
-  priceModifier?: number;
   sortOrder: number;
+  description?: string;
+  priceModifier?: number;
 }
 
 export interface ConditionalOn {
@@ -17,12 +17,12 @@ export interface ConditionalOn {
 export interface Customization {
   name: string;
   clothingType: ClothingType;
-  description?: string;
   type: string;
   required: boolean;
   options: CustomizationOption[];
-  defaultValue?: string;
   sortOrder: number;
+  description?: string;
+  defaultValue?: string;
   priceModifier?: number;
   conditionalOn?: ConditionalOn;
 }
