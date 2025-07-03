@@ -6,7 +6,7 @@ export const getImageUrl = (imagePath: string | null | undefined): string => {
   }
 
   // If the image path is already a full URL, return it as is
-  if (imagePath.startsWith('https://') || imagePath.startsWith('https://')) {
+  if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
     return imagePath;
   }
 
