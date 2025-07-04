@@ -7,7 +7,7 @@ export const createBackdropHandler = (
   states: Array<{
     isOpen: boolean;
     setIsOpen: (value: boolean) => void;
-  }>
+  }>,
 ) => {
   return () => {
     states.forEach(({ isOpen, setIsOpen }) => {
@@ -23,7 +23,7 @@ export const createBackdropHandler = (
  */
 export const createMultiStateHandler = (...handlers: Array<() => void>) => {
   return () => {
-    handlers.forEach(handler => handler());
+    handlers.forEach((handler) => handler());
   };
 };
 
@@ -32,7 +32,7 @@ export const createMultiStateHandler = (...handlers: Array<() => void>) => {
  */
 export const createSingleBackdropHandler = (
   isOpen: boolean,
-  setIsOpen: (value: boolean) => void
+  setIsOpen: (value: boolean) => void,
 ) => {
   return () => {
     if (isOpen) {

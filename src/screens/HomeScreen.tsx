@@ -77,7 +77,9 @@ export default function HomeScreen({ navigation }: Props) {
                     style={styles.categoryHeader}
                     onPress={() => setIsSubmenuOpen(!isSubmenuOpen)}
                   >
-                    <Text style={styles.menuItemText}>Shirt Category {isSubmenuOpen ? '-' : '+'}</Text>
+                    <Text style={styles.menuItemText}>
+                      Shirt Category {isSubmenuOpen ? '-' : '+'}
+                    </Text>
                   </TouchableOpacity>
                   {isSubmenuOpen && (
                     <View style={styles.submenu}>

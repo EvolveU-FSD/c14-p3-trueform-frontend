@@ -83,10 +83,10 @@ function RegisterScreen({ navigation }: RegisterScreenProps) {
     try {
       // Register the user with Firebase
       const user = await register(email, password);
-      
+
       // Create customer profile in database
       await createCustomer(user.uid);
-      
+
       showAlert(
         'Registration Successful',
         'Your account has been created successfully!',
