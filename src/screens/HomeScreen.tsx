@@ -120,7 +120,7 @@ export default function HomeScreen({ navigation }: Props) {
         {/* Remove headerCenter View completely */}
 
         <View style={styles.headerRight}>
-          <TouchableOpacity style={styles.loginButton}>
+          <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('Login')}>
             <Text style={styles.loginText}>Login</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconButton}>
@@ -144,6 +144,13 @@ export default function HomeScreen({ navigation }: Props) {
           onPress={() => navigation.navigate('Items', { slug: 'all' })}
         >
           <Text style={styles.startShoppingText}>Start Shopping</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.startShoppingButton}
+          onPress={() => navigation.navigate('BodyScan')}
+        >
+          <Text style={styles.startShoppingText}>Open Body Scan</Text>
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>

@@ -51,7 +51,6 @@ To start emulator automatically by pressing 'a' after 'npx expo start' you need 
 C:\Users\<YourUsername>\AppData\Local\Android\Sdk\emulator
 C:\Users\<YourUsername>\AppData\Local\Android\Sdk\platform-tools
 
-
 ---
 
 ## 📁 Project Structure
