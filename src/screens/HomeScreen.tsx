@@ -13,6 +13,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/navigation';
 import { FontAwesome5 } from '@expo/vector-icons';
 import createStyles from '../styles/HomeScreenStyles';
+import { useAuth } from 'context/AuthContext';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const heroBannerImage = require('../../assets/images/banners/hero-banner.jpg');
@@ -27,6 +28,17 @@ export default function HomeScreen({ navigation }: Props) {
   const styles = createStyles();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSubmenuOpen, setIsSubmenuOpen] = useState(false);
+  const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
+  const { isAuthenticated, logout } = useAuth();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      setIsAccountMenuOpen(false);
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -117,12 +129,33 @@ export default function HomeScreen({ navigation }: Props) {
           </View>
         )}
 
-        {/* Remove headerCenter View completely */}
-
         <View style={styles.headerRight}>
-          <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('Login')}>
-            <Text style={styles.loginText}>Login</Text>
-          </TouchableOpacity>
+          {isAuthenticated ? (
+            <View style={styles.accountContainer}>
+              <TouchableOpacity
+                style={styles.accountButton}
+                onPress={() => setIsAccountMenuOpen(!isAccountMenuOpen)}
+              >
+                <FontAwesome5 name='user-circle' size={20} color='#333' />
+              </TouchableOpacity>
+
+              {/* Account dropdown menu */}
+              {isAccountMenuOpen && (
+                <View style={styles.accountDropdown}>
+                  <TouchableOpacity style={styles.accountMenuItem} onPress={handleLogout}>
+                    <Text style={styles.accountMenuText}>Logout</Text>
+                  </TouchableOpacity>
+                </View>
+              )}
+            </View>
+          ) : (
+            <TouchableOpacity
+              style={styles.loginButton}
+              onPress={() => navigation.navigate('Login')}
+            >
+              <Text style={styles.loginText}>Login</Text>
+            </TouchableOpacity>
+          )}
           <TouchableOpacity style={styles.iconButton}>
             <FontAwesome5 name='shopping-cart' size={20} color='#333' />
           </TouchableOpacity>
