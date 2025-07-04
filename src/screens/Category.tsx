@@ -28,7 +28,6 @@ export default function CategoryScreen({ navigation }: CategoryScreenProps) {
       try {
         setLoading(true);
         const fetchedCategories = await CategoryService.getAll();
-        console.log(fetchedCategories);
         setCategories(fetchedCategories);
 
         // Find the current category by slug
