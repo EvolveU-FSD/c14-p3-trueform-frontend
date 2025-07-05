@@ -5,6 +5,7 @@ export interface Clothing {
   price: number;
   colors: string[];
   mediaUrl: string;
+  updatedAt: string; // ISO date string
 }
 
 export type CreateClothingDTO = Omit<Clothing, 'id'>;

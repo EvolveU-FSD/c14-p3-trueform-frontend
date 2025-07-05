@@ -81,14 +81,19 @@ export default function useCreateStyles() {
     },
     // Sort and Filter dropdowns
     sortDropdown: {
+      position: 'absolute',
+      top: 60, // Adjust based on your header height
+      left: 0,
+      right: 0,
       backgroundColor: theme.backgroundColor,
       borderBottomWidth: 1,
       borderBottomColor: theme.borderColor,
-      elevation: 2,
+      elevation: 5,
       shadowColor: theme.textColor,
       shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 3,
+      shadowOpacity: 0.2,
+      shadowRadius: 4,
+      zIndex: 1000,
     },
     sortOption: {
       padding: spacing.md,
@@ -103,15 +108,21 @@ export default function useCreateStyles() {
       color: theme.textColor,
     },
     filterDropdown: {
+      position: 'absolute',
+      top: 60, // Adjust based on your header height
+      left: 0,
+      right: 0,
       backgroundColor: theme.backgroundColor,
       borderBottomWidth: 1,
       borderBottomColor: theme.borderColor,
       padding: spacing.md,
-      elevation: 2,
+      elevation: 5,
       shadowColor: theme.textColor,
       shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 3,
+      shadowOpacity: 0.2,
+      shadowRadius: 4,
+      zIndex: 1000,
+      maxHeight: 300, // Limit height to prevent covering everything
     },
     filterHeader: {
       flexDirection: 'row',
