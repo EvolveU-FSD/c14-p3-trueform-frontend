@@ -102,12 +102,13 @@ export default function Items() {
   const filterItems = (items: Clothing[], filters: string[]): Clothing[] => {
     if (filters.length === 0) return items;
 
-    const filterLowerCase = filters.map(f => f.toLowerCase());
+    const filterLowerCase = filters.map((f) => f.toLowerCase());
 
-    return items.filter(item =>
-      Array.isArray(item.filter) &&
-      item.filter.some(filter => filterLowerCase.includes(filter.toLowerCase()))
-    )
+    return items.filter(
+      (item) =>
+        Array.isArray(item.filter) &&
+        item.filter.some((filter) => filterLowerCase.includes(filter.toLowerCase())),
+    );
   };
 
   // Get sorted and filtered items
