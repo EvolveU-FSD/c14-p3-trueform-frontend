@@ -140,6 +140,42 @@ export default function useCreateStyles() {
       color: theme.secondaryColor,
       marginTop: spacing.xs,
     },
+    accountContainer: {
+      position: 'relative',
+    },
+    accountButton: {
+      padding: spacing.sm,
+      borderRadius: borderRadius.lg,
+      backgroundColor: 'transparent',
+    },
+    accountDropdown: {
+      position: 'absolute',
+      top: spacing.xxl,
+      right: 0,
+      backgroundColor: theme.backgroundColor,
+      borderRadius: borderRadius.md,
+      shadowColor: theme.isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
+      minWidth: 120,
+      zIndex: 1000,
+      borderWidth: 1,
+      borderColor: theme.borderColor,
+    },
+    accountMenuItem: {
+      padding: spacing.sm,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.borderColor,
+    },
+    accountMenuText: {
+      fontSize: fontSizes.md,
+      color: theme.textColor,
+    },
   });
 }
 
