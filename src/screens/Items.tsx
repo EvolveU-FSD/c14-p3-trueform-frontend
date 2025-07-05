@@ -21,17 +21,19 @@ import { useTheme } from '../theme/ThemeContext';
 
 const FILTER_OPTIONS = {
   colors: [
-    { label: 'White', value: 'white' },
-    { label: 'Navy', value: 'navy' },
-    { label: 'Beige', value: 'beige' },
-    { label: 'Red', value: 'red' },
+    { label: 'Black', value: 'black' },
     { label: 'Blue', value: 'blue' },
+    { label: 'Green', value: 'green' },
+    { label: 'Navy', value: 'navy' },
+    { label: 'Red', value: 'red' },
+    { label: 'White', value: 'white' },
+    { label: 'Yellow', value: 'yellow' },
   ],
   patterns: [
-    { label: 'Solid', value: 'solid' },
     { label: 'Check', value: 'check' },
+    { label: 'Print', value: 'print' },
+    { label: 'Solid', value: 'solid' },
     { label: 'Stripe', value: 'stripe' },
-    { label: 'Printed', value: 'printed' },
   ],
 };
 
