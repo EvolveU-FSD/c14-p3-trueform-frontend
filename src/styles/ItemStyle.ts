@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { spacing, fontSizes, borderRadius, iconSizes, buttonHeights } from '../utils/sizes';
+import { spacing, fontSizes, borderRadius, buttonHeights } from '../utils/sizes';
 import { useTheme } from '../theme/ThemeContext';
 
 export default function useCreateStyles() {
