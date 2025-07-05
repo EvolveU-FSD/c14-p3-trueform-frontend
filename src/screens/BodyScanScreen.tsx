@@ -11,10 +11,10 @@ import {
 import { Picker } from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
 import createStyles from '../styles/BodyScanStyles';
-import { endpoints } from '../config/constants';
 import { CrossImage } from '../components/CrossImage';
 import { showAlert } from '../utils/showAlerts';
-import { api } from '../services/api.service';
+import { apiService } from '../services/api.service';
+import { API_CONFIG } from '../config/api.config';
 import { BodyScanResponse } from '../types/bodyScanResponse';
 
 export default function BodyScanScreen() {
@@ -133,7 +133,10 @@ export default function BodyScanScreen() {
       formData.append('profile_image_base64', profileImageBase64);
 
       // Send FormData (will be multipart/form-data but with text fields only)
-      const result: BodyScanResponse = await api.post(endpoints.bodyScan, formData);
+      const result: BodyScanResponse = await apiService.post(
+        API_CONFIG.ENDPOINTS.BODYSCAN,
+        formData,
+      );
       setMeasurements(result.measurements);
     } catch (error) {
       console.error('Error submitting scan:', error);

@@ -54,7 +54,7 @@ export default function useCreateStyles() {
     metaContainer: { marginTop: spacing.sm, width: '100%' },
     meta: { fontSize: fontSizes.md, color: theme.secondaryColor, marginBottom: spacing.xs },
     notFound: { fontSize: fontSizes.lg, color: 'red', marginTop: spacing.xxl },
-    cartBtn: {
+    customizeBtn: {
       marginTop: spacing.lg,
       backgroundColor: theme.primaryColor,
       borderRadius: borderRadius.md,
@@ -62,7 +62,7 @@ export default function useCreateStyles() {
       paddingHorizontal: spacing.xl,
       alignItems: 'center',
     },
-    cartBtnText: {
+    customizeBtnText: {
       color: '#fff',
       fontSize: fontSizes.lg,
       fontWeight: 'bold',

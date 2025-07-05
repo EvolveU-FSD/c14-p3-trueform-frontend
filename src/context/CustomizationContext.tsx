@@ -1,50 +1,37 @@
 import React, { createContext, useContext, useState } from 'react';
 
-type CustomizationState = {
-  collarStyle: string;
-  cuffStyle: string;
-  pocketStyle: string;
-  sleeveStyle: string;
-  shirtLength: string;
-  monogram: string;
-  buttonColor: string;
-  measurementType: string;
+type Selection = {
+  [customizationId: string]: string;
 };
 
-type CustomizationContextType = {
-  state: CustomizationState;
-  updateOption: (key: keyof CustomizationState, value: string) => void;
-};
+interface CustomizationContextType {
+  selections: Selection;
+  handleSelection: (customizationId: string, optionId: string) => void;
+}
 
 const CustomizationContext = createContext<CustomizationContextType | undefined>(undefined);
 
 export function CustomizationProvider({ children }: { children: React.ReactNode }) {
-  const [state, setState] = useState<CustomizationState>({
-    collarStyle: '',
-    cuffStyle: '',
-    pocketStyle: '',
-    sleeveStyle: '',
-    shirtLength: '',
-    monogram: '',
-    buttonColor: '',
-    measurementType: '',
-  });
+  const [selections, setSelections] = useState<Selection>({});
 
-  const updateOption = (key: keyof CustomizationState, value: string) => {
-    setState((prev) => ({ ...prev, [key]: value }));
-  };
+  function handleSelection(customizationId: string, optionId: string): void {
+    setSelections((prev) => ({
+      ...prev,
+      [customizationId]: optionId,
+    }));
+  }
 
   return (
-    <CustomizationContext.Provider value={{ state, updateOption }}>
+    <CustomizationContext.Provider value={{ selections, handleSelection }}>
       {children}
     </CustomizationContext.Provider>
   );
 }
 
-export const useCustomization = () => {
+export function useCustomization(): CustomizationContextType {
   const context = useContext(CustomizationContext);
-  if (context === undefined) {
+  if (!context) {
     throw new Error('useCustomization must be used within a CustomizationProvider');
   }
   return context;
-};
+}

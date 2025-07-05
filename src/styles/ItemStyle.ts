@@ -10,6 +10,12 @@ export default function useCreateStyles() {
       flex: 1,
       backgroundColor: theme.backgroundColor,
     },
+    centerContent: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    // Header styles
     header: {
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -28,11 +34,10 @@ export default function useCreateStyles() {
       fontSize: fontSizes.md,
       color: theme.textColor,
     },
-    backButton: {
-      padding: spacing.sm,
-    },
+    // Grid styles
     gridContainer: {
-      padding: spacing.sm,
+      paddingHorizontal: spacing.sm,
+      paddingBottom: spacing.lg,
     },
     columnWrapper: {
       justifyContent: 'space-between',
@@ -49,41 +54,41 @@ export default function useCreateStyles() {
       shadowOffset: { width: 0, height: 1 },
       shadowOpacity: 0.2,
       shadowRadius: 2,
-      height: 300,
-      paddingBottom: spacing.xxxl,
+      borderWidth: 1,
+      borderColor: theme.borderColor,
     },
     itemImage: {
       width: '100%',
-      height: '100%',
+      height: 180,
+      backgroundColor: theme.borderColor,
     },
     itemContent: {
-      flex: 1,
-      justifyContent: 'center',
-      margin: spacing.sm,
-      marginTop: spacing.xs
+      padding: spacing.sm,
+      minHeight: 60,
+      justifyContent: 'space-between',
     },
     itemName: {
       fontSize: fontSizes.sm,
-      fontWeight: '500',
+      fontWeight: '600',
       color: theme.textColor,
+      marginBottom: spacing.xs,
+      lineHeight: fontSizes.sm * 1.2,
     },
     itemPrice: {
       fontSize: fontSizes.md,
       fontWeight: 'bold',
       color: theme.primaryColor,
     },
+    // Sort and Filter dropdowns
     sortDropdown: {
-      position: 'absolute',
-      top: spacing.xxl,
-      left: spacing.md,
       backgroundColor: theme.backgroundColor,
-      borderRadius: borderRadius.md,
-      elevation: 5,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.borderColor,
+      elevation: 2,
       shadowColor: theme.textColor,
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.1,
-      shadowRadius: 4,
-      zIndex: 1000,
+      shadowRadius: 3,
     },
     sortOption: {
       padding: spacing.md,
@@ -91,26 +96,22 @@ export default function useCreateStyles() {
       borderBottomColor: theme.borderColor,
     },
     sortOptionSelected: {
-      backgroundColor: theme.secondaryColor,
+      backgroundColor: theme.primaryColor + '20',
     },
     sortOptionText: {
-      fontSize: fontSizes.sm,
+      fontSize: fontSizes.md,
       color: theme.textColor,
     },
     filterDropdown: {
-      position: 'absolute',
-      top: spacing.xxl,
-      right: spacing.md,
       backgroundColor: theme.backgroundColor,
-      borderRadius: borderRadius.md,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.borderColor,
+      padding: spacing.md,
+      elevation: 2,
       shadowColor: theme.textColor,
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.1,
-      shadowRadius: 4,
-      elevation: 5,
-      zIndex: 1000,
-      minWidth: 200,
-      padding: spacing.md,
+      shadowRadius: 3,
     },
     filterHeader: {
       flexDirection: 'row',
@@ -124,20 +125,44 @@ export default function useCreateStyles() {
       color: theme.textColor,
     },
     filterOptions: {
-      flexDirection: 'column',
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      marginTop: spacing.sm,
     },
     filterOption: {
-      paddingVertical: spacing.sm,
-      paddingHorizontal: spacing.md,
-      borderBottomWidth: 1,
-      borderBottomColor: theme.borderColor,
+      paddingHorizontal: spacing.sm,
+      paddingVertical: spacing.xs,
+      marginRight: spacing.sm,
+      marginBottom: spacing.xs,
+      backgroundColor: theme.borderColor,
+      borderRadius: borderRadius.sm,
+      borderWidth: 1,
+      borderColor: theme.borderColor,
     },
     filterOptionSelected: {
-      backgroundColor: theme.secondaryColor,
+      backgroundColor: theme.primaryColor,
+      borderColor: theme.primaryColor,
     },
     filterOptionText: {
       fontSize: fontSizes.sm,
       color: theme.textColor,
+    },
+    // Error and loading states
+    errorText: {
+      fontSize: fontSizes.lg,
+      color: 'red',
+      textAlign: 'center',
+      marginHorizontal: spacing.md,
+    },
+    itemCount: {
+      fontSize: fontSizes.sm,
+      color: theme.secondaryColor,
+      padding: spacing.md,
+      textAlign: 'center',
+    },
+    // Navigation
+    backButton: {
+      padding: spacing.sm,
     },
   });
 }

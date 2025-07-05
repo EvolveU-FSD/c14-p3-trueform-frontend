@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   SafeAreaView,
   StatusBar,
@@ -7,11 +7,17 @@ import {
   TouchableOpacity,
   FlatList,
   Image,
+  ActivityIndicator,
 } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
+import type { RouteProp, NavigationProp } from '@react-navigation/native';
 import { FontAwesome5 } from '@expo/vector-icons';
-import itemsData from '../data/categoryItems.json';
 import createStyles from '../styles/ItemStyle';
+import { ClothingService } from '../services/clothing.service';
+import { Clothing } from '../types/clothing';
+import { getImageUrl } from '../utils/imageHandling';
+import { RootStackParamList } from '../types/navigation';
+import { useTheme } from '../theme/ThemeContext';
 
 const FILTER_OPTIONS = {
   colors: [
@@ -29,35 +35,18 @@ const FILTER_OPTIONS = {
   ],
 };
 
-const imageMapping: { [key: string]: any } = {
-  'assets/images/shirtImages/White solid shirt.jpeg': require('../../assets/images/shirtImages/White solid shirt.jpeg'),
-  'assets/images/shirtImages/Black solid shirt.jpeg': require('../../assets/images/shirtImages/Black solid shirt.jpeg'),
-  'assets/images/shirtImages/Yellow solid shirt.jpeg': require('../../assets/images/shirtImages/Yellow solid shirt.jpeg'),
-  'assets/images/shirtImages/Red solid shirt.jpeg': require('../../assets/images/shirtImages/Red solid shirt.jpeg'),
-  'assets/images/shirtImages/Blue solid shirt.jpeg': require('../../assets/images/shirtImages/Blue solid shirt.jpeg'),
-  'assets/images/shirtImages/Navy solid shirt.jpeg': require('../../assets/images/shirtImages/Navy solid shirt.jpeg'),
-  'assets/images/shirtImages/White stripes shirt.jpeg': require('../../assets/images/shirtImages/White stripes shirt.jpeg'),
-  'assets/images/shirtImages/Red stripes shirt.jpeg': require('../../assets/images/shirtImages/Red stripes shirt.jpeg'),
-  'assets/images/shirtImages/Navy stripes shirt.jpeg': require('../../assets/images/shirtImages/Navy stripes shirt.jpeg'),
-  'assets/images/shirtImages/Blue stripes shirt.jpeg': require('../../assets/images/shirtImages/Blue stripes shirt.jpeg'),
-  'assets/images/shirtImages/Red check shirt.jpeg': require('../../assets/images/shirtImages/Red check shirt.jpeg'),
-  'assets/images/shirtImages/Green check shirt.jpeg': require('../../assets/images/shirtImages/Green check shirt.jpeg'),
-  'assets/images/shirtImages/Blue check shirt.jpeg': require('../../assets/images/shirtImages/Blue check shirt.jpeg'),
-  'assets/images/shirtImages/Black check shirt.jpeg': require('../../assets/images/shirtImages/Black check shirt.jpeg'),
-  'assets/images/shirtImages/White floral print shirt.jpeg': require('../../assets/images/shirtImages/White floral print shirt.jpeg'),
-  'assets/images/shirtImages/Navy parsley printed shirt.jpeg': require('../../assets/images/shirtImages/Navy parsley printed shirt.jpeg'),
-  'assets/images/shirtImages/Blue parsley printed shirt.jpeg': require('../../assets/images/shirtImages/Blue parsley printed shirt.jpeg'),
-  'assets/images/shirtImages/Green printed shirt.jpeg': require('../../assets/images/shirtImages/Green printed shirt.jpeg'),
-  'assets/images/shirtImages/White printed shirt.jpeg': require('../../assets/images/shirtImages/White printed shirt.jpeg'),
-  'assets/images/shirtImages/Blue printed shirt.jpeg': require('../../assets/images/shirtImages/Blue printed shirt.jpeg'),
-};
-
-export default function Items({ navigation }: any) {
-  const route = useRoute<any>();
+export default function Items() {
+  const theme = useTheme();
   const styles = createStyles();
+
+  const route = useRoute<RouteProp<RootStackParamList, 'Items'>>();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const { slug: categoryId } = route.params;
 
   // States
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [clothingItems, setClothingItems] = useState<Clothing[]>([]);
   const [showSort, setShowSort] = useState(false);
   const [selectedSort, setSelectedSort] = useState('recommended');
   const [showFilter, setShowFilter] = useState(false);
@@ -67,9 +56,23 @@ export default function Items({ navigation }: any) {
     patterns: true,
   });
 
-  // Filter items for this category
-  const categoryItems = useMemo(() => {
-    return categoryId === 'all' ? itemsData : itemsData.filter((item) => item.categoryId === categoryId);
+  // Fetch clothing items
+  useEffect(() => {
+    const fetchClothingItems = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const items = await ClothingService.getAll();
+        setClothingItems(items);
+      } catch (err) {
+        console.error('Failed to fetch clothing items:', err);
+        setError('Failed to load items');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchClothingItems();
   }, [categoryId]);
 
   const handleBackPress = () => {
@@ -96,6 +99,22 @@ export default function Items({ navigation }: any) {
     });
   }, [navigation]);
 
+  if (loading) {
+    return (
+      <View style={[styles.container, styles.centerContent]}>
+        <ActivityIndicator size='large' color={theme.primaryColor} />
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={[styles.container, styles.centerContent]}>
+        <Text style={styles.errorText}>{error}</Text>
+      </View>
+    );
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle='dark-content' />
@@ -110,6 +129,11 @@ export default function Items({ navigation }: any) {
           <FontAwesome5 name='sliders-h' size={20} color='#333' />
         </TouchableOpacity>
       </View>
+
+      {/* Items Count */}
+      <Text style={styles.itemCount}>
+        {clothingItems.length} {clothingItems.length === 1 ? 'item' : 'items'} found
+      </Text>
 
       {/* Sort Options Dropdown */}
       {showSort && (
@@ -132,7 +156,7 @@ export default function Items({ navigation }: any) {
         </View>
       )}
 
-      {/* Add Filter Dropdown */}
+      {/* Filter Dropdown */}
       {showFilter && (
         <View style={styles.filterDropdown}>
           {/* Colors Section */}
@@ -206,7 +230,7 @@ export default function Items({ navigation }: any) {
 
       {/* Items Grid */}
       <FlatList
-        data={categoryItems}
+        data={clothingItems}
         keyExtractor={(item) => item.id}
         numColumns={2}
         contentContainerStyle={styles.gridContainer}
@@ -218,7 +242,7 @@ export default function Items({ navigation }: any) {
             activeOpacity={0.8}
           >
             <Image
-              source={imageMapping[item.images[0]]}
+              source={{ uri: getImageUrl(item.mediaUrl) }}
               style={styles.itemImage}
               resizeMode='cover'
             />

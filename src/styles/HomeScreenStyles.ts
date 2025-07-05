@@ -127,16 +127,16 @@ export default function useCreateStyles() {
     },
     headerTitleContainer: {
       alignItems: 'center',
-      paddingVertical: spacing.lg,
-      marginBottom: spacing.sm,
+      paddingVertical: spacing.md, // Reduced from spacing.lg
+      marginBottom: spacing.xs, // Reduced from spacing.sm
     },
     mainTitle: {
-      fontSize: fontSizes.xl,
+      fontSize: fontSizes.lg, // Changed from fontSizes.xl (24 -> 20)
       fontWeight: 'bold',
       color: theme.textColor,
     },
     mainSubtitle: {
-      fontSize: fontSizes.md,
+      fontSize: fontSizes.sm, // Changed from fontSizes.md (16 -> 12)
       color: theme.secondaryColor,
       marginTop: spacing.xs,
     },
