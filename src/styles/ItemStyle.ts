@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { spacing, fontSizes, borderRadius } from '../utils/sizes';
+import { spacing, fontSizes, borderRadius, buttonHeights } from '../utils/sizes';
 import { useTheme } from '../theme/ThemeContext';
 
 export default function useCreateStyles() {
@@ -24,11 +24,13 @@ export default function useCreateStyles() {
       paddingVertical: spacing.sm,
       borderBottomWidth: 1,
       borderBottomColor: theme.borderColor,
+      minHeight: buttonHeights.xl,
     },
     headerButton: {
       flexDirection: 'row',
       alignItems: 'center',
       padding: spacing.sm,
+      minHeight: buttonHeights.md,
     },
     headerButtonText: {
       fontSize: fontSizes.md,
@@ -37,7 +39,7 @@ export default function useCreateStyles() {
     // Grid styles
     gridContainer: {
       paddingHorizontal: spacing.sm,
-      paddingBottom: spacing.lg,
+      paddingBottom: spacing.xl,
     },
     columnWrapper: {
       justifyContent: 'space-between',
@@ -64,7 +66,7 @@ export default function useCreateStyles() {
     },
     itemContent: {
       padding: spacing.sm,
-      minHeight: 60,
+      minHeight: spacing.xxxl,
       justifyContent: 'space-between',
     },
     itemName: {
@@ -81,19 +83,26 @@ export default function useCreateStyles() {
     },
     // Sort and Filter dropdowns
     sortDropdown: {
+      position: 'absolute',
+      top: buttonHeights.xl + spacing.sm, // Use button height + spacing for consistent positioning
+      left: 0,
+      right: 0,
       backgroundColor: theme.backgroundColor,
       borderBottomWidth: 1,
       borderBottomColor: theme.borderColor,
-      elevation: 2,
+      elevation: 5,
       shadowColor: theme.textColor,
       shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 3,
+      shadowOpacity: 0.2,
+      shadowRadius: 4,
+      zIndex: 1000,
     },
     sortOption: {
       padding: spacing.md,
       borderBottomWidth: 1,
       borderBottomColor: theme.borderColor,
+      minHeight: buttonHeights.lg,
+      justifyContent: 'center',
     },
     sortOptionSelected: {
       backgroundColor: theme.primaryColor + '20',
@@ -103,21 +112,28 @@ export default function useCreateStyles() {
       color: theme.textColor,
     },
     filterDropdown: {
+      position: 'absolute',
+      top: buttonHeights.xl + spacing.sm, // Use button height + spacing for consistent positioning
+      left: 0,
+      right: 0,
       backgroundColor: theme.backgroundColor,
       borderBottomWidth: 1,
       borderBottomColor: theme.borderColor,
       padding: spacing.md,
-      elevation: 2,
+      elevation: 5,
       shadowColor: theme.textColor,
       shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 3,
+      shadowOpacity: 0.2,
+      shadowRadius: 4,
+      zIndex: 1000,
+      maxHeight: spacing.xxxl * 5, // Use spacing multiplier instead of hardcoded value
     },
     filterHeader: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
       paddingVertical: spacing.sm,
+      minHeight: buttonHeights.md,
     },
     filterTitle: {
       fontSize: fontSizes.md,
@@ -128,16 +144,18 @@ export default function useCreateStyles() {
       flexDirection: 'row',
       flexWrap: 'wrap',
       marginTop: spacing.sm,
+      gap: spacing.xs, // Use gap instead of margins for better spacing
     },
     filterOption: {
       paddingHorizontal: spacing.sm,
       paddingVertical: spacing.xs,
-      marginRight: spacing.sm,
-      marginBottom: spacing.xs,
       backgroundColor: theme.borderColor,
       borderRadius: borderRadius.sm,
       borderWidth: 1,
       borderColor: theme.borderColor,
+      minHeight: buttonHeights.sm,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     filterOptionSelected: {
       backgroundColor: theme.primaryColor,
@@ -163,6 +181,10 @@ export default function useCreateStyles() {
     // Navigation
     backButton: {
       padding: spacing.sm,
+      minHeight: buttonHeights.md,
+      minWidth: buttonHeights.md,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
   });
 }
