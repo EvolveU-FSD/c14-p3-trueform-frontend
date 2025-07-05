@@ -98,21 +98,16 @@ export default function Items() {
     }
   };
 
-  // TODO: Fix the filters on the next ticket.
-  // Filter function
+  // Updated filter function to use the filters array from API
   const filterItems = (items: Clothing[], filters: string[]): Clothing[] => {
     if (filters.length === 0) return items;
 
-    return items.filter((item) => {
-      // Check if item matches any of the selected filters
-      const matchesColor = filters.some((filter) =>
-        item.colors.some((color) => color.toLowerCase() === filter.toLowerCase()),
-      );
+    const filterLowerCase = filters.map(f => f.toLowerCase());
 
-      // For patterns, you'd need to add a pattern field to your Clothing type
-      // For now, we'll just check colors
-      return matchesColor;
-    });
+    return items.filter(item =>
+      Array.isArray(item.filter) &&
+      item.filter.some(filter => filterLowerCase.includes(filter.toLowerCase()))
+    )
   };
 
   // Get sorted and filtered items
