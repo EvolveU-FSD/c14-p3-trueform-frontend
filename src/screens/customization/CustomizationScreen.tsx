@@ -15,7 +15,7 @@ export default function CustomizationScreen() {
   const navigation = useNavigation();
   const { itemId } = route.params;
 
-  const { selections, setSelection } = useCustomization();
+  const { selections, handleSelection } = useCustomization();
   const [customizations, setCustomizations] = useState<any[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const scrollViewRef = useRef<ScrollView>(null);
@@ -142,7 +142,7 @@ export default function CustomizationScreen() {
           {activeCustomization?.options.map((opt: any) => (
             <TouchableOpacity
               key={opt.id}
-              onPress={() => setSelection(activeCustomization.id, opt.id)}
+              onPress={() => handleSelection(activeCustomization.id, opt.id)}
               style={[
                 styles.optionBox,
                 selections[activeCustomization.id] === opt.id && styles.optionBoxSelected,

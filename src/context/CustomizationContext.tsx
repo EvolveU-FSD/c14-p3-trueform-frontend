@@ -6,7 +6,7 @@ type Selection = {
 
 interface CustomizationContextType {
   selections: Selection;
-  setSelection: (customizationId: string, optionId: string) => void;
+  handleSelection: (customizationId: string, optionId: string) => void;
 }
 
 const CustomizationContext = createContext<CustomizationContextType | undefined>(undefined);
@@ -14,7 +14,7 @@ const CustomizationContext = createContext<CustomizationContextType | undefined>
 export function CustomizationProvider({ children }: { children: React.ReactNode }) {
   const [selections, setSelections] = useState<Selection>({});
 
-  function setSelection(customizationId: string, optionId: string): void {
+  function handleSelection(customizationId: string, optionId: string): void {
     setSelections((prev) => ({
       ...prev,
       [customizationId]: optionId,
@@ -22,7 +22,7 @@ export function CustomizationProvider({ children }: { children: React.ReactNode 
   }
 
   return (
-    <CustomizationContext.Provider value={{ selections, setSelection }}>
+    <CustomizationContext.Provider value={{ selections, handleSelection }}>
       {children}
     </CustomizationContext.Provider>
   );

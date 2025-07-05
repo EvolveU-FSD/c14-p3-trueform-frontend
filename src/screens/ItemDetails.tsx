@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import {
-  View,
-  Text,
-  Image,
-  ScrollView,
-  TouchableOpacity,
   ActivityIndicator,
   Dimensions,
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
