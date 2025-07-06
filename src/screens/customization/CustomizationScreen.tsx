@@ -83,8 +83,8 @@ export default function CustomizationScreen() {
     if (activeIndex < customizations.length - 1) {
       setActiveIndex(activeIndex + 1);
     } else {
-      // Navigate to next screen (e.g., review/summary)
-      navigation.navigate('CustomizationReview', { itemId });
+      // Navigate to Cart screen when customization is complete
+      navigation.navigate('Cart' as never);
     }
   };
 
@@ -176,7 +176,7 @@ export default function CustomizationScreen() {
             disabled={isNextDisabled}
           >
             <Text style={[styles.nextButtonText, isNextDisabled && styles.disabledButtonText]}>
-              {isLastStep ? 'Complete' : 'Next'}
+              {isLastStep ? 'Add to Cart' : 'Next'}
             </Text>
           </TouchableOpacity>
         </View>
