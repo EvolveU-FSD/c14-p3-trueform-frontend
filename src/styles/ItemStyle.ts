@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { spacing, fontSizes, borderRadius, buttonHeights } from '../utils/sizes';
+import { spacing, fontSizes, borderRadius, buttonHeights, componentHeights } from '../utils/sizes';
 import { useTheme } from '../theme/ThemeContext';
 
 export default function useCreateStyles() {
@@ -126,7 +126,7 @@ export default function useCreateStyles() {
       shadowOpacity: 0.2,
       shadowRadius: 4,
       zIndex: 1000,
-      maxHeight: spacing.xxxl * 5, // Use spacing multiplier instead of hardcoded value
+      maxHeight: componentHeights.dropdown,
     },
     filterHeader: {
       flexDirection: 'row',

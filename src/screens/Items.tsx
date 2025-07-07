@@ -131,6 +131,7 @@ export default function Items() {
     return sortItems(filteredItems, selectedSort);
   };
 
+  // TODO: Consider moving to an async/await pattern if the number of items gets large.
   const displayItems = getSortedAndFilteredItems();
 
   // Handle sort change
