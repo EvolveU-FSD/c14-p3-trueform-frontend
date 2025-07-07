@@ -12,9 +12,8 @@ import {
 } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/navigation';
-import { FontAwesome5 } from '@expo/vector-icons';
 import createStyles from '../styles/HomeScreenStyles';
-import { useAuth } from 'context/AuthContext';
+import NavigationBar from '../components/NavigationBar';
 import { createBackdropHandler } from '../utils/dropdownUtils';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -28,162 +27,35 @@ interface Props {
 
 export default function HomeScreen({ navigation }: Props) {
   const styles = createStyles();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSubmenuOpen, setIsSubmenuOpen] = useState(false);
-  const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
-  const { isAuthenticated, logout } = useAuth();
+  const [navState, setNavState] = useState({
+    isMenuOpen: false,
+    isSubmenuOpen: false,
+    isAccountMenuOpen: false,
+  });
 
-  // Create backdrop handler using the utility
+  // Create backdrop handler for navigation dropdowns
   const handleBackdropPress = createBackdropHandler([
-    { isOpen: isAccountMenuOpen, setIsOpen: setIsAccountMenuOpen },
-    { isOpen: isMenuOpen, setIsOpen: setIsMenuOpen },
-    { isOpen: isSubmenuOpen, setIsOpen: setIsSubmenuOpen },
+    {
+      isOpen: navState.isMenuOpen,
+      setIsOpen: (value) => setNavState((prev) => ({ ...prev, isMenuOpen: value })),
+    },
+    {
+      isOpen: navState.isSubmenuOpen,
+      setIsOpen: (value) => setNavState((prev) => ({ ...prev, isSubmenuOpen: value })),
+    },
+    {
+      isOpen: navState.isAccountMenuOpen,
+      setIsOpen: (value) => setNavState((prev) => ({ ...prev, isAccountMenuOpen: value })),
+    },
   ]);
-
-  const handleCategorySelect = (category: string) => {
-    // Handle category selection logic
-    console.log(`Selected category: ${category}`);
-    setIsMenuOpen(false);
-    setIsSubmenuOpen(false);
-  };
-
-  const handleLogout = async () => {
-    try {
-      await logout();
-      setIsAccountMenuOpen(false);
-    } catch (error) {
-      console.error('Logout failed:', error);
-    }
-  };
 
   return (
     <TouchableWithoutFeedback onPress={handleBackdropPress}>
       <SafeAreaView style={styles.container}>
         <StatusBar barStyle='dark-content' />
 
-        {/* Header */}
-        <View style={styles.header}>
-          <TouchableOpacity style={styles.menuButton} onPress={() => setIsMenuOpen(!isMenuOpen)}>
-            <Text style={styles.menuIcon}>☰</Text>
-          </TouchableOpacity>
-
-          {/* Dropdown Menu - simplified */}
-          {isMenuOpen && (
-            <TouchableWithoutFeedback onPress={(e) => e.stopPropagation()}>
-              <View style={styles.dropdown}>
-                {/* Shirt Category Menu Item */}
-                <View style={styles.menuItem}>
-                  <TouchableOpacity
-                    style={styles.categoryHeader}
-                    onPress={() => setIsSubmenuOpen(!isSubmenuOpen)}
-                  >
-                    <Text style={styles.menuItemText}>
-                      Shirt Category {isSubmenuOpen ? '-' : '+'}
-                    </Text>
-                  </TouchableOpacity>
-                  {isSubmenuOpen && (
-                    <View style={styles.submenu}>
-                      <TouchableOpacity
-                        style={styles.submenuItem}
-                        onPress={() => handleCategorySelect('casual')}
-                      >
-                        <Text>Casual</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        style={styles.submenuItem}
-                        onPress={() => handleCategorySelect('work')}
-                      >
-                        <Text>Work</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        style={styles.submenuItem}
-                        onPress={() => handleCategorySelect('party')}
-                      >
-                        <Text>Party</Text>
-                      </TouchableOpacity>
-                    </View>
-                  )}
-                </View>
-
-                {/* Additional Menu Items */}
-                <TouchableOpacity style={styles.menuItem}>
-                  <Text style={styles.menuItemText}>About True Form Tailors</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.menuItem}>
-                  <Text style={styles.menuItemText}>Contact Us</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.menuItem}>
-                  <Text style={styles.menuItemText}>FAQ</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.menuItem}>
-                  <Text style={styles.menuItemText}>Why True Form Tailor</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.menuItem}>
-                  <Text style={styles.menuItemText}>Reviews</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.menuItem}>
-                  <Text style={styles.menuItemText}>How It Works</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.menuItem}>
-                  <Text style={styles.menuItemText}>Quality</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.menuItem}>
-                  <Text style={styles.menuItemText}>Fit Guarantee</Text>
-                </TouchableOpacity>
-
-                {/* Social Media Icons */}
-                <View style={styles.socialContainer}>
-                  <TouchableOpacity style={styles.socialIcon}>
-                    <FontAwesome5 name='facebook' size={20} color='#1877F2' />
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.socialIcon}>
-                    <FontAwesome5 name='instagram' size={20} color='#E4405F' />
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.socialIcon}>
-                    <FontAwesome5 name='linkedin' size={20} color='#0A66C2' />
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.socialIcon}>
-                    <FontAwesome5 name='youtube' size={20} color='#FF0000' />
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </TouchableWithoutFeedback>
-          )}
-
-          <View style={styles.headerRight}>
-            {isAuthenticated ? (
-              <View style={styles.accountContainer}>
-                <TouchableOpacity
-                  style={styles.accountButton}
-                  onPress={() => setIsAccountMenuOpen(!isAccountMenuOpen)}
-                >
-                  <FontAwesome5 name='user-circle' size={20} color='#333' />
-                </TouchableOpacity>
-
-                {/* Account dropdown menu */}
-                {isAccountMenuOpen && (
-                  <TouchableWithoutFeedback onPress={(e) => e.stopPropagation()}>
-                    <View style={styles.accountDropdown}>
-                      <TouchableOpacity style={styles.accountMenuItem} onPress={handleLogout}>
-                        <Text style={styles.accountMenuText}>Logout</Text>
-                      </TouchableOpacity>
-                    </View>
-                  </TouchableWithoutFeedback>
-                )}
-              </View>
-            ) : (
-              <TouchableOpacity
-                style={styles.loginButton}
-                onPress={() => navigation.navigate('Login')}
-              >
-                <Text style={styles.loginText}>Login</Text>
-              </TouchableOpacity>
-            )}
-            <TouchableOpacity style={styles.iconButton}>
-              <FontAwesome5 name='shopping-cart' size={20} color='#333' />
-            </TouchableOpacity>
-          </View>
-        </View>
+        {/* Navigation Bar */}
+        <NavigationBar navigation={navigation} navState={navState} setNavState={setNavState} />
 
         <ScrollView>
           <View style={styles.headerTitleContainer}>
