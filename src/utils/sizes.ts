@@ -54,3 +54,10 @@ export const buttonHeights = {
   lg: normalize(48),
   xl: normalize(56),
 };
+
+// Component Heights
+export const componentHeights = {
+  dropdown: spacing.xxxl * 5,
+  modal: spacing.xxxl * 8,
+  sheet: spacing.xxxl * 6,
+};

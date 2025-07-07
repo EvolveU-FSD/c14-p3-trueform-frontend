@@ -23,22 +23,23 @@ import { createBackdropHandler } from '../utils/dropdownUtils';
 
 const FILTER_OPTIONS = {
   colors: [
-    { label: 'White', value: 'white' },
-    { label: 'Navy', value: 'navy' },
-    { label: 'Beige', value: 'beige' },
-    { label: 'Red', value: 'red' },
+    { label: 'Black', value: 'black' },
     { label: 'Blue', value: 'blue' },
+    { label: 'Green', value: 'green' },
+    { label: 'Navy', value: 'navy' },
+    { label: 'Red', value: 'red' },
+    { label: 'White', value: 'white' },
+    { label: 'Yellow', value: 'yellow' },
   ],
   patterns: [
-    { label: 'Solid', value: 'solid' },
     { label: 'Check', value: 'check' },
+    { label: 'Print', value: 'print' },
+    { label: 'Solid', value: 'solid' },
     { label: 'Stripe', value: 'stripe' },
-    { label: 'Printed', value: 'printed' },
   ],
 };
 
 const SORT_OPTIONS = [
-  { label: 'Recommended', value: 'recommended' },
   { label: 'Newest', value: 'newest' },
   { label: 'Price: Low to High', value: 'price_low' },
   { label: 'Price: High to Low', value: 'price_high' },
@@ -57,7 +58,7 @@ export default function Items() {
   const [error, setError] = useState<string | null>(null);
   const [clothingItems, setClothingItems] = useState<Clothing[]>([]);
   const [showSort, setShowSort] = useState(false);
-  const [selectedSort, setSelectedSort] = useState('recommended');
+  const [selectedSort, setSelectedSort] = useState('newest');
   const [showFilter, setShowFilter] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
   const [collapsedSections, setCollapsedSections] = useState({
@@ -89,6 +90,55 @@ export default function Items() {
 
     fetchClothingItems();
   }, [categoryId]);
+
+  // Sort function
+  const sortItems = (items: Clothing[], sortBy: string): Clothing[] => {
+    const sortedItems = [...items];
+
+    switch (sortBy) {
+      case 'newest':
+        // Sort by updatedAt date, most recent first
+        return sortedItems.sort((a, b) => {
+          const dateA = new Date(a.updatedAt || 0);
+          const dateB = new Date(b.updatedAt || 0);
+          return dateB.getTime() - dateA.getTime();
+        });
+      case 'price_low':
+        return sortedItems.sort((a, b) => a.price - b.price);
+      case 'price_high':
+        return sortedItems.sort((a, b) => b.price - a.price);
+      default:
+        return sortedItems;
+    }
+  };
+
+  // Updated filter function to use the filters array from API
+  const filterItems = (items: Clothing[], filters: string[]): Clothing[] => {
+    if (filters.length === 0) return items;
+
+    const filterLowerCase = filters.map((f) => f.toLowerCase());
+
+    return items.filter(
+      (item) =>
+        Array.isArray(item.filter) &&
+        item.filter.some((filter) => filterLowerCase.includes(filter.toLowerCase())),
+    );
+  };
+
+  // Get sorted and filtered items
+  const getSortedAndFilteredItems = (): Clothing[] => {
+    const filteredItems = filterItems(clothingItems, selectedFilters);
+    return sortItems(filteredItems, selectedSort);
+  };
+
+  // TODO: Consider moving to an async/await pattern if the number of items gets large.
+  const displayItems = getSortedAndFilteredItems();
+
+  // Handle sort change
+  const handleSortChange = (sortValue: string) => {
+    setSelectedSort(sortValue);
+    setShowSort(false);
+  };
 
   const handleBackPress = () => {
     navigation.navigate('Home');
@@ -138,7 +188,9 @@ export default function Items() {
         {/* Header with Sort and Filter */}
         <View style={styles.header}>
           <TouchableOpacity style={styles.headerButton} onPress={() => setShowSort(!showSort)}>
-            <Text style={styles.headerButtonText}>Sort By: {selectedSort}</Text>
+            <Text style={styles.headerButtonText}>
+              Sort By: {SORT_OPTIONS.find((opt) => opt.value === selectedSort)?.label}
+            </Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.headerButton} onPress={() => setShowFilter(!showFilter)}>
@@ -148,7 +200,7 @@ export default function Items() {
 
         {/* Items Count */}
         <Text style={styles.itemCount}>
-          {clothingItems.length} {clothingItems.length === 1 ? 'item' : 'items'} found
+          {displayItems.length} {displayItems.length === 1 ? 'item' : 'items'} found
         </Text>
 
         {/* Sort Options Dropdown */}
@@ -162,10 +214,7 @@ export default function Items() {
                     styles.sortOption,
                     selectedSort === option.value && styles.sortOptionSelected,
                   ]}
-                  onPress={() => {
-                    setSelectedSort(option.value);
-                    setShowSort(false);
-                  }}
+                  onPress={() => handleSortChange(option.value)}
                 >
                   <Text style={styles.sortOptionText}>{option.label}</Text>
                 </TouchableOpacity>
@@ -250,7 +299,7 @@ export default function Items() {
 
         {/* Items Grid */}
         <FlatList
-          data={clothingItems}
+          data={displayItems}
           keyExtractor={(item) => item.id}
           numColumns={2}
           contentContainerStyle={styles.gridContainer}
