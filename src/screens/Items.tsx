@@ -39,6 +39,12 @@ const FILTER_OPTIONS = {
   ],
 };
 
+const SORT_OPTIONS = [
+  { label: 'Newest', value: 'newest' },
+  { label: 'Price: Low to High', value: 'price_low' },
+  { label: 'Price: High to Low', value: 'price_high' },
+];
+
 export default function Items() {
   const theme = useTheme();
   const styles = createStyles();
@@ -321,9 +327,3 @@ export default function Items() {
     </TouchableWithoutFeedback>
   );
 }
-
-const SORT_OPTIONS = [
-  { label: 'Newest', value: 'newest' },
-  { label: 'Price: Low to High', value: 'price_low' },
-  { label: 'Price: High to Low', value: 'price_high' },
-];
