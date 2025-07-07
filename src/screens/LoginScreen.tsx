@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { showAlert } from '../utils/showAlerts';
 import { LoginScreenProps } from '../types/navigation';
 import createStyles from '../styles/LoginScreenStyles';
+import BackButton from 'components/BackButton';
 
 function LoginScreen({ navigation, route }: LoginScreenProps) {
   const styles = createStyles();
@@ -44,6 +45,7 @@ function LoginScreen({ navigation, route }: LoginScreenProps) {
 
   return (
     <View style={styles.container}>
+      <BackButton />
       <Text style={styles.title}>Login</Text>
 
       <TextInput
