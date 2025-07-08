@@ -7,6 +7,7 @@ type Selection = {
 interface CustomizationContextType {
   selections: Selection;
   handleSelection: (customizationId: string, optionId: string) => void;
+  clearSelections: () => void; // Add this line
 }
 
 const CustomizationContext = createContext<CustomizationContextType | undefined>(undefined);
@@ -21,8 +22,12 @@ export function CustomizationProvider({ children }: { children: React.ReactNode 
     }));
   }
 
+  function clearSelections(): void {
+    setSelections({});
+  }
+
   return (
-    <CustomizationContext.Provider value={{ selections, handleSelection }}>
+    <CustomizationContext.Provider value={{ selections, handleSelection, clearSelections }}>
       {children}
     </CustomizationContext.Provider>
   );
