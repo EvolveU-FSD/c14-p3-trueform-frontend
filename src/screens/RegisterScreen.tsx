@@ -13,6 +13,10 @@ import { useAuth } from '../context/AuthContext';
 import { showAlert } from '../utils/showAlerts';
 import { RegisterScreenProps } from '../types/navigation';
 import createStyles from '../styles/RegisterScreenStyles';
+import { apiService } from '../services/api.service';
+import { API_CONFIG } from '../config/api.config';
+import { CustomerData } from 'types/customerData';
+import BackButton from '../components/BackButton';
 
 function RegisterScreen({ navigation }: RegisterScreenProps) {
   const styles = createStyles();
@@ -20,11 +24,12 @@ function RegisterScreen({ navigation }: RegisterScreenProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { register } = useAuth();
 
   const validateForm = () => {
-    if (!email || !password || !confirmPassword) {
+    if (!email || !password || !confirmPassword || !name) {
       showAlert('Error', 'Please fill in all fields');
       return false;
     }
@@ -47,7 +52,28 @@ function RegisterScreen({ navigation }: RegisterScreenProps) {
       return false;
     }
 
+    // Name validation
+    if (name.trim().length < 2) {
+      showAlert('Error', 'Please enter a valid name');
+      return false;
+    }
+
     return true;
+  };
+
+  const createCustomer = async (firebaseUid: string): Promise<void> => {
+    try {
+      const customerData: CustomerData = {
+        firebaseUid,
+        email,
+        name: name.trim(),
+      };
+
+      await apiService.post(API_CONFIG.ENDPOINTS.CUSTOMERS, customerData);
+    } catch (error: any) {
+      console.error('Error creating customer:', error);
+      throw new Error('Failed to create customer profile');
+    }
   };
 
   const handleRegister = async () => {
@@ -55,7 +81,12 @@ function RegisterScreen({ navigation }: RegisterScreenProps) {
 
     setIsLoading(true);
     try {
-      await register(email, password);
+      // Register the user with Firebase
+      const user = await register(email, password);
+
+      // Create customer profile in database
+      await createCustomer(user.uid);
+
       showAlert(
         'Registration Successful',
         'Your account has been created successfully!',
@@ -89,7 +120,17 @@ function RegisterScreen({ navigation }: RegisterScreenProps) {
       keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
     >
       <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <BackButton />
         <Text style={styles.title}>Create Account</Text>
+
+        <TextInput
+          style={styles.input}
+          placeholder='Full Name'
+          value={name}
+          onChangeText={setName}
+          autoCapitalize='words'
+          textContentType='name'
+        />
 
         <TextInput
           style={styles.input}
@@ -135,7 +176,7 @@ function RegisterScreen({ navigation }: RegisterScreenProps) {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => navigation.navigate('Login')}
+          onPress={() => navigation.goBack()}
           style={styles.linkContainer}
           disabled={isLoading}
         >
