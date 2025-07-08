@@ -18,6 +18,7 @@ export type RootStackParamList = {
   Login: { email?: string } | undefined;
   Register: undefined;
   Payment: undefined;
+  Cart: undefined;
 };
 
 // Navigation prop types
