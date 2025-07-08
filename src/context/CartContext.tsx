@@ -1,33 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 import { Clothing } from '../types/clothing';
-
-export interface CartCustomization {
-  customizationId: string;
-  optionId: string;
-  name: string;
-  optionName: string;
-  priceModifier?: number;
-}
-
-export interface CartItem {
-  id: string; // Unique identifier for the cart item
-  clothing: Clothing;
-  customizations: CartCustomization[];
-  quantity: number;
-  basePrice: number;
-  customizationPrice: number;
-  totalPrice: number; // (basePrice + customizationPrice) * quantity
-}
-
-interface CartContextType {
-  items: CartItem[];
-  addItem: (clothing: Clothing, customizations: CartCustomization[]) => void;
-  removeItem: (itemId: string) => void;
-  updateQuantity: (itemId: string, quantity: number) => void;
-  clearCart: () => void;
-  getCartTotal: () => number;
-  getItemCount: () => number;
-}
+import { CartCustomization, CartItem, CartContextType } from '../types/context/cart.types';
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 

@@ -1,14 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-
-type Selection = {
-  [customizationId: string]: string;
-};
-
-interface CustomizationContextType {
-  selections: Selection;
-  handleSelection: (customizationId: string, optionId: string) => void;
-  clearSelections: () => void; // Add this line
-}
+import { Selection, CustomizationContextType } from '../types/context/customization.types';
 
 const CustomizationContext = createContext<CustomizationContextType | undefined>(undefined);
 
