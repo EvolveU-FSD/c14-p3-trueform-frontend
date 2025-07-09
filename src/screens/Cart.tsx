@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, FlatList } from 'react-native';
 import { useCart } from '../context/CartContext';
 import CartItem from '../components/cart/CartItem';
+import CartSummary from '../components/cart/CartSummary';
 import createStyles from '../styles/CartScreenStyles';
 
 export default function Cart() {
@@ -18,13 +19,13 @@ export default function Cart() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Cart</Text>
       <FlatList
         data={items}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <CartItem item={item} />}
         contentContainerStyle={styles.itemsList}
       />
+      <CartSummary />
     </View>
   );
 }
