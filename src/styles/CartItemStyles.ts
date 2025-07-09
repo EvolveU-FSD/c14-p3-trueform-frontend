@@ -28,15 +28,25 @@ export default function useCreateStyles() {
       borderWidth: 1,
       borderColor: theme.borderColor,
     },
+    leftContainer: {
+      alignItems: 'center',
+      marginRight: spacing.md,
+    },
     image: {
       width: spacing.xxxl + spacing.md,
       height: spacing.xxxl + spacing.md,
       borderRadius: borderRadius.md,
-      marginRight: spacing.md,
+      marginBottom: spacing.xs,
     },
     contentContainer: {
       flex: 1,
       justifyContent: 'flex-start',
+    },
+    itemHeader: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'flex-start',
+      marginBottom: spacing.xs,
     },
     textContainer: {
       flex: 1,
@@ -47,6 +57,20 @@ export default function useCreateStyles() {
       fontWeight: 'bold',
       color: theme.textColor,
       marginBottom: spacing.xs,
+    },
+    priceContainer: {
+      alignItems: 'center',
+      marginTop: spacing.xs,
+    },
+    basePriceText: {
+      fontSize: fontSizes.xs,
+      color: theme.secondaryColor,
+      marginBottom: spacing.xs / 2,
+    },
+    totalPriceText: {
+      fontSize: fontSizes.md,
+      fontWeight: 'bold',
+      color: theme.primaryColor,
     },
     customizationGrid: {
       flexDirection: 'row',
