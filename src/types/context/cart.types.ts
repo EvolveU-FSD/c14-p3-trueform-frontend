@@ -5,6 +5,7 @@ export interface CartCustomization {
   optionId: string;
   name: string;
   optionName: string;
+  mediaUrl?: string;
   priceModifier?: number;
 }
 
@@ -16,6 +17,7 @@ export interface CartItem {
   basePrice: number;
   customizationPrice: number;
   totalPrice: number;
+  mediaUrl?: string;
 }
 
 export interface CartContextType {

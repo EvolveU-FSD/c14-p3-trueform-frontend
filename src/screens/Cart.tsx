@@ -11,7 +11,6 @@ export default function Cart() {
   if (items.length === 0) {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Cart</Text>
         <Text style={styles.subtitle}>Your cart is empty</Text>
       </View>
     );

@@ -119,6 +119,7 @@ export default function CustomizationScreen() {
               optionId,
               name: customization?.name || 'Unknown',
               optionName: option?.name || 'Unknown',
+              mediaUrl: option?.mediaUrl,
               priceModifier: option?.priceModifier || 0,
             };
           },
