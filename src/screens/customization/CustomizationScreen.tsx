@@ -5,6 +5,9 @@ import { CustomizationService } from '../../services/customization.service';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import createStyles from '../../styles/CustomizationScreenStyles';
 import { ClothingService } from '../../services/clothing.service';
+import { useCart } from '../../context/CartContext';
+import { Clothing } from '../../types/clothing';
+import { CartCustomization } from '../../types/context/cart.types';
 import { getImageUrl } from '../../utils/imageHandling';
 
 const { width: screenWidth } = Dimensions.get('window');
@@ -16,21 +19,40 @@ export default function CustomizationScreen() {
   const { itemId } = route.params;
 
   const { selections, handleSelection } = useCustomization();
+  const { addItem } = useCart();
   const [customizations, setCustomizations] = useState<any[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [clothingItem, setClothingItem] = useState<Clothing | null>(null);
   const scrollViewRef = useRef<ScrollView>(null);
 
   // Constants for scroll calculation
   const STEP_ITEM_WIDTH = 80; // Approximate width of each step item including margins
   const CONTAINER_PADDING = 16; // Horizontal padding of stepsContainer
 
+  // Fetch clothing item details
+  useEffect(() => {
+    const fetchClothingItem = async () => {
+      if (itemId) {
+        try {
+          const item = await ClothingService.getById(itemId);
+          setClothingItem(item);
+        } catch (error) {
+          console.error('Failed to fetch clothing item:', error);
+        }
+      }
+    };
+
+    fetchClothingItem();
+  }, [itemId]);
+
   useEffect(() => {
     (async () => {
-      const item = await ClothingService.getById(itemId);
-      const response = await CustomizationService.getCustomizationsByCategoryId(item.categoryId);
+      const response = await CustomizationService.getCustomizationsByCategoryId(
+        clothingItem?.categoryId,
+      );
       setCustomizations(response);
     })();
-  }, []);
+  }, [clothingItem]);
 
   // Auto-scroll to keep active step visible
   useEffect(() => {
@@ -83,7 +105,27 @@ export default function CustomizationScreen() {
     if (activeIndex < customizations.length - 1) {
       setActiveIndex(activeIndex + 1);
     } else {
-      // Navigate to Cart screen when customization is complete
+      // Add item to cart when customization is complete
+      if (clothingItem) {
+        const cartCustomizations: CartCustomization[] = Object.entries(selections).map(
+          ([customizationId, optionId]) => {
+            const customization = customizations.find((c) => c.id === customizationId);
+            const option = customization?.options.find((o) => o.id === optionId);
+
+            return {
+              customizationId,
+              optionId,
+              name: customization?.name || 'Unknown',
+              optionName: option?.name || 'Unknown',
+              priceModifier: option?.priceModifier || 0,
+            };
+          },
+        );
+
+        addItem(clothingItem, cartCustomizations);
+      }
+
+      // Navigate to Cart screen
       navigation.navigate('Cart' as never);
     }
   };

@@ -1,0 +1,35 @@
+import { StyleSheet } from 'react-native';
+import { useTheme } from '../theme/ThemeContext';
+
+export default function useCreateStyles() {
+  const { theme } = useTheme();
+
+  return StyleSheet.create({
+    container: {
+      flexDirection: 'row',
+      padding: 16,
+      marginBottom: 8,
+      backgroundColor: theme.backgroundColor,
+      borderRadius: 8,
+      borderWidth: 1,
+      borderColor: theme.borderColor,
+    },
+    image: {
+      width: 80,
+      height: 80,
+      borderRadius: 8,
+      marginRight: 16,
+    },
+    textContainer: {
+      flex: 1,
+      justifyContent: 'center',
+    },
+    itemName: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      color: theme.textColor,
+    },
+  });
+}
+
+export type Styles = ReturnType<typeof useCreateStyles>;
