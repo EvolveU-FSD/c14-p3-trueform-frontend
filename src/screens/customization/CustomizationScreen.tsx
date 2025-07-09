@@ -46,12 +46,14 @@ export default function CustomizationScreen() {
   }, [itemId]);
 
   useEffect(() => {
-    (async () => {
-      const response = await CustomizationService.getCustomizationsByCategoryId(
-        clothingItem?.categoryId,
-      );
-      setCustomizations(response);
-    })();
+    if (clothingItem) {
+      (async () => {
+        const response = await CustomizationService.getCustomizationsByCategoryId(
+          clothingItem.categoryId,
+        );
+        setCustomizations(response);
+      })();
+    }
   }, [clothingItem]);
 
   // Auto-scroll to keep active step visible
