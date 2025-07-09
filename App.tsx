@@ -14,6 +14,7 @@ import BodyScanScreen from './src/screens/BodyScanScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
 import PaymentScreen from './src/screens/PaymentScreen';
+import ManualMeasurementInput from './src/screens/ManualMeasurementInput';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -86,6 +87,11 @@ function AppContent() {
               name='Customization'
               component={CustomizationScreen}
               options={{ title: 'Customize Your Shirt' }}
+            />
+            <Stack.Screen
+              name='ManualMeasurementInput'
+              component={ManualMeasurementInput}
+              options={{ title: 'Manual Measurement Input' }}
             />
           </Stack.Navigator>
         </NavigationContainer>

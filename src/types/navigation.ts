@@ -18,6 +18,7 @@ export type RootStackParamList = {
   Login: { email?: string } | undefined;
   Register: undefined;
   Payment: undefined;
+  ManualMeasurementInput: undefined;
 };
 
 // Navigation prop types
