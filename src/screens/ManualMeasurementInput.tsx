@@ -103,22 +103,34 @@ export default function ManualMeasurementInput() {
           </TouchableOpacity>
         </View>
 
-        {/* Measurement Inputs in vertical, compact style */}
+        {/* Measurement Inputs in two-column, 4-row grid with label on top, input, then unit */}
         <View style={styles.measurementSection}>
           <Text style={styles.sectionTitle}>SHIRT</Text>
           <View style={styles.measurementGrid}>
-            {measurementFields.map((field) => (
-              <View key={field.key} style={styles.measurementBox}>
-                <Text style={styles.measurementLabel}>{field.label}</Text>
-                <TextInput
-                  style={styles.measurementInput}
-                  keyboardType="numeric"
-                  value={measurements[field.key] || ''}
-                  onChangeText={(text) => handleInputChange(field.key, text)}
-                  placeholder=""
-                  placeholderTextColor={theme.secondaryColor}
-                />
-                <Text style={styles.measurementUnit}>{unit.charAt(0).toUpperCase() + unit.slice(1)}</Text>
+            {Array.from({ length: 4 }).map((_, rowIdx) => (
+              <View key={rowIdx} style={styles.measurementRow}>
+                {[0, 1].map((colIdx) => {
+                  const fieldIdx = rowIdx * 2 + colIdx;
+                  const field = measurementFields[fieldIdx];
+                  if (!field) {
+                    // If odd number, add empty box for alignment
+                    return <View key={colIdx} style={[styles.measurementBox, { opacity: 0 }]} />;
+                  }
+                  return (
+                    <View key={field.key} style={styles.measurementBox}>
+                      <Text style={styles.measurementLabel}>{field.label}</Text>
+                      <TextInput
+                        style={styles.measurementInput}
+                        keyboardType="numeric"
+                        value={measurements[field.key] || ''}
+                        onChangeText={(text) => handleInputChange(field.key, text)}
+                        placeholder=""
+                        placeholderTextColor={theme.secondaryColor}
+                      />
+                      <Text style={styles.measurementUnit}>{unit.charAt(0).toUpperCase() + unit.slice(1)}</Text>
+                    </View>
+                  );
+                })}
               </View>
             ))}
           </View>
