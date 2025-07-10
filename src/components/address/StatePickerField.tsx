@@ -1,6 +1,14 @@
-import React from 'react';
-import { View, Text, Platform } from 'react-native';
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  Platform,
+  TouchableOpacity,
+  Modal,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import { FontAwesome5 } from '@expo/vector-icons';
 import useCreateStyles from '../../styles/AddressStyles';
 
 interface StatePickerFieldProps {
@@ -75,7 +83,94 @@ export default function StatePickerField({
   style,
 }: StatePickerFieldProps) {
   const styles = useCreateStyles();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [tempValue, setTempValue] = useState(value);
 
+  const selectedState = US_STATES.find((state) => state.value === value);
+  const displayText = selectedState ? selectedState.label : 'Select State';
+
+  const handleConfirm = () => {
+    onValueChange(tempValue);
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setTempValue(value);
+    setIsModalVisible(false);
+  };
+
+  const handleOverlayPress = () => {
+    handleCancel();
+  };
+
+  // iOS Modal Picker
+  if (Platform.OS === 'ios') {
+    return (
+      <View style={[styles.fieldContainer, style]}>
+        <Text style={styles.label}>
+          {label}
+          {required && <Text style={styles.requiredIndicator}> *</Text>}
+        </Text>
+
+        <TouchableOpacity
+          style={[styles.modalTrigger, error && styles.inputError]}
+          onPress={() => {
+            setTempValue(value);
+            setIsModalVisible(true);
+          }}
+        >
+          <Text style={[styles.modalTriggerText, !value && styles.placeholderText]}>
+            {displayText}
+          </Text>
+          <FontAwesome5 name='chevron-down' size={16} color='#666' />
+        </TouchableOpacity>
+
+        <Modal
+          visible={isModalVisible}
+          animationType='slide'
+          transparent={true}
+          onRequestClose={handleCancel}
+        >
+          <TouchableWithoutFeedback onPress={handleOverlayPress}>
+            <View style={styles.modalOverlay}>
+              <TouchableWithoutFeedback onPress={(e) => e.stopPropagation()}>
+                <View style={styles.modalContainer}>
+                  {/* Header */}
+                  <View style={styles.modalHeader}>
+                    <TouchableOpacity onPress={handleCancel} style={styles.modalButton}>
+                      <Text style={styles.modalButtonText}>Cancel</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.modalTitle}>Select State</Text>
+                    <TouchableOpacity onPress={handleConfirm} style={styles.modalButton}>
+                      <Text style={[styles.modalButtonText, styles.modalConfirmText]}>Done</Text>
+                    </TouchableOpacity>
+                  </View>
+
+                  {/* Picker */}
+                  <View style={styles.modalPickerContainer}>
+                    <Picker
+                      selectedValue={tempValue}
+                      onValueChange={setTempValue}
+                      style={styles.modalPicker}
+                      itemStyle={styles.modalPickerItem}
+                    >
+                      {US_STATES.map((state) => (
+                        <Picker.Item key={state.value} label={state.label} value={state.value} />
+                      ))}
+                    </Picker>
+                  </View>
+                </View>
+              </TouchableWithoutFeedback>
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
+
+        {error && <Text style={styles.errorText}>{error}</Text>}
+      </View>
+    );
+  }
+
+  // Android Dropdown Picker
   return (
     <View style={[styles.fieldContainer, style]}>
       <Text style={styles.label}>
@@ -87,8 +182,7 @@ export default function StatePickerField({
           selectedValue={value}
           onValueChange={onValueChange}
           style={styles.picker}
-          mode={Platform.OS === 'android' ? 'dropdown' : undefined}
-          itemStyle={Platform.OS === 'ios' ? styles.pickerItemStyle : undefined}
+          mode='dropdown'
         >
           {US_STATES.map((state) => (
             <Picker.Item key={state.value} label={state.label} value={state.value} />
