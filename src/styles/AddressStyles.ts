@@ -15,6 +15,7 @@ export default function useCreateStyles() {
       marginBottom: spacing.md,
       borderWidth: 1,
       borderColor: theme.borderColor,
+      width: '100%',
     },
     title: {
       fontSize: fontSizes.lg,
@@ -168,7 +169,9 @@ export default function useCreateStyles() {
     checkboxContainer: {
       flexDirection: 'row',
       alignItems: 'center',
-      marginTop: spacing.md,
+      marginBottom: spacing.md,
+      paddingVertical: spacing.sm,
+      paddingHorizontal: spacing.xs,
     },
     checkbox: {
       width: 20,
@@ -176,7 +179,7 @@ export default function useCreateStyles() {
       borderWidth: 2,
       borderColor: theme.borderColor,
       borderRadius: borderRadius.sm,
-      marginRight: spacing.sm,
+      marginRight: spacing.md,
       alignItems: 'center',
       justifyContent: 'center',
     },
@@ -188,6 +191,7 @@ export default function useCreateStyles() {
       fontSize: fontSizes.md,
       color: theme.textColor,
       flex: 1,
+      fontWeight: '500',
     },
     checkmark: {
       color: '#fff',

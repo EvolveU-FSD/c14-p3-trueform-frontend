@@ -14,7 +14,7 @@ export default function useCreateStyles() {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      paddingHorizontal: spacing.lg,
+      paddingHorizontal: spacing.md,
       paddingVertical: spacing.xl,
     },
     title: {

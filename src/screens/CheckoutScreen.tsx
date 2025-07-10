@@ -35,7 +35,7 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
     phone: '',
   });
 
-  const [sameAsShipping, setSameAsShipping] = useState(false);
+  const [sameAsShipping, setSameAsShipping] = useState(true);
 
   const handleShippingChange = (field: keyof AddressData, value: string) => {
     setShippingAddress((prev) => ({ ...prev, [field]: value }));
@@ -56,7 +56,6 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.content}>
-        <Text style={styles.title}>Checkout</Text>
         <Text style={styles.subtitle}>Coming Soon!</Text>
         <Text style={styles.description}>
           We&apos;re working hard to bring you a seamless checkout experience. This feature will be
