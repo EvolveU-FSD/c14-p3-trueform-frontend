@@ -59,7 +59,7 @@ export default function HomeScreen({ navigation }: Props) {
 
         <ScrollView>
           <View style={styles.headerTitleContainer}>
-            <Text style={styles.mainTitle}>True Form Tailors</Text>
+            <Text style={styles.mainTitle}>True Form Tailors </Text>
             <Text style={styles.mainSubtitle}>Custom Made Shirts</Text>
           </View>
 
@@ -79,6 +79,13 @@ export default function HomeScreen({ navigation }: Props) {
             onPress={() => navigation.navigate('BodyScan')}
           >
             <Text style={styles.startShoppingText}>Open Body Scan</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.startShoppingButton}
+            onPress={() => navigation.navigate('ManualMeasurementInput')}
+          >
+            <Text style={styles.startShoppingText}>Manual Measurement Input</Text>
           </TouchableOpacity>
         </ScrollView>
       </SafeAreaView>
