@@ -19,6 +19,7 @@ export type RootStackParamList = {
   Register: undefined;
   Payment: undefined;
   Cart: undefined;
+  ManualMeasurementInput: undefined;
 };
 
 // Navigation prop types
