@@ -1,10 +1,11 @@
 export interface Clothing {
   id: string;
+  categoryId: string;
   name: string;
   description: string;
   price: number;
   colors: string[];
-  filter: string[]; // Add this new field
+  filter: string[];
   mediaUrl: string;
   updatedAt?: string;
 }

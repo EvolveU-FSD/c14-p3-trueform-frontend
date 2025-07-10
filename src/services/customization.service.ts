@@ -18,7 +18,7 @@ export class CustomizationService {
 
       return [];
     } catch (error) {
-      console.error(`Failed to fetch customizations for ${clothingType}:`, error);
+      console.error(`Failed to fetch customizations for ${categoryId}:`, error);
       return [];
     }
   }
