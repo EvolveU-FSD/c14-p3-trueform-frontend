@@ -16,6 +16,7 @@ import RegisterScreen from './src/screens/RegisterScreen';
 import PaymentScreen from './src/screens/PaymentScreen';
 import Cart from './src/screens/Cart';
 import { CartProvider } from './src/context/CartContext';
+import CheckoutScreen from './src/screens/CheckoutScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -74,6 +75,11 @@ function AppContent() {
                 name='Payment'
                 component={PaymentScreen}
                 options={{ title: 'Payment' }}
+              />
+              <Stack.Screen
+                name='Checkout'
+                component={CheckoutScreen}
+                options={{ title: 'Checkout' }}
               />
               <Stack.Screen
                 name='ItemDetails'

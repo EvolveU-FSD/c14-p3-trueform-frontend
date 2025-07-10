@@ -1,18 +1,22 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../types/navigation';
 import { useCart } from '../context/CartContext';
 import CartItem from '../components/cart/CartItem';
 import CartSummary from '../components/cart/CartSummary';
 import createStyles from '../styles/CartScreenStyles';
 
+type CartScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Cart'>;
+
 export default function Cart() {
   const styles = createStyles();
   const { items } = useCart();
+  const navigation = useNavigation<CartScreenNavigationProp>();
 
   const handleProceedToCheckout = () => {
-    // Navigate to checkout/payment screen
-    console.log('Proceed to checkout');
-    // navigation.navigate('Payment');
+    navigation.navigate('Checkout');
   };
 
   if (items.length === 0) {
