@@ -13,6 +13,7 @@ import useManualMeasurementInputStyles from '../styles/ManualMeasurementInput';
 import { useTheme } from '../theme/ThemeContext';
 
 // Placeholder image for video
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const videoPlaceholder = require('../../assets/images/measurementImage.jpeg');
 
 const measurementFields = [
@@ -42,11 +43,7 @@ export default function ManualMeasurementInput() {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Video/Image Placeholder */}
         <View style={styles.imageContainer}>
-          <Image
-            source={videoPlaceholder}
-            style={styles.image}
-            resizeMode="cover"
-          />
+          <Image source={videoPlaceholder} style={styles.image} resizeMode='cover' />
         </View>
 
         {/* Bullet + Unit Toggle */}
@@ -62,7 +59,9 @@ export default function ManualMeasurementInput() {
             ]}
             onPress={() => setUnit('inch')}
           >
-            <Text style={{ color: unit === 'inch' ? '#fff' : theme.textColor, fontWeight: 'bold' }}>Inch</Text>
+            <Text style={{ color: unit === 'inch' ? '#fff' : theme.textColor, fontWeight: 'bold' }}>
+              Inch
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[
@@ -72,7 +71,9 @@ export default function ManualMeasurementInput() {
             ]}
             onPress={() => setUnit('cm')}
           >
-            <Text style={{ color: unit === 'cm' ? '#fff' : theme.textColor, fontWeight: 'bold' }}>cm</Text>
+            <Text style={{ color: unit === 'cm' ? '#fff' : theme.textColor, fontWeight: 'bold' }}>
+              cm
+            </Text>
           </TouchableOpacity>
         </View>
 
@@ -89,7 +90,11 @@ export default function ManualMeasurementInput() {
             ]}
             onPress={() => setFit('standard')}
           >
-            <Text style={{ color: fit === 'standard' ? '#fff' : theme.textColor, fontWeight: 'bold' }}>Signature Standard Fit</Text>
+            <Text
+              style={{ color: fit === 'standard' ? '#fff' : theme.textColor, fontWeight: 'bold' }}
+            >
+              Signature Standard Fit
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[
@@ -99,26 +104,42 @@ export default function ManualMeasurementInput() {
             ]}
             onPress={() => setFit('slim')}
           >
-            <Text style={{ color: fit === 'slim' ? '#fff' : theme.textColor, fontWeight: 'bold' }}>Euro Slim Fit</Text>
+            <Text style={{ color: fit === 'slim' ? '#fff' : theme.textColor, fontWeight: 'bold' }}>
+              Euro Slim Fit
+            </Text>
           </TouchableOpacity>
         </View>
 
-        {/* Measurement Inputs in vertical, compact style */}
+        {/* Measurement Inputs in two-column, 4-row grid with label on top, input, then unit */}
         <View style={styles.measurementSection}>
           <Text style={styles.sectionTitle}>SHIRT</Text>
           <View style={styles.measurementGrid}>
-            {measurementFields.map((field) => (
-              <View key={field.key} style={styles.measurementBox}>
-                <Text style={styles.measurementLabel}>{field.label}</Text>
-                <TextInput
-                  style={styles.measurementInput}
-                  keyboardType="numeric"
-                  value={measurements[field.key] || ''}
-                  onChangeText={(text) => handleInputChange(field.key, text)}
-                  placeholder=""
-                  placeholderTextColor={theme.secondaryColor}
-                />
-                <Text style={styles.measurementUnit}>{unit.charAt(0).toUpperCase() + unit.slice(1)}</Text>
+            {Array.from({ length: 4 }).map((_, rowIdx) => (
+              <View key={rowIdx} style={styles.measurementRow}>
+                {[0, 1].map((colIdx) => {
+                  const fieldIdx = rowIdx * 2 + colIdx;
+                  const field = measurementFields[fieldIdx];
+                  if (!field) {
+                    // If odd number, add empty box for alignment
+                    return <View key={colIdx} style={[styles.measurementBox, { opacity: 0 }]} />;
+                  }
+                  return (
+                    <View key={field.key} style={styles.measurementBox}>
+                      <Text style={styles.measurementLabel}>{field.label}</Text>
+                      <TextInput
+                        style={styles.measurementInput}
+                        keyboardType='numeric'
+                        value={measurements[field.key] || ''}
+                        onChangeText={(text) => handleInputChange(field.key, text)}
+                        placeholder=''
+                        placeholderTextColor={theme.secondaryColor}
+                      />
+                      <Text style={styles.measurementUnit}>
+                        {unit.charAt(0).toUpperCase() + unit.slice(1)}
+                      </Text>
+                    </View>
+                  );
+                })}
               </View>
             ))}
           </View>
@@ -126,15 +147,14 @@ export default function ManualMeasurementInput() {
 
         {/* Action Buttons */}
         <View style={styles.actionRow}>
-          <TouchableOpacity
-            style={styles.backButton}
-            onPress={() => navigation.goBack()}
-          >
+          <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
             <Text style={styles.buttonText}>BACK TO DESIGN</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.addToCartButton}
-            onPress={() => {/* Add to cart logic here */}}
+            onPress={() => {
+              /* Add to cart logic here */
+            }}
           >
             <Text style={styles.buttonText}>ADD TO CART</Text>
           </TouchableOpacity>
