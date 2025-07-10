@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput } from 'react-native';
 import useCreateStyles from '../../styles/AddressStyles';
+import { spacing } from '../../utils/sizes';
 
 interface AddressFieldProps {
   label: string;
@@ -40,18 +41,26 @@ export default function AddressField({
   const styles = useCreateStyles();
   const [isFocused, setIsFocused] = useState(false);
 
+  const getInputHeight = () => {
+    if (multiline) {
+      return numberOfLines * 20 + spacing.lg;
+    }
+    return undefined;
+  };
+
   return (
     <View style={[styles.fieldContainer, style]}>
       <Text style={styles.label}>
         {label}
-        {required && <Text style={{ color: '#ff4444' }}> *</Text>}
+        {required && <Text style={styles.requiredIndicator}> *</Text>}
       </Text>
       <TextInput
         style={[
           styles.input,
           isFocused && styles.inputFocused,
           error && styles.inputError,
-          multiline && { height: numberOfLines * 20 + spacing.lg },
+          multiline && styles.inputMultiline,
+          multiline && { height: getInputHeight() },
         ]}
         value={value}
         onChangeText={onChangeText}

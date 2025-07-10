@@ -29,6 +29,9 @@ export default function useCreateStyles() {
       color: theme.textColor,
       marginBottom: spacing.sm,
     },
+    requiredIndicator: {
+      color: '#ff4444',
+    },
     input: {
       height: buttonHeights.lg,
       borderWidth: 1,
@@ -46,6 +49,12 @@ export default function useCreateStyles() {
     inputError: {
       borderColor: '#ff4444',
       borderWidth: 2,
+    },
+    inputMultiline: {
+      height: undefined,
+      minHeight: buttonHeights.lg,
+      textAlignVertical: 'top',
+      paddingTop: spacing.sm,
     },
     errorText: {
       fontSize: fontSizes.sm,
@@ -73,6 +82,11 @@ export default function useCreateStyles() {
       color: theme.textColor,
       backgroundColor: 'transparent',
       marginTop: Platform.OS === 'ios' ? -70 : 0,
+    },
+    pickerItemStyle: {
+      fontSize: 16,
+      height: 120,
+      textAlign: 'center',
     },
     checkboxContainer: {
       flexDirection: 'row',

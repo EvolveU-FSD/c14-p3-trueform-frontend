@@ -80,15 +80,15 @@ export default function StatePickerField({
     <View style={[styles.fieldContainer, style]}>
       <Text style={styles.label}>
         {label}
-        {required && <Text style={{ color: '#ff4444' }}> *</Text>}
+        {required && <Text style={styles.requiredIndicator}> *</Text>}
       </Text>
       <View style={[styles.pickerContainer, error && styles.inputError]}>
         <Picker
           selectedValue={value}
           onValueChange={onValueChange}
           style={styles.picker}
-          mode={Platform.OS === 'android' ? 'dropdown' : 'compact'}
-          itemStyle={Platform.OS === 'ios' ? { fontSize: 16, height: 120 } : undefined}
+          mode={Platform.OS === 'android' ? 'dropdown' : undefined}
+          itemStyle={Platform.OS === 'ios' ? styles.pickerItemStyle : undefined}
         >
           {US_STATES.map((state) => (
             <Picker.Item key={state.value} label={state.label} value={state.value} />
