@@ -10,17 +10,9 @@ import {
 import { Picker } from '@react-native-picker/picker';
 import { FontAwesome5 } from '@expo/vector-icons';
 import useCreateStyles from '../../styles/AddressStyles';
+import { CountryPickerFieldProps, CountryOption } from '../../types/address.types';
 
-interface CountryPickerFieldProps {
-  label: string;
-  value: string;
-  onValueChange: (value: string) => void;
-  error?: string;
-  required?: boolean;
-  style?: any;
-}
-
-const COUNTRIES = [
+const COUNTRIES: CountryOption[] = [
   { label: 'United States', value: 'US' },
   { label: 'Canada', value: 'CA' },
   { label: 'United Kingdom', value: 'GB' },

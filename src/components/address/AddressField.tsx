@@ -2,28 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput } from 'react-native';
 import useCreateStyles from '../../styles/AddressStyles';
 import { spacing } from '../../utils/sizes';
-
-interface AddressFieldProps {
-  label: string;
-  value: string;
-  onChangeText: (text: string) => void;
-  placeholder?: string;
-  error?: string;
-  required?: boolean;
-  autoComplete?:
-    | 'name'
-    | 'email'
-    | 'street-address'
-    | 'address-line1'
-    | 'address-line2'
-    | 'postal-code'
-    | 'country'
-    | 'tel';
-  keyboardType?: 'default' | 'email-address' | 'numeric' | 'phone-pad';
-  multiline?: boolean;
-  numberOfLines?: number;
-  style?: any;
-}
+import { AddressFieldProps } from '../../types/address.types';
 
 export default function AddressField({
   label,

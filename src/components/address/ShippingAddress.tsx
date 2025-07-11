@@ -1,11 +1,6 @@
 import React from 'react';
-import Address, { AddressData, AddressErrors } from './Address';
-
-interface ShippingAddressProps {
-  data: AddressData;
-  onDataChange: (field: keyof AddressData, value: string) => void;
-  errors?: AddressErrors;
-}
+import Address from './Address';
+import { ShippingAddressProps } from '../../types/address.types';
 
 export default function ShippingAddress({ data, onDataChange, errors }: ShippingAddressProps) {
   return (

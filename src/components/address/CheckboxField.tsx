@@ -1,13 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import useCreateStyles from '../../styles/AddressStyles';
-
-interface CheckboxFieldProps {
-  label: string;
-  value: boolean;
-  onValueChange: (value: boolean) => void;
-  style?: any;
-}
+import { CheckboxFieldProps } from '../../types/address.types';
 
 export default function CheckboxField({ label, value, onValueChange, style }: CheckboxFieldProps) {
   const styles = useCreateStyles();
@@ -16,6 +10,7 @@ export default function CheckboxField({ label, value, onValueChange, style }: Ch
     <TouchableOpacity
       style={[styles.checkboxContainer, style]}
       onPress={() => onValueChange(!value)}
+      activeOpacity={0.7}
     >
       <View style={[styles.checkbox, value && styles.checkboxChecked]}>
         {value && <Text style={styles.checkmark}>✓</Text>}

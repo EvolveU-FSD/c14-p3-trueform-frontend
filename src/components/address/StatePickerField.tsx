@@ -10,17 +10,9 @@ import {
 import { Picker } from '@react-native-picker/picker';
 import { FontAwesome5 } from '@expo/vector-icons';
 import useCreateStyles from '../../styles/AddressStyles';
+import { StatePickerFieldProps, StateOption } from '../../types/address.types';
 
-interface StatePickerFieldProps {
-  label: string;
-  value: string;
-  onValueChange: (value: string) => void;
-  error?: string;
-  required?: boolean;
-  style?: any;
-}
-
-const US_STATES = [
+const US_STATES: StateOption[] = [
   { label: 'Select State', value: '' },
   { label: 'Alabama', value: 'AL' },
   { label: 'Alaska', value: 'AK' },

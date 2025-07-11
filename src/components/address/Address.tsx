@@ -5,42 +5,7 @@ import StatePickerField from './StatePickerField';
 import CountryPickerField from './CountryPickerField';
 import CheckboxField from './CheckboxField';
 import useCreateStyles from '../../styles/AddressStyles';
-
-export interface AddressData {
-  firstName: string;
-  lastName: string;
-  company?: string;
-  address1: string;
-  address2?: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  country: string;
-  phone: string;
-}
-
-export interface AddressErrors {
-  firstName?: string;
-  lastName?: string;
-  company?: string;
-  address1?: string;
-  address2?: string;
-  city?: string;
-  state?: string;
-  zipCode?: string;
-  country?: string;
-  phone?: string;
-}
-
-interface AddressProps {
-  title: string;
-  data: AddressData;
-  onDataChange: (field: keyof AddressData, value: string) => void;
-  errors?: AddressErrors;
-  showSameAsShipping?: boolean;
-  sameAsShipping?: boolean;
-  onSameAsShippingChange?: (value: boolean) => void;
-}
+import { AddressProps } from '../../types/address.types';
 
 export default function Address({
   title,

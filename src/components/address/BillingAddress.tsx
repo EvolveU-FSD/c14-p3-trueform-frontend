@@ -1,13 +1,6 @@
 import React from 'react';
-import Address, { AddressData, AddressErrors } from './Address';
-
-interface BillingAddressProps {
-  data: AddressData;
-  onDataChange: (field: keyof AddressData, value: string) => void;
-  errors?: AddressErrors;
-  sameAsShipping?: boolean;
-  onSameAsShippingChange?: (value: boolean) => void;
-}
+import Address from './Address';
+import { BillingAddressProps } from '../../types/address.types';
 
 export default function BillingAddress({
   data,

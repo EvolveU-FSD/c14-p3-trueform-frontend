@@ -4,7 +4,7 @@ import { CheckoutScreenProps } from '../types/navigation';
 import createStyles from '../styles/CheckoutScreenStyles';
 import ShippingAddress from '../components/address/ShippingAddress';
 import BillingAddress from '../components/address/BillingAddress';
-import { AddressData } from '../components/address/Address';
+import { AddressData } from '../types/address.types';
 
 export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
   const styles = createStyles();
@@ -56,12 +56,6 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.content}>
-        <Text style={styles.subtitle}>Coming Soon!</Text>
-        <Text style={styles.description}>
-          We&apos;re working hard to bring you a seamless checkout experience. This feature will be
-          available soon.
-        </Text>
-
         <ShippingAddress data={shippingAddress} onDataChange={handleShippingChange} />
         <BillingAddress
           data={sameAsShipping ? shippingAddress : billingAddress}
