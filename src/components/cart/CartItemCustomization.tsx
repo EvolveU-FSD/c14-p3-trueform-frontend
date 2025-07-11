@@ -11,7 +11,7 @@ interface CartItemCustomizationProps {
 export default function CartItemCustomization({ item }: CartItemCustomizationProps) {
   const styles = createStyles();
 
-  if (!item.customizations || item.customizations.length === 0) {
+  if (!item.customizations || item?.customizations.length === 0) {
     return null;
   }
 
