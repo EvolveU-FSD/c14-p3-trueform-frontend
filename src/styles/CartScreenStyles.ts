@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { useTheme } from '../theme/ThemeContext';
+import { fontSizes, spacing } from '../utils/sizes';
 
 export default function useCreateStyles() {
   const { theme } = useTheme();
@@ -7,21 +8,25 @@ export default function useCreateStyles() {
   return StyleSheet.create({
     container: {
       flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: 20,
       backgroundColor: theme.backgroundColor,
+      padding: spacing.md,
     },
     title: {
-      fontSize: 24,
+      fontSize: fontSizes.xl,
       fontWeight: 'bold',
-      marginBottom: 10,
       color: theme.textColor,
+      marginBottom: spacing.md,
     },
     subtitle: {
-      fontSize: 16,
+      fontSize: fontSizes.md,
+      color: theme.secondaryColor,
       textAlign: 'center',
-      color: theme.textColor,
+      marginTop: spacing.xl,
+    },
+    itemsList: {
+      paddingBottom: spacing.lg,
     },
   });
 }
+
+export type Styles = ReturnType<typeof useCreateStyles>;

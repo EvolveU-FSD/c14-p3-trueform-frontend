@@ -155,7 +155,7 @@ export default function NavigationBar({ navigation, navState, setNavState }: Nav
             <Text style={styles.loginText}>Login</Text>
           </TouchableOpacity>
         )}
-        <TouchableOpacity style={styles.iconButton}>
+        <TouchableOpacity style={styles.iconButton} onPress={() => navigation.navigate('Cart')}>
           <FontAwesome5 name='shopping-cart' size={20} color='#333' />
         </TouchableOpacity>
       </View>
