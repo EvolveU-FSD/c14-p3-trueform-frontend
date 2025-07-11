@@ -72,6 +72,22 @@ export default function useCreateStyles() {
       fontWeight: 'bold',
       color: theme.primaryColor,
     },
+    deleteButton: {
+      marginTop: spacing.xs,
+      paddingHorizontal: spacing.sm,
+      paddingVertical: spacing.sm,
+      backgroundColor: '#ff4444',
+      borderRadius: borderRadius.sm,
+      alignItems: 'center',
+      justifyContent: 'center',
+      minWidth: 40,
+      minHeight: 40,
+    },
+    deleteButtonText: {
+      color: '#ffffff',
+      fontSize: fontSizes.sm,
+      fontWeight: '600',
+    },
     customizationGrid: {
       flexDirection: 'row',
       flexWrap: 'wrap',
