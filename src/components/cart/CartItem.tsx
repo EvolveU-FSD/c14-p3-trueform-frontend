@@ -5,6 +5,7 @@ import CartItemImage from './CartItemImage';
 import CartItemTitle from './CartItemTitle';
 import CartItemCustomization from './CartItemCustomization';
 import CartItemPrice from './CartItemPrice';
+import CartItemQuantity from './CartItemQuantity';
 import CartItemDelete from './CartItemDelete';
 import createStyles from '../../styles/CartItemStyles';
 
@@ -20,6 +21,7 @@ export default function CartItem({ item }: CartItemProps) {
       <View style={styles.leftContainer}>
         <CartItemImage item={item} />
         <CartItemPrice item={item} />
+        <CartItemQuantity item={item} />
         <CartItemDelete item={item} />
       </View>
       <View style={styles.contentContainer}>
