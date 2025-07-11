@@ -9,12 +9,16 @@
           "Always reference 'sizes.ts' and 'themeContext.ts' for styling values.",
           "Avoid magic numbers in layout and spacing.",
           "When generating components, always generate corresponding style file.",
-          "Always state what file you're modifying or creating."
+          "Always state what file you're modifying or creating.",
+          "Always use single quotes for strings."
         ]
       },
       "typescript": {
         "context": ["src/theme/sizes.ts", "src/theme/themeContext.ts"],
-        "rules": ["Same rules as for JavaScript."]
+        "rules": [
+          "Same rules as for JavaScript.",
+          "Never use the any type. Interfaces created for this purpose should be placed in the types folder."
+        ]
       }
     }
   }
