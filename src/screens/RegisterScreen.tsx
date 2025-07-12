@@ -15,7 +15,7 @@ import { RegisterScreenProps } from '../types/navigation';
 import createStyles from '../styles/RegisterScreenStyles';
 import { apiService } from '../services/api.service';
 import { API_CONFIG } from '../config/api.config';
-import { CustomerData } from 'types/customerData';
+import { CreateCustomerDTO } from 'types/customer';
 import BackButton from '../components/BackButton';
 
 function RegisterScreen({ navigation }: RegisterScreenProps) {
@@ -63,7 +63,7 @@ function RegisterScreen({ navigation }: RegisterScreenProps) {
 
   const createCustomer = async (firebaseUid: string): Promise<void> => {
     try {
-      const customerData: CustomerData = {
+      const customerData: CreateCustomerDTO = {
         firebaseUid,
         email,
         name: name.trim(),

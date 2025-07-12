@@ -7,6 +7,7 @@ import {
   User,
 } from 'firebase/auth';
 import { auth } from '../config/firebase';
+import { CustomerService } from './customer.service';
 
 export async function signUp(email: string, password: string): Promise<User> {
   try {
@@ -28,6 +29,12 @@ export async function signUp(email: string, password: string): Promise<User> {
 export async function signIn(email: string, password: string): Promise<User> {
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
+
+    // Update last login in the database
+    if (userCredential.user) {
+      await CustomerService.updateLastLogin(userCredential.user.uid);
+    }
+
     return userCredential.user;
   } catch (error: any) {
     console.error('Login failed:', error);

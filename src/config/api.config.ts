@@ -5,6 +5,7 @@ export const API_CONFIG = {
   ENDPOINTS: {
     CATEGORIES: '/category',
     CLOTHING: '/clothing',
+    CUSTOMER: '/customer',
     CUSTOMIZATION: '/customization',
     VENDORS: '/vendor',
     CUSTOMERS: '/customer',
