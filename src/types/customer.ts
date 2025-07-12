@@ -1,11 +1,18 @@
+import { Address } from './address.types';
+
 export interface Customer {
   id: string;
-  name: string;
+  firebaseUid: string;
   email: string;
-  firebaseUid?: string;
-  createdAt: string;
-  updatedAt: string;
+  name: string;
+  createdAt?: string;
+  updatedAt?: string;
   lastLogin?: string;
+  defaultBillingAddressId?: string;
+  defaultShippingAddressId?: string;
+  defaultBillingAddress?: Address;
+  defaultShippingAddress?: Address;
+  addresses?: Address[];
 }
 
 export interface CreateCustomerDTO {
