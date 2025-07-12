@@ -15,6 +15,7 @@ import RegisterScreen from './src/screens/RegisterScreen';
 import PaymentScreen from './src/screens/PaymentScreen';
 import Cart from './src/screens/Cart';
 import { CartProvider } from './src/context/CartContext';
+import CheckoutScreen from './src/screens/CheckoutScreen';
 import ManualMeasurementInput from './src/screens/ManualMeasurementInput';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -64,6 +65,7 @@ function AppContent() {
           options={{ title: 'Automatic Body Measurements' }}
         />
         <Stack.Screen name='Payment' component={PaymentScreen} options={{ title: 'Payment' }} />
+        <Stack.Screen name='Checkout' component={CheckoutScreen} options={{ title: 'Checkout' }} />
         <Stack.Screen
           name='ItemDetails'
           component={ItemDetails}
