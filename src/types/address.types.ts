@@ -150,3 +150,14 @@ export interface CountryOption {
   label: string;
   value: string;
 }
+
+export interface SavedAddressDropdownProps {
+  label: string;
+  addresses: Address[];
+  selectedAddressId?: string;
+  onAddressSelect: (address: Address | null) => void;
+  placeholder?: string;
+  error?: string;
+  required?: boolean;
+  style?: any;
+}
