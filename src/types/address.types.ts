@@ -74,6 +74,7 @@ export interface AddressProps {
   showSaveAddress?: boolean;
   saveAddress?: boolean;
   onSaveAddressChange?: (value: boolean) => void;
+  disabled?: boolean;
 }
 
 export interface AddressFieldProps {
@@ -96,6 +97,7 @@ export interface AddressFieldProps {
   multiline?: boolean;
   numberOfLines?: number;
   style?: any;
+  disabled?: boolean;
 }
 
 export interface StatePickerFieldProps {
@@ -105,6 +107,7 @@ export interface StatePickerFieldProps {
   error?: string;
   required?: boolean;
   style?: any;
+  disabled?: boolean;
 }
 
 export interface CountryPickerFieldProps {
@@ -114,6 +117,7 @@ export interface CountryPickerFieldProps {
   error?: string;
   required?: boolean;
   style?: any;
+  disabled?: boolean;
 }
 
 export interface CheckboxFieldProps {
@@ -129,6 +133,7 @@ export interface ShippingAddressProps {
   errors?: AddressErrors;
   saveAddress?: boolean;
   onSaveAddressChange?: (value: boolean) => void;
+  disabled?: boolean;
 }
 
 export interface BillingAddressProps {
@@ -139,6 +144,7 @@ export interface BillingAddressProps {
   onSameAsShippingChange?: (value: boolean) => void;
   saveAddress?: boolean;
   onSaveAddressChange?: (value: boolean) => void;
+  disabled?: boolean;
 }
 
 export interface StateOption {

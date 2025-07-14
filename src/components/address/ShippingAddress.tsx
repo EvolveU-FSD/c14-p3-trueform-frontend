@@ -8,6 +8,7 @@ export default function ShippingAddress({
   errors,
   saveAddress,
   onSaveAddressChange,
+  disabled = false,
 }: ShippingAddressProps) {
   return (
     <Address
@@ -18,6 +19,7 @@ export default function ShippingAddress({
       showSaveAddress={true}
       saveAddress={saveAddress}
       onSaveAddressChange={onSaveAddressChange}
+      disabled={disabled}
     />
   );
 }

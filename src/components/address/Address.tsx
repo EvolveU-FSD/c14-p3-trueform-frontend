@@ -19,19 +19,22 @@ export default function Address({
   showSaveAddress = false,
   saveAddress = false,
   onSaveAddressChange,
+  disabled = false,
 }: AddressProps) {
   const styles = useCreateStyles();
   const { isAuthenticated } = useAuth();
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, disabled && styles.disabledContainer]}>
       <Text style={styles.title}>{title}</Text>
 
       {showSameAsShipping && onSameAsShippingChange && (
         <CheckboxField
           label='Same as shipping address'
           value={sameAsShipping}
-          onValueChange={onSameAsShippingChange}
+          // TODO: Find a better way to handle the empty function below.
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
+          onValueChange={disabled ? () => {} : onSameAsShippingChange}
         />
       )}
 
@@ -47,6 +50,7 @@ export default function Address({
               required
               autoComplete='name'
               style={styles.halfWidth}
+              disabled={disabled}
             />
             <AddressField
               label='Last Name'
@@ -57,6 +61,7 @@ export default function Address({
               required
               autoComplete='name'
               style={styles.halfWidth}
+              disabled={disabled}
             />
           </View>
 
@@ -66,6 +71,7 @@ export default function Address({
             onChangeText={(text) => onDataChange('company', text)}
             placeholder='Company name (optional)'
             error={errors.company}
+            disabled={disabled}
           />
 
           <AddressField
@@ -76,6 +82,7 @@ export default function Address({
             error={errors.address1}
             required
             autoComplete='street-address'
+            disabled={disabled}
           />
 
           <AddressField
@@ -85,6 +92,7 @@ export default function Address({
             placeholder='Apartment, suite, etc. (optional)'
             error={errors.address2}
             autoComplete='address-line2'
+            disabled={disabled}
           />
 
           <AddressField
@@ -94,6 +102,7 @@ export default function Address({
             placeholder='Enter city'
             error={errors.city}
             required
+            disabled={disabled}
           />
 
           <View style={styles.row}>
@@ -104,6 +113,7 @@ export default function Address({
               error={errors.state}
               required
               style={styles.halfWidth}
+              disabled={disabled}
             />
             <AddressField
               label='ZIP Code'
@@ -115,6 +125,7 @@ export default function Address({
               keyboardType='numeric'
               autoComplete='postal-code'
               style={styles.halfWidth}
+              disabled={disabled}
             />
           </View>
 
@@ -124,6 +135,7 @@ export default function Address({
             onValueChange={(value) => onDataChange('country', value)}
             error={errors.country}
             required
+            disabled={disabled}
           />
 
           <AddressField
@@ -135,6 +147,7 @@ export default function Address({
             required
             keyboardType='phone-pad'
             autoComplete='tel'
+            disabled={disabled}
           />
 
           {showSaveAddress && onSaveAddressChange && (
@@ -148,8 +161,8 @@ export default function Address({
                 value={isAuthenticated ? saveAddress : false}
                 // TODO: Find a better way to handle the empty function below.
                 // eslint-disable-next-line @typescript-eslint/no-empty-function
-                onValueChange={isAuthenticated ? onSaveAddressChange : () => {}}
-                style={[!isAuthenticated && styles.disabledCheckbox]}
+                onValueChange={isAuthenticated && !disabled ? onSaveAddressChange : () => {}}
+                style={[(!isAuthenticated || disabled) && styles.disabledCheckbox]}
               />
             </View>
           )}

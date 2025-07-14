@@ -10,6 +10,7 @@ export default function BillingAddress({
   onSameAsShippingChange,
   saveAddress,
   onSaveAddressChange,
+  disabled = false,
 }: BillingAddressProps) {
   return (
     <Address
@@ -23,6 +24,7 @@ export default function BillingAddress({
       showSaveAddress={true}
       saveAddress={saveAddress}
       onSaveAddressChange={onSaveAddressChange}
+      disabled={disabled}
     />
   );
 }

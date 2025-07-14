@@ -207,6 +207,19 @@ export default function useCreateStyles() {
     disabledCheckbox: {
       opacity: 0.5,
     },
+    disabledContainer: {
+      opacity: 0.6,
+    },
+    disabledInput: {
+      backgroundColor: theme.isDarkMode ? '#1a1a1a' : '#f0f0f0',
+      color: theme.isDarkMode ? '#666' : '#999',
+    },
+    disabledText: {
+      color: theme.isDarkMode ? '#666' : '#999',
+    },
+    disabledPickerContainer: {
+      backgroundColor: theme.isDarkMode ? '#1a1a1a' : '#f0f0f0',
+    },
   });
 }
 
