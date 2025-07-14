@@ -1,14 +1,14 @@
 export interface AddressData {
   firstName: string;
   lastName: string;
-  company?: string;
   address1: string;
-  address2?: string;
   city: string;
   state: string;
   zipCode: string;
   country: string;
   phone: string;
+  company?: string;
+  address2?: string;
 }
 
 export interface AddressErrors {
@@ -56,6 +56,20 @@ export interface AddressFieldProps {
   style?: any;
 }
 
+export interface ShippingAddressProps {
+  data: AddressData;
+  onDataChange: (field: keyof AddressData, value: string) => void;
+  errors?: AddressErrors;
+}
+
+export interface BillingAddressProps {
+  data: AddressData;
+  onDataChange: (field: keyof AddressData, value: string) => void;
+  errors?: AddressErrors;
+  sameAsShipping?: boolean;
+  onSameAsShippingChange?: (value: boolean) => void;
+}
+
 export interface StatePickerFieldProps {
   label: string;
   value: string;
@@ -79,20 +93,6 @@ export interface CheckboxFieldProps {
   value: boolean;
   onValueChange: (value: boolean) => void;
   style?: any;
-}
-
-export interface ShippingAddressProps {
-  data: AddressData;
-  onDataChange: (field: keyof AddressData, value: string) => void;
-  errors?: AddressErrors;
-}
-
-export interface BillingAddressProps {
-  data: AddressData;
-  onDataChange: (field: keyof AddressData, value: string) => void;
-  errors?: AddressErrors;
-  sameAsShipping?: boolean;
-  onSameAsShippingChange?: (value: boolean) => void;
 }
 
 export interface StateOption {

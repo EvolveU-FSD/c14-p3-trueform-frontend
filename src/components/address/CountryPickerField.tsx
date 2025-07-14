@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -55,7 +55,7 @@ export default function CountryPickerField({
   const displayText = selectedCountry ? selectedCountry.label : 'United States';
 
   // Set default on mount if no value exists
-  React.useEffect(() => {
+  useEffect(() => {
     if (!value) {
       onValueChange('US');
     }
