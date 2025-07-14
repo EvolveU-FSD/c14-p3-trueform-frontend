@@ -60,7 +60,7 @@ export default function useCreateStyles() {
     },
     priceContainer: {
       alignItems: 'center',
-      marginTop: spacing.xs,
+      marginTop: spacing.sm,
     },
     basePriceText: {
       fontSize: fontSizes.xs,
@@ -72,8 +72,36 @@ export default function useCreateStyles() {
       fontWeight: 'bold',
       color: theme.primaryColor,
     },
+    quantityContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginTop: spacing.sm,
+      backgroundColor: theme.backgroundColor,
+      borderRadius: borderRadius.sm,
+      borderWidth: 1,
+      borderColor: theme.borderColor,
+    },
+    quantityButton: {
+      paddingHorizontal: spacing.sm,
+      paddingVertical: spacing.xs,
+      alignItems: 'center',
+      justifyContent: 'center',
+      minWidth: 32,
+      minHeight: 32,
+    },
+    quantityButtonDisabled: {
+      opacity: 0.5,
+    },
+    quantityText: {
+      fontSize: fontSizes.md,
+      fontWeight: '600',
+      color: theme.textColor,
+      paddingHorizontal: spacing.sm,
+      minWidth: 40,
+      textAlign: 'center',
+    },
     deleteButton: {
-      marginTop: spacing.xs,
+      marginTop: spacing.sm,
       paddingHorizontal: spacing.sm,
       paddingVertical: spacing.sm,
       backgroundColor: '#ff4444',
