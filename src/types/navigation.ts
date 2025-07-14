@@ -1,24 +1,18 @@
-import { CustomizationOption } from './customization';
-import type { RouteProp } from '@react-navigation/core';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RouteProp } from '@react-navigation/native';
 
 export type RootStackParamList = {
   Home: undefined;
-  ItemDetails: { itemId: string };
-  Items: { slug: string };
-  Customization: {
-    itemId: string;
-  };
-  CustomizationOption: {
-    itemId: string;
-    category: string;
-    options: CustomizationOption[];
-  };
-  BodyScan: undefined;
   Login: { email?: string } | undefined;
   Register: undefined;
-  Payment: undefined;
+  ItemDetails: { itemId: string };
+  Items: { slug: string };
+  Category: { slug: string };
+  BodyScan: undefined;
   Cart: undefined;
+  Checkout: undefined; // Add Checkout to the navigation types
+  Payment: undefined;
+  Customization: { itemId: string };
   ManualMeasurementInput: undefined;
 };
 
@@ -38,6 +32,10 @@ export type RegisterScreenNavigationProp = NativeStackNavigationProp<
   'Register'
 >;
 export type PaymentScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Payment'>;
+export type CheckoutScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Checkout'
+>; // Add navigation prop type for Checkout
 
 // Route prop types
 export type HomeScreenRouteProp = RouteProp<RootStackParamList, 'Home'>;
@@ -46,6 +44,7 @@ export type BodyScanScreenRouteProp = RouteProp<RootStackParamList, 'BodyScan'>;
 export type LoginScreenRouteProp = RouteProp<RootStackParamList, 'Login'>;
 export type RegisterScreenRouteProp = RouteProp<RootStackParamList, 'Register'>;
 export type PaymentScreenRouteProp = RouteProp<RootStackParamList, 'Payment'>;
+export type CheckoutScreenRouteProp = RouteProp<RootStackParamList, 'Checkout'>; // Add route prop type for Checkout
 
 // Screen props interfaces
 export interface HomeScreenProps {
@@ -71,4 +70,10 @@ export interface LoginScreenProps {
 export interface RegisterScreenProps {
   navigation: RegisterScreenNavigationProp;
   route: RegisterScreenRouteProp;
+}
+
+export interface CheckoutScreenProps {
+  // Add screen props interface for Checkout
+  navigation: CheckoutScreenNavigationProp;
+  route: CheckoutScreenRouteProp;
 }

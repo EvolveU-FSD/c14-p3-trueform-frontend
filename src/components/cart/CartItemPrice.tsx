@@ -12,7 +12,7 @@ export default function CartItemPrice({ item }: CartItemPriceProps) {
 
   const hasCustomizations = item.customizationPrice > 0;
   const basePrice = item.basePrice;
-  const totalPrice = item.totalPrice / item.quantity; // Price per item
+  const totalPrice = item.totalPrice;
 
   return (
     <View style={styles.priceContainer}>
