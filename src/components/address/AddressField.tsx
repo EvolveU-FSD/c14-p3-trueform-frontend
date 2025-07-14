@@ -22,7 +22,7 @@ export default function AddressField({
 
   const getInputHeight = () => {
     if (multiline) {
-      return numberOfLines * 20 + spacing.lg;
+      return numberOfLines * spacing.xxl;
     }
     return undefined;
   };
