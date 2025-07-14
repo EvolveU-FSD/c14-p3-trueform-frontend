@@ -146,6 +146,8 @@ export default function Address({
                     : 'Please create an account if you would like to save your address for future use'
                 }
                 value={isAuthenticated ? saveAddress : false}
+                // TODO: Find a better way to handle the empty function below.
+                // eslint-disable-next-line @typescript-eslint/no-empty-function
                 onValueChange={isAuthenticated ? onSaveAddressChange : () => {}}
                 style={[!isAuthenticated && styles.disabledCheckbox]}
               />

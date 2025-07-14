@@ -67,6 +67,29 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
     navigation.goBack();
   };
 
+  const compareAddresses = (address1: Address, address2: Address): boolean => {
+    // Compare all relevant fields (excluding id, customerId, timestamps, and isDefault)
+    return (
+      address1.firstName.toLowerCase() === address2.firstName.toLowerCase() &&
+      address1.lastName.toLowerCase() === address2.lastName.toLowerCase() &&
+      (address1.company || '').toLowerCase() === (address2.company || '').toLowerCase() &&
+      address1.address1.toLowerCase() === address2.address1.toLowerCase() &&
+      (address1.address2 || '').toLowerCase() === (address2.address2 || '').toLowerCase() &&
+      address1.city.toLowerCase() === address2.city.toLowerCase() &&
+      address1.state === address2.state &&
+      address1.zipCode === address2.zipCode &&
+      address1.country === address2.country &&
+      (address1.phone || '').replace(/\D/g, '') === (address2.phone || '').replace(/\D/g, '')
+    );
+  };
+
+  const findExistingAddress = (
+    addressData: Address,
+    existingAddresses: Address[],
+  ): Address | null => {
+    return existingAddresses.find((existing) => compareAddresses(addressData, existing)) || null;
+  };
+
   const saveAddressToAPI = async (addressData: Address, isShipping: boolean): Promise<boolean> => {
     if (!isAuthenticated || !user) {
       return false;
@@ -81,6 +104,21 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
         return false;
       }
 
+      // Get existing addresses for the customer
+      const existingAddresses = await AddressService.getByCustomerId(customer.id);
+
+      // Check if this address already exists
+      const existingAddress = findExistingAddress(addressData, existingAddresses);
+
+      if (existingAddress) {
+        console.log(
+          `${isShipping ? 'Shipping' : 'Billing'} address already exists, skipping save:`,
+          existingAddress,
+        );
+        return true; // Return true because the address exists (no need to save)
+      }
+
+      // Address is new, proceed with saving
       const createAddressData: CreateAddressDTO = {
         customerId: customer.id,
         firstName: addressData.firstName,
@@ -96,7 +134,7 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
         isDefault: false,
       };
 
-      console.log(createAddressData);
+      console.log('Saving new address:', createAddressData);
       const savedAddress = await AddressService.create(createAddressData);
 
       if (savedAddress) {
@@ -117,17 +155,24 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
 
   const handleProceedToPayment = async () => {
     const saveResults: boolean[] = [];
+    const messages: string[] = [];
 
     // Save addresses if user is authenticated and checkboxes are checked
     if (isAuthenticated) {
       if (saveShippingAddress) {
         const shippingSaved = await saveAddressToAPI(shippingAddress, true);
         saveResults.push(shippingSaved);
+        if (shippingSaved) {
+          messages.push('Shipping address processed');
+        }
       }
 
       if (saveBillingAddress && !sameAsShipping) {
         const billingSaved = await saveAddressToAPI(billingAddress, false);
         saveResults.push(billingSaved);
+        if (billingSaved) {
+          messages.push('Billing address processed');
+        }
       }
 
       // Show feedback about save operations
@@ -135,8 +180,8 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
         const allSaved = saveResults.every((result) => result);
         const someFailed = saveResults.some((result) => !result);
 
-        if (allSaved) {
-          Alert.alert('Success', 'Address(es) saved successfully!');
+        if (allSaved && messages.length > 0) {
+          Alert.alert('Success', messages.join(', ') + ' successfully!');
         } else if (someFailed) {
           Alert.alert(
             'Partial Success',
