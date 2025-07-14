@@ -71,6 +71,9 @@ export interface AddressProps {
   showSameAsShipping?: boolean;
   sameAsShipping?: boolean;
   onSameAsShippingChange?: (value: boolean) => void;
+  showSaveAddress?: boolean;
+  saveAddress?: boolean;
+  onSaveAddressChange?: (value: boolean) => void;
 }
 
 export interface AddressFieldProps {
@@ -124,6 +127,8 @@ export interface ShippingAddressProps {
   data: Address;
   onDataChange: (field: keyof Address, value: string) => void;
   errors?: AddressErrors;
+  saveAddress?: boolean;
+  onSaveAddressChange?: (value: boolean) => void;
 }
 
 export interface BillingAddressProps {
@@ -132,6 +137,8 @@ export interface BillingAddressProps {
   errors?: AddressErrors;
   sameAsShipping?: boolean;
   onSameAsShippingChange?: (value: boolean) => void;
+  saveAddress?: boolean;
+  onSaveAddressChange?: (value: boolean) => void;
 }
 
 export interface StateOption {

@@ -39,7 +39,10 @@ export class AddressService {
 
   static async create(data: CreateAddressDTO): Promise<Address | null> {
     try {
+      console.log('inside the create API:');
+      console.log(data);
       const response = await apiService.post<Address, CreateAddressDTO>(this.endpoint, data);
+      console.log(response);
       return response.data ?? null;
     } catch (error) {
       console.error('Failed to create address:', error);

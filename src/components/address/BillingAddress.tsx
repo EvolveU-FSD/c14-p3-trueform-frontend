@@ -8,6 +8,8 @@ export default function BillingAddress({
   errors,
   sameAsShipping = false,
   onSameAsShippingChange,
+  saveAddress,
+  onSaveAddressChange,
 }: BillingAddressProps) {
   return (
     <Address
@@ -18,6 +20,9 @@ export default function BillingAddress({
       showSameAsShipping
       sameAsShipping={sameAsShipping}
       onSameAsShippingChange={onSameAsShippingChange}
+      showSaveAddress={true}
+      saveAddress={saveAddress}
+      onSaveAddressChange={onSaveAddressChange}
     />
   );
 }
