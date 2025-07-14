@@ -16,6 +16,7 @@ import { ClothingService } from '../services/clothing.service';
 import { Clothing } from '../types/clothing';
 import { useTheme } from '../theme/ThemeContext';
 import { getImageUrl } from '../utils/imageHandling';
+import { useCustomization } from '../context/CustomizationContext';
 
 type ItemDetailsScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'ItemDetails'>;
 
@@ -26,6 +27,7 @@ export default function ItemDetails() {
   const route = useRoute<any>();
   const styles = createStyles();
   const { theme } = useTheme();
+  const { clearSelections } = useCustomization();
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -65,6 +67,8 @@ export default function ItemDetails() {
 
   const handleCustomization = () => {
     if (item) {
+      // Clear any previous selections when starting new customization
+      clearSelections();
       navigation.navigate('Customization', {
         itemId: item.id,
       });

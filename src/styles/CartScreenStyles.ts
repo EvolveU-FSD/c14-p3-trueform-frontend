@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { useTheme } from '../theme/ThemeContext';
+import { fontSizes, spacing, borderRadius } from '../utils/sizes';
 
 export default function useCreateStyles() {
   const { theme } = useTheme();
@@ -7,21 +8,44 @@ export default function useCreateStyles() {
   return StyleSheet.create({
     container: {
       flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: 20,
       backgroundColor: theme.backgroundColor,
     },
     title: {
-      fontSize: 24,
+      fontSize: fontSizes.xl,
       fontWeight: 'bold',
-      marginBottom: 10,
       color: theme.textColor,
+      marginBottom: spacing.md,
+      paddingHorizontal: spacing.md,
+      paddingTop: spacing.md,
     },
     subtitle: {
-      fontSize: 16,
+      fontSize: fontSizes.md,
+      color: theme.secondaryColor,
       textAlign: 'center',
-      color: theme.textColor,
+      marginTop: spacing.xl,
+    },
+    itemsContainer: {
+      paddingHorizontal: spacing.md,
+      paddingTop: spacing.md,
+    },
+    itemsList: {
+      paddingBottom: spacing.lg,
+    },
+    checkoutButton: {
+      backgroundColor: theme.primaryColor,
+      paddingVertical: spacing.lg,
+      marginHorizontal: spacing.md,
+      marginVertical: spacing.md,
+      borderRadius: borderRadius.md,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    checkoutButtonText: {
+      color: '#ffffff',
+      fontSize: fontSizes.lg,
+      fontWeight: '600',
     },
   });
 }
+
+export type Styles = ReturnType<typeof useCreateStyles>;

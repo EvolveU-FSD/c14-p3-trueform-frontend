@@ -1,13 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-
-type Selection = {
-  [customizationId: string]: string;
-};
-
-interface CustomizationContextType {
-  selections: Selection;
-  handleSelection: (customizationId: string, optionId: string) => void;
-}
+import { Selection, CustomizationContextType } from '../types/context/customization.types';
 
 const CustomizationContext = createContext<CustomizationContextType | undefined>(undefined);
 
@@ -21,8 +13,12 @@ export function CustomizationProvider({ children }: { children: React.ReactNode 
     }));
   }
 
+  function clearSelections(): void {
+    setSelections({});
+  }
+
   return (
-    <CustomizationContext.Provider value={{ selections, handleSelection }}>
+    <CustomizationContext.Provider value={{ selections, handleSelection, clearSelections }}>
       {children}
     </CustomizationContext.Provider>
   );

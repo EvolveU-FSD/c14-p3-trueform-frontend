@@ -148,10 +148,14 @@ export default function ManualMeasurementInput() {
         {/* Action Buttons */}
         <View style={styles.actionRow}>
           <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+          <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
             <Text style={styles.buttonText}>BACK TO DESIGN</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.addToCartButton}
+            onPress={() => {
+              /* Add to cart logic here */
+            }}
             onPress={() => {
               /* Add to cart logic here */
             }}

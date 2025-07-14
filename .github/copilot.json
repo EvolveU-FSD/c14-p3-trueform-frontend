@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.github.com/copilot.json",
+  "config": {
+    "language": {
+      "javascript": {
+        "context": ["src/theme/sizes.ts", "src/theme/themeContext.ts"],
+        "rules": [
+          "Always use external CSS modules (e.g., .module.css, .ts/.tsx).",
+          "Always reference 'sizes.ts' and 'themeContext.ts' for styling values.",
+          "Avoid magic numbers in layout and spacing.",
+          "When generating components, always generate corresponding style file.",
+          "Always state what file you're modifying or creating.",
+          "Always use single quotes for strings."
+        ]
+      },
+      "typescript": {
+        "context": ["src/theme/sizes.ts", "src/theme/themeContext.ts"],
+        "rules": [
+          "Same rules as for JavaScript.",
+          "Never use the any type. Interfaces created for this purpose should be placed in the types folder."
+        ]
+      }
+    }
+  }
+}

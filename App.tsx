@@ -1,4 +1,3 @@
-// App.tsx
 import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -15,6 +14,8 @@ import LoginScreen from './src/screens/LoginScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
 import PaymentScreen from './src/screens/PaymentScreen';
 import Cart from './src/screens/Cart';
+import { CartProvider } from './src/context/CartContext';
+import CheckoutScreen from './src/screens/CheckoutScreen';
 import ManualMeasurementInput from './src/screens/ManualMeasurementInput';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -37,14 +38,6 @@ function ProtectedBodyScanScreen({ navigation }: ProtectedBodyScanScreenProps) {
   return isAuthenticated ? <BodyScanScreen /> : null;
 }
 
-export default function App() {
-  return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
-  );
-}
-
 function AppContent() {
   const { loading } = useAuth();
 
@@ -54,50 +47,57 @@ function AppContent() {
   }
 
   return (
-    <ThemeProvider>
-      <CustomizationProvider>
-        <NavigationContainer>
-          <Stack.Navigator initialRouteName='Home'>
-            {/* Public screens */}
-            <Stack.Screen
-              name='Home'
-              component={HomeScreen}
-              options={{ title: 'Home', headerShown: false }}
-            />
-            <Stack.Screen name='Login' component={LoginScreen} options={{ headerShown: false }} />
-            <Stack.Screen
-              name='Register'
-              component={RegisterScreen}
-              options={{ headerShown: false }}
-            />
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName='Home'>
+        {/* Public screens */}
+        <Stack.Screen
+          name='Home'
+          component={HomeScreen}
+          options={{ title: 'Home', headerShown: false }}
+        />
+        <Stack.Screen name='Login' component={LoginScreen} options={{ headerShown: false }} />
+        <Stack.Screen name='Register' component={RegisterScreen} options={{ headerShown: false }} />
 
-            {/* Protected screens */}
-            <Stack.Screen
-              name='BodyScan'
-              component={ProtectedBodyScanScreen}
-              options={{ title: 'Automatic Body Measurements' }}
-            />
-            <Stack.Screen name='Payment' component={PaymentScreen} options={{ title: 'Payment' }} />
-            <Stack.Screen
-              name='ItemDetails'
-              component={ItemDetails}
-              options={{ title: 'Item Details' }}
-            />
-            <Stack.Screen name='Items' component={Items} options={{ title: 'Items' }} />
-            <Stack.Screen
-              name='Customization'
-              component={CustomizationScreen}
-              options={{ title: 'Customize Your Shirt' }}
-            />
-            <Stack.Screen name='Cart' component={Cart} options={{ title: 'Cart' }} />
-            <Stack.Screen
-              name='ManualMeasurementInput'
-              component={ManualMeasurementInput}
-              options={{ title: 'Manual Measurement Input' }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </CustomizationProvider>
-    </ThemeProvider>
+        {/* Protected screens */}
+        <Stack.Screen
+          name='BodyScan'
+          component={ProtectedBodyScanScreen}
+          options={{ title: 'Automatic Body Measurements' }}
+        />
+        <Stack.Screen name='Payment' component={PaymentScreen} options={{ title: 'Payment' }} />
+        <Stack.Screen name='Checkout' component={CheckoutScreen} options={{ title: 'Checkout' }} />
+        <Stack.Screen
+          name='ItemDetails'
+          component={ItemDetails}
+          options={{ title: 'Item Details' }}
+        />
+        <Stack.Screen name='Items' component={Items} options={{ title: 'Items' }} />
+        <Stack.Screen
+          name='Customization'
+          component={CustomizationScreen}
+          options={{ title: 'Customize Your Shirt' }}
+        />
+        <Stack.Screen name='Cart' component={Cart} options={{ title: 'Cart' }} />
+        <Stack.Screen
+          name='ManualMeasurementInput'
+          component={ManualMeasurementInput}
+          options={{ title: 'Manual Measurement Input' }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <ThemeProvider>
+        <CustomizationProvider>
+          <CartProvider>
+            <AppContent />
+          </CartProvider>
+        </CustomizationProvider>
+      </ThemeProvider>
+    </AuthProvider>
   );
 }
