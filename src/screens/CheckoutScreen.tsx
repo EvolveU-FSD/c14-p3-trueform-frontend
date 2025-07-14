@@ -4,6 +4,7 @@ import { CheckoutScreenProps } from '../types/navigation';
 import createStyles from '../styles/CheckoutScreenStyles';
 import ShippingAddress from '../components/address/ShippingAddress';
 import BillingAddress from '../components/address/BillingAddress';
+import LoginStatus from '../components/checkout/CheckoutLoginStatus';
 import { AddressData } from '../types/address.types';
 
 export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
@@ -56,6 +57,7 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.content}>
+        <LoginStatus />
         <ShippingAddress data={shippingAddress} onDataChange={handleShippingChange} />
         <BillingAddress
           data={sameAsShipping ? shippingAddress : billingAddress}
