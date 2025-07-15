@@ -12,25 +12,22 @@ import { StripeProvider, CardField, useStripe } from '@stripe/stripe-react-nativ
 import type { CardFieldInput } from '@stripe/stripe-react-native';
 import { showAlert } from 'utils/showAlerts';
 import { Ionicons } from '@expo/vector-icons';
-import { paymentScreenStyles as styles } from 'styles/PaymentScreenStyles'; // Adjust the import path as necessary
+import { paymentScreenStyles as styles } from '../styles/PaymentScreenStyles';
+import { useCart } from '../context/CartContext';
 
-// Mock order data - replace with actual props/navigation params
-const ORDER_DETAILS = {
-  items: [
-    { name: 'Custom Tailored Suit', price: 899.0, quantity: 1 },
-    { name: 'Silk Tie', price: 79.0, quantity: 2 },
-    { name: 'Alterations', price: 45.0, quantity: 1 },
-  ],
-  subtotal: 1102.0,
-  tax: 88.16,
-  shipping: 0.0,
-  total: 1190.16,
-};
-
-const PaymentScreen = () => {
+export default function PaymentScreen() {
   const [cardDetails, setCardDetails] = useState<CardFieldInput.Details | null>(null);
   const [loading, setLoading] = useState(false);
   const { confirmPayment } = useStripe();
+  const { items, getCartTotal } = useCart();
+
+  // Calculate order totals
+  const subtotal = getCartTotal();
+  const taxRate = 0.08; // 8% tax rate - you might want to make this configurable
+  const tax = subtotal * taxRate;
+  const shipping = 0.0; // Free shipping
+  const total = subtotal + tax + shipping;
+  console.log(JSON.stringify(items, null, 2));
 
   const formatCurrency = (amount: number) => {
     return `$${amount.toFixed(2)}`;
@@ -46,7 +43,7 @@ const PaymentScreen = () => {
       setLoading(true);
 
       // Convert dollars to cents for Stripe
-      const amountInCents = Math.round(ORDER_DETAILS.total * 100);
+      const amountInCents = Math.round(total * 100);
 
       const response = await fetch(
         `${process.env.EXPO_PUBLIC_API_BASE_URL}/payment/create-intent`,
@@ -58,6 +55,12 @@ const PaymentScreen = () => {
           body: JSON.stringify({
             amount: amountInCents,
             currency: 'usd',
+            orderItems: items.map((item) => ({
+              id: item.id,
+              name: item.clothing.name,
+              quantity: item.quantity,
+              price: item.totalPrice,
+            })),
           }),
         },
       );
@@ -126,13 +129,23 @@ const PaymentScreen = () => {
           <View style={styles.orderSummary}>
             <Text style={styles.sectionTitle}>Order Summary</Text>
 
-            {ORDER_DETAILS.items.map((item, index) => (
-              <View key={index} style={styles.orderItem}>
+            {items.map((item) => (
+              <View key={item.id} style={styles.orderItem}>
                 <View style={styles.itemDetails}>
-                  <Text style={styles.itemName}>{item.name}</Text>
+                  <Text style={styles.itemName}>{item.clothing.name}</Text>
                   <Text style={styles.itemQuantity}>Qty: {item.quantity}</Text>
+                  {item.customizations.length > 0 && (
+                    <View style={styles.customizationsList}>
+                      <Text style={styles.customizationsHeader}>Customizations:</Text>
+                      {item.customizations.map((customization, index) => (
+                        <Text key={index} style={styles.customizationItem}>
+                          • {customization.name}: {customization.optionName}
+                        </Text>
+                      ))}
+                    </View>
+                  )}
                 </View>
-                <Text style={styles.itemPrice}>{formatCurrency(item.price * item.quantity)}</Text>
+                <Text style={styles.itemPrice}>{formatCurrency(item.totalPrice)}</Text>
               </View>
             ))}
 
@@ -140,18 +153,18 @@ const PaymentScreen = () => {
 
             <View style={styles.summaryRow}>
               <Text style={styles.summaryLabel}>Subtotal</Text>
-              <Text style={styles.summaryValue}>{formatCurrency(ORDER_DETAILS.subtotal)}</Text>
+              <Text style={styles.summaryValue}>{formatCurrency(subtotal)}</Text>
             </View>
 
             <View style={styles.summaryRow}>
               <Text style={styles.summaryLabel}>Tax</Text>
-              <Text style={styles.summaryValue}>{formatCurrency(ORDER_DETAILS.tax)}</Text>
+              <Text style={styles.summaryValue}>{formatCurrency(tax)}</Text>
             </View>
 
             <View style={styles.summaryRow}>
               <Text style={styles.summaryLabel}>Shipping</Text>
               <Text style={styles.summaryValue}>
-                {ORDER_DETAILS.shipping === 0 ? 'FREE' : formatCurrency(ORDER_DETAILS.shipping)}
+                {shipping === 0 ? 'FREE' : formatCurrency(shipping)}
               </Text>
             </View>
 
@@ -159,7 +172,7 @@ const PaymentScreen = () => {
 
             <View style={styles.totalRow}>
               <Text style={styles.totalLabel}>Total</Text>
-              <Text style={styles.totalValue}>{formatCurrency(ORDER_DETAILS.total)}</Text>
+              <Text style={styles.totalValue}>{formatCurrency(total)}</Text>
             </View>
           </View>
 
@@ -195,7 +208,7 @@ const PaymentScreen = () => {
               <ActivityIndicator color='#fff' />
             ) : (
               <View style={styles.buttonContent}>
-                <Text style={styles.buttonText}>Pay {formatCurrency(ORDER_DETAILS.total)}</Text>
+                <Text style={styles.buttonText}>Pay {formatCurrency(total)}</Text>
                 <Ionicons name='arrow-forward' size={20} color='#fff' />
               </View>
             )}
@@ -212,6 +225,4 @@ const PaymentScreen = () => {
       </SafeAreaView>
     </StripeProvider>
   );
-};
-
-export default PaymentScreen;
+}
