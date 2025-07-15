@@ -74,7 +74,10 @@ export interface AddressProps {
   showSaveAddress?: boolean;
   saveAddress?: boolean;
   onSaveAddressChange?: (value: boolean) => void;
-  disabled?: boolean;
+  showSavedAddresses?: boolean;
+  savedAddresses?: Address[];
+  selectedSavedAddressId?: string;
+  onSavedAddressSelect?: (address: Address | null) => void;
 }
 
 export interface AddressFieldProps {
@@ -133,7 +136,10 @@ export interface ShippingAddressProps {
   errors?: AddressErrors;
   saveAddress?: boolean;
   onSaveAddressChange?: (value: boolean) => void;
-  disabled?: boolean;
+  showSavedAddresses?: boolean;
+  savedAddresses?: Address[];
+  selectedSavedAddressId?: string;
+  onSavedAddressSelect?: (address: Address | null) => void;
 }
 
 export interface BillingAddressProps {
@@ -144,7 +150,10 @@ export interface BillingAddressProps {
   onSameAsShippingChange?: (value: boolean) => void;
   saveAddress?: boolean;
   onSaveAddressChange?: (value: boolean) => void;
-  disabled?: boolean;
+  showSavedAddresses?: boolean;
+  savedAddresses?: Address[];
+  selectedSavedAddressId?: string;
+  onSavedAddressSelect?: (address: Address | null) => void;
 }
 
 export interface StateOption {

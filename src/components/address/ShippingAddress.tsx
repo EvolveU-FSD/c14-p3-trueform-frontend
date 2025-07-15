@@ -8,7 +8,10 @@ export default function ShippingAddress({
   errors,
   saveAddress,
   onSaveAddressChange,
-  disabled = false,
+  showSavedAddresses = false,
+  savedAddresses = [],
+  selectedSavedAddressId,
+  onSavedAddressSelect,
 }: ShippingAddressProps) {
   return (
     <Address
@@ -19,7 +22,10 @@ export default function ShippingAddress({
       showSaveAddress={true}
       saveAddress={saveAddress}
       onSaveAddressChange={onSaveAddressChange}
-      disabled={disabled}
+      showSavedAddresses={showSavedAddresses}
+      savedAddresses={savedAddresses}
+      selectedSavedAddressId={selectedSavedAddressId}
+      onSavedAddressSelect={onSavedAddressSelect}
     />
   );
 }

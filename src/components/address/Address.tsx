@@ -4,6 +4,7 @@ import AddressField from './AddressField';
 import StatePickerField from './StatePickerField';
 import CountryPickerField from './CountryPickerField';
 import CheckboxField from './CheckboxField';
+import SavedAddressDropdown from './SavedAddressDropdown';
 import useCreateStyles from '../../styles/AddressStyles';
 import { AddressProps } from '../../types/address.types';
 import { useAuth } from '../../context/AuthContext';
@@ -19,27 +20,41 @@ export default function Address({
   showSaveAddress = false,
   saveAddress = false,
   onSaveAddressChange,
-  disabled = false,
+  showSavedAddresses = false,
+  savedAddresses = [],
+  selectedSavedAddressId,
+  onSavedAddressSelect,
 }: AddressProps) {
   const styles = useCreateStyles();
   const { isAuthenticated } = useAuth();
 
+  // Determine if address fields should be disabled based on saved address selection
+  const isAddressDisabled = !!selectedSavedAddressId;
+
   return (
-    <View style={[styles.container, disabled && styles.disabledContainer]}>
+    <View style={[styles.container, isAddressDisabled && styles.disabledContainer]}>
       <Text style={styles.title}>{title}</Text>
 
       {showSameAsShipping && onSameAsShippingChange && (
         <CheckboxField
           label='Same as shipping address'
           value={sameAsShipping}
-          // TODO: Find a better way to handle the empty function below.
-          // eslint-disable-next-line @typescript-eslint/no-empty-function
-          onValueChange={disabled ? () => {} : onSameAsShippingChange}
+          onValueChange={onSameAsShippingChange}
         />
       )}
 
       {!(showSameAsShipping && sameAsShipping) && (
         <>
+          {showSavedAddresses && isAuthenticated && savedAddresses && onSavedAddressSelect && (
+            <SavedAddressDropdown
+              label='Use Saved Address'
+              addresses={savedAddresses}
+              selectedAddressId={selectedSavedAddressId}
+              onAddressSelect={onSavedAddressSelect}
+              placeholder='Select a saved address or enter new address below'
+            />
+          )}
+
           <View style={styles.row}>
             <AddressField
               label='First Name'
@@ -50,7 +65,7 @@ export default function Address({
               required
               autoComplete='name'
               style={styles.halfWidth}
-              disabled={disabled}
+              disabled={isAddressDisabled}
             />
             <AddressField
               label='Last Name'
@@ -61,7 +76,7 @@ export default function Address({
               required
               autoComplete='name'
               style={styles.halfWidth}
-              disabled={disabled}
+              disabled={isAddressDisabled}
             />
           </View>
 
@@ -71,7 +86,7 @@ export default function Address({
             onChangeText={(text) => onDataChange('company', text)}
             placeholder='Company name (optional)'
             error={errors.company}
-            disabled={disabled}
+            disabled={isAddressDisabled}
           />
 
           <AddressField
@@ -82,7 +97,7 @@ export default function Address({
             error={errors.address1}
             required
             autoComplete='street-address'
-            disabled={disabled}
+            disabled={isAddressDisabled}
           />
 
           <AddressField
@@ -92,7 +107,7 @@ export default function Address({
             placeholder='Apartment, suite, etc. (optional)'
             error={errors.address2}
             autoComplete='address-line2'
-            disabled={disabled}
+            disabled={isAddressDisabled}
           />
 
           <AddressField
@@ -102,7 +117,7 @@ export default function Address({
             placeholder='Enter city'
             error={errors.city}
             required
-            disabled={disabled}
+            disabled={isAddressDisabled}
           />
 
           <View style={styles.row}>
@@ -113,7 +128,7 @@ export default function Address({
               error={errors.state}
               required
               style={styles.halfWidth}
-              disabled={disabled}
+              disabled={isAddressDisabled}
             />
             <AddressField
               label='ZIP Code'
@@ -125,7 +140,7 @@ export default function Address({
               keyboardType='numeric'
               autoComplete='postal-code'
               style={styles.halfWidth}
-              disabled={disabled}
+              disabled={isAddressDisabled}
             />
           </View>
 
@@ -135,7 +150,7 @@ export default function Address({
             onValueChange={(value) => onDataChange('country', value)}
             error={errors.country}
             required
-            disabled={disabled}
+            disabled={isAddressDisabled}
           />
 
           <AddressField
@@ -147,10 +162,10 @@ export default function Address({
             required
             keyboardType='phone-pad'
             autoComplete='tel'
-            disabled={disabled}
+            disabled={isAddressDisabled}
           />
 
-          {showSaveAddress && onSaveAddressChange && (
+          {showSaveAddress && onSaveAddressChange && !selectedSavedAddressId && (
             <View style={styles.saveAddressContainer}>
               <CheckboxField
                 label={
@@ -161,8 +176,8 @@ export default function Address({
                 value={isAuthenticated ? saveAddress : false}
                 // TODO: Find a better way to handle the empty function below.
                 // eslint-disable-next-line @typescript-eslint/no-empty-function
-                onValueChange={isAuthenticated && !disabled ? onSaveAddressChange : () => {}}
-                style={[(!isAuthenticated || disabled) && styles.disabledCheckbox]}
+                onValueChange={isAuthenticated ? onSaveAddressChange : () => {}}
+                style={!isAuthenticated ? styles.disabledCheckbox : undefined}
               />
             </View>
           )}
