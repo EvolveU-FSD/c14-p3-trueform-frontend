@@ -51,16 +51,11 @@ export default function useCreateStyles() {
       borderColor: '#ff4444',
       borderWidth: 2,
     },
-    inputMultiline: {
-      height: undefined,
-      minHeight: buttonHeights.lg,
-      textAlignVertical: 'top',
-      paddingTop: spacing.sm,
-    },
     errorText: {
       fontSize: fontSizes.sm,
       color: '#ff4444',
       marginTop: spacing.xs,
+      marginLeft: spacing.sm,
     },
     row: {
       flexDirection: 'row',
