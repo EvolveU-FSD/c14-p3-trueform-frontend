@@ -1,14 +1,53 @@
-export interface AddressData {
+export interface Address {
+  id: string;
+  customerId: string;
   firstName: string;
   lastName: string;
+  company?: string;
   address1: string;
+  address2?: string;
   city: string;
   state: string;
   zipCode: string;
   country: string;
-  phone: string;
+  phone?: string;
+  isDefault: boolean;
+  createdAt: string;
+  updatedAt: string;
+  customer?: {
+    id: string;
+    name: string;
+    email: string;
+  };
+}
+
+export interface CreateAddressDTO {
+  customerId: string;
+  firstName: string;
+  lastName: string;
   company?: string;
+  address1: string;
   address2?: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  country: string;
+  phone?: string;
+  isDefault?: boolean;
+}
+
+export interface UpdateAddressDTO {
+  firstName?: string;
+  lastName?: string;
+  company?: string;
+  address1?: string;
+  address2?: string;
+  city?: string;
+  state?: string;
+  zipCode?: string;
+  country?: string;
+  phone?: string;
+  isDefault?: boolean;
 }
 
 export interface AddressErrors {
@@ -26,12 +65,15 @@ export interface AddressErrors {
 
 export interface AddressProps {
   title: string;
-  data: AddressData;
-  onDataChange: (field: keyof AddressData, value: string) => void;
+  data: Address;
+  onDataChange: (field: keyof Address, value: string) => void;
   errors?: AddressErrors;
   showSameAsShipping?: boolean;
   sameAsShipping?: boolean;
   onSameAsShippingChange?: (value: boolean) => void;
+  showSaveAddress?: boolean;
+  saveAddress?: boolean;
+  onSaveAddressChange?: (value: boolean) => void;
 }
 
 export interface AddressFieldProps {
@@ -54,20 +96,6 @@ export interface AddressFieldProps {
   multiline?: boolean;
   numberOfLines?: number;
   style?: any;
-}
-
-export interface ShippingAddressProps {
-  data: AddressData;
-  onDataChange: (field: keyof AddressData, value: string) => void;
-  errors?: AddressErrors;
-}
-
-export interface BillingAddressProps {
-  data: AddressData;
-  onDataChange: (field: keyof AddressData, value: string) => void;
-  errors?: AddressErrors;
-  sameAsShipping?: boolean;
-  onSameAsShippingChange?: (value: boolean) => void;
 }
 
 export interface StatePickerFieldProps {
@@ -93,6 +121,24 @@ export interface CheckboxFieldProps {
   value: boolean;
   onValueChange: (value: boolean) => void;
   style?: any;
+}
+
+export interface ShippingAddressProps {
+  data: Address;
+  onDataChange: (field: keyof Address, value: string) => void;
+  errors?: AddressErrors;
+  saveAddress?: boolean;
+  onSaveAddressChange?: (value: boolean) => void;
+}
+
+export interface BillingAddressProps {
+  data: Address;
+  onDataChange: (field: keyof Address, value: string) => void;
+  errors?: AddressErrors;
+  sameAsShipping?: boolean;
+  onSameAsShippingChange?: (value: boolean) => void;
+  saveAddress?: boolean;
+  onSaveAddressChange?: (value: boolean) => void;
 }
 
 export interface StateOption {
