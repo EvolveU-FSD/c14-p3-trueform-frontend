@@ -1,8 +1,6 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { useTheme } from '../theme/ThemeContext';
-import { spacing, fontSizes, borderRadius, buttonHeights } from '../utils/sizes';
-
-const { height: screenHeight } = Dimensions.get('window');
+import { spacing, fontSizes, borderRadius, buttonHeights, modalSizes } from '../utils/sizes';
 
 export default function useCreateStyles() {
   const { theme } = useTheme();
@@ -57,8 +55,8 @@ export default function useCreateStyles() {
       backgroundColor: theme.backgroundColor,
       borderTopLeftRadius: borderRadius.lg,
       borderTopRightRadius: borderRadius.lg,
-      maxHeight: screenHeight * 0.6,
-      minHeight: screenHeight * 0.3,
+      maxHeight: modalSizes.bottomSheet.maxHeight,
+      minHeight: modalSizes.bottomSheet.defaultHeight,
     },
     modalHeader: {
       flexDirection: 'row',

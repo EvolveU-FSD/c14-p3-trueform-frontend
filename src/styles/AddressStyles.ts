@@ -1,8 +1,6 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { useTheme } from '../theme/ThemeContext';
-import { spacing, fontSizes, borderRadius, buttonHeights } from '../utils/sizes';
-
-const { height: screenHeight } = Dimensions.get('window');
+import { spacing, fontSizes, borderRadius, buttonHeights, modalSizes } from '../utils/sizes';
 
 export default function useCreateStyles() {
   const { theme } = useTheme();
@@ -87,7 +85,7 @@ export default function useCreateStyles() {
     },
     pickerItemStyle: {
       fontSize: Math.round(fontSizes.md),
-      height: 44,
+      height: modalSizes.dropdown.itemHeight,
       textAlign: 'center' as const,
     },
     // Modal styles for iOS - Bottom Sheet
@@ -119,8 +117,8 @@ export default function useCreateStyles() {
       backgroundColor: theme.backgroundColor,
       borderTopLeftRadius: borderRadius.lg,
       borderTopRightRadius: borderRadius.lg,
-      maxHeight: screenHeight * 0.6,
-      minHeight: screenHeight * 0.5,
+      maxHeight: modalSizes.picker.maxHeight,
+      minHeight: modalSizes.picker.minHeight,
     },
     modalHeader: {
       flexDirection: 'row',
@@ -162,7 +160,7 @@ export default function useCreateStyles() {
     },
     modalPickerItem: {
       fontSize: Math.round(fontSizes.md),
-      height: 44,
+      height: modalSizes.dropdown.itemHeight,
       color: theme.textColor,
       textAlign: 'center' as const,
     },

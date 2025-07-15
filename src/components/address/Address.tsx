@@ -51,7 +51,7 @@ export default function Address({
               addresses={savedAddresses}
               selectedAddressId={selectedSavedAddressId}
               onAddressSelect={onSavedAddressSelect}
-              placeholder='Select a saved address or enter new address below'
+              placeholder='Select a saved address'
             />
           )}
 
