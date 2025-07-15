@@ -52,9 +52,22 @@ export default function CustomizationScreen() {
           clothingItem.categoryId,
         );
         setCustomizations(response);
+        
+        // Auto-select the first option for each customization
+        const initialSelections: { [key: string]: string } = {};
+        response.forEach((customization: any) => {
+          if (customization.options && customization.options.length > 0) {
+            initialSelections[customization.id] = customization.options[0].id;
+          }
+        });
+        
+        // Apply initial selections
+        Object.entries(initialSelections).forEach(([customizationId, optionId]) => {
+          handleSelection(customizationId, optionId);
+        });
       })();
     }
-  }, [clothingItem]);
+  }, [clothingItem, handleSelection]);
 
   // Auto-scroll to keep active step visible
   useEffect(() => {
@@ -112,7 +125,7 @@ export default function CustomizationScreen() {
         const cartCustomizations: CartCustomization[] = Object.entries(selections).map(
           ([customizationId, optionId]) => {
             const customization = customizations.find((c) => c.id === customizationId);
-            const option = customization?.options.find((o) => o.id === optionId);
+            const option = customization?.options.find((o: any) => o.id === optionId);
 
             return {
               customizationId,
