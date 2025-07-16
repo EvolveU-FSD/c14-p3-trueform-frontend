@@ -1,11 +1,12 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { BottomNavBarProps } from '../../types/product';
 import createStyles from '../../styles/BottomNavBarStyles';
 import { useNavigation } from '@react-navigation/native';
+import { useNavigation as useNavigationContext } from '../../context/NavigationContext';
 
-export default function BottomNavBar({ activeTab, onTabChange }: BottomNavBarProps) {
+export default function BottomNavBar() {
   const navigation = useNavigation();
+  const { activeTab, setActiveTab } = useNavigationContext();
   const styles = createStyles();
 
   const tabs = [
@@ -16,6 +17,8 @@ export default function BottomNavBar({ activeTab, onTabChange }: BottomNavBarPro
   ];
 
   const handleTabPress = (tabName: string) => {
+    setActiveTab(tabName);
+
     if (tabName === 'measure') {
       navigation.navigate('BodyScan' as never);
     } else if (tabName === 'cart') {
@@ -24,8 +27,6 @@ export default function BottomNavBar({ activeTab, onTabChange }: BottomNavBarPro
       navigation.navigate('Items', { slug: 'all' } as never);
     } else if (tabName === 'account') {
       navigation.navigate('Login' as never);
-    } else {
-      onTabChange(tabName);
     }
   };
 
