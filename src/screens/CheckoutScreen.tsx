@@ -70,6 +70,7 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
   const compareAddresses = (address1: Address, address2: Address): boolean => {
     // Compare all relevant fields (excluding id, customerId, timestamps, and isDefault)
     return (
+      // TODO: Consider option chaining for the future.
       address1.firstName.toLowerCase() === address2.firstName.toLowerCase() &&
       address1.lastName.toLowerCase() === address2.lastName.toLowerCase() &&
       (address1.company || '').toLowerCase() === (address2.company || '').toLowerCase() &&
@@ -111,10 +112,6 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
       const existingAddress = findExistingAddress(addressData, existingAddresses);
 
       if (existingAddress) {
-        console.log(
-          `${isShipping ? 'Shipping' : 'Billing'} address already exists, skipping save:`,
-          existingAddress,
-        );
         return true; // Return true because the address exists (no need to save)
       }
 
@@ -134,14 +131,9 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
         isDefault: false,
       };
 
-      console.log('Saving new address:', createAddressData);
       const savedAddress = await AddressService.create(createAddressData);
 
       if (savedAddress) {
-        console.log(
-          `${isShipping ? 'Shipping' : 'Billing'} address saved successfully:`,
-          savedAddress,
-        );
         return true;
       } else {
         console.error(`Failed to save ${isShipping ? 'shipping' : 'billing'} address`);
