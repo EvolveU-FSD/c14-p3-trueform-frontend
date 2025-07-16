@@ -140,10 +140,6 @@ export default function Items() {
     setShowSort(false);
   };
 
-  const handleBackPress = () => {
-    navigation.navigate('Home');
-  };
-
   const toggleSection = (section: 'colors' | 'patterns') => {
     setCollapsedSections((prev) => ({
       ...prev,
@@ -154,13 +150,8 @@ export default function Items() {
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
-      headerLeft: () => (
-        <TouchableOpacity onPress={handleBackPress} style={styles.backButton}>
-          <FontAwesome5 name='chevron-left' size={20} color='#333' />
-        </TouchableOpacity>
-      ),
-      headerTitle: '',
-      headerShadowVisible: false,
+      headerTitle: 'TruForm Tailors',
+      headerShadowVisible: true,
     });
   }, [navigation]);
 
