@@ -27,6 +27,8 @@ export default function useCreateStyles() {
     tabBarIcon: {
       fontSize: iconSizes.lg,
     },
+    tabBarActiveTintColor: theme.primaryColor,
+    tabBarInactiveTintColor: theme.secondaryColor,
   });
 }
 

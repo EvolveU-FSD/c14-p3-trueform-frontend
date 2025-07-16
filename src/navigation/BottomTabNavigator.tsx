@@ -5,13 +5,11 @@ import Items from '../screens/Items';
 import BodyScanScreen from '../screens/BodyScanScreen';
 import Cart from '../screens/Cart';
 import LoginScreen from '../screens/LoginScreen';
-import { useTheme } from '../theme/ThemeContext';
 import createStyles from '../styles/BottomTabNavigatorStyles';
 
 const Tab = createBottomTabNavigator();
 
 export default function BottomTabNavigator() {
-  const { theme } = useTheme();
   const styles = createStyles();
 
   return (
@@ -19,8 +17,8 @@ export default function BottomTabNavigator() {
       screenOptions={{
         tabBarStyle: styles.tabBarStyle,
         tabBarLabelStyle: styles.tabBarLabelStyle,
-        tabBarActiveTintColor: theme.primaryColor,
-        tabBarInactiveTintColor: theme.secondaryColor,
+        tabBarActiveTintColor: styles.tabBarActiveTintColor,
+        tabBarInactiveTintColor: styles.tabBarInactiveTintColor,
         headerShown: false,
       }}
     >
