@@ -7,6 +7,7 @@ import { useCart } from '../context/CartContext';
 import CartItem from '../components/cart/CartItem';
 import CartSummary from '../components/cart/CartSummary';
 import createStyles from '../styles/CartScreenStyles';
+import { useBottomNavHeight } from '../hooks/useBottomNavHeight';
 
 type CartScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Cart'>;
 
@@ -14,6 +15,7 @@ export default function Cart() {
   const styles = createStyles();
   const { items } = useCart();
   const navigation = useNavigation<CartScreenNavigationProp>();
+  const bottomNavHeight = useBottomNavHeight();
 
   const handleProceedToCheckout = () => {
     navigation.navigate('Checkout');
@@ -21,14 +23,18 @@ export default function Cart() {
 
   if (items.length === 0) {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { paddingBottom: bottomNavHeight }]}>
         <Text style={styles.subtitle}>Your cart is empty</Text>
       </View>
     );
   }
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={{ paddingBottom: bottomNavHeight }}
+      showsVerticalScrollIndicator={false}
+    >
       <View style={styles.itemsContainer}>
         {items.map((item) => (
           <CartItem key={item.id} item={item} />

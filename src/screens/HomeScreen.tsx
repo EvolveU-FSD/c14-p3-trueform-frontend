@@ -15,6 +15,7 @@ import { RootStackParamList } from '../types/navigation';
 import createStyles from '../styles/HomeScreenStyles';
 import NavigationBar from '../components/NavigationBar';
 import { createBackdropHandler } from '../utils/dropdownUtils';
+import { useBottomNavHeight } from '../hooks/useBottomNavHeight';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const heroBannerImage = require('../../assets/images/banners/hero-banner.jpg');
@@ -27,6 +28,7 @@ interface Props {
 
 export default function HomeScreen({ navigation }: Props) {
   const styles = createStyles();
+  const bottomNavHeight = useBottomNavHeight();
   const [navState, setNavState] = useState({
     isMenuOpen: false,
     isSubmenuOpen: false,
@@ -57,7 +59,10 @@ export default function HomeScreen({ navigation }: Props) {
         {/* Navigation Bar */}
         <NavigationBar navigation={navigation} navState={navState} setNavState={setNavState} />
 
-        <ScrollView>
+        <ScrollView 
+          contentContainerStyle={{ paddingBottom: bottomNavHeight }}
+          showsVerticalScrollIndicator={false}
+        >
           <View style={styles.headerTitleContainer}>
             <Text style={styles.mainTitle}>True Form Tailors </Text>
             <Text style={styles.mainSubtitle}>Custom Made Shirts</Text>
