@@ -7,33 +7,46 @@ export default function useCreateStyles() {
 
   return StyleSheet.create({
     container: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      right: 0,
       flexDirection: 'row',
       backgroundColor: theme.backgroundColor,
       borderTopWidth: 1,
       borderTopColor: theme.borderColor,
-      paddingVertical: spacing.sm,
+      paddingVertical: spacing.xs,
       paddingHorizontal: spacing.xs,
+      paddingBottom: spacing.md,
+      elevation: 8,
+      shadowColor: theme.textColor,
+      shadowOffset: { width: 0, height: -2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 4,
     },
     tabButton: {
       flex: 1,
       alignItems: 'center',
       paddingVertical: spacing.sm,
+      paddingHorizontal: spacing.xs,
     },
     tabIcon: {
-      fontSize: iconSizes.md,
-      marginBottom: spacing.xs / 2,
-      color: theme.iconColorInactive,
+      fontSize: iconSizes.lg,
+      marginBottom: spacing.xs,
+      color: theme.secondaryColor,
     },
     activeTabIcon: {
-      color: theme.iconColorActive,
+      color: theme.primaryColor,
     },
     tabLabel: {
-      fontSize: fontSizes.xs,
-      color: theme.iconColorInactive,
+      fontSize: fontSizes.sm,
+      color: theme.secondaryColor,
+      fontWeight: '400',
+      textAlign: 'center',
     },
     activeTabLabel: {
-      color: theme.iconColorActive,
-      fontWeight: '500',
+      color: theme.primaryColor,
+      fontWeight: '600',
     },
   });
 }

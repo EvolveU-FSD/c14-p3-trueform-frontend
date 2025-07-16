@@ -14,6 +14,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/navigation';
 import createStyles from '../styles/HomeScreenStyles';
 import NavigationBar from '../components/NavigationBar';
+import BottomNavBar from '../components/navigation/BottomNavBar';
 import { createBackdropHandler } from '../utils/dropdownUtils';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -33,6 +34,9 @@ export default function HomeScreen({ navigation }: Props) {
     isAccountMenuOpen: false,
   });
 
+  // Add state for bottom navigation
+  const [activeTab, setActiveTab] = useState('shop');
+
   // Create backdrop handler for navigation dropdowns
   const handleBackdropPress = createBackdropHandler([
     {
@@ -48,6 +52,10 @@ export default function HomeScreen({ navigation }: Props) {
       setIsOpen: (value) => setNavState((prev) => ({ ...prev, isAccountMenuOpen: value })),
     },
   ]);
+
+  const handleTabChange = (tabName: string) => {
+    setActiveTab(tabName);
+  };
 
   return (
     <TouchableWithoutFeedback onPress={handleBackdropPress}>
@@ -88,6 +96,9 @@ export default function HomeScreen({ navigation }: Props) {
             <Text style={styles.startShoppingText}>Manual Measurement Input</Text>
           </TouchableOpacity>
         </ScrollView>
+
+        {/* Bottom Navigation Bar */}
+        <BottomNavBar activeTab={activeTab} onTabChange={handleTabChange} />
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );

@@ -1,8 +1,7 @@
-// src/components/BottomNavBar.tsx
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { BottomNavBarProps } from '../types/product';
-import createStyles from '../styles/BottomNavBarStyles';
+import { BottomNavBarProps } from '../../types/product';
+import createStyles from '../../styles/BottomNavBarStyles';
 import { useNavigation } from '@react-navigation/native';
 
 export default function BottomNavBar({ activeTab, onTabChange }: BottomNavBarProps) {
@@ -10,21 +9,21 @@ export default function BottomNavBar({ activeTab, onTabChange }: BottomNavBarPro
   const styles = createStyles();
 
   const tabs = [
-    { name: 'home', icon: '🏠', label: 'Home' },
-    { name: 'discover', icon: '🔍', label: 'Discover' },
-    { name: 'bodyscan', icon: '📏', label: 'Body Scan' },
+    { name: 'shop', icon: '🛍️', label: 'Shop' },
+    { name: 'measure', icon: '📏', label: 'Measure' },
     { name: 'cart', icon: '🛒', label: 'Cart' },
-    { name: 'notifications', icon: '🔔', label: 'Alerts' },
-    { name: 'payment', icon: '💳', label: 'Payment' },
-    { name: 'profile', icon: '👤', label: 'Profile' },
+    { name: 'account', icon: '👤', label: 'Account' },
   ];
 
   const handleTabPress = (tabName: string) => {
-    if (tabName === 'bodyscan') {
+    if (tabName === 'measure') {
       navigation.navigate('BodyScan' as never);
-    } else if (tabName === 'payment') {
-      // ADD THIS CONDITION
-      navigation.navigate('Payment' as never);
+    } else if (tabName === 'cart') {
+      navigation.navigate('Cart' as never);
+    } else if (tabName === 'shop') {
+      navigation.navigate('Items', { slug: 'all' } as never);
+    } else if (tabName === 'account') {
+      navigation.navigate('Login' as never);
     } else {
       onTabChange(tabName);
     }
