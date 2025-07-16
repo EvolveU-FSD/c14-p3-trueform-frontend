@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, ScrollView, StatusBar } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { CheckoutScreenProps } from '../types/navigation';
 import createStyles from '../styles/CheckoutScreenStyles';
 import ShippingAddress from '../components/address/ShippingAddress';
@@ -38,6 +39,16 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
 
   const [sameAsShipping, setSameAsShipping] = useState(true);
 
+  useEffect(() => {
+    navigation.setOptions({
+      headerShown: true,
+      headerTitle: 'Checkout',
+      headerShadowVisible: true,
+      headerBackTitle: 'Cart',
+      headerBackTitleVisible: true,
+    });
+  }, [navigation]);
+
   const handleShippingChange = (field: keyof AddressData, value: string) => {
     setShippingAddress((prev) => ({ ...prev, [field]: value }));
   };
@@ -55,27 +66,30 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
   };
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      <View style={styles.content}>
-        <LoginStatus />
-        <ShippingAddress data={shippingAddress} onDataChange={handleShippingChange} />
-        <BillingAddress
-          data={sameAsShipping ? shippingAddress : billingAddress}
-          onDataChange={handleBillingChange}
-          sameAsShipping={sameAsShipping}
-          onSameAsShippingChange={setSameAsShipping}
-        />
+    <SafeAreaView style={styles.container} edges={[]}>
+      <StatusBar barStyle='dark-content' />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.content}>
+          <LoginStatus />
+          <ShippingAddress data={shippingAddress} onDataChange={handleShippingChange} />
+          <BillingAddress
+            data={sameAsShipping ? shippingAddress : billingAddress}
+            onDataChange={handleBillingChange}
+            sameAsShipping={sameAsShipping}
+            onSameAsShippingChange={setSameAsShipping}
+          />
 
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.backButton} onPress={handleBackToCart}>
-            <Text style={styles.backButtonText}>Back to Cart</Text>
-          </TouchableOpacity>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.backButton} onPress={handleBackToCart}>
+              <Text style={styles.backButtonText}>Back to Cart</Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity style={styles.paymentButton} onPress={handleProceedToPayment}>
-            <Text style={styles.paymentButtonText}>Go to Payment</Text>
-          </TouchableOpacity>
+            <TouchableOpacity style={styles.paymentButton} onPress={handleProceedToPayment}>
+              <Text style={styles.paymentButtonText}>Go to Payment</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
