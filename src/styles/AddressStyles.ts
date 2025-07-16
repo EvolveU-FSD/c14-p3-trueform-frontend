@@ -198,6 +198,15 @@ export default function useCreateStyles() {
       fontSize: fontSizes.sm,
       fontWeight: 'bold',
     },
+    saveAddressContainer: {
+      marginTop: spacing.sm,
+      paddingTop: spacing.sm,
+      borderTopWidth: 1,
+      borderTopColor: theme.borderColor,
+    },
+    disabledCheckbox: {
+      opacity: 0.5,
+    },
   });
 }
 

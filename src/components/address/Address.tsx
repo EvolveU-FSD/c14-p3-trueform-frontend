@@ -6,6 +6,7 @@ import CountryPickerField from './CountryPickerField';
 import CheckboxField from './CheckboxField';
 import useCreateStyles from '../../styles/AddressStyles';
 import { AddressProps } from '../../types/address.types';
+import { useAuth } from '../../context/AuthContext';
 
 export default function Address({
   title,
@@ -15,8 +16,12 @@ export default function Address({
   showSameAsShipping = false,
   sameAsShipping = false,
   onSameAsShippingChange,
+  showSaveAddress = false,
+  saveAddress = false,
+  onSaveAddressChange,
 }: AddressProps) {
   const styles = useCreateStyles();
+  const { isAuthenticated } = useAuth();
 
   return (
     <View style={styles.container}>
@@ -131,6 +136,23 @@ export default function Address({
             keyboardType='phone-pad'
             autoComplete='tel'
           />
+
+          {showSaveAddress && onSaveAddressChange && (
+            <View style={styles.saveAddressContainer}>
+              <CheckboxField
+                label={
+                  isAuthenticated
+                    ? 'Save this address for future use'
+                    : 'Please create an account if you would like to save your address for future use'
+                }
+                value={isAuthenticated ? saveAddress : false}
+                // TODO: Find a better way to handle the empty function below.
+                // eslint-disable-next-line @typescript-eslint/no-empty-function
+                onValueChange={isAuthenticated ? onSaveAddressChange : () => {}}
+                style={[!isAuthenticated && styles.disabledCheckbox]}
+              />
+            </View>
+          )}
         </>
       )}
     </View>

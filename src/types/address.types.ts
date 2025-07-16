@@ -3,17 +3,17 @@ export interface Address {
   customerId: string;
   firstName: string;
   lastName: string;
-  company?: string;
   address1: string;
-  address2?: string;
   city: string;
   state: string;
   zipCode: string;
   country: string;
-  phone?: string;
   isDefault: boolean;
   createdAt: string;
   updatedAt: string;
+  company?: string;
+  address2?: string;
+  phone?: string;
   customer?: {
     id: string;
     name: string;
@@ -25,13 +25,13 @@ export interface CreateAddressDTO {
   customerId: string;
   firstName: string;
   lastName: string;
-  company?: string;
   address1: string;
-  address2?: string;
   city: string;
   state: string;
   zipCode: string;
   country: string;
+  company?: string;
+  address2?: string;
   phone?: string;
   isDefault?: boolean;
 }
