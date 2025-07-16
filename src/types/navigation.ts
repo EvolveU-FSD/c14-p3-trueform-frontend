@@ -1,23 +1,27 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { RouteProp } from '@react-navigation/native';
 
 export type RootStackParamList = {
-  Home: undefined;
-  Login: { email?: string } | undefined;
+  Main: undefined; // Bottom Tab Navigator
   Register: undefined;
   ItemDetails: { itemId: string };
-  Items: { slug: string };
-  Category: { slug: string };
   BodyScan: undefined;
-  Cart: undefined;
-  Checkout: undefined; // Add Checkout to the navigation types
+  Checkout: undefined;
   Payment: undefined;
   Customization: { itemId: string };
   ManualMeasurementInput: undefined;
 };
 
-// Navigation prop types
-export type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
+export type BottomTabParamList = {
+  Shop: { slug: string };
+  Measure: undefined;
+  Cart: undefined;
+  Account: undefined;
+};
+
+// Stack Navigation prop types
+export type MainScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Main'>;
 export type ItemDetailsScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   'ItemDetails'
@@ -26,7 +30,7 @@ export type BodyScanScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   'BodyScan'
 >;
-export type LoginScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
+export type LoginScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Register'>;
 export type RegisterScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   'Register'
@@ -35,21 +39,27 @@ export type PaymentScreenNavigationProp = NativeStackNavigationProp<RootStackPar
 export type CheckoutScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   'Checkout'
->; // Add navigation prop type for Checkout
+>;
+
+// Bottom Tab Navigation prop types
+export type ShopTabNavigationProp = BottomTabNavigationProp<BottomTabParamList, 'Shop'>;
+export type MeasureTabNavigationProp = BottomTabNavigationProp<BottomTabParamList, 'Measure'>;
+export type CartTabNavigationProp = BottomTabNavigationProp<BottomTabParamList, 'Cart'>;
+export type AccountTabNavigationProp = BottomTabNavigationProp<BottomTabParamList, 'Account'>;
 
 // Route prop types
-export type HomeScreenRouteProp = RouteProp<RootStackParamList, 'Home'>;
+export type MainScreenRouteProp = RouteProp<RootStackParamList, 'Main'>;
 export type ItemDetailsScreenRouteProp = RouteProp<RootStackParamList, 'ItemDetails'>;
 export type BodyScanScreenRouteProp = RouteProp<RootStackParamList, 'BodyScan'>;
-export type LoginScreenRouteProp = RouteProp<RootStackParamList, 'Login'>;
+export type LoginScreenRouteProp = RouteProp<RootStackParamList, 'Register'>;
 export type RegisterScreenRouteProp = RouteProp<RootStackParamList, 'Register'>;
 export type PaymentScreenRouteProp = RouteProp<RootStackParamList, 'Payment'>;
-export type CheckoutScreenRouteProp = RouteProp<RootStackParamList, 'Checkout'>; // Add route prop type for Checkout
+export type CheckoutScreenRouteProp = RouteProp<RootStackParamList, 'Checkout'>;
 
 // Screen props interfaces
-export interface HomeScreenProps {
-  navigation: HomeScreenNavigationProp;
-  route: HomeScreenRouteProp;
+export interface MainScreenProps {
+  navigation: MainScreenNavigationProp;
+  route: MainScreenRouteProp;
 }
 
 export interface ItemDetailsScreenProps {
@@ -73,7 +83,6 @@ export interface RegisterScreenProps {
 }
 
 export interface CheckoutScreenProps {
-  // Add screen props interface for Checkout
   navigation: CheckoutScreenNavigationProp;
   route: CheckoutScreenRouteProp;
 }

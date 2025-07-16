@@ -9,7 +9,6 @@ import { useCart } from '../../context/CartContext';
 import { Clothing } from '../../types/clothing';
 import { CartCustomization } from '../../types/context/cart.types';
 import { getImageUrl } from '../../utils/imageHandling';
-import { useBottomNavHeight } from '../../hooks/useBottomNavHeight';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -18,7 +17,6 @@ export default function CustomizationScreen() {
   const route = useRoute<any>();
   const navigation = useNavigation();
   const { itemId } = route.params;
-  const bottomNavHeight = useBottomNavHeight();
 
   const { selections, handleSelection } = useCustomization();
   const { addItem } = useCart();
@@ -186,10 +184,8 @@ export default function CustomizationScreen() {
 
         {/* Customization Options */}
         <ScrollView
-          contentContainerStyle={[
-            styles.optionsContainer,
-            { paddingBottom: bottomNavHeight },
-          ]}
+          style={{ flex: 1 }}
+          contentContainerStyle={styles.optionsContainer}
           showsVerticalScrollIndicator={false}
         >
           {activeCustomization?.options.map((opt: any) => (
@@ -208,7 +204,7 @@ export default function CustomizationScreen() {
         </ScrollView>
 
         {/* Navigation Buttons */}
-        <View style={[styles.navigationContainer, { marginBottom: bottomNavHeight }]}>
+        <View style={styles.navigationContainer}>
           <TouchableOpacity
             style={[styles.navButton, styles.previousButton]}
             onPress={handlePrevious}
