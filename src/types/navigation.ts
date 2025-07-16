@@ -3,7 +3,8 @@ import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { RouteProp } from '@react-navigation/native';
 
 export type RootStackParamList = {
-  Main: undefined; // Bottom Tab Navigator
+  Main: undefined;
+  Login: { email?: string };
   Register: undefined;
   ItemDetails: { itemId: string };
   BodyScan: undefined;
@@ -30,7 +31,7 @@ export type BodyScanScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   'BodyScan'
 >;
-export type LoginScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Register'>;
+export type LoginScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
 export type RegisterScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   'Register'
@@ -51,7 +52,7 @@ export type AccountTabNavigationProp = BottomTabNavigationProp<BottomTabParamLis
 export type MainScreenRouteProp = RouteProp<RootStackParamList, 'Main'>;
 export type ItemDetailsScreenRouteProp = RouteProp<RootStackParamList, 'ItemDetails'>;
 export type BodyScanScreenRouteProp = RouteProp<RootStackParamList, 'BodyScan'>;
-export type LoginScreenRouteProp = RouteProp<RootStackParamList, 'Register'>;
+export type LoginScreenRouteProp = RouteProp<RootStackParamList, 'Login'>;
 export type RegisterScreenRouteProp = RouteProp<RootStackParamList, 'Register'>;
 export type PaymentScreenRouteProp = RouteProp<RootStackParamList, 'Payment'>;
 export type CheckoutScreenRouteProp = RouteProp<RootStackParamList, 'Checkout'>;
