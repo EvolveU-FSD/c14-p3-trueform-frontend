@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -6,13 +6,16 @@ import {
   Alert,
   ActivityIndicator,
   ScrollView,
-  SafeAreaView,
+  StatusBar,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { StripeProvider, CardField, useStripe } from '@stripe/stripe-react-native';
 import type { CardFieldInput } from '@stripe/stripe-react-native';
-import { showAlert } from 'utils/showAlerts';
+import { showAlert } from '../utils/showAlerts';
 import { Ionicons } from '@expo/vector-icons';
-import { paymentScreenStyles as styles } from 'styles/PaymentScreenStyles'; // Adjust the import path as necessary
+import { paymentScreenStyles as styles } from '../styles/PaymentScreenStyles';
+import { useNavigation } from '@react-navigation/native';
+import { PaymentScreenNavigationProp } from '../types/navigation';
 
 // Mock order data - replace with actual props/navigation params
 const ORDER_DETAILS = {
@@ -31,6 +34,17 @@ const PaymentScreen = () => {
   const [cardDetails, setCardDetails] = useState<CardFieldInput.Details | null>(null);
   const [loading, setLoading] = useState(false);
   const { confirmPayment } = useStripe();
+  const navigation = useNavigation<PaymentScreenNavigationProp>();
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerShown: true,
+      headerTitle: 'Payment',
+      headerShadowVisible: true,
+      headerBackTitle: 'Checkout',
+      headerBackTitleVisible: true,
+    });
+  }, [navigation]);
 
   const formatCurrency = (amount: number) => {
     return `$${amount.toFixed(2)}`;
@@ -114,7 +128,8 @@ const PaymentScreen = () => {
       publishableKey={process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY || ''}
       urlScheme='your-app-scheme'
     >
-      <SafeAreaView style={styles.safeArea}>
+      <SafeAreaView style={styles.safeArea} edges={[]}>
+        <StatusBar barStyle='dark-content' />
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
           {/* Header */}
           <View style={styles.header}>
