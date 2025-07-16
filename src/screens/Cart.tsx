@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/navigation';
@@ -21,25 +21,27 @@ export default function Cart() {
 
   if (items.length === 0) {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <Text style={styles.subtitle}>Your cart is empty</Text>
-      </View>
+      </SafeAreaView>
     );
   }
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      <View style={styles.itemsContainer}>
-        {items.map((item) => (
-          <CartItem key={item.id} item={item} />
-        ))}
-      </View>
+    <SafeAreaView style={styles.container}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.itemsContainer}>
+          {items.map((item) => (
+            <CartItem key={item.id} item={item} />
+          ))}
+        </View>
 
-      <CartSummary />
+        <CartSummary />
 
-      <TouchableOpacity style={styles.checkoutButton} onPress={handleProceedToCheckout}>
-        <Text style={styles.checkoutButtonText}>Proceed to Checkout</Text>
-      </TouchableOpacity>
-    </ScrollView>
+        <TouchableOpacity style={styles.checkoutButton} onPress={handleProceedToCheckout}>
+          <Text style={styles.checkoutButtonText}>Proceed to Checkout</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
