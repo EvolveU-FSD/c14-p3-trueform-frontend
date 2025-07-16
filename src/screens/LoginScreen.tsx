@@ -35,13 +35,22 @@ function LoginScreen({ navigation, route }: LoginScreenProps) {
     try {
       await login(email, password);
 
-      navigation.navigate('Home');
+      // Navigate back to previous screen or to Main if no previous screen
+      if (navigation.canGoBack()) {
+        navigation.goBack();
+      } else {
+        navigation.navigate('Main');
+      }
     } catch (error: any) {
       showAlert('Login Failed', error.message);
     } finally {
       setIsLoading(false);
     }
   };
+
+  function handleRegisterPress() {
+    navigation.navigate('Register');
+  }
 
   return (
     <View style={styles.container}>
@@ -71,10 +80,7 @@ function LoginScreen({ navigation, route }: LoginScreenProps) {
         <Text style={styles.buttonText}>{isLoading ? 'Logging in...' : 'Login'}</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity
-        onPress={() => navigation.navigate('Register')}
-        style={styles.linkContainer}
-      >
+      <TouchableOpacity onPress={handleRegisterPress} style={styles.linkContainer}>
         <Text style={styles.link}>Don&apos;t have an account? Register</Text>
       </TouchableOpacity>
     </View>
