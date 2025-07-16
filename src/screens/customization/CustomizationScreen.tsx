@@ -1,5 +1,13 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { ScrollView, View, Text, Image, TouchableOpacity, Dimensions } from 'react-native';
+import {
+  ScrollView,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  Dimensions,
+  SafeAreaView,
+} from 'react-native';
 import { CustomizationProvider, useCustomization } from '../../context/CustomizationContext';
 import { CustomizationService } from '../../services/customization.service';
 import { useRoute, useNavigation } from '@react-navigation/native';
@@ -128,8 +136,8 @@ export default function CustomizationScreen() {
         addItem(clothingItem, cartCustomizations);
       }
 
-      // Navigate to Cart screen
-      navigation.navigate('Cart' as never);
+      // Navigate back to Main (BottomTabNavigator) and then to Cart tab
+      navigation.navigate('Main', { screen: 'Cart' });
     }
   };
 
@@ -154,82 +162,84 @@ export default function CustomizationScreen() {
 
   return (
     <CustomizationProvider>
-      <View style={styles.container}>
-        {/* Top Nav */}
-        <ScrollView
-          ref={scrollViewRef}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={styles.stepsContainer}
-          contentContainerStyle={styles.stepsContentContainer}
-        >
-          {customizations.map((c, idx) => (
+      <SafeAreaView style={styles.container}>
+        <View style={{ flex: 1 }}>
+          {/* Top Nav */}
+          <ScrollView
+            ref={scrollViewRef}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={styles.stepsContainer}
+            contentContainerStyle={styles.stepsContentContainer}
+          >
+            {customizations.map((c, idx) => (
+              <TouchableOpacity
+                key={c.id}
+                onPress={() => handleStepPress(idx)}
+                style={[styles.stepItem, idx === activeIndex && styles.activeStepItem]}
+              >
+                <View style={[styles.circle, idx === activeIndex && styles.activeCircle]}>
+                  <Text style={styles.stepNumberText}>{idx + 1}</Text>
+                </View>
+                <Text style={[styles.stepTitle, idx === activeIndex && styles.activeStepTitle]}>
+                  {c.name}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+
+          {/* Line separator */}
+          <View style={styles.line} />
+
+          {/* Customization Options */}
+          <ScrollView
+            style={{ flex: 1 }}
+            contentContainerStyle={styles.optionsContainer}
+            showsVerticalScrollIndicator={false}
+          >
+            {activeCustomization?.options.map((opt: any) => (
+              <TouchableOpacity
+                key={opt.id}
+                onPress={() => handleSelection(activeCustomization.id, opt.id)}
+                style={[
+                  styles.optionBox,
+                  selections[activeCustomization.id] === opt.id && styles.optionBoxSelected,
+                ]}
+              >
+                <Image source={{ uri: getImageUrl(opt.mediaUrl) }} style={styles.optionImage} />
+                <Text style={styles.optionText}>{opt.title}</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+
+          {/* Navigation Buttons */}
+          <View style={styles.navigationContainer}>
             <TouchableOpacity
-              key={c.id}
-              onPress={() => handleStepPress(idx)}
-              style={[styles.stepItem, idx === activeIndex && styles.activeStepItem]}
+              style={[styles.navButton, styles.previousButton]}
+              onPress={handlePrevious}
+              disabled={isFirstStep}
             >
-              <View style={[styles.circle, idx === activeIndex && styles.activeCircle]}>
-                <Text style={styles.stepNumberText}>{idx + 1}</Text>
-              </View>
-              <Text style={[styles.stepTitle, idx === activeIndex && styles.activeStepTitle]}>
-                {c.name}
+              <Text style={[styles.navButtonText, isFirstStep && styles.disabledButtonText]}>
+                {isFirstStep ? 'Back' : 'Previous'}
               </Text>
             </TouchableOpacity>
-          ))}
-        </ScrollView>
 
-        {/* Line separator */}
-        <View style={styles.line} />
+            <Text style={styles.stepIndicator}>
+              {activeIndex + 1} of {customizations.length}
+            </Text>
 
-        {/* Customization Options */}
-        <ScrollView
-          style={{ flex: 1 }}
-          contentContainerStyle={styles.optionsContainer}
-          showsVerticalScrollIndicator={false}
-        >
-          {activeCustomization?.options.map((opt: any) => (
             <TouchableOpacity
-              key={opt.id}
-              onPress={() => handleSelection(activeCustomization.id, opt.id)}
-              style={[
-                styles.optionBox,
-                selections[activeCustomization.id] === opt.id && styles.optionBoxSelected,
-              ]}
+              style={[styles.navButton, styles.nextButton, isNextDisabled && styles.disabledButton]}
+              onPress={handleNext}
+              disabled={isNextDisabled}
             >
-              <Image source={{ uri: getImageUrl(opt.mediaUrl) }} style={styles.optionImage} />
-              <Text style={styles.optionText}>{opt.title}</Text>
+              <Text style={[styles.nextButtonText, isNextDisabled && styles.disabledButtonText]}>
+                {isLastStep ? 'Add to Cart' : 'Next'}
+              </Text>
             </TouchableOpacity>
-          ))}
-        </ScrollView>
-
-        {/* Navigation Buttons */}
-        <View style={styles.navigationContainer}>
-          <TouchableOpacity
-            style={[styles.navButton, styles.previousButton]}
-            onPress={handlePrevious}
-            disabled={isFirstStep}
-          >
-            <Text style={[styles.navButtonText, isFirstStep && styles.disabledButtonText]}>
-              {isFirstStep ? 'Back' : 'Previous'}
-            </Text>
-          </TouchableOpacity>
-
-          <Text style={styles.stepIndicator}>
-            {activeIndex + 1} of {customizations.length}
-          </Text>
-
-          <TouchableOpacity
-            style={[styles.navButton, styles.nextButton, isNextDisabled && styles.disabledButton]}
-            onPress={handleNext}
-            disabled={isNextDisabled}
-          >
-            <Text style={[styles.nextButtonText, isNextDisabled && styles.disabledButtonText]}>
-              {isLastStep ? 'Add to Cart' : 'Next'}
-            </Text>
-          </TouchableOpacity>
+          </View>
         </View>
-      </View>
+      </SafeAreaView>
     </CustomizationProvider>
   );
 }
