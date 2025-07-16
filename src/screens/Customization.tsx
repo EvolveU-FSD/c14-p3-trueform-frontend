@@ -13,11 +13,33 @@ export default function CustomizationScreen() {
   const navigation = useNavigation();
   const [categories, setCategories] = useState<CustomizationCategory[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedOptions, setSelectedOptions] = useState<{ [categoryId: string]: string }>({});
 
   useEffect(() => {
     const fetchCategories = async () => {
       const fetchedCategories = await CustomizationService.getCategories('shirt');
       setCategories(fetchedCategories);
+
+      // Set default selections for each category based on API defaultValue
+      const defaults: { [categoryId: string]: string } = {};
+      fetchedCategories.forEach(category => {
+        if (category.options && category.options.length > 0) {
+          // Use defaultValue from API if available, otherwise use first option
+          const defaultOptionId = category.defaultValue || category.options[0].id;
+          
+          // Verify the default option exists in the options array
+          const defaultOptionExists = category.options.some((opt: any) => opt.id === defaultOptionId);
+          
+          if (defaultOptionExists) {
+            defaults[category.id] = defaultOptionId;
+          } else {
+            // Fallback to first option if default doesn't exist
+            defaults[category.id] = category.options[0].id;
+          }
+        }
+      });
+      setSelectedOptions(defaults);
+
       setLoading(false);
     };
     fetchCategories();
