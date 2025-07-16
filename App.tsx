@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AuthProvider, useAuth } from './src/context/AuthContext';
 import { NavigationProvider } from './src/context/NavigationContext';
 import ItemDetails from './src/screens/ItemDetails';
@@ -87,16 +88,18 @@ function AppContent() {
 
 export default function App() {
   return (
-    <ThemeProvider>
-      <AuthProvider>
-        <NavigationProvider>
-          <CartProvider>
-            <CustomizationProvider>
-              <AppContent />
-            </CustomizationProvider>
-          </CartProvider>
-        </NavigationProvider>
-      </AuthProvider>
-    </ThemeProvider>
+    <SafeAreaProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <NavigationProvider>
+            <CartProvider>
+              <CustomizationProvider>
+                <AppContent />
+              </CustomizationProvider>
+            </CartProvider>
+          </NavigationProvider>
+        </AuthProvider>
+      </ThemeProvider>
+    </SafeAreaProvider>
   );
 }

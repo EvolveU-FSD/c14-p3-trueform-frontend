@@ -1,5 +1,6 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, Text, TouchableOpacity, ScrollView, StatusBar } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/navigation';
@@ -19,16 +20,26 @@ export default function Cart() {
     navigation.navigate('Checkout');
   };
 
+  useEffect(() => {
+    navigation.setOptions({
+      headerShown: true,
+      headerTitle: 'Cart',
+      headerShadowVisible: true,
+    });
+  }, [navigation]);
+
   if (items.length === 0) {
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.container} edges={[]}>
+        <StatusBar barStyle='dark-content' />
         <Text style={styles.subtitle}>Your cart is empty</Text>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={[]}>
+      <StatusBar barStyle='dark-content' />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.itemsContainer}>
           {items.map((item) => (
