@@ -121,29 +121,24 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
     }
   };
 
-  const handleShippingSavedAddressSelect = (address: Address | null) => {
+  const handleSavedAddressSelect = (address: Address | null, isShipping: boolean) => {
     if (address) {
-      setSelectedShippingAddressId(address.id);
-      setShippingAddress(address);
-      setSaveShippingAddress(false);
-      // Clear validation errors when using saved address
-      setShippingErrors({});
-      setIsShippingValid(true);
+      if (isShipping) {
+        setSelectedShippingAddressId(address.id);
+        setShippingAddress(address);
+        setSaveShippingAddress(false);
+      } else {
+        setSelectedBillingAddressId(address.id);
+        setBillingAddress(address);
+        setSaveBillingAddress(false);
+      }
     } else {
-      setSelectedShippingAddressId('');
-    }
-  };
-
-  const handleBillingSavedAddressSelect = (address: Address | null) => {
-    if (address) {
-      setSelectedBillingAddressId(address.id);
-      setBillingAddress(address);
-      setSaveBillingAddress(false);
-      // Clear validation errors when using saved address
-      setBillingErrors({});
-      setIsBillingValid(true);
-    } else {
-      setSelectedBillingAddressId('');
+      if (isShipping) {
+        setSelectedShippingAddressId('');
+      } else {
+        setSelectedBillingAddressId('');
+      }
+      // Don't clear the address data, let user continue editing
     }
   };
 
@@ -154,6 +149,7 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
   const compareAddresses = (address1: Address, address2: Address): boolean => {
     // Compare all relevant fields (excluding id, customerId, timestamps, and isDefault)
     return (
+      // TODO: Consider option chaining for the future.
       address1.firstName.toLowerCase() === address2.firstName.toLowerCase() &&
       address1.lastName.toLowerCase() === address2.lastName.toLowerCase() &&
       (address1.company || '').toLowerCase() === (address2.company || '').toLowerCase() &&
@@ -195,10 +191,6 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
       const existingAddress = findExistingAddress(addressData, existingAddresses);
 
       if (existingAddress) {
-        console.log(
-          `${isShipping ? 'Shipping' : 'Billing'} address already exists, skipping save:`,
-          existingAddress,
-        );
         return true; // Return true because the address exists (no need to save)
       }
 
@@ -218,14 +210,9 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
         isDefault: false,
       };
 
-      console.log('Saving new address:', createAddressData);
       const savedAddress = await AddressService.create(createAddressData);
 
       if (savedAddress) {
-        console.log(
-          `${isShipping ? 'Shipping' : 'Billing'} address saved successfully:`,
-          savedAddress,
-        );
         return true;
       } else {
         console.error(`Failed to save ${isShipping ? 'shipping' : 'billing'} address`);
@@ -297,9 +284,7 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
           showSavedAddresses={true}
           savedAddresses={savedAddresses}
           selectedSavedAddressId={selectedShippingAddressId}
-          onSavedAddressSelect={handleShippingSavedAddressSelect}
-          errors={shippingErrors}
-          onValidation={handleShippingValidation}
+          onSavedAddressSelect={(address) => handleSavedAddressSelect(address, true)}
         />
         <BillingAddress
           data={sameAsShipping ? shippingAddress : billingAddress}
@@ -311,9 +296,7 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
           showSavedAddresses={true}
           savedAddresses={savedAddresses}
           selectedSavedAddressId={selectedBillingAddressId}
-          onSavedAddressSelect={handleBillingSavedAddressSelect}
-          errors={billingErrors}
-          onValidation={handleBillingValidation}
+          onSavedAddressSelect={(address) => handleSavedAddressSelect(address, false)}
         />
 
         <View style={styles.buttonContainer}>
