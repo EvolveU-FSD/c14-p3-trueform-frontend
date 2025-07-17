@@ -10,6 +10,7 @@ import { AddressService } from '../services/address.service';
 import { CustomerService } from '../services/customer.service';
 import { useAuth } from '../context/AuthContext';
 import { CreateAddressDTO } from '../types/address.types';
+import { AddressValidationErrors } from '../types/address.types';
 
 export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
   const styles = createStyles();
@@ -54,11 +55,13 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
   const [sameAsShipping, setSameAsShipping] = useState(true);
   const [saveShippingAddress, setSaveShippingAddress] = useState(false);
   const [saveBillingAddress, setSaveBillingAddress] = useState(false);
-
-  // New state for saved addresses
   const [savedAddresses, setSavedAddresses] = useState<Address[]>([]);
   const [selectedShippingAddressId, setSelectedShippingAddressId] = useState<string>('');
   const [selectedBillingAddressId, setSelectedBillingAddressId] = useState<string>('');
+
+  // Validation state
+  const [shippingErrors, setShippingErrors] = useState<AddressValidationErrors>({});
+  const [billingErrors, setBillingErrors] = useState<AddressValidationErrors>({});
 
   // Fetch saved addresses when user is authenticated
   useEffect(() => {
@@ -85,10 +88,18 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
 
   const handleShippingChange = (field: keyof Address, value: string) => {
     setShippingAddress((prev) => ({ ...prev, [field]: value }));
+    // Clear errors for this field when user starts typing
+    if (shippingErrors[field as keyof AddressValidationErrors]) {
+      setShippingErrors((prev) => ({ ...prev, [field]: undefined }));
+    }
   };
 
   const handleBillingChange = (field: keyof Address, value: string) => {
     setBillingAddress((prev) => ({ ...prev, [field]: value }));
+    // Clear errors for this field when user starts typing
+    if (billingErrors[field as keyof AddressValidationErrors]) {
+      setBillingErrors((prev) => ({ ...prev, [field]: undefined }));
+    }
   };
 
   const handleSavedAddressSelect = (address: Address | null, isShipping: boolean) => {
@@ -195,11 +206,17 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
   };
 
   const handleProceedToPayment = async () => {
+    if (!isShippingValid || (!sameAsShipping && !isBillingValid)) {
+      Alert.alert('Validation Error', 'Please fix the highlighted fields before proceeding.', [
+        { text: 'OK' },
+      ]);
+      return;
+    }
+
     const saveResults: boolean[] = [];
     const messages: string[] = [];
 
     // Save addresses if user is authenticated and checkboxes are checked
-    // Only save if not using a saved address
     if (isAuthenticated) {
       if (saveShippingAddress && !selectedShippingAddressId) {
         const shippingSaved = await saveAddressToAPI(shippingAddress, true);
