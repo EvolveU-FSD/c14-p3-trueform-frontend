@@ -17,30 +17,14 @@ export function CustomizationProvider({ children }: { children: React.ReactNode 
     setSelections({});
   }
 
-  // Function to set default selections for customization options
-  function setDefaultSelections(customizations: any[]): void {
-    const defaults: Selection = {};
-    customizations.forEach((customization) => {
-      if (customization.options && customization.options.length > 0) {
-        // Use defaultValue from API if available, otherwise use first option
-        const defaultOptionId = customization.defaultValue || customization.options[0].id;
-        
-        // Verify the default option exists in the options array
-        const defaultOptionExists = customization.options.some((opt: any) => opt.id === defaultOptionId);
-        
-        if (defaultOptionExists) {
-          defaults[customization.id] = defaultOptionId;
-        } else {
-          // Fallback to first option if default doesn't exist
-          defaults[customization.id] = customization.options[0].id;
-        }
-      }
-    });
-    setSelections(defaults);
-  }
-
   return (
-    <CustomizationContext.Provider value={{ selections, handleSelection, clearSelections }}>
+    <CustomizationContext.Provider
+      value={{
+        selections,
+        handleSelection,
+        clearSelections,
+      }}
+    >
       {children}
     </CustomizationContext.Provider>
   );

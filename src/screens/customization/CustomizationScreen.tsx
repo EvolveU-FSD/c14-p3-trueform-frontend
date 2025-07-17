@@ -52,17 +52,19 @@ export default function CustomizationScreen() {
           clothingItem.categoryId,
         );
         setCustomizations(response);
-        
+
         // Auto-select the default option for each customization based on API response
         const initialSelections: { [key: string]: string } = {};
         response.forEach((customization: any) => {
           if (customization.options && customization.options.length > 0) {
             // Use defaultValue from API if available, otherwise use first option
             const defaultOptionId = customization.defaultValue || customization.options[0].id;
-            
+
             // Verify the default option exists in the options array
-            const defaultOptionExists = customization.options.some((opt: any) => opt.id === defaultOptionId);
-            
+            const defaultOptionExists = customization.options.some(
+              (opt: any) => opt.id === defaultOptionId,
+            );
+
             if (defaultOptionExists) {
               initialSelections[customization.id] = defaultOptionId;
             } else {
@@ -71,7 +73,7 @@ export default function CustomizationScreen() {
             }
           }
         });
-        
+
         // Apply initial selections
         Object.entries(initialSelections).forEach(([customizationId, optionId]) => {
           handleSelection(customizationId, optionId);
