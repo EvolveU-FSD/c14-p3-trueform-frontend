@@ -194,7 +194,7 @@ export default function CustomizationScreen() {
               ]}
             >
               <Image source={{ uri: getImageUrl(opt.mediaUrl) }} style={styles.optionImage} />
-              <Text style={styles.optionText}>{opt.title}</Text>
+              <Text style={styles.optionText}>{opt.name}</Text>
             </TouchableOpacity>
           ))}
         </ScrollView>
