@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import createStyles from '../styles/CheckoutScreenStyles';
 import { Address } from '../types/address.types';
@@ -55,12 +55,61 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
   const [saveShippingAddress, setSaveShippingAddress] = useState(false);
   const [saveBillingAddress, setSaveBillingAddress] = useState(false);
 
+  // New state for saved addresses
+  const [savedAddresses, setSavedAddresses] = useState<Address[]>([]);
+  const [selectedShippingAddressId, setSelectedShippingAddressId] = useState<string>('');
+  const [selectedBillingAddressId, setSelectedBillingAddressId] = useState<string>('');
+
+  // Fetch saved addresses when user is authenticated
+  useEffect(() => {
+    const fetchSavedAddresses = async () => {
+      if (isAuthenticated && user) {
+        try {
+          const customer = await CustomerService.getByFirebaseUid(user.uid);
+          if (customer) {
+            const addresses = await AddressService.getByCustomerId(customer.id);
+            setSavedAddresses(addresses);
+          }
+        } catch (error) {
+          console.error('Error fetching saved addresses:', error);
+        }
+      } else {
+        setSavedAddresses([]);
+        setSelectedShippingAddressId('');
+        setSelectedBillingAddressId('');
+      }
+    };
+
+    fetchSavedAddresses();
+  }, [isAuthenticated, user]);
+
   const handleShippingChange = (field: keyof Address, value: string) => {
     setShippingAddress((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleBillingChange = (field: keyof Address, value: string) => {
     setBillingAddress((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleSavedAddressSelect = (address: Address | null, isShipping: boolean) => {
+    if (address) {
+      if (isShipping) {
+        setSelectedShippingAddressId(address.id);
+        setShippingAddress(address);
+        setSaveShippingAddress(false);
+      } else {
+        setSelectedBillingAddressId(address.id);
+        setBillingAddress(address);
+        setSaveBillingAddress(false);
+      }
+    } else {
+      if (isShipping) {
+        setSelectedShippingAddressId('');
+      } else {
+        setSelectedBillingAddressId('');
+      }
+      // Don't clear the address data, let user continue editing
+    }
   };
 
   const handleBackToCart = () => {
@@ -150,8 +199,9 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
     const messages: string[] = [];
 
     // Save addresses if user is authenticated and checkboxes are checked
+    // Only save if not using a saved address
     if (isAuthenticated) {
-      if (saveShippingAddress) {
+      if (saveShippingAddress && !selectedShippingAddressId) {
         const shippingSaved = await saveAddressToAPI(shippingAddress, true);
         saveResults.push(shippingSaved);
         if (shippingSaved) {
@@ -159,7 +209,7 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
         }
       }
 
-      if (saveBillingAddress && !sameAsShipping) {
+      if (saveBillingAddress && !sameAsShipping && !selectedBillingAddressId) {
         const billingSaved = await saveAddressToAPI(billingAddress, false);
         saveResults.push(billingSaved);
         if (billingSaved) {
@@ -195,6 +245,10 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
           onDataChange={handleShippingChange}
           saveAddress={saveShippingAddress}
           onSaveAddressChange={setSaveShippingAddress}
+          showSavedAddresses={true}
+          savedAddresses={savedAddresses}
+          selectedSavedAddressId={selectedShippingAddressId}
+          onSavedAddressSelect={(address) => handleSavedAddressSelect(address, true)}
         />
         <BillingAddress
           data={sameAsShipping ? shippingAddress : billingAddress}
@@ -203,6 +257,10 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
           onSameAsShippingChange={setSameAsShipping}
           saveAddress={saveBillingAddress}
           onSaveAddressChange={setSaveBillingAddress}
+          showSavedAddresses={true}
+          savedAddresses={savedAddresses}
+          selectedSavedAddressId={selectedBillingAddressId}
+          onSavedAddressSelect={(address) => handleSavedAddressSelect(address, false)}
         />
 
         <View style={styles.buttonContainer}>

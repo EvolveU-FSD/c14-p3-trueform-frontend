@@ -74,6 +74,10 @@ export interface AddressProps {
   showSaveAddress?: boolean;
   saveAddress?: boolean;
   onSaveAddressChange?: (value: boolean) => void;
+  showSavedAddresses?: boolean;
+  savedAddresses?: Address[];
+  selectedSavedAddressId?: string;
+  onSavedAddressSelect?: (address: Address | null) => void;
 }
 
 export interface AddressFieldProps {
@@ -96,6 +100,7 @@ export interface AddressFieldProps {
   multiline?: boolean;
   numberOfLines?: number;
   style?: any;
+  disabled?: boolean;
 }
 
 export interface StatePickerFieldProps {
@@ -105,6 +110,7 @@ export interface StatePickerFieldProps {
   error?: string;
   required?: boolean;
   style?: any;
+  disabled?: boolean;
 }
 
 export interface CountryPickerFieldProps {
@@ -114,6 +120,7 @@ export interface CountryPickerFieldProps {
   error?: string;
   required?: boolean;
   style?: any;
+  disabled?: boolean;
 }
 
 export interface CheckboxFieldProps {
@@ -129,6 +136,10 @@ export interface ShippingAddressProps {
   errors?: AddressErrors;
   saveAddress?: boolean;
   onSaveAddressChange?: (value: boolean) => void;
+  showSavedAddresses?: boolean;
+  savedAddresses?: Address[];
+  selectedSavedAddressId?: string;
+  onSavedAddressSelect?: (address: Address | null) => void;
 }
 
 export interface BillingAddressProps {
@@ -139,6 +150,10 @@ export interface BillingAddressProps {
   onSameAsShippingChange?: (value: boolean) => void;
   saveAddress?: boolean;
   onSaveAddressChange?: (value: boolean) => void;
+  showSavedAddresses?: boolean;
+  savedAddresses?: Address[];
+  selectedSavedAddressId?: string;
+  onSavedAddressSelect?: (address: Address | null) => void;
 }
 
 export interface StateOption {
@@ -149,4 +164,15 @@ export interface StateOption {
 export interface CountryOption {
   label: string;
   value: string;
+}
+
+export interface SavedAddressDropdownProps {
+  label: string;
+  addresses: Address[];
+  selectedAddressId?: string;
+  onAddressSelect: (address: Address | null) => void;
+  placeholder?: string;
+  error?: string;
+  required?: boolean;
+  style?: any;
 }
