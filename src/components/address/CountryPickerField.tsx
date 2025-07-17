@@ -44,6 +44,7 @@ export default function CountryPickerField({
   error,
   required = false,
   style,
+  disabled = false,
 }: CountryPickerFieldProps) {
   const styles = useCreateStyles();
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -56,14 +57,16 @@ export default function CountryPickerField({
 
   // Set default on mount if no value exists
   useEffect(() => {
-    if (!value) {
+    if (!value && !disabled) {
       onValueChange('US');
     }
   }, []);
 
   const handleConfirm = () => {
-    onValueChange(tempValue);
-    setIsModalVisible(false);
+    if (!disabled) {
+      onValueChange(tempValue);
+      setIsModalVisible(false);
+    }
   };
 
   const handleCancel = () => {
@@ -78,25 +81,38 @@ export default function CountryPickerField({
   // iOS Modal Picker
   if (Platform.OS === 'ios') {
     return (
-      <View style={[styles.fieldContainer, style]}>
-        <Text style={styles.label}>
+      <View style={[styles.fieldContainer, style, disabled && styles.disabledContainer]}>
+        <Text style={[styles.label, disabled && styles.disabledText]}>
           {label}
           {required && <Text style={styles.requiredIndicator}> *</Text>}
         </Text>
 
         <TouchableOpacity
-          style={[styles.modalTrigger, error && styles.inputError]}
+          style={[
+            styles.modalTrigger,
+            error && styles.inputError,
+            disabled && styles.disabledPickerContainer,
+          ]}
           onPress={() => {
-            setTempValue(currentValue);
-            setIsModalVisible(true);
+            if (!disabled) {
+              setTempValue(currentValue);
+              setIsModalVisible(true);
+            }
           }}
+          disabled={disabled}
         >
-          <Text style={styles.modalTriggerText}>{displayText}</Text>
-          <FontAwesome5 name='chevron-down' size={16} color='#666' />
+          <Text style={[styles.modalTriggerText, disabled && styles.disabledText]}>
+            {displayText}
+          </Text>
+          <FontAwesome5
+            name='chevron-down'
+            size={16}
+            color={disabled ? styles.disabledText?.color || '#999' : '#666'}
+          />
         </TouchableOpacity>
 
         <Modal
-          visible={isModalVisible}
+          visible={isModalVisible && !disabled}
           animationType='slide'
           transparent={true}
           onRequestClose={handleCancel}
@@ -146,17 +162,26 @@ export default function CountryPickerField({
 
   // Android Dropdown Picker
   return (
-    <View style={[styles.fieldContainer, style]}>
-      <Text style={styles.label}>
+    <View style={[styles.fieldContainer, style, disabled && styles.disabledContainer]}>
+      <Text style={[styles.label, disabled && styles.disabledText]}>
         {label}
         {required && <Text style={styles.requiredIndicator}> *</Text>}
       </Text>
-      <View style={[styles.pickerContainer, error && styles.inputError]}>
+      <View
+        style={[
+          styles.pickerContainer,
+          error && styles.inputError,
+          disabled && styles.disabledPickerContainer,
+        ]}
+      >
         <Picker
           selectedValue={currentValue}
-          onValueChange={onValueChange}
+          // TODO: Find a better way to handle the empty function below.
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
+          onValueChange={disabled ? () => {} : onValueChange}
           style={styles.picker}
           mode='dropdown'
+          enabled={!disabled}
         >
           {COUNTRIES.map((country) => (
             <Picker.Item key={country.value} label={country.label} value={country.value} />

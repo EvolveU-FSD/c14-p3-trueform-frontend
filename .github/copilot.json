@@ -17,7 +17,8 @@
         "context": ["src/theme/sizes.ts", "src/theme/themeContext.ts"],
         "rules": [
           "Same rules as for JavaScript.",
-          "Never use the any type. Interfaces created for this purpose should be placed in the types folder."
+          "Never use the any type. Interfaces created for this purpose should be placed in the types folder.",
+          "When building interfaces and types, order them with required fields at the top and optional ones at the bottom."
         ]
       }
     }

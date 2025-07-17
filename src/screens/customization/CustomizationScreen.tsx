@@ -192,11 +192,7 @@ export default function CustomizationScreen() {
           <View style={styles.line} />
 
           {/* Customization Options */}
-          <ScrollView
-            style={{ flex: 1 }}
-            contentContainerStyle={styles.optionsContainer}
-            showsVerticalScrollIndicator={false}
-          >
+          <ScrollView contentContainerStyle={styles.optionsContainer}>
             {activeCustomization?.options.map((opt: any) => (
               <TouchableOpacity
                 key={opt.id}
@@ -207,7 +203,7 @@ export default function CustomizationScreen() {
                 ]}
               >
                 <Image source={{ uri: getImageUrl(opt.mediaUrl) }} style={styles.optionImage} />
-                <Text style={styles.optionText}>{opt.title}</Text>
+                <Text style={styles.optionText}>{opt.name}</Text>
               </TouchableOpacity>
             ))}
           </ScrollView>
