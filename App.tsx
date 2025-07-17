@@ -17,6 +17,7 @@ import ManualMeasurementInput from './src/screens/ManualMeasurementInput';
 import BottomTabNavigator from './src/navigation/BottomTabNavigator';
 import RegisterScreen from './src/screens/RegisterScreen';
 import LoginScreen from './src/screens/LoginScreen';
+import AccountScreen from './src/screens/AccountScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -49,6 +50,7 @@ function AppContent() {
         <Stack.Screen name='Main' component={BottomTabNavigator} />
         <Stack.Screen name='Login' component={LoginScreen} options={{ title: 'Login' }} />
         <Stack.Screen name='Register' component={RegisterScreen} options={{ title: 'Register' }} />
+        <Stack.Screen name='Account' component={AccountScreen} options={{ title: 'Account' }} />
         <Stack.Screen
           name='ItemDetails'
           component={ItemDetails}
@@ -65,7 +67,7 @@ function AppContent() {
         <Stack.Screen
           name='ManualMeasurementInput'
           component={ManualMeasurementInput}
-          options={{ title: 'Manual Measurement Input' }}
+          options={{ title: 'Manual Measurement' }}
         />
       </Stack.Navigator>
     </NavigationContainer>
@@ -77,13 +79,13 @@ export default function App() {
     <SafeAreaProvider>
       <ThemeProvider>
         <AuthProvider>
-          <NavigationProvider>
-            <CartProvider>
-              <CustomizationProvider>
+          <CartProvider>
+            <CustomizationProvider>
+              <NavigationProvider>
                 <AppContent />
-              </CustomizationProvider>
-            </CartProvider>
-          </NavigationProvider>
+              </NavigationProvider>
+            </CustomizationProvider>
+          </CartProvider>
         </AuthProvider>
       </ThemeProvider>
     </SafeAreaProvider>
