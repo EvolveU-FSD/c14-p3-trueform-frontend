@@ -24,6 +24,7 @@ export default function CustomizationScreen() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [clothingItem, setClothingItem] = useState<Clothing | null>(null);
   const scrollViewRef = useRef<ScrollView>(null);
+  const [hasInitializedSelections, setHasInitializedSelections] = useState(false);
 
   // Constants for scroll calculation
   const STEP_ITEM_WIDTH = 80; // Approximate width of each step item including margins
@@ -46,7 +47,7 @@ export default function CustomizationScreen() {
   }, [itemId]);
 
   useEffect(() => {
-    if (clothingItem) {
+    if (clothingItem && !hasInitializedSelections) {
       (async () => {
         const response = await CustomizationService.getCustomizationsByCategoryId(
           clothingItem.categoryId,
@@ -57,30 +58,26 @@ export default function CustomizationScreen() {
         const initialSelections: { [key: string]: string } = {};
         response.forEach((customization: any) => {
           if (customization.options && customization.options.length > 0) {
-            // Use defaultValue from API if available, otherwise use first option
             const defaultOptionId = customization.defaultValue || customization.options[0].id;
-
-            // Verify the default option exists in the options array
             const defaultOptionExists = customization.options.some(
               (opt: any) => opt.id === defaultOptionId,
             );
-
             if (defaultOptionExists) {
               initialSelections[customization.id] = defaultOptionId;
             } else {
-              // Fallback to first option if default doesn't exist
               initialSelections[customization.id] = customization.options[0].id;
             }
           }
         });
 
-        // Apply initial selections
         Object.entries(initialSelections).forEach(([customizationId, optionId]) => {
           handleSelection(customizationId, optionId);
         });
+
+        setHasInitializedSelections(true); // Only run this once per item
       })();
     }
-  }, [clothingItem, handleSelection]);
+  }, [clothingItem, hasInitializedSelections, handleSelection]);
 
   // Auto-scroll to keep active step visible
   useEffect(() => {
