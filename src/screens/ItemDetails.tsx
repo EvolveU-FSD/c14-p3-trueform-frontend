@@ -7,7 +7,9 @@ import {
   Text,
   TouchableOpacity,
   View,
+  StatusBar,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/navigation';
@@ -38,6 +40,16 @@ export default function ItemDetails() {
 
   // Get itemId from route params
   const itemId = route.params?.itemId;
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerShown: true,
+      headerTitle: 'Item Details',
+      headerShadowVisible: true,
+      headerBackTitle: 'Shop',
+      headerBackTitleVisible: true,
+    });
+  }, [navigation]);
 
   useEffect(() => {
     const fetchItemDetails = async () => {
@@ -85,64 +97,81 @@ export default function ItemDetails() {
 
   if (loading) {
     return (
-      <View style={[styles.container, styles.centerContent]}>
-        <ActivityIndicator size='large' color={theme.primaryColor} />
-      </View>
+      <SafeAreaView style={styles.container} edges={[]}>
+        <StatusBar barStyle='dark-content' />
+        <View style={[styles.container, styles.centerContent]}>
+          <ActivityIndicator size='large' color={theme.primaryColor} />
+        </View>
+      </SafeAreaView>
     );
   }
 
   if (error || !item) {
     return (
-      <View style={[styles.container, styles.centerContent]}>
-        <Text style={styles.notFound}>{error || 'Item not found'}</Text>
-      </View>
+      <SafeAreaView style={styles.container} edges={[]}>
+        <StatusBar barStyle='dark-content' />
+        <View style={[styles.container, styles.centerContent]}>
+          <Text style={styles.notFound}>{error || 'Item not found'}</Text>
+        </View>
+      </SafeAreaView>
     );
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      {/* Image Gallery */}
+    <SafeAreaView style={styles.container} edges={[]}>
+      <StatusBar barStyle='dark-content' />
       <ScrollView
-        horizontal
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
-        style={styles.imageGallery}
-        onMomentumScrollEnd={handleScroll}
+        contentContainerStyle={styles.scrollContainer}
+        showsVerticalScrollIndicator={false}
       >
-        <Image
-          source={{ uri: getImageUrl(item.mediaUrl) }}
-          style={[styles.image, { width: screenWidth }]}
-          resizeMode='cover'
-        />
-      </ScrollView>
+        {/* Image Gallery */}
+        <ScrollView
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          style={styles.imageGallery}
+          onMomentumScrollEnd={handleScroll}
+        >
+          <Image
+            source={{ uri: getImageUrl(item.mediaUrl) }}
+            style={[styles.image, { width: screenWidth }]}
+            resizeMode='cover'
+          />
+        </ScrollView>
 
-      {/* Item Details */}
-      <Text style={styles.name}>{item.name}</Text>
-      <Text style={styles.price}>${item.price}</Text>
-      <Text style={styles.desc}>{item.description}</Text>
+        {/* Item Details */}
+        <View style={styles.detailsContainer}>
+          <Text style={styles.name}>{item.name}</Text>
+          <Text style={styles.price}>${item.price}</Text>
+          <Text style={styles.desc}>{item.description}</Text>
 
-      <View style={styles.metaContainer}>
-        {item.colors && <Text style={styles.meta}>Colors: {item.colors.join(', ')}</Text>}
-      </View>
+          <View style={styles.metaContainer}>
+            {item.colors && <Text style={styles.meta}>Colors: {item.colors.join(', ')}</Text>}
+          </View>
 
-      {/* Fabric Details Section */}
-      <TouchableOpacity style={styles.collapseHeader} onPress={() => setShowFabric(!showFabric)}>
-        <Text style={styles.collapseHeaderText}>Fabric Details</Text>
-        <Text style={styles.collapseHeaderIcon}>{showFabric ? '▲' : '▼'}</Text>
-      </TouchableOpacity>
+          {/* Fabric Details Section */}
+          <TouchableOpacity
+            style={styles.collapseHeader}
+            onPress={() => setShowFabric(!showFabric)}
+          >
+            <Text style={styles.collapseHeaderText}>Fabric Details</Text>
+            <Text style={styles.collapseHeaderIcon}>{showFabric ? '▲' : '▼'}</Text>
+          </TouchableOpacity>
 
-      {showFabric && (
-        <View style={styles.fabricSection}>
-          <Text style={styles.fabricDetail}>
-            {item.description || 'Fabric details not available'}
-          </Text>
+          {showFabric && (
+            <View style={styles.fabricSection}>
+              <Text style={styles.fabricDetail}>
+                {item.description || 'Fabric details not available'}
+              </Text>
+            </View>
+          )}
+
+          {/* Start Customization Button */}
+          <TouchableOpacity style={styles.customizeBtn} onPress={handleCustomization}>
+            <Text style={styles.customizeBtnText}>Start Customization</Text>
+          </TouchableOpacity>
         </View>
-      )}
-
-      {/* Start Customization Button */}
-      <TouchableOpacity style={styles.customizeBtn} onPress={handleCustomization}>
-        <Text style={styles.customizeBtnText}>Start Customization</Text>
-      </TouchableOpacity>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
