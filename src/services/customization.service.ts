@@ -1,6 +1,6 @@
 import { API_CONFIG } from '../config/api.config';
 import { apiService } from './api.service';
-import { Customization } from '../types/customization';
+import { Customization, CustomizationOption } from '../types/customization';
 
 export class CustomizationService {
   private static readonly endpoint = API_CONFIG.ENDPOINTS.CUSTOMIZATION;

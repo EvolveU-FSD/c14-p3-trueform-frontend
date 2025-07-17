@@ -46,25 +46,48 @@ export const paymentScreenStyles = StyleSheet.create({
   orderItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     marginBottom: 12,
+    paddingBottom: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0',
   },
   itemDetails: {
     flex: 1,
+    marginRight: 12,
   },
   itemName: {
-    fontSize: 14,
-    color: '#333',
-    marginBottom: 2,
-  },
-  itemQuantity: {
-    fontSize: 12,
-    color: '#666',
-  },
-  itemPrice: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '500',
     color: '#333',
+    marginBottom: 4,
+  },
+  itemQuantity: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 4,
+  },
+  customizationsList: {
+    marginTop: 6,
+    paddingLeft: 4,
+  },
+  customizationsHeader: {
+    fontSize: 13,
+    fontWeight: '500',
+    color: '#555',
+    marginBottom: 4,
+  },
+  customizationItem: {
+    fontSize: 12,
+    color: '#666',
+    marginBottom: 2,
+    lineHeight: 16,
+  },
+  itemPrice: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#333',
+    textAlign: 'right',
   },
   divider: {
     height: 1,
