@@ -1,6 +1,8 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import { useTheme } from '../theme/ThemeContext';
-import { spacing, fontSizes, borderRadius } from '../utils/sizes';
+import { spacing, fontSizes, borderRadius, buttonHeights } from '../utils/sizes';
+
+const screenHeight = Dimensions.get('window').height;
 
 export default function useCreateStyles() {
   const { theme } = useTheme();
@@ -9,116 +11,200 @@ export default function useCreateStyles() {
     container: {
       flex: 1,
       backgroundColor: theme.backgroundColor,
-      padding: spacing.md,
     },
     title: {
       fontSize: fontSizes.xl,
       fontWeight: 'bold',
-      marginBottom: spacing.lg,
-      textAlign: 'center',
       color: theme.textColor,
+      textAlign: 'center',
+      marginVertical: spacing.lg,
     },
     formSection: {
+      paddingHorizontal: spacing.lg,
       marginBottom: spacing.lg,
-      backgroundColor: theme.backgroundColor,
-      borderRadius: borderRadius.md,
-      padding: spacing.md,
     },
     sectionTitle: {
       fontSize: fontSizes.lg,
       fontWeight: 'bold',
-      marginBottom: spacing.md,
       color: theme.textColor,
+      marginBottom: spacing.md,
     },
     inputContainer: {
       marginBottom: spacing.md,
     },
     label: {
       fontSize: fontSizes.md,
-      marginBottom: spacing.sm,
       color: theme.textColor,
+      marginBottom: spacing.xs,
+      fontWeight: '500',
     },
     input: {
+      height: buttonHeights.lg,
       borderWidth: 1,
       borderColor: theme.borderColor,
-      borderRadius: borderRadius.sm,
-      padding: spacing.sm,
+      borderRadius: borderRadius.md,
+      paddingHorizontal: spacing.md,
       fontSize: fontSizes.md,
-      backgroundColor: theme.backgroundColor,
+      backgroundColor: theme.isDarkMode ? '#232323' : '#f9f9f9',
       color: theme.textColor,
     },
     pickerContainer: {
+      height: buttonHeights.lg,
       borderWidth: 1,
       borderColor: theme.borderColor,
-      borderRadius: borderRadius.sm,
-      backgroundColor: theme.backgroundColor,
+      borderRadius: borderRadius.md,
+      backgroundColor: theme.isDarkMode ? '#232323' : '#f9f9f9',
+      justifyContent: 'center',
+      overflow: 'hidden',
     },
     picker: {
-      height: 50,
+      height: buttonHeights.lg,
+      color: theme.textColor,
+      backgroundColor: 'transparent',
+    },
+    // Modal styles for iOS gender picker
+    modalTrigger: {
+      height: buttonHeights.lg,
+      borderWidth: 1,
+      borderColor: theme.borderColor,
+      borderRadius: borderRadius.md,
+      backgroundColor: theme.isDarkMode ? '#232323' : '#f9f9f9',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingHorizontal: spacing.md,
+    },
+    modalTriggerText: {
+      fontSize: fontSizes.md,
+      color: theme.textColor,
+    },
+    modalOverlay: {
+      flex: 1,
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      justifyContent: 'flex-end',
+    },
+    modalContainer: {
+      backgroundColor: theme.backgroundColor,
+      borderTopLeftRadius: borderRadius.lg,
+      borderTopRightRadius: borderRadius.lg,
+      maxHeight: screenHeight * 0.4,
+      minHeight: screenHeight * 0.3,
+    },
+    modalHeader: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingHorizontal: spacing.lg,
+      paddingVertical: spacing.md,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.borderColor,
+      backgroundColor: theme.backgroundColor,
+      borderTopLeftRadius: borderRadius.lg,
+      borderTopRightRadius: borderRadius.lg,
+    },
+    modalTitle: {
+      fontSize: fontSizes.lg,
+      fontWeight: '600',
+      color: theme.textColor,
+    },
+    modalButton: {
+      paddingVertical: spacing.sm,
+      paddingHorizontal: spacing.md,
+    },
+    modalButtonText: {
+      fontSize: fontSizes.md,
+      color: theme.primaryColor,
+    },
+    modalConfirmText: {
+      fontWeight: '600',
+    },
+    modalPickerContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      backgroundColor: theme.backgroundColor,
+      paddingVertical: spacing.sm,
+    },
+    modalPicker: {
+      width: '100%',
+      backgroundColor: 'transparent',
+    },
+    modalPickerItem: {
+      fontSize: Math.round(fontSizes.md),
+      height: 44,
+      color: theme.textColor,
+      textAlign: 'center' as const,
     },
     photoInstructions: {
-      marginBottom: spacing.md,
       fontSize: fontSizes.sm,
       color: theme.secondaryColor,
+      marginBottom: spacing.lg,
       lineHeight: 20,
     },
     photoSection: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
+      gap: spacing.lg,
     },
     photoContainer: {
-      width: '48%',
       alignItems: 'center',
     },
     photoLabel: {
-      marginBottom: spacing.sm,
-      fontSize: fontSizes.sm,
-      fontWeight: 'bold',
+      fontSize: fontSizes.md,
+      fontWeight: '500',
       color: theme.textColor,
+      marginBottom: spacing.sm,
+    },
+    previewImage: {
+      width: 150,
+      height: 200,
+      borderRadius: borderRadius.md,
+      marginBottom: spacing.sm,
     },
     placeholderImage: {
-      width: '100%',
+      width: 150,
       height: 200,
-      backgroundColor: theme.borderColor,
+      borderWidth: 2,
+      borderColor: theme.borderColor,
+      borderStyle: 'dashed',
       borderRadius: borderRadius.md,
       justifyContent: 'center',
       alignItems: 'center',
       marginBottom: spacing.sm,
+      backgroundColor: theme.isDarkMode ? '#232323' : '#f9f9f9',
     },
-    previewImage: {
-      width: '100%',
-      height: 200,
-      borderRadius: borderRadius.md,
-      marginBottom: spacing.sm,
+    photoButtonsRow: {
+      flexDirection: 'row',
+      gap: spacing.sm,
     },
     photoButton: {
-      backgroundColor: theme.borderColor,
-      padding: spacing.sm,
-      borderRadius: borderRadius.sm,
-      width: '100%',
+      backgroundColor: theme.primaryColor,
+      paddingVertical: spacing.sm,
+      paddingHorizontal: spacing.lg,
+      borderRadius: borderRadius.md,
       alignItems: 'center',
     },
+    halfWidthButton: {
+      flex: 1,
+    },
     photoButtonText: {
-      fontSize: fontSizes.sm,
-      color: theme.textColor,
+      color: '#ffffff',
+      fontSize: fontSizes.md,
+      fontWeight: '500',
     },
     submitButton: {
       backgroundColor: theme.primaryColor,
-      padding: spacing.md,
+      marginHorizontal: spacing.lg,
+      paddingVertical: spacing.lg,
       borderRadius: borderRadius.md,
       alignItems: 'center',
       marginBottom: spacing.lg,
     },
     submitButtonText: {
-      color: '#fff',
-      fontSize: fontSizes.md,
+      color: '#ffffff',
+      fontSize: fontSizes.lg,
       fontWeight: 'bold',
     },
     resultsSection: {
-      marginBottom: spacing.lg,
-      backgroundColor: theme.backgroundColor,
-      borderRadius: borderRadius.md,
-      padding: spacing.md,
+      paddingHorizontal: spacing.lg,
+      marginBottom: spacing.xl,
     },
     measurementRow: {
       flexDirection: 'row',
@@ -130,19 +216,12 @@ export default function useCreateStyles() {
     measurementLabel: {
       fontSize: fontSizes.md,
       color: theme.textColor,
+      textTransform: 'capitalize',
     },
     measurementValue: {
       fontSize: fontSizes.md,
-      fontWeight: 'bold',
-      color: theme.textColor,
-    },
-    photoButtonsRow: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      width: '100%',
-    },
-    halfWidthButton: {
-      width: '48%',
+      color: theme.primaryColor,
+      fontWeight: '500',
     },
   });
 }
