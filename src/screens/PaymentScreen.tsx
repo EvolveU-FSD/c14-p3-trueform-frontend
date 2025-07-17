@@ -33,7 +33,7 @@ const PaymentScreen = () => {
   const { confirmPayment } = useStripe();
 
   const formatCurrency = (amount: number) => {
-    return `$${amount.toFixed(2)}`;
+    return `$${Math.round(amount)}`;
   };
 
   const handlePayment = async () => {

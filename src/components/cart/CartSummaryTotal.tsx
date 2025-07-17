@@ -12,7 +12,7 @@ export default function CartSummaryTotal() {
   return (
     <View style={styles.totalRow}>
       <Text style={styles.totalLabel}>Total</Text>
-      <Text style={styles.totalValue}>${total.toFixed(2)}</Text>
+      <Text style={styles.totalValue}>${Math.round(total)}</Text>
     </View>
   );
 }

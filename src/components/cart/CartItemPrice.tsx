@@ -16,8 +16,8 @@ export default function CartItemPrice({ item }: CartItemPriceProps) {
 
   return (
     <View style={styles.priceContainer}>
-      {hasCustomizations && <Text style={styles.basePriceText}>Base: ${basePrice.toFixed(2)}</Text>}
-      <Text style={styles.totalPriceText}>${totalPrice.toFixed(2)}</Text>
+      {hasCustomizations && <Text style={styles.basePriceText}>Base: ${Math.round(basePrice)}</Text>}
+      <Text style={styles.totalPriceText}>${Math.round(totalPrice)}</Text>
     </View>
   );
 }

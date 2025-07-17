@@ -319,7 +319,7 @@ export default function Items() {
                 <Text style={styles.itemName} numberOfLines={1}>
                   {item.name}
                 </Text>
-                <Text style={styles.itemPrice}>${item.price}</Text>
+                <Text style={styles.itemPrice}>${Math.round(item.price)}</Text>
               </View>
             </TouchableOpacity>
           )}

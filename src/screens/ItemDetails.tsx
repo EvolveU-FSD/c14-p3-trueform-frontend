@@ -118,7 +118,7 @@ export default function ItemDetails() {
 
       {/* Item Details */}
       <Text style={styles.name}>{item.name}</Text>
-      <Text style={styles.price}>${item.price}</Text>
+      <Text style={styles.price}>${Math.round(item.price)}</Text>
       <Text style={styles.desc}>{item.description}</Text>
 
       <View style={styles.metaContainer}>

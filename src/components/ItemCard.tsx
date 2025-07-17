@@ -20,7 +20,7 @@ export default function ItemCard({ product, onPress }: ItemCardProps) {
       <View style={styles.detailsContainer}>
         <Text style={styles.category}>{product.category}</Text>
         <Text style={styles.name}>{product.name}</Text>
-        <Text style={styles.price}>${product.price}</Text>
+        <Text style={styles.price}>${Math.round(product.price)}</Text>
       </View>
     </TouchableOpacity>
   );

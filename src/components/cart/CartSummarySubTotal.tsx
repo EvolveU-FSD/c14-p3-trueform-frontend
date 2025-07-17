@@ -12,7 +12,7 @@ export default function CartSummarySubTotal() {
   return (
     <View style={styles.summaryRow}>
       <Text style={styles.summaryLabel}>Subtotal</Text>
-      <Text style={styles.summaryValue}>${subtotal.toFixed(2)}</Text>
+      <Text style={styles.summaryValue}>${Math.round(subtotal)}</Text>
     </View>
   );
 }
