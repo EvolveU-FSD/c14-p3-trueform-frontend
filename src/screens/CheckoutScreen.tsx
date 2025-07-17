@@ -91,26 +91,23 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
     setBillingAddress((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleShippingSavedAddressSelect = (address: Address | null) => {
+  const handleSavedAddressSelect = (address: Address | null, isShipping: boolean) => {
     if (address) {
-      setSelectedShippingAddressId(address.id);
-      setShippingAddress(address);
-      // Clear the save address checkbox since we're using a saved address
-      setSaveShippingAddress(false);
+      if (isShipping) {
+        setSelectedShippingAddressId(address.id);
+        setShippingAddress(address);
+        setSaveShippingAddress(false);
+      } else {
+        setSelectedBillingAddressId(address.id);
+        setBillingAddress(address);
+        setSaveBillingAddress(false);
+      }
     } else {
-      setSelectedShippingAddressId('');
-      // Don't clear the address data, let user continue editing
-    }
-  };
-
-  const handleBillingSavedAddressSelect = (address: Address | null) => {
-    if (address) {
-      setSelectedBillingAddressId(address.id);
-      setBillingAddress(address);
-      // Clear the save address checkbox since we're using a saved address
-      setSaveBillingAddress(false);
-    } else {
-      setSelectedBillingAddressId('');
+      if (isShipping) {
+        setSelectedShippingAddressId('');
+      } else {
+        setSelectedBillingAddressId('');
+      }
       // Don't clear the address data, let user continue editing
     }
   };
@@ -259,7 +256,7 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
           showSavedAddresses={true}
           savedAddresses={savedAddresses}
           selectedSavedAddressId={selectedShippingAddressId}
-          onSavedAddressSelect={handleShippingSavedAddressSelect}
+          onSavedAddressSelect={(address) => handleSavedAddressSelect(address, true)}
         />
         <BillingAddress
           data={sameAsShipping ? shippingAddress : billingAddress}
@@ -271,7 +268,7 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
           showSavedAddresses={true}
           savedAddresses={savedAddresses}
           selectedSavedAddressId={selectedBillingAddressId}
-          onSavedAddressSelect={handleBillingSavedAddressSelect}
+          onSavedAddressSelect={(address) => handleSavedAddressSelect(address, false)}
         />
 
         <View style={styles.buttonContainer}>
