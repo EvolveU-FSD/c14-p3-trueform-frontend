@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AuthProvider, useAuth } from './src/context/AuthContext';
 import { NavigationProvider } from './src/context/NavigationContext';
 import ItemDetails from './src/screens/ItemDetails';
@@ -15,6 +16,7 @@ import CheckoutScreen from './src/screens/CheckoutScreen';
 import ManualMeasurementInput from './src/screens/ManualMeasurementInput';
 import BottomTabNavigator from './src/navigation/BottomTabNavigator';
 import RegisterScreen from './src/screens/RegisterScreen';
+import LoginScreen from './src/screens/LoginScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -37,43 +39,28 @@ function ProtectedBodyScanScreen({ navigation }: ProtectedBodyScanScreenProps) {
 }
 
 function AppContent() {
-  const { loading } = useAuth();
-
-  if (loading) {
-    return null;
-  }
-
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName='Main'
         screenOptions={{
-          headerShown: true,
+          headerShown: false,
         }}
       >
-        {/* Main Tab Navigator */}
-        <Stack.Screen name='Main' component={BottomTabNavigator} options={{ headerShown: false }} />
-
-        {/* Modal/Detail Screens */}
-        <Stack.Screen
-          name='Register'
-          component={RegisterScreen}
-          options={{
-            headerShown: false,
-            presentation: 'modal',
-          }}
-        />
+        <Stack.Screen name='Main' component={BottomTabNavigator} />
+        <Stack.Screen name='Login' component={LoginScreen} options={{ title: 'Login' }} />
+        <Stack.Screen name='Register' component={RegisterScreen} options={{ title: 'Register' }} />
         <Stack.Screen
           name='ItemDetails'
           component={ItemDetails}
           options={{ title: 'Item Details' }}
         />
+        <Stack.Screen name='BodyScan' component={BodyScanScreen} options={{ title: 'Body Scan' }} />
+        <Stack.Screen name='Payment' component={PaymentScreen} options={{ title: 'Payment' }} />
         <Stack.Screen
           name='Customization'
           component={CustomizationScreen}
-          options={{ title: 'Customize Your Shirt' }}
+          options={{ title: 'Customization' }}
         />
-        <Stack.Screen name='Payment' component={PaymentScreen} options={{ title: 'Payment' }} />
         <Stack.Screen name='Checkout' component={CheckoutScreen} options={{ title: 'Checkout' }} />
         <Stack.Screen
           name='ManualMeasurementInput'
@@ -87,16 +74,18 @@ function AppContent() {
 
 export default function App() {
   return (
-    <ThemeProvider>
-      <AuthProvider>
-        <NavigationProvider>
-          <CartProvider>
-            <CustomizationProvider>
-              <AppContent />
-            </CustomizationProvider>
-          </CartProvider>
-        </NavigationProvider>
-      </AuthProvider>
-    </ThemeProvider>
+    <SafeAreaProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <NavigationProvider>
+            <CartProvider>
+              <CustomizationProvider>
+                <AppContent />
+              </CustomizationProvider>
+            </CartProvider>
+          </NavigationProvider>
+        </AuthProvider>
+      </ThemeProvider>
+    </SafeAreaProvider>
   );
 }

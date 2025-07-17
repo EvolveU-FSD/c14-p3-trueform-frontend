@@ -9,11 +9,22 @@ export default function useCreateStyles() {
 
   return StyleSheet.create({
     container: {
-      alignItems: 'center',
-      padding: spacing.lg,
+      flex: 1,
       backgroundColor: theme.backgroundColor,
     },
-    imageGallery: { width: screenWidth, height: 260, marginBottom: spacing.sm },
+    scrollContainer: {
+      paddingBottom: spacing.xl,
+    },
+    centerContent: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    imageGallery: {
+      width: screenWidth,
+      height: 260,
+      marginBottom: spacing.sm,
+    },
     image: {
       width: screenWidth - spacing.lg * 2,
       height: 220,
@@ -33,6 +44,11 @@ export default function useCreateStyles() {
       backgroundColor: theme.borderColor,
       margin: 3,
     },
+    detailsContainer: {
+      paddingHorizontal: spacing.lg,
+      paddingBottom: spacing.xl,
+      paddingTop: spacing.sm,
+    },
     name: {
       fontSize: fontSizes.xl,
       fontWeight: 'bold',
@@ -42,42 +58,64 @@ export default function useCreateStyles() {
     price: {
       fontSize: fontSizes.lg,
       color: theme.primaryColor,
-      fontWeight: 'bold',
-      marginBottom: spacing.sm,
+      fontWeight: '600',
+      marginBottom: spacing.md,
     },
     desc: {
       fontSize: fontSizes.md,
       color: theme.secondaryColor,
-      marginBottom: spacing.sm,
-      textAlign: 'center',
+      lineHeight: 22,
+      marginBottom: spacing.md,
     },
-    metaContainer: { marginTop: spacing.sm, width: '100%' },
-    meta: { fontSize: fontSizes.md, color: theme.secondaryColor, marginBottom: spacing.xs },
-    notFound: { fontSize: fontSizes.lg, color: 'red', marginTop: spacing.xxl },
     customizeBtn: {
-      marginTop: spacing.lg,
       backgroundColor: theme.primaryColor,
+      paddingVertical: spacing.lg,
       borderRadius: borderRadius.md,
-      paddingVertical: spacing.sm,
-      paddingHorizontal: spacing.xl,
       alignItems: 'center',
+      justifyContent: 'center',
+      marginTop: spacing.lg,
     },
     customizeBtnText: {
-      color: '#fff',
+      color: '#ffffff',
+      fontSize: fontSizes.md,
+      fontWeight: '600',
+    },
+    notFound: {
       fontSize: fontSizes.lg,
-      fontWeight: 'bold',
+      color: theme.secondaryColor,
+      textAlign: 'center',
+      marginHorizontal: spacing.md,
     },
-    customSection: {
-      width: '100%',
-      marginTop: spacing.lg,
-      marginBottom: spacing.sm,
-      backgroundColor: theme.backgroundColor,
-      borderRadius: borderRadius.md,
+    itemCount: {
+      fontSize: fontSizes.sm,
+      color: theme.secondaryColor,
       padding: spacing.md,
+      textAlign: 'center',
     },
-
-    customRow: { marginBottom: spacing.sm },
-    customLabel: { fontSize: fontSizes.md, color: theme.textColor, marginBottom: spacing.xs },
+    // Navigation
+    backButton: {
+      padding: spacing.sm,
+      minHeight: 44,
+      minWidth: 44,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    metaContainer: {
+      marginBottom: spacing.md,
+    },
+    meta: {
+      fontSize: fontSizes.sm,
+      color: theme.secondaryColor,
+      marginBottom: spacing.xs,
+    },
+    customRow: {
+      marginBottom: spacing.sm,
+    },
+    customLabel: {
+      fontSize: fontSizes.md,
+      color: theme.textColor,
+      marginBottom: spacing.xs,
+    },
     customOptionBtn: {
       paddingVertical: spacing.xs,
       paddingHorizontal: spacing.sm,
@@ -85,15 +123,26 @@ export default function useCreateStyles() {
       backgroundColor: theme.borderColor,
       marginRight: spacing.sm,
     },
-    customOptionBtnActive: { backgroundColor: theme.primaryColor },
-    customOptionText: { color: theme.textColor },
-    customOptionTextActive: { color: '#fff', fontWeight: 'bold' },
-    customHint: { color: theme.primaryColor, marginTop: spacing.sm, fontSize: fontSizes.sm },
+    customOptionBtnActive: {
+      backgroundColor: theme.primaryColor,
+    },
+    customOptionText: {
+      color: theme.textColor,
+    },
+    customOptionTextActive: {
+      color: '#fff',
+      fontWeight: 'bold',
+    },
+    customHint: {
+      color: theme.primaryColor,
+      marginTop: spacing.sm,
+      fontSize: fontSizes.sm,
+    },
     fabricSection: {
       width: '100%',
       marginTop: spacing.md,
       marginBottom: spacing.sm,
-      backgroundColor: theme.borderColor,
+      backgroundColor: theme.isDarkMode ? '#232323' : '#f9f9f9',
       borderRadius: borderRadius.md,
       padding: spacing.md,
     },

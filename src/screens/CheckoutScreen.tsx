@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Alert, StatusBar } from 'react-native';
 import createStyles from '../styles/CheckoutScreenStyles';
 import { Address } from '../types/address.types';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { CheckoutScreenProps } from '../types/navigation';
 import LoginStatus from '../components/checkout/CheckoutLoginStatus';
 import ShippingAddress from '../components/address/ShippingAddress';
@@ -53,6 +54,7 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
   });
 
   const [sameAsShipping, setSameAsShipping] = useState(true);
+
   const [saveShippingAddress, setSaveShippingAddress] = useState(false);
   const [saveBillingAddress, setSaveBillingAddress] = useState(false);
   const [savedAddresses, setSavedAddresses] = useState<Address[]>([]);
@@ -62,6 +64,16 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
   // Validation state
   const [shippingErrors, setShippingErrors] = useState<AddressValidationErrors>({});
   const [billingErrors, setBillingErrors] = useState<AddressValidationErrors>({});
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerShown: true,
+      headerTitle: 'Checkout',
+      headerShadowVisible: true,
+      headerBackTitle: 'Cart',
+      headerBackTitleVisible: true,
+    });
+  }, [navigation]);
 
   // Fetch saved addresses when user is authenticated
   useEffect(() => {
@@ -254,42 +266,45 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
   };
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      <View style={styles.content}>
-        <LoginStatus />
-        <ShippingAddress
-          data={shippingAddress}
-          onDataChange={handleShippingChange}
-          saveAddress={saveShippingAddress}
-          onSaveAddressChange={setSaveShippingAddress}
-          showSavedAddresses={true}
-          savedAddresses={savedAddresses}
-          selectedSavedAddressId={selectedShippingAddressId}
-          onSavedAddressSelect={(address) => handleSavedAddressSelect(address, true)}
-        />
-        <BillingAddress
-          data={sameAsShipping ? shippingAddress : billingAddress}
-          onDataChange={handleBillingChange}
-          sameAsShipping={sameAsShipping}
-          onSameAsShippingChange={setSameAsShipping}
-          saveAddress={saveBillingAddress}
-          onSaveAddressChange={setSaveBillingAddress}
-          showSavedAddresses={true}
-          savedAddresses={savedAddresses}
-          selectedSavedAddressId={selectedBillingAddressId}
-          onSavedAddressSelect={(address) => handleSavedAddressSelect(address, false)}
-        />
+    <SafeAreaView style={styles.container} edges={[]}>
+      <StatusBar barStyle='dark-content' />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.content}>
+          <LoginStatus />
+          <ShippingAddress
+            data={shippingAddress}
+            onDataChange={handleShippingChange}
+            saveAddress={saveShippingAddress}
+            onSaveAddressChange={setSaveShippingAddress}
+            showSavedAddresses={true}
+            savedAddresses={savedAddresses}
+            selectedSavedAddressId={selectedShippingAddressId}
+            onSavedAddressSelect={(address) => handleSavedAddressSelect(address, true)}
+          />
+          <BillingAddress
+            data={sameAsShipping ? shippingAddress : billingAddress}
+            onDataChange={handleBillingChange}
+            sameAsShipping={sameAsShipping}
+            onSameAsShippingChange={setSameAsShipping}
+            saveAddress={saveBillingAddress}
+            onSaveAddressChange={setSaveBillingAddress}
+            showSavedAddresses={true}
+            savedAddresses={savedAddresses}
+            selectedSavedAddressId={selectedBillingAddressId}
+            onSavedAddressSelect={(address) => handleSavedAddressSelect(address, false)}
+          />
 
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.backButton} onPress={handleBackToCart}>
-            <Text style={styles.backButtonText}>Back to Cart</Text>
-          </TouchableOpacity>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.backButton} onPress={handleBackToCart}>
+              <Text style={styles.backButtonText}>Back to Cart</Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity style={styles.paymentButton} onPress={handleProceedToPayment}>
-            <Text style={styles.paymentButtonText}>Go to Payment</Text>
-          </TouchableOpacity>
+            <TouchableOpacity style={styles.paymentButton} onPress={handleProceedToPayment}>
+              <Text style={styles.paymentButtonText}>Go to Payment</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }

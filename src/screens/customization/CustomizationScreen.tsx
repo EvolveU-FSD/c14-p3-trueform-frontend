@@ -6,11 +6,14 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
-  SafeAreaView,
+  StatusBar,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { CustomizationProvider, useCustomization } from '../../context/CustomizationContext';
 import { CustomizationService } from '../../services/customization.service';
 import { useRoute, useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../types/navigation';
 import createStyles from '../../styles/CustomizationScreenStyles';
 import { ClothingService } from '../../services/clothing.service';
 import { useCart } from '../../context/CartContext';
@@ -20,10 +23,15 @@ import { getImageUrl } from '../../utils/imageHandling';
 
 const { width: screenWidth } = Dimensions.get('window');
 
+type CustomizationScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Customization'
+>;
+
 export default function CustomizationScreen() {
   const styles = createStyles();
   const route = useRoute<any>();
-  const navigation = useNavigation();
+  const navigation = useNavigation<CustomizationScreenNavigationProp>();
   const { itemId } = route.params;
 
   const { selections, handleSelection } = useCustomization();
@@ -36,6 +44,17 @@ export default function CustomizationScreen() {
   // Constants for scroll calculation
   const STEP_ITEM_WIDTH = 80; // Approximate width of each step item including margins
   const CONTAINER_PADDING = 16; // Horizontal padding of stepsContainer
+
+  // Set up navigation options
+  useEffect(() => {
+    navigation.setOptions({
+      headerShown: true,
+      headerTitle: 'Customization',
+      headerShadowVisible: true,
+      headerBackTitle: 'Item Details',
+      headerBackTitleVisible: true,
+    });
+  }, [navigation]);
 
   // Fetch clothing item details
   useEffect(() => {
@@ -162,7 +181,8 @@ export default function CustomizationScreen() {
 
   return (
     <CustomizationProvider>
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.container} edges={[]}>
+        <StatusBar barStyle='dark-content' />
         <View style={{ flex: 1 }}>
           {/* Top Nav */}
           <ScrollView

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import {
-  SafeAreaView,
   StatusBar,
   View,
   Text,
@@ -10,6 +9,7 @@ import {
   ActivityIndicator,
   TouchableWithoutFeedback,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import type { RouteProp, NavigationProp } from '@react-navigation/native';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -173,7 +173,7 @@ export default function Items() {
 
   return (
     <TouchableWithoutFeedback onPress={handleBackdropPress}>
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.container} edges={[]}>
         <StatusBar barStyle='dark-content' />
 
         {/* Header with Sort and Filter */}
