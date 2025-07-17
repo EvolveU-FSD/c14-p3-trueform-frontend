@@ -1,22 +1,20 @@
 import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { AuthProvider, useAuth } from './src/context/AuthContext'; // This is the correct import
-import HomeScreen from './src/screens/HomeScreen';
+import { AuthProvider, useAuth } from './src/context/AuthContext';
+import { NavigationProvider } from './src/context/NavigationContext';
 import ItemDetails from './src/screens/ItemDetails';
 import CustomizationScreen from './src/screens/customization/CustomizationScreen';
 import { RootStackParamList, LoginScreenNavigationProp } from './src/types/navigation';
 import { ThemeProvider } from './src/theme/ThemeContext';
 import { CustomizationProvider } from './src/context/CustomizationContext';
-import Items from './src/screens/Items';
 import BodyScanScreen from './src/screens/BodyScanScreen';
-import LoginScreen from './src/screens/LoginScreen';
-import RegisterScreen from './src/screens/RegisterScreen';
 import PaymentScreen from './src/screens/PaymentScreen';
-import Cart from './src/screens/Cart';
 import { CartProvider } from './src/context/CartContext';
 import CheckoutScreen from './src/screens/CheckoutScreen';
 import ManualMeasurementInput from './src/screens/ManualMeasurementInput';
+import BottomTabNavigator from './src/navigation/BottomTabNavigator';
+import RegisterScreen from './src/screens/RegisterScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -24,17 +22,17 @@ interface ProtectedBodyScanScreenProps {
   navigation: LoginScreenNavigationProp;
 }
 
+// TODO: When rewriting, add Auth back into the navigation for measurement.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function ProtectedBodyScanScreen({ navigation }: ProtectedBodyScanScreenProps) {
   const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     if (!isAuthenticated) {
-      // Redirect to login if not authenticated
       navigation.navigate('Login');
     }
   }, [isAuthenticated, navigation]);
 
-  // Only render the BodyScanScreen if authenticated
   return isAuthenticated ? <BodyScanScreen /> : null;
 }
 
@@ -42,42 +40,41 @@ function AppContent() {
   const { loading } = useAuth();
 
   if (loading) {
-    // Return a loading screen if needed
     return null;
   }
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='Home'>
-        {/* Public screens */}
-        <Stack.Screen
-          name='Home'
-          component={HomeScreen}
-          options={{ title: 'Home', headerShown: false }}
-        />
-        <Stack.Screen name='Login' component={LoginScreen} options={{ headerShown: false }} />
-        <Stack.Screen name='Register' component={RegisterScreen} options={{ headerShown: false }} />
+      <Stack.Navigator
+        initialRouteName='Main'
+        screenOptions={{
+          headerShown: true,
+        }}
+      >
+        {/* Main Tab Navigator */}
+        <Stack.Screen name='Main' component={BottomTabNavigator} options={{ headerShown: false }} />
 
-        {/* Protected screens */}
+        {/* Modal/Detail Screens */}
         <Stack.Screen
-          name='BodyScan'
-          component={ProtectedBodyScanScreen}
-          options={{ title: 'Automatic Body Measurements' }}
+          name='Register'
+          component={RegisterScreen}
+          options={{
+            headerShown: false,
+            presentation: 'modal',
+          }}
         />
-        <Stack.Screen name='Payment' component={PaymentScreen} options={{ title: 'Payment' }} />
-        <Stack.Screen name='Checkout' component={CheckoutScreen} options={{ title: 'Checkout' }} />
         <Stack.Screen
           name='ItemDetails'
           component={ItemDetails}
           options={{ title: 'Item Details' }}
         />
-        <Stack.Screen name='Items' component={Items} options={{ title: 'Items' }} />
         <Stack.Screen
           name='Customization'
           component={CustomizationScreen}
           options={{ title: 'Customize Your Shirt' }}
         />
-        <Stack.Screen name='Cart' component={Cart} options={{ title: 'Cart' }} />
+        <Stack.Screen name='Payment' component={PaymentScreen} options={{ title: 'Payment' }} />
+        <Stack.Screen name='Checkout' component={CheckoutScreen} options={{ title: 'Checkout' }} />
         <Stack.Screen
           name='ManualMeasurementInput'
           component={ManualMeasurementInput}
@@ -90,14 +87,16 @@ function AppContent() {
 
 export default function App() {
   return (
-    <AuthProvider>
-      <ThemeProvider>
-        <CustomizationProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <NavigationProvider>
           <CartProvider>
-            <AppContent />
+            <CustomizationProvider>
+              <AppContent />
+            </CustomizationProvider>
           </CartProvider>
-        </CustomizationProvider>
-      </ThemeProvider>
-    </AuthProvider>
+        </NavigationProvider>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
