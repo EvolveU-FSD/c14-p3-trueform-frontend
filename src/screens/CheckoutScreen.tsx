@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import createStyles from '../styles/CheckoutScreenStyles';
 import { Address } from '../types/address.types';
@@ -62,8 +62,6 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
   // Validation state
   const [shippingErrors, setShippingErrors] = useState<AddressValidationErrors>({});
   const [billingErrors, setBillingErrors] = useState<AddressValidationErrors>({});
-  const [isShippingValid, setIsShippingValid] = useState(false);
-  const [isBillingValid, setIsBillingValid] = useState(false);
 
   // Fetch saved addresses when user is authenticated
   useEffect(() => {
@@ -87,23 +85,6 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
 
     fetchSavedAddresses();
   }, [isAuthenticated, user]);
-
-  // Validation callbacks
-  const handleShippingValidation = useCallback(
-    (isValid: boolean, errors: AddressValidationErrors) => {
-      setIsShippingValid(isValid);
-      setShippingErrors(errors);
-    },
-    [],
-  );
-
-  const handleBillingValidation = useCallback(
-    (isValid: boolean, errors: AddressValidationErrors) => {
-      setIsBillingValid(isValid);
-      setBillingErrors(errors);
-    },
-    [],
-  );
 
   const handleShippingChange = (field: keyof Address, value: string) => {
     setShippingAddress((prev) => ({ ...prev, [field]: value }));
