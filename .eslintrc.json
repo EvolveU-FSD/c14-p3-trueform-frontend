@@ -39,17 +39,6 @@
         "ignoreStrings": true,
         "ignoreTemplateLiterals": true
       }
-    ],
-    "operator-linebreak": [
-      "error",
-      "before",
-      {
-        "overrides": {
-          "&&": "before",
-          "||": "before",
-          "=": "after"
-        }
-      }
     ]
   },
   "settings": {

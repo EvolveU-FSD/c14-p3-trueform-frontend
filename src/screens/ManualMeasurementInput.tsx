@@ -13,6 +13,13 @@ import { useNavigation } from '@react-navigation/native';
 import useManualMeasurementInputStyles from '../styles/ManualMeasurementInput';
 import { useTheme } from '../theme/ThemeContext';
 import { ManualMeasurementInputNavigationProp } from '../types/navigation';
+import { MeasurementService } from '../services/measurement.service';
+import {
+  CreateMeasurementDTO,
+  MeasurementUnit,
+  MeasurementValues,
+} from '../types/measurement.types';
+import { showAlert } from 'utils/showAlerts';
 
 // Placeholder image for video
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -48,6 +55,38 @@ export default function ManualMeasurementInput() {
 
   const handleInputChange = (key: string, value: string) => {
     setMeasurements((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const handleAddMeasurement = async () => {
+    try {
+      // Convert measurements to numbers and create MeasurementValues object
+      const measurementValues: MeasurementValues = {};
+      Object.entries(measurements).forEach(([key, value]) => {
+        if (value && value.trim() !== '') {
+          measurementValues[key] = parseFloat(value);
+        }
+      });
+
+      // Create measurement data
+      const measurementData: CreateMeasurementDTO = {
+        customerId: 'current-user-id', // Replace with actual customer ID from auth context
+        standardType: fit === 'standard' ? 'US' : 'EU',
+        unit: unit === 'inch' ? MeasurementUnit.INCHES : MeasurementUnit.CENTIMETERS,
+        values: measurementValues,
+      };
+
+      const result = await MeasurementService.create(measurementData);
+
+      if (result) {
+        showAlert('Success', 'Measurements saved successfully!');
+        navigation.goBack();
+      } else {
+        showAlert('Error', 'Failed to save measurements. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error saving measurements:', error);
+      showAlert('Error', 'Failed to save measurements. Please try again.');
+    }
   };
 
   return (
@@ -163,13 +202,8 @@ export default function ManualMeasurementInput() {
           <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
             <Text style={styles.buttonText}>BACK TO DESIGN</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.addToCartButton}
-            onPress={() => {
-              /* Add to cart logic here */
-            }}
-          >
-            <Text style={styles.buttonText}>ADD TO CART</Text>
+          <TouchableOpacity style={styles.addToCartButton} onPress={handleAddMeasurement}>
+            <Text style={styles.buttonText}>SAVE MEASUREMENTS</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
