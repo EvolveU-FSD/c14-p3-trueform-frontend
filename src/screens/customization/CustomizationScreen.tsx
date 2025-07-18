@@ -40,6 +40,7 @@ export default function CustomizationScreen() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [clothingItem, setClothingItem] = useState<Clothing | null>(null);
   const scrollViewRef = useRef<ScrollView>(null);
+  const [hasInitializedSelections, setHasInitializedSelections] = useState(false);
 
   // Constants for scroll calculation
   const STEP_ITEM_WIDTH = 80; // Approximate width of each step item including margins
@@ -73,15 +74,37 @@ export default function CustomizationScreen() {
   }, [itemId]);
 
   useEffect(() => {
-    if (clothingItem) {
+    if (clothingItem && !hasInitializedSelections) {
       (async () => {
         const response = await CustomizationService.getCustomizationsByCategoryId(
           clothingItem.categoryId,
         );
         setCustomizations(response);
+
+        // Auto-select the default option for each customization based on API response
+        const initialSelections: { [key: string]: string } = {};
+        response.forEach((customization: any) => {
+          if (customization.options && customization.options.length > 0) {
+            const defaultOptionId = customization.defaultValue || customization.options[0].id;
+            const defaultOptionExists = customization.options.some(
+              (opt: any) => opt.id === defaultOptionId,
+            );
+            if (defaultOptionExists) {
+              initialSelections[customization.id] = defaultOptionId;
+            } else {
+              initialSelections[customization.id] = customization.options[0].id;
+            }
+          }
+        });
+
+        Object.entries(initialSelections).forEach(([customizationId, optionId]) => {
+          handleSelection(customizationId, optionId);
+        });
+
+        setHasInitializedSelections(true); // Only run this once per item
       })();
     }
-  }, [clothingItem]);
+  }, [clothingItem, hasInitializedSelections, handleSelection]);
 
   // Auto-scroll to keep active step visible
   useEffect(() => {
