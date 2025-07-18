@@ -4,14 +4,21 @@ import { RouteProp } from '@react-navigation/native';
 
 export type RootStackParamList = {
   Main: undefined;
+  // Login related
   Login: { email?: string };
   Register: undefined;
+  Account: undefined;
+  // Shopping related.
+  Items: undefined;
   ItemDetails: { itemId: string };
+  Customization: { itemId: string };
+  // Measurements related.
+  Measure: undefined;
   BodyScan: undefined;
+  ManualMeasurementInput: undefined;
+  // Checkout related.
   Checkout: undefined;
   Payment: undefined;
-  Customization: { itemId: string };
-  ManualMeasurementInput: undefined;
 };
 
 export type BottomTabParamList = {
@@ -41,6 +48,11 @@ export type CheckoutScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   'Checkout'
 >;
+export type AccountScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Account'>;
+export type ManualMeasurementInputNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'ManualMeasurementInput'
+>;
 
 // Bottom Tab Navigation prop types
 export type ShopTabNavigationProp = BottomTabNavigationProp<BottomTabParamList, 'Shop'>;
@@ -56,6 +68,14 @@ export type LoginScreenRouteProp = RouteProp<RootStackParamList, 'Login'>;
 export type RegisterScreenRouteProp = RouteProp<RootStackParamList, 'Register'>;
 export type PaymentScreenRouteProp = RouteProp<RootStackParamList, 'Payment'>;
 export type CheckoutScreenRouteProp = RouteProp<RootStackParamList, 'Checkout'>;
+export type AccountScreenRouteProp = RouteProp<RootStackParamList, 'Account'>;
+export type ManualMeasurementInputRouteProp = RouteProp<
+  RootStackParamList,
+  'ManualMeasurementInput'
+>;
+
+// Bottom Tab Route prop types
+export type MeasureTabRouteProp = RouteProp<BottomTabParamList, 'Measure'>;
 
 // Screen props interfaces
 export interface MainScreenProps {
@@ -86,4 +106,28 @@ export interface RegisterScreenProps {
 export interface CheckoutScreenProps {
   navigation: CheckoutScreenNavigationProp;
   route: CheckoutScreenRouteProp;
+}
+
+export interface AccountScreenProps {
+  navigation: AccountScreenNavigationProp;
+  route: AccountScreenRouteProp;
+}
+
+export interface ManualMeasurementInputProps {
+  navigation: ManualMeasurementInputNavigationProp;
+  route: ManualMeasurementInputRouteProp;
+}
+
+// Bottom Tab Screen props interfaces
+export interface MeasureTabProps {
+  navigation: MeasureTabNavigationProp;
+  route: MeasureTabRouteProp;
+}
+
+// Category screen navigation types
+export type CategoryScreenNavigationProp = NativeStackNavigationProp<any, 'Category'>;
+export type CategoryScreenRouteProp = RouteProp<any, 'Category'>;
+
+export interface CategoryScreenProps {
+  navigation: CategoryScreenNavigationProp;
 }

@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
   TextInput,
   TouchableOpacity,
   ScrollView,
-  SafeAreaView,
   Image,
+  StatusBar,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import useManualMeasurementInputStyles from '../styles/ManualMeasurementInput';
 import { useTheme } from '../theme/ThemeContext';
+import { ManualMeasurementInputNavigationProp } from '../types/navigation';
 
 // Placeholder image for video
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -29,17 +31,28 @@ const measurementFields = [
 export default function ManualMeasurementInput() {
   const styles = useManualMeasurementInputStyles();
   const { theme } = useTheme();
-  const navigation = useNavigation();
+  const navigation = useNavigation<ManualMeasurementInputNavigationProp>();
   const [unit, setUnit] = useState<'inch' | 'cm'>('inch');
   const [fit, setFit] = useState<'standard' | 'slim'>('standard');
   const [measurements, setMeasurements] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerShown: true,
+      headerTitle: 'Manual Measurements',
+      headerShadowVisible: true,
+      headerBackTitle: 'Measurements',
+      headerBackTitleVisible: true,
+    });
+  }, [navigation]);
 
   const handleInputChange = (key: string, value: string) => {
     setMeasurements((prev) => ({ ...prev, [key]: value }));
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={[]}>
+      <StatusBar barStyle='dark-content' />
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Video/Image Placeholder */}
         <View style={styles.imageContainer}>
