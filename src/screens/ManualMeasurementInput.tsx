@@ -5,10 +5,10 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
-  SafeAreaView,
   Image,
   StatusBar,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import useManualMeasurementInputStyles from '../styles/ManualMeasurementInput';
 import { useTheme } from '../theme/ThemeContext';
