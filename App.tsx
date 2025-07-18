@@ -18,6 +18,8 @@ import BottomTabNavigator from './src/navigation/BottomTabNavigator';
 import RegisterScreen from './src/screens/RegisterScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import AccountScreen from './src/screens/AccountScreen';
+import Items from 'screens/Items';
+import MeasurementScreen from 'screens/MeasurementScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -48,27 +50,33 @@ function AppContent() {
         }}
       >
         <Stack.Screen name='Main' component={BottomTabNavigator} />
+        {/* Login related */}
         <Stack.Screen name='Login' component={LoginScreen} options={{ title: 'Login' }} />
         <Stack.Screen name='Register' component={RegisterScreen} options={{ title: 'Register' }} />
         <Stack.Screen name='Account' component={AccountScreen} options={{ title: 'Account' }} />
+        {/* Shopping related. */}
+        <Stack.Screen name='Items' component={Items} options={{ title: 'Items' }} />
         <Stack.Screen
           name='ItemDetails'
           component={ItemDetails}
           options={{ title: 'Item Details' }}
         />
-        <Stack.Screen name='BodyScan' component={BodyScanScreen} options={{ title: 'Body Scan' }} />
-        <Stack.Screen name='Payment' component={PaymentScreen} options={{ title: 'Payment' }} />
         <Stack.Screen
           name='Customization'
           component={CustomizationScreen}
           options={{ title: 'Customization' }}
         />
-        <Stack.Screen name='Checkout' component={CheckoutScreen} options={{ title: 'Checkout' }} />
+        {/* Measurements related. */}
+        <Stack.Screen name='Measure' component={MeasurementScreen} options={{ title: 'Measure' }} />
+        <Stack.Screen name='BodyScan' component={BodyScanScreen} options={{ title: 'Body Scan' }} />
         <Stack.Screen
           name='ManualMeasurementInput'
           component={ManualMeasurementInput}
           options={{ title: 'Manual Measurement' }}
         />
+        {/* Checkout related. */}
+        <Stack.Screen name='Payment' component={PaymentScreen} options={{ title: 'Payment' }} />
+        <Stack.Screen name='Checkout' component={CheckoutScreen} options={{ title: 'Checkout' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

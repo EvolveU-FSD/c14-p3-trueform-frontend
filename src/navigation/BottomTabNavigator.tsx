@@ -2,10 +2,10 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Text } from 'react-native';
 import Items from '../screens/Items';
-import BodyScanScreen from '../screens/BodyScanScreen';
 import Cart from '../screens/Cart';
 import AccountScreen from '../screens/AccountScreen';
 import createStyles from '../styles/BottomTabNavigatorStyles';
+import MeasurementScreen from 'screens/MeasurementScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -32,7 +32,7 @@ export default function BottomTabNavigator() {
       />
       <Tab.Screen
         name='Measure'
-        component={BodyScanScreen}
+        component={MeasurementScreen}
         options={{
           tabBarIcon: ({ color }) => <Text style={[styles.tabBarIcon, { color }]}>📏</Text>,
         }}
