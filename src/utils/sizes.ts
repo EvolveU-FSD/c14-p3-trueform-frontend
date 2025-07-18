@@ -1,6 +1,6 @@
 import { Dimensions, PixelRatio } from 'react-native';
 
-const { width: SCREEN_WIDTH } = Dimensions.get('window');
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const BASE_WIDTH = 375; // Reference width (iPhone 8)
 
 const scale = (size: number) => (SCREEN_WIDTH / BASE_WIDTH) * size;
@@ -60,4 +60,38 @@ export const componentHeights = {
   dropdown: spacing.xxxl * 5,
   modal: spacing.xxxl * 8,
   sheet: spacing.xxxl * 6,
+};
+
+// Modal Dimensions (percentage of screen)
+export const modalSizes = {
+  // Height percentages
+  smallHeight: SCREEN_HEIGHT * 0.3,
+  mediumHeight: SCREEN_HEIGHT * 0.5,
+  largeHeight: SCREEN_HEIGHT * 0.7,
+  fullHeight: SCREEN_HEIGHT * 0.9,
+
+  // Width percentages (for centered modals)
+  smallWidth: SCREEN_WIDTH * 0.8,
+  mediumWidth: SCREEN_WIDTH * 0.9,
+  largeWidth: SCREEN_WIDTH * 0.95,
+
+  // Bottom sheet specific
+  bottomSheet: {
+    minHeight: SCREEN_HEIGHT * 0.25,
+    maxHeight: SCREEN_HEIGHT * 0.75,
+    defaultHeight: SCREEN_HEIGHT * 0.6,
+  },
+
+  // Picker specific
+  picker: {
+    minHeight: SCREEN_HEIGHT * 0.4,
+    maxHeight: SCREEN_HEIGHT * 0.7,
+    defaultHeight: SCREEN_HEIGHT * 0.5,
+  },
+
+  // Dropdown specific
+  dropdown: {
+    maxHeight: SCREEN_HEIGHT * 0.4,
+    itemHeight: normalize(48),
+  },
 };

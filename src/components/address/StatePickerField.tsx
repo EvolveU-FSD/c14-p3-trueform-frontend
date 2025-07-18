@@ -73,6 +73,7 @@ export default function StatePickerField({
   error,
   required = false,
   style,
+  disabled = false,
 }: StatePickerFieldProps) {
   const styles = useCreateStyles();
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -82,8 +83,10 @@ export default function StatePickerField({
   const displayText = selectedState ? selectedState.label : 'Select State';
 
   const handleConfirm = () => {
-    onValueChange(tempValue);
-    setIsModalVisible(false);
+    if (!disabled) {
+      onValueChange(tempValue);
+      setIsModalVisible(false);
+    }
   };
 
   const handleCancel = () => {
@@ -98,27 +101,44 @@ export default function StatePickerField({
   // iOS Modal Picker
   if (Platform.OS === 'ios') {
     return (
-      <View style={[styles.fieldContainer, style]}>
-        <Text style={styles.label}>
+      <View style={[styles.fieldContainer, style, disabled && styles.disabledContainer]}>
+        <Text style={[styles.label, disabled && styles.disabledText]}>
           {label}
           {required && <Text style={styles.requiredIndicator}> *</Text>}
         </Text>
 
         <TouchableOpacity
-          style={[styles.modalTrigger, error && styles.inputError]}
+          style={[
+            styles.modalTrigger,
+            error && styles.inputError,
+            disabled && styles.disabledPickerContainer,
+          ]}
           onPress={() => {
-            setTempValue(value);
-            setIsModalVisible(true);
+            if (!disabled) {
+              setTempValue(value);
+              setIsModalVisible(true);
+            }
           }}
+          disabled={disabled}
         >
-          <Text style={[styles.modalTriggerText, !value && styles.placeholderText]}>
+          <Text
+            style={[
+              styles.modalTriggerText,
+              !value && styles.placeholderText,
+              disabled && styles.disabledText,
+            ]}
+          >
             {displayText}
           </Text>
-          <FontAwesome5 name='chevron-down' size={16} color='#666' />
+          <FontAwesome5
+            name='chevron-down'
+            size={16}
+            color={disabled ? styles.disabledText?.color || '#999' : '#666'}
+          />
         </TouchableOpacity>
 
         <Modal
-          visible={isModalVisible}
+          visible={isModalVisible && !disabled}
           animationType='slide'
           transparent={true}
           onRequestClose={handleCancel}
@@ -164,17 +184,26 @@ export default function StatePickerField({
 
   // Android Dropdown Picker
   return (
-    <View style={[styles.fieldContainer, style]}>
-      <Text style={styles.label}>
+    <View style={[styles.fieldContainer, style, disabled && styles.disabledContainer]}>
+      <Text style={[styles.label, disabled && styles.disabledText]}>
         {label}
         {required && <Text style={styles.requiredIndicator}> *</Text>}
       </Text>
-      <View style={[styles.pickerContainer, error && styles.inputError]}>
+      <View
+        style={[
+          styles.pickerContainer,
+          error && styles.inputError,
+          disabled && styles.disabledPickerContainer,
+        ]}
+      >
         <Picker
           selectedValue={value}
-          onValueChange={onValueChange}
+          // TODO: Find a better way to handle the empty function below.
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
+          onValueChange={disabled ? () => {} : onValueChange}
           style={styles.picker}
           mode='dropdown'
+          enabled={!disabled}
         >
           {US_STATES.map((state) => (
             <Picker.Item key={state.value} label={state.label} value={state.value} />

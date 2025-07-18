@@ -3,17 +3,17 @@ export interface Address {
   customerId: string;
   firstName: string;
   lastName: string;
-  company?: string;
   address1: string;
-  address2?: string;
   city: string;
   state: string;
   zipCode: string;
   country: string;
-  phone?: string;
   isDefault: boolean;
   createdAt: string;
   updatedAt: string;
+  company?: string;
+  address2?: string;
+  phone?: string;
   customer?: {
     id: string;
     name: string;
@@ -25,13 +25,13 @@ export interface CreateAddressDTO {
   customerId: string;
   firstName: string;
   lastName: string;
-  company?: string;
   address1: string;
-  address2?: string;
   city: string;
   state: string;
   zipCode: string;
   country: string;
+  company?: string;
+  address2?: string;
   phone?: string;
   isDefault?: boolean;
 }
@@ -50,30 +50,21 @@ export interface UpdateAddressDTO {
   isDefault?: boolean;
 }
 
-export interface AddressErrors {
-  firstName?: string;
-  lastName?: string;
-  company?: string;
-  address1?: string;
-  address2?: string;
-  city?: string;
-  state?: string;
-  zipCode?: string;
-  country?: string;
-  phone?: string;
-}
-
 export interface AddressProps {
   title: string;
   data: Address;
   onDataChange: (field: keyof Address, value: string) => void;
-  errors?: AddressErrors;
+  errors?: AddressValidationErrors;
   showSameAsShipping?: boolean;
   sameAsShipping?: boolean;
   onSameAsShippingChange?: (value: boolean) => void;
   showSaveAddress?: boolean;
   saveAddress?: boolean;
   onSaveAddressChange?: (value: boolean) => void;
+  showSavedAddresses?: boolean;
+  savedAddresses?: Address[];
+  selectedSavedAddressId?: string;
+  onSavedAddressSelect?: (address: Address | null) => void;
 }
 
 export interface AddressFieldProps {
@@ -96,6 +87,7 @@ export interface AddressFieldProps {
   multiline?: boolean;
   numberOfLines?: number;
   style?: any;
+  disabled?: boolean;
 }
 
 export interface StatePickerFieldProps {
@@ -105,6 +97,7 @@ export interface StatePickerFieldProps {
   error?: string;
   required?: boolean;
   style?: any;
+  disabled?: boolean;
 }
 
 export interface CountryPickerFieldProps {
@@ -114,6 +107,7 @@ export interface CountryPickerFieldProps {
   error?: string;
   required?: boolean;
   style?: any;
+  disabled?: boolean;
 }
 
 export interface CheckboxFieldProps {
@@ -126,19 +120,19 @@ export interface CheckboxFieldProps {
 export interface ShippingAddressProps {
   data: Address;
   onDataChange: (field: keyof Address, value: string) => void;
-  errors?: AddressErrors;
+  errors?: AddressValidationErrors;
   saveAddress?: boolean;
   onSaveAddressChange?: (value: boolean) => void;
+  showSavedAddresses?: boolean;
+  savedAddresses?: Address[];
+  selectedSavedAddressId?: string;
+  onSavedAddressSelect?: (address: Address | null) => void;
+  onValidation?: ValidationCallback;
 }
 
-export interface BillingAddressProps {
-  data: Address;
-  onDataChange: (field: keyof Address, value: string) => void;
-  errors?: AddressErrors;
-  sameAsShipping?: boolean;
-  onSameAsShippingChange?: (value: boolean) => void;
-  saveAddress?: boolean;
-  onSaveAddressChange?: (value: boolean) => void;
+export interface BillingAddressProps extends ShippingAddressProps {
+  sameAsShipping: boolean;
+  onSameAsShippingChange: (value: boolean) => void;
 }
 
 export interface StateOption {
@@ -150,3 +144,37 @@ export interface CountryOption {
   label: string;
   value: string;
 }
+
+export interface SavedAddressDropdownProps {
+  label: string;
+  addresses: Address[];
+  selectedAddressId?: string;
+  onAddressSelect: (address: Address | null) => void;
+  placeholder?: string;
+  error?: string;
+  required?: boolean;
+  style?: any;
+}
+
+export interface ValidationError {
+  field: string;
+  message: string;
+}
+
+export interface ValidationResult {
+  isValid: boolean;
+  errors: ValidationError[];
+}
+
+export interface AddressValidationErrors {
+  firstName?: string;
+  lastName?: string;
+  address1?: string;
+  city?: string;
+  state?: string;
+  zipCode?: string;
+  country?: string;
+  phone?: string;
+}
+
+export type ValidationCallback = (isValid: boolean, errors: AddressValidationErrors) => void;

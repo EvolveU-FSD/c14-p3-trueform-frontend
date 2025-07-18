@@ -1,8 +1,6 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { useTheme } from '../theme/ThemeContext';
-import { spacing, fontSizes, borderRadius, buttonHeights } from '../utils/sizes';
-
-const { height: screenHeight } = Dimensions.get('window');
+import { spacing, fontSizes, borderRadius, buttonHeights, modalSizes } from '../utils/sizes';
 
 export default function useCreateStyles() {
   const { theme } = useTheme();
@@ -53,16 +51,11 @@ export default function useCreateStyles() {
       borderColor: '#ff4444',
       borderWidth: 2,
     },
-    inputMultiline: {
-      height: undefined,
-      minHeight: buttonHeights.lg,
-      textAlignVertical: 'top',
-      paddingTop: spacing.sm,
-    },
     errorText: {
       fontSize: fontSizes.sm,
       color: '#ff4444',
       marginTop: spacing.xs,
+      marginLeft: spacing.sm,
     },
     row: {
       flexDirection: 'row',
@@ -87,7 +80,7 @@ export default function useCreateStyles() {
     },
     pickerItemStyle: {
       fontSize: Math.round(fontSizes.md),
-      height: 44,
+      height: modalSizes.dropdown.itemHeight,
       textAlign: 'center' as const,
     },
     // Modal styles for iOS - Bottom Sheet
@@ -119,8 +112,8 @@ export default function useCreateStyles() {
       backgroundColor: theme.backgroundColor,
       borderTopLeftRadius: borderRadius.lg,
       borderTopRightRadius: borderRadius.lg,
-      maxHeight: screenHeight * 0.6,
-      minHeight: screenHeight * 0.5,
+      maxHeight: modalSizes.picker.maxHeight,
+      minHeight: modalSizes.picker.minHeight,
     },
     modalHeader: {
       flexDirection: 'row',
@@ -162,7 +155,7 @@ export default function useCreateStyles() {
     },
     modalPickerItem: {
       fontSize: Math.round(fontSizes.md),
-      height: 44,
+      height: modalSizes.dropdown.itemHeight,
       color: theme.textColor,
       textAlign: 'center' as const,
     },
@@ -197,6 +190,28 @@ export default function useCreateStyles() {
       color: '#fff',
       fontSize: fontSizes.sm,
       fontWeight: 'bold',
+    },
+    saveAddressContainer: {
+      marginTop: spacing.sm,
+      paddingTop: spacing.sm,
+      borderTopWidth: 1,
+      borderTopColor: theme.borderColor,
+    },
+    disabledCheckbox: {
+      opacity: 0.5,
+    },
+    disabledContainer: {
+      opacity: 0.6,
+    },
+    disabledInput: {
+      backgroundColor: theme.isDarkMode ? '#1a1a1a' : '#f0f0f0',
+      color: theme.isDarkMode ? '#666' : '#999',
+    },
+    disabledText: {
+      color: theme.isDarkMode ? '#666' : '#999',
+    },
+    disabledPickerContainer: {
+      backgroundColor: theme.isDarkMode ? '#1a1a1a' : '#f0f0f0',
     },
   });
 }
