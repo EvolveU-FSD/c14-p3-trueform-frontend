@@ -4,7 +4,7 @@ import { Text } from 'react-native';
 import Items from '../screens/Items';
 import BodyScanScreen from '../screens/BodyScanScreen';
 import Cart from '../screens/Cart';
-import LoginScreen from '../screens/LoginScreen';
+import AccountScreen from '../screens/AccountScreen';
 import createStyles from '../styles/BottomTabNavigatorStyles';
 
 const Tab = createBottomTabNavigator();
@@ -46,7 +46,7 @@ export default function BottomTabNavigator() {
       />
       <Tab.Screen
         name='Account'
-        component={LoginScreen}
+        component={AccountScreen}
         options={{
           tabBarIcon: ({ color }) => <Text style={[styles.tabBarIcon, { color }]}>👤</Text>,
         }}
