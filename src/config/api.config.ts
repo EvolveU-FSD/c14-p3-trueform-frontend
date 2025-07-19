@@ -11,6 +11,7 @@ export const API_CONFIG = {
     VENDORS: '/vendor',
     CUSTOMERS: '/customer',
     BODYSCAN: `/scan`,
+    MEASUREMENTS: '/measurement',
   },
   TIMEOUT: 10000,
   HEADERS: {
