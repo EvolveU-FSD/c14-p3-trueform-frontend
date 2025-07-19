@@ -41,7 +41,6 @@ export default function PaymentScreen() {
   const tax = subtotal * taxRate;
   const shipping = 0.0; // Free shipping
   const total = subtotal + tax + shipping;
-  console.log(JSON.stringify(items, null, 2));
 
   const formatCurrency = (amount: number) => {
     return `$${amount.toFixed(2)}`;

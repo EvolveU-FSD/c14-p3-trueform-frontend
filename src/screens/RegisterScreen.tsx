@@ -26,7 +26,7 @@ function RegisterScreen({ navigation }: RegisterScreenProps) {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { register } = useAuth();
+  const { register, logout } = useAuth();
 
   const validateForm = () => {
     if (!email || !password || !confirmPassword || !name) {
@@ -86,6 +86,9 @@ function RegisterScreen({ navigation }: RegisterScreenProps) {
 
       // Create customer profile in database
       await createCustomer(user.uid);
+
+      // Sign out the user to prevent auto-login issues
+      await logout();
 
       showAlert(
         'Registration Successful',
