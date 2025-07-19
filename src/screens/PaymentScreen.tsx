@@ -54,7 +54,7 @@ export default function PaymentScreen() {
 
   // Calculate order totals
   const subtotal = getCartTotal();
-  const taxRate = 0.08; // 8% tax rate - you might want to make this configurable
+  const taxRate = 0.08; // 8% tax rate - to be set up later with Stripe tax dynamically.
   const tax = subtotal * taxRate;
   const shipping = 0.0; // Free shipping
   const total = subtotal + tax + shipping;
@@ -127,7 +127,8 @@ export default function PaymentScreen() {
         const verifyResult = await verifyResponse.json();
 
         if (verifyResult.success) {
-          Alert.alert('Success', 'Payment completed successfully!');
+          // Clear cart and navigate to confirmation
+          navigation.navigate('Confirmation');
         } else {
           Alert.alert('Error', 'Payment verification failed');
         }
