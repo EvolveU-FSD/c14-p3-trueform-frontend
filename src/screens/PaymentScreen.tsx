@@ -76,7 +76,7 @@ export default function PaymentScreen() {
       const amountInCents = Math.round(total * 100);
 
       const response = await fetch(
-        `${process.env.EXPO_PUBLIC_API_BASE_URL}/payment/create-intent`,
+        `${process.env.EXPO_PUBLIC_API_BASE_URL}/api/payment/create-intent`,
         {
           method: 'POST',
           headers: {
@@ -112,7 +112,7 @@ export default function PaymentScreen() {
 
       if (paymentIntent?.status === 'Succeeded') {
         const verifyResponse = await fetch(
-          `${process.env.EXPO_PUBLIC_API_BASE_URL}/payment/verify`,
+          `${process.env.EXPO_PUBLIC_API_BASE_URL}/api/payment/verify`,
           {
             method: 'POST',
             headers: {
