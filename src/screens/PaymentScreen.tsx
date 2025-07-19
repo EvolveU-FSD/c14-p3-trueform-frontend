@@ -7,6 +7,9 @@ import {
   ActivityIndicator,
   ScrollView,
   StatusBar,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StripeProvider, CardField, useStripe } from '@stripe/stripe-react-native';
@@ -21,6 +24,7 @@ import { useCart } from '../context/CartContext';
 export default function PaymentScreen() {
   const [cardDetails, setCardDetails] = useState<CardFieldInput.Details | null>(null);
   const [loading, setLoading] = useState(false);
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
   const { confirmPayment } = useStripe();
   const navigation = useNavigation<PaymentScreenNavigationProp>();
 
@@ -32,6 +36,19 @@ export default function PaymentScreen() {
       headerBackTitle: 'Checkout',
       headerBackTitleVisible: true,
     });
+
+    // Listen for keyboard events
+    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
+      setKeyboardVisible(true);
+    });
+    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+      setKeyboardVisible(false);
+    });
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
   }, [navigation]);
   const { items, getCartTotal } = useCart();
 
@@ -130,113 +147,127 @@ export default function PaymentScreen() {
       publishableKey={process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY || ''}
       urlScheme='your-app-scheme'
     >
-      <SafeAreaView style={styles.safeArea} edges={[]}>
-        <StatusBar barStyle='dark-content' />
-        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-          {/* Header */}
-          <View style={styles.header}>
-            <Ionicons name='lock-closed' size={24} color='#5469d4' />
-            <Text style={styles.headerText}>Secure Payment</Text>
-          </View>
-
-          {/* Order Summary */}
-          <View style={styles.orderSummary}>
-            <Text style={styles.sectionTitle}>Order Summary</Text>
-
-            {items.map((item) => (
-              <View key={item.id} style={styles.orderItem}>
-                <View style={styles.itemDetails}>
-                  <Text style={styles.itemName}>{item.clothing.name}</Text>
-                  <Text style={styles.itemQuantity}>Qty: {item.quantity}</Text>
-                  {item.customizations.length > 0 && (
-                    <View style={styles.customizationsList}>
-                      <Text style={styles.customizationsHeader}>Customizations:</Text>
-                      {item.customizations.map((customization, index) => (
-                        <Text key={index} style={styles.customizationItem}>
-                          • {customization.name}: {customization.optionName}
-                        </Text>
-                      ))}
-                    </View>
-                  )}
-                </View>
-                <Text style={styles.itemPrice}>{formatCurrency(item.totalPrice)}</Text>
-              </View>
-            ))}
-
-            <View style={styles.divider} />
-
-            <View style={styles.summaryRow}>
-              <Text style={styles.summaryLabel}>Subtotal</Text>
-              <Text style={styles.summaryValue}>{formatCurrency(subtotal)}</Text>
-            </View>
-
-            <View style={styles.summaryRow}>
-              <Text style={styles.summaryLabel}>Tax</Text>
-              <Text style={styles.summaryValue}>{formatCurrency(tax)}</Text>
-            </View>
-
-            <View style={styles.summaryRow}>
-              <Text style={styles.summaryLabel}>Shipping</Text>
-              <Text style={styles.summaryValue}>
-                {shipping === 0 ? 'FREE' : formatCurrency(shipping)}
-              </Text>
-            </View>
-
-            <View style={styles.divider} />
-
-            <View style={styles.totalRow}>
-              <Text style={styles.totalLabel}>Total</Text>
-              <Text style={styles.totalValue}>{formatCurrency(total)}</Text>
-            </View>
-          </View>
-
-          {/* Payment Details */}
-          <View style={styles.paymentSection}>
-            <Text style={styles.sectionTitle}>Payment Details</Text>
-
-            <CardField
-              postalCodeEnabled={true}
-              placeholders={{
-                number: '4242 4242 4242 4242',
-              }}
-              cardStyle={styles.card}
-              style={styles.cardContainer}
-              onCardChange={(details) => setCardDetails(details)}
-            />
-
-            <View style={styles.securityNote}>
-              <Ionicons name='shield-checkmark' size={16} color='#666' />
-              <Text style={styles.securityText}>
-                Your payment information is encrypted and secure
-              </Text>
-            </View>
-          </View>
-
-          {/* Pay Button */}
-          <TouchableOpacity
-            style={[styles.button, loading && styles.buttonDisabled]}
-            onPress={handlePayment}
-            disabled={loading || !cardDetails?.complete}
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0}
+      >
+        <SafeAreaView style={styles.safeArea} edges={[]}>
+          <StatusBar barStyle='dark-content' />
+          <ScrollView
+            style={styles.container}
+            contentContainerStyle={{
+              paddingBottom: keyboardVisible ? 200 : 50,
+            }}
+            showsVerticalScrollIndicator={false}
+            keyboardShouldPersistTaps='handled'
+            automaticallyAdjustKeyboardInsets={true}
           >
-            {loading ? (
-              <ActivityIndicator color='#fff' />
-            ) : (
-              <View style={styles.buttonContent}>
-                <Text style={styles.buttonText}>Pay {formatCurrency(total)}</Text>
-                <Ionicons name='arrow-forward' size={20} color='#fff' />
+            {/* Header */}
+            <View style={styles.header}>
+              <Ionicons name='lock-closed' size={24} color='#5469d4' />
+              <Text style={styles.headerText}>Secure Payment</Text>
+            </View>
+
+            {/* Order Summary */}
+            <View style={styles.orderSummary}>
+              <Text style={styles.sectionTitle}>Order Summary</Text>
+
+              {items.map((item) => (
+                <View key={item.id} style={styles.orderItem}>
+                  <View style={styles.itemDetails}>
+                    <Text style={styles.itemName}>{item.clothing.name}</Text>
+                    <Text style={styles.itemQuantity}>Qty: {item.quantity}</Text>
+                    {item.customizations.length > 0 && (
+                      <View style={styles.customizationsList}>
+                        <Text style={styles.customizationsHeader}>Customizations:</Text>
+                        {item.customizations.map((customization, index) => (
+                          <Text key={index} style={styles.customizationItem}>
+                            • {customization.name}: {customization.optionName}
+                          </Text>
+                        ))}
+                      </View>
+                    )}
+                  </View>
+                  <Text style={styles.itemPrice}>{formatCurrency(item.totalPrice)}</Text>
+                </View>
+              ))}
+
+              <View style={styles.divider} />
+
+              <View style={styles.summaryRow}>
+                <Text style={styles.summaryLabel}>Subtotal</Text>
+                <Text style={styles.summaryValue}>{formatCurrency(subtotal)}</Text>
+              </View>
+
+              <View style={styles.summaryRow}>
+                <Text style={styles.summaryLabel}>Tax</Text>
+                <Text style={styles.summaryValue}>{formatCurrency(tax)}</Text>
+              </View>
+
+              <View style={styles.summaryRow}>
+                <Text style={styles.summaryLabel}>Shipping</Text>
+                <Text style={styles.summaryValue}>
+                  {shipping === 0 ? 'FREE' : formatCurrency(shipping)}
+                </Text>
+              </View>
+
+              <View style={styles.divider} />
+
+              <View style={styles.totalRow}>
+                <Text style={styles.totalLabel}>Total</Text>
+                <Text style={styles.totalValue}>{formatCurrency(total)}</Text>
+              </View>
+            </View>
+
+            {/* Payment Details */}
+            <View style={styles.paymentSection}>
+              <Text style={styles.sectionTitle}>Payment Details</Text>
+
+              <CardField
+                postalCodeEnabled={true}
+                placeholders={{
+                  number: '4242 4242 4242 4242',
+                }}
+                cardStyle={styles.card}
+                style={styles.cardContainer}
+                onCardChange={(details) => setCardDetails(details)}
+              />
+
+              <View style={styles.securityNote}>
+                <Ionicons name='shield-checkmark' size={16} color='#666' />
+                <Text style={styles.securityText}>
+                  Your payment information is encrypted and secure
+                </Text>
+              </View>
+            </View>
+
+            {/* Pay Button */}
+            <TouchableOpacity
+              style={[styles.button, loading && styles.buttonDisabled]}
+              onPress={handlePayment}
+              disabled={loading || !cardDetails?.complete}
+            >
+              {loading ? (
+                <ActivityIndicator color='#fff' />
+              ) : (
+                <View style={styles.buttonContent}>
+                  <Text style={styles.buttonText}>Pay {formatCurrency(total)}</Text>
+                  <Ionicons name='arrow-forward' size={20} color='#fff' />
+                </View>
+              )}
+            </TouchableOpacity>
+
+            {/* Test Mode Notice */}
+            {process.env.NODE_ENV === 'development' && (
+              <View style={styles.testNotice}>
+                <Ionicons name='information-circle' size={16} color='#ff9800' />
+                <Text style={styles.testText}>Test mode - Use card 4242 4242 4242 4242</Text>
               </View>
             )}
-          </TouchableOpacity>
-
-          {/* Test Mode Notice */}
-          {process.env.NODE_ENV === 'development' && (
-            <View style={styles.testNotice}>
-              <Ionicons name='information-circle' size={16} color='#ff9800' />
-              <Text style={styles.testText}>Test mode - Use card 4242 4242 4242 4242</Text>
-            </View>
-          )}
-        </ScrollView>
-      </SafeAreaView>
+          </ScrollView>
+        </SafeAreaView>
+      </KeyboardAvoidingView>
     </StripeProvider>
   );
 }
