@@ -63,7 +63,9 @@ export default function ManualMeasurementInput() {
       const measurementValues: MeasurementValues = {};
       Object.entries(measurements).forEach(([key, value]) => {
         if (value && value.trim() !== '') {
-          measurementValues[key] = parseFloat(value);
+          const num = parseFloat(value);
+          if (!Number.isFinite(num)) return; // Skip invalid numbers
+          measurementValues[key] = num;
         }
       });
 
