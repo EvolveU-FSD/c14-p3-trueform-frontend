@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Alert, StatusBar } from 'react-native';
 import createStyles from '../styles/CheckoutScreenStyles';
 import { Address } from '../types/address.types';
@@ -64,6 +64,8 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
   // Validation state
   const [shippingErrors, setShippingErrors] = useState<AddressValidationErrors>({});
   const [billingErrors, setBillingErrors] = useState<AddressValidationErrors>({});
+  const [isShippingValid, setIsShippingValid] = useState(false);
+  const [isBillingValid, setIsBillingValid] = useState(false);
 
   useEffect(() => {
     navigation.setOptions({
@@ -265,6 +267,23 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
     navigation.navigate('Payment');
   };
 
+  // Memoize the validation callbacks to prevent infinite re-renders
+  const handleShippingValidation = useCallback(
+    (isValid: boolean, errors: AddressValidationErrors) => {
+      setShippingErrors(errors);
+      setIsShippingValid(isValid);
+    },
+    [],
+  );
+
+  const handleBillingValidation = useCallback(
+    (isValid: boolean, errors: AddressValidationErrors) => {
+      setBillingErrors(errors);
+      setIsBillingValid(isValid);
+    },
+    [],
+  );
+
   return (
     <SafeAreaView style={styles.container} edges={[]}>
       <StatusBar barStyle='dark-content' />
@@ -274,16 +293,19 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
           <ShippingAddress
             data={shippingAddress}
             onDataChange={handleShippingChange}
+            errors={shippingErrors}
             saveAddress={saveShippingAddress}
             onSaveAddressChange={setSaveShippingAddress}
             showSavedAddresses={true}
             savedAddresses={savedAddresses}
             selectedSavedAddressId={selectedShippingAddressId}
             onSavedAddressSelect={(address) => handleSavedAddressSelect(address, true)}
+            onValidation={handleShippingValidation}
           />
           <BillingAddress
             data={sameAsShipping ? shippingAddress : billingAddress}
             onDataChange={handleBillingChange}
+            errors={sameAsShipping ? shippingErrors : billingErrors}
             sameAsShipping={sameAsShipping}
             onSameAsShippingChange={setSameAsShipping}
             saveAddress={saveBillingAddress}
@@ -292,6 +314,7 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
             savedAddresses={savedAddresses}
             selectedSavedAddressId={selectedBillingAddressId}
             onSavedAddressSelect={(address) => handleSavedAddressSelect(address, false)}
+            onValidation={handleBillingValidation}
           />
 
           <View style={styles.buttonContainer}>
