@@ -173,7 +173,10 @@ export default function PaymentScreen() {
             return;
           }
           // Clear cart and navigate to confirmation
-          navigation.navigate('Confirmation');
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'Confirmation' }],
+          });
         } else {
           Alert.alert('Error', 'Payment verification failed');
         }
