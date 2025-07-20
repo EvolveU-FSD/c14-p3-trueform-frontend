@@ -58,7 +58,8 @@ export default function PaymentScreen() {
       keyboardDidShowListener.remove();
     };
   }, [navigation]);
-  const { items, getCartTotal, shippingAddress, billingAddress, measurement } = useCart();
+  const { items, getCartTotal, shippingAddress, billingAddress, measurement, clearCart } =
+    useCart();
   const { user, isAuthenticated } = useAuth();
 
   // Utility to get the current logged-in customer from Firebase UID
@@ -165,6 +166,7 @@ export default function PaymentScreen() {
               shippingAddress: mapAddressToOrderAddress(shippingAddress),
               billingAddress: mapAddressToOrderAddress(billingAddress),
             });
+            clearCart(); // <-- Clear the cart after order is processed
           } catch (error) {
             console.error('Order creation failed:', error);
             Alert.alert('Error', 'Order creation failed. Please contact support.');
