@@ -19,7 +19,15 @@ import { Ionicons } from '@expo/vector-icons';
 import { paymentScreenStyles as styles } from '../styles/PaymentScreenStyles';
 import { useNavigation } from '@react-navigation/native';
 import { PaymentScreenNavigationProp } from '../types/navigation';
+import { OrderService } from '../services/order.service';
+import { CustomerService } from '../services/customer.service';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
+import {
+  mapCartItemToOrderItem,
+  mapAddressToOrderAddress,
+  mapMeasurementToOrderMeasurement,
+} from '../utils/orderMapping';
 
 export default function PaymentScreen() {
   const [cardDetails, setCardDetails] = useState<CardFieldInput.Details | null>(null);
@@ -50,7 +58,20 @@ export default function PaymentScreen() {
       keyboardDidShowListener.remove();
     };
   }, [navigation]);
-  const { items, getCartTotal } = useCart();
+  const { items, getCartTotal, shippingAddress, billingAddress, measurement } = useCart();
+  const { user, isAuthenticated } = useAuth();
+
+  // Utility to get the current logged-in customer from Firebase UID
+  const getCurrentCustomer = async (): Promise<string | null> => {
+    if (!isAuthenticated || !user) return null;
+    try {
+      const customer = await CustomerService.getByFirebaseUid(user.uid);
+      return customer ? customer.id : null;
+    } catch (error) {
+      console.error('Failed to fetch customer by Firebase UID:', error);
+      return null;
+    }
+  };
 
   // Calculate order totals
   const subtotal = getCartTotal();
@@ -127,6 +148,28 @@ export default function PaymentScreen() {
         const verifyResult = await verifyResponse.json();
 
         if (verifyResult.success) {
+          try {
+            const customerId = await getCurrentCustomer();
+            await OrderService.create({
+              customerId: customerId || '',
+              status: 'PAID',
+              subtotal,
+              tax,
+              shipping,
+              total,
+              shippingAddressId: shippingAddress.id || '',
+              billingAddressId: billingAddress.id || '',
+              paymentIntentId: paymentIntent.id,
+              items: items.map(mapCartItemToOrderItem),
+              measurements: measurement ? [mapMeasurementToOrderMeasurement(measurement)] : [],
+              shippingAddress: mapAddressToOrderAddress(shippingAddress),
+              billingAddress: mapAddressToOrderAddress(billingAddress),
+            });
+          } catch (error) {
+            console.error('Order creation failed:', error);
+            Alert.alert('Error', 'Order creation failed. Please contact support.');
+            return;
+          }
           // Clear cart and navigate to confirmation
           navigation.navigate('Confirmation');
         } else {
