@@ -29,7 +29,17 @@
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": ["error"],
     "react-native/no-unused-styles": "warn",
-    "react-native/no-inline-styles": "warn"
+    "react-native/no-inline-styles": "warn",
+    "newline-per-chained-call": ["error", { "ignoreChainWithDepth": 3 }],
+    "max-len": [
+      "error",
+      {
+        "code": 100,
+        "ignoreUrls": true,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true
+      }
+    ]
   },
   "settings": {
     "react": {
