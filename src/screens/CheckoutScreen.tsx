@@ -12,10 +12,17 @@ import { CustomerService } from '../services/customer.service';
 import { useAuth } from '../context/AuthContext';
 import { CreateAddressDTO } from '../types/address.types';
 import { AddressValidationErrors } from '../types/address.types';
+import { useCart } from '../context/CartContext';
+import { MeasurementService } from '../services/measurement.service';
 
 export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
   const styles = createStyles();
   const { isAuthenticated, user } = useAuth();
+  const {
+    setShippingAddress: setCartShippingAddress,
+    setBillingAddress: setCartBillingAddress,
+    setMeasurement: setCartMeasurement,
+  } = useCart();
 
   const [shippingAddress, setShippingAddress] = useState<Address>({
     id: '',
@@ -261,6 +268,34 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
             'Some addresses could not be saved, but you can still proceed with payment.',
           );
         }
+      }
+    }
+
+    // Add addresses to cart context
+    setCartShippingAddress(shippingAddress);
+    setCartBillingAddress(sameAsShipping ? shippingAddress : billingAddress);
+
+    // Fetch and add latest scan measurement to cart context
+    if (isAuthenticated && user) {
+      try {
+        const customer = await CustomerService.getByFirebaseUid(user.uid);
+        if (customer) {
+          const measurements = await MeasurementService.getByCustomerId(customer.id);
+          // Find the latest scan measurement (standardType: 'SCAN' or similar)
+          const scanMeasurement = measurements
+            .filter((m) => m.standardType?.toUpperCase() === 'SCAN')
+            .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())[0];
+          if (scanMeasurement) {
+            setCartMeasurement({
+              customerId: scanMeasurement.customerId,
+              standardType: scanMeasurement.standardType,
+              unit: scanMeasurement.unit,
+              values: scanMeasurement.values,
+            });
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching scan measurement:', error);
       }
     }
 

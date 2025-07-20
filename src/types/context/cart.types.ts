@@ -1,4 +1,6 @@
 import { Clothing } from '../clothing';
+import { Address } from '../address.types';
+import { CreateMeasurementDTO } from '../measurement.types';
 
 export interface CartCustomization {
   customizationId: string;
@@ -28,4 +30,10 @@ export interface CartContextType {
   clearCart: () => void;
   getCartTotal: () => number;
   getItemCount: () => number;
+  shippingAddress: Partial<Address>;
+  setShippingAddress: (address: Partial<Address>) => void;
+  billingAddress: Partial<Address>;
+  setBillingAddress: (address: Partial<Address>) => void;
+  measurement: Partial<CreateMeasurementDTO>;
+  setMeasurement: (measurement: Partial<CreateMeasurementDTO>) => void;
 }
