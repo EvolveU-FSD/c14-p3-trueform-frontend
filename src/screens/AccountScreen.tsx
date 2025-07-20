@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -7,6 +7,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { useAuth } from '../context/AuthContext';
 import { RootStackParamList } from '../types/navigation';
 import createStyles from '../styles/AccountScreenStyles';
+import { CustomerService } from 'services/customer.service';
 
 type AccountScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Account'>;
 
@@ -14,6 +15,7 @@ export default function AccountScreen() {
   const styles = createStyles();
   const navigation = useNavigation<AccountScreenNavigationProp>();
   const { isAuthenticated, user, logout } = useAuth();
+  const [customerName, setCustomerName] = useState<string>('');
 
   useEffect(() => {
     navigation.setOptions({
@@ -22,6 +24,24 @@ export default function AccountScreen() {
       headerShadowVisible: true,
     });
   }, [navigation]);
+
+  useEffect(() => {
+    async function fetchCustomerName() {
+      if (isAuthenticated && user) {
+        const customer = await CustomerService.getByFirebaseUid(user.uid);
+        if (customer) {
+          setCustomerName(customer.name);
+        } else if (user.displayName) {
+          setCustomerName(user.displayName);
+        } else {
+          setCustomerName('');
+        }
+      } else {
+        setCustomerName('');
+      }
+    }
+    fetchCustomerName();
+  }, [isAuthenticated, user]);
 
   const handleLogout = async () => {
     try {
@@ -83,7 +103,7 @@ export default function AccountScreen() {
             <View style={styles.avatarContainer}>
               <FontAwesome5 name='user-circle' size={80} color='#4CAF50' />
             </View>
-            <Text style={styles.userName}>{user?.displayName || user?.email}</Text>
+            <Text style={styles.userName}>{customerName || user?.displayName || user?.email}</Text>
             <Text style={styles.userEmail}>{user?.email}</Text>
           </View>
 
