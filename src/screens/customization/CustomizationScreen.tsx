@@ -28,6 +28,35 @@ type CustomizationScreenNavigationProp = NativeStackNavigationProp<
   'Customization'
 >;
 
+// Helper to filter customizations based on conditionalOn and current selections
+function filterCustomizations(customizations: any[], selections: { [key: string]: string }) {
+  // Find the sleeve customization and the short sleeve option id
+  const sleeveCustomization = customizations.find(
+    (c) => c.name.toLowerCase() === 'sleeve'
+  );
+  let shortSleeveOptionId = undefined;
+  if (sleeveCustomization) {
+    const shortSleeveOption = sleeveCustomization.options.find(
+      (opt: any) => opt.name.toLowerCase().includes('short')
+    );
+    if (shortSleeveOption) {
+      shortSleeveOptionId = shortSleeveOption.id;
+    }
+  }
+
+  return customizations.filter((c) => {
+    if (!c.conditionalOn) return true;
+    // Only supporting { not: { sleeve: 'shortSleeve' } } for now
+    if (c.conditionalOn.not && c.conditionalOn.not.sleeve) {
+      // Use the actual sleeve customization id and short sleeve option id
+      if (sleeveCustomization && shortSleeveOptionId) {
+        return selections[sleeveCustomization.id] !== shortSleeveOptionId;
+      }
+    }
+    return true;
+  });
+}
+
 export default function CustomizationScreen() {
   const styles = createStyles();
   const route = useRoute<any>();
@@ -53,7 +82,7 @@ export default function CustomizationScreen() {
       headerTitle: 'Customization',
       headerShadowVisible: true,
       headerBackTitle: 'Item Details',
-      headerBackTitleVisible: true,
+      headerBackVisible: true,
     });
   }, [navigation]);
 
@@ -151,18 +180,20 @@ export default function CustomizationScreen() {
     }
   }, [activeIndex, customizations.length]);
 
-  const activeCustomization = customizations[activeIndex];
+  // Instead of using customizations directly, use filteredCustomizations
+  const filteredCustomizations = filterCustomizations(customizations, selections);
+  const activeCustomization = filteredCustomizations[activeIndex];
 
   const handleNext = () => {
-    if (activeIndex < customizations.length - 1) {
+    if (activeIndex < filteredCustomizations.length - 1) {
       setActiveIndex(activeIndex + 1);
     } else {
       // Add item to cart when customization is complete
       if (clothingItem) {
         const cartCustomizations: CartCustomization[] = Object.entries(selections).map(
-          ([customizationId, optionId]) => {
+          ([customizationId, optionId]: [string, string]) => {
             const customization = customizations.find((c) => c.id === customizationId);
-            const option = customization?.options.find((o) => o.id === optionId);
+            const option = customization?.options.find((o: any) => o.id === optionId);
 
             return {
               customizationId,
@@ -179,7 +210,7 @@ export default function CustomizationScreen() {
       }
 
       // Navigate back to Main (BottomTabNavigator) and then to Cart tab
-      navigation.navigate('Main', { screen: 'Cart' });
+      (navigation as any).navigate('Main', { screen: 'Cart' });
     }
   };
 
@@ -196,7 +227,7 @@ export default function CustomizationScreen() {
   };
 
   const isFirstStep = activeIndex === 0;
-  const isLastStep = activeIndex === customizations.length - 1;
+  const isLastStep = activeIndex === filteredCustomizations.length - 1;
 
   // Check if current step has a selection
   const hasCurrentSelection = activeCustomization && selections[activeCustomization.id];
@@ -215,7 +246,7 @@ export default function CustomizationScreen() {
             style={styles.stepsContainer}
             contentContainerStyle={styles.stepsContentContainer}
           >
-            {customizations.map((c, idx) => (
+            {filteredCustomizations.map((c, idx) => (
               <TouchableOpacity
                 key={c.id}
                 onPress={() => handleStepPress(idx)}
@@ -264,7 +295,7 @@ export default function CustomizationScreen() {
             </TouchableOpacity>
 
             <Text style={styles.stepIndicator}>
-              {activeIndex + 1} of {customizations.length}
+              {activeIndex + 1} of {filteredCustomizations.length}
             </Text>
 
             <TouchableOpacity
