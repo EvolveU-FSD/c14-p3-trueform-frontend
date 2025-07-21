@@ -10,6 +10,8 @@ import {
   StatusBar,
   Modal,
   TouchableWithoutFeedback,
+  Keyboard,
+  KeyboardAvoidingView,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -56,6 +58,9 @@ export default function BodyScanScreen() {
   // Check if running on a mobile device
   const isMobile = Platform.OS !== 'web';
 
+  // Keyboard safe space state
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
@@ -64,6 +69,19 @@ export default function BodyScanScreen() {
       headerBackTitle: 'Measurements',
       headerBackTitleVisible: true,
     });
+
+    // Keyboard listeners for padding adjustment
+    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
+      setKeyboardVisible(true);
+    });
+    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+      setKeyboardVisible(false);
+    });
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
   }, [navigation]);
 
   // Gender picker handlers
@@ -313,97 +331,110 @@ export default function BodyScanScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container} edges={[]}>
-      <StatusBar barStyle='dark-content' />
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <Text style={styles.title}>Body Measurements Scan</Text>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0}
+    >
+      <SafeAreaView style={styles.container} edges={[]}>
+        <StatusBar barStyle='dark-content' />
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            paddingBottom: keyboardVisible ? 200 : 50,
+          }}
+          keyboardShouldPersistTaps='handled'
+          automaticallyAdjustKeyboardInsets={true}
+        >
+          <Text style={styles.title}>Body Measurements Scan</Text>
 
-        <View style={styles.formSection}>
-          <Text style={styles.sectionTitle}>Personal Information</Text>
+          <View style={styles.formSection}>
+            <Text style={styles.sectionTitle}>Personal Information</Text>
 
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Height (cm)</Text>
-            <TextInput
-              style={styles.input}
-              value={height}
-              onChangeText={setHeight}
-              placeholder='Enter your height in cm'
-              keyboardType='numeric'
-            />
+            <View style={styles.inputContainer}>
+              <Text style={styles.label}>Height (cm)</Text>
+              <TextInput
+                style={styles.input}
+                value={height}
+                onChangeText={setHeight}
+                placeholder='Enter your height in cm'
+                keyboardType='numeric'
+              />
+            </View>
+
+            <View style={styles.inputContainer}>
+              <Text style={styles.label}>Weight (kg)</Text>
+              <TextInput
+                style={styles.input}
+                value={weight}
+                onChangeText={setWeight}
+                placeholder='Enter your weight in kg'
+                keyboardType='numeric'
+              />
+            </View>
+
+            <View style={styles.inputContainer}>
+              <Text style={styles.label}>Gender</Text>
+              {renderGenderPicker()}
+            </View>
+
+            <View style={styles.inputContainer}>
+              <Text style={styles.label}>Age (optional)</Text>
+              <TextInput
+                style={styles.input}
+                value={age}
+                onChangeText={setAge}
+                placeholder='Enter your age'
+                keyboardType='numeric'
+              />
+            </View>
           </View>
 
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Weight (kg)</Text>
-            <TextInput
-              style={styles.input}
-              value={weight}
-              onChangeText={setWeight}
-              placeholder='Enter your weight in kg'
-              keyboardType='numeric'
-            />
+          <View style={styles.formSection}>
+            <Text style={styles.sectionTitle}>Photos</Text>
+            <Text style={styles.photoInstructions}>
+              Please provide two full-body photos: one front-facing and one right-side profile. Wear
+              tight-fitting clothes for best results.
+            </Text>
+
+            <View style={styles.photoSection}>
+              {renderPhotoSection(
+                'Front Photo',
+                frontImage,
+                () => handleImagePick('gallery', setFrontImage),
+                () => handleImagePick('camera', setFrontImage),
+              )}
+
+              {renderPhotoSection(
+                'Profile Photo',
+                profileImage,
+                () => handleImagePick('gallery', setProfileImage),
+                () => handleImagePick('camera', setProfileImage),
+              )}
+            </View>
           </View>
 
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Gender</Text>
-            {renderGenderPicker()}
-          </View>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Age (optional)</Text>
-            <TextInput
-              style={styles.input}
-              value={age}
-              onChangeText={setAge}
-              placeholder='Enter your age'
-              keyboardType='numeric'
-            />
-          </View>
-        </View>
-
-        <View style={styles.formSection}>
-          <Text style={styles.sectionTitle}>Photos</Text>
-          <Text style={styles.photoInstructions}>
-            Please provide two full-body photos: one front-facing and one right-side profile. Wear
-            tight-fitting clothes for best results.
-          </Text>
-
-          <View style={styles.photoSection}>
-            {renderPhotoSection(
-              'Front Photo',
-              frontImage,
-              () => handleImagePick('gallery', setFrontImage),
-              () => handleImagePick('camera', setFrontImage),
+          <TouchableOpacity style={styles.submitButton} onPress={handleSubmit} disabled={isLoading}>
+            {isLoading ? (
+              <ActivityIndicator color='#fff' />
+            ) : (
+              <Text style={styles.submitButtonText}>Get Measurements</Text>
             )}
+          </TouchableOpacity>
 
-            {renderPhotoSection(
-              'Profile Photo',
-              profileImage,
-              () => handleImagePick('gallery', setProfileImage),
-              () => handleImagePick('camera', setProfileImage),
-            )}
-          </View>
-        </View>
-
-        <TouchableOpacity style={styles.submitButton} onPress={handleSubmit} disabled={isLoading}>
-          {isLoading ? (
-            <ActivityIndicator color='#fff' />
-          ) : (
-            <Text style={styles.submitButtonText}>Get Measurements</Text>
+          {measurements && (
+            <View style={styles.resultsSection}>
+              <Text style={styles.sectionTitle}>Your Measurements</Text>
+              {Object.entries(measurements).map(([key, value]: [any, any]) => (
+                <View key={key} style={styles.measurementRow}>
+                  <Text style={styles.measurementLabel}>{key}</Text>
+                  <Text style={styles.measurementValue}>{value}</Text>
+                </View>
+              ))}
+            </View>
           )}
-        </TouchableOpacity>
-
-        {measurements && (
-          <View style={styles.resultsSection}>
-            <Text style={styles.sectionTitle}>Your Measurements</Text>
-            {Object.entries(measurements).map(([key, value]: [any, any]) => (
-              <View key={key} style={styles.measurementRow}>
-                <Text style={styles.measurementLabel}>{key}</Text>
-                <Text style={styles.measurementValue}>{value}</Text>
-              </View>
-            ))}
-          </View>
-        )}
-      </ScrollView>
-    </SafeAreaView>
+        </ScrollView>
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 }
