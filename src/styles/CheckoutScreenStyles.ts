@@ -10,6 +10,9 @@ export default function useCreateStyles() {
       flex: 1,
       backgroundColor: theme.backgroundColor,
     },
+    scrollContent: {
+      paddingBottom: spacing.sm,
+    },
     content: {
       flex: 1,
       justifyContent: 'center',

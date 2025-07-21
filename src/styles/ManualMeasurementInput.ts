@@ -10,7 +10,7 @@ export default function useManualMeasurementInputStyles() {
       backgroundColor: theme.backgroundColor,
     },
     scrollContent: {
-      paddingBottom: spacing.xl,
+      paddingBottom: spacing.sm,
     },
     imageContainer: {
       width: '100%',
