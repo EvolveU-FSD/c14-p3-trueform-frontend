@@ -22,7 +22,8 @@ import {
   MeasurementUnit,
   MeasurementValues,
 } from '../types/measurement.types';
-import { showAlert } from 'utils/showAlerts';
+import { useAuth } from '../context/AuthContext';
+import { showAlert } from '../utils/showAlerts';
 
 // Placeholder image for video
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -41,6 +42,7 @@ const measurementFields = [
 export default function ManualMeasurementInput() {
   const styles = useManualMeasurementInputStyles();
   const { theme } = useTheme();
+  const { isAuthenticated } = useAuth();
   const navigation = useNavigation<ManualMeasurementInputNavigationProp>();
   const [unit, setUnit] = useState<'inch' | 'cm'>('inch');
   const [fit, setFit] = useState<'standard' | 'slim'>('standard');
@@ -76,6 +78,12 @@ export default function ManualMeasurementInput() {
   };
 
   const handleAddMeasurement = async () => {
+    if (!isAuthenticated) {
+      showAlert('Authentication Required', 'Please sign in to save your measurements.', () => {
+        navigation.navigate('Login');
+      });
+      return;
+    }
     try {
       // Convert measurements to numbers and create MeasurementValues object
       const measurementValues: MeasurementValues = {};
