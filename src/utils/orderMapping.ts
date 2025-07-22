@@ -12,14 +12,15 @@ export function mapCartItemToOrderItem(item: CartItem): CreateOrderItemDTO {
     productId: item.clothing.id,
     quantity: item.quantity,
     price: item.totalPrice,
-    customizations: item.customizations.map((c) => ({
-      customizationId: c.customizationId,
-      optionId: c.optionId,
-      name: c.name,
-      optionName: c.optionName,
-      mediaUrl: c.mediaUrl,
-      priceModifier: c.priceModifier,
-    })),
+    customizations:
+      item.customizations.map((c) => ({
+        customizationId: c.customizationId,
+        optionId: c.optionId,
+        name: c.name,
+        optionName: c.optionName,
+        mediaUrl: c.mediaUrl,
+        priceModifier: c.priceModifier,
+      })) ?? [],
   };
 }
 
