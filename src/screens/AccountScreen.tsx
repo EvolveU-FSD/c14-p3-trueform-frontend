@@ -28,13 +28,22 @@ export default function AccountScreen() {
   useEffect(() => {
     async function fetchCustomerName() {
       if (isAuthenticated && user) {
-        const customer = await CustomerService.getByFirebaseUid(user.uid);
-        if (customer) {
-          setCustomerName(customer.name);
-        } else if (user.displayName) {
-          setCustomerName(user.displayName);
-        } else {
-          setCustomerName('');
+        try {
+          const customer = await CustomerService.getByFirebaseUid(user.uid);
+          if (customer) {
+            setCustomerName(customer.name);
+          } else if (user.displayName) {
+            setCustomerName(user.displayName);
+          } else {
+            setCustomerName('');
+          }
+        } catch (error) {
+          console.error('Failed to fetch customer by Firebase UID:', error);
+          if (user.displayName) {
+            setCustomerName(user.displayName);
+          } else {
+            setCustomerName('');
+          }
         }
       } else {
         setCustomerName('');
