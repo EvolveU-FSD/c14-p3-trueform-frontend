@@ -193,14 +193,39 @@ export default function BodyScanScreen() {
       formData.append('profile_image_base64', profileImageBase64);
 
       // Send FormData (will be multipart/form-data but with text fields only)
-      const result: BodyScanResponse = await apiService.post(
+      const result: BodyScanResponse | any = await apiService.post(
         API_CONFIG.ENDPOINTS.BODYSCAN,
         formData,
       );
+
+      if (result?.error) {
+        // Gracefully handle BodyGram rejection
+        showAlert(
+          'Scan Rejected',
+          result.message ||
+            'Your scan could not be processed. Please try again with clearer photos or different poses.',
+        );
+        setIsLoading(false);
+        return;
+      }
+
+      console.log('bodygram response');
+      console.log(result);
       setMeasurements(result.measurements);
-    } catch (error) {
-      console.error('Error submitting scan:', error);
-      showAlert('Error', 'Failed to submit scan. Please try again.');
+    } catch (error: any) {
+      // Check for BodyGram rejection (502 with error details)
+      if (
+        error?.response?.status === 502 &&
+        error?.response?.data?.error === 'BodyGram API error'
+      ) {
+        showAlert(
+          'Scan Rejected',
+          'Your scan could not be processed. Please attain a clearer image or consider holding your arms farther from your body.',
+        );
+      } else {
+        console.error('Error submitting scan:', error);
+        showAlert('Error', 'Failed to submit scan. Please try again.');
+      }
     } finally {
       setIsLoading(false);
     }
