@@ -1,5 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, Alert, StatusBar } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  Alert,
+  StatusBar,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
+} from 'react-native';
 import createStyles from '../styles/CheckoutScreenStyles';
 import { Address } from '../types/address.types';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -74,6 +84,9 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
   const [isShippingValid, setIsShippingValid] = useState(false);
   const [isBillingValid, setIsBillingValid] = useState(false);
 
+  // Keyboard safe space state.
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
@@ -82,6 +95,18 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
       headerBackTitle: 'Cart',
       headerBackTitleVisible: true,
     });
+
+    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
+      setKeyboardVisible(true);
+    });
+    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+      setKeyboardVisible(false);
+    });
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
   }, [navigation]);
 
   // Fetch saved addresses when user is authenticated
@@ -320,49 +345,63 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
   };
 
   return (
-    <SafeAreaView style={styles.container} edges={[]}>
-      <StatusBar barStyle='dark-content' />
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.content}>
-          <LoginStatus />
-          <ShippingAddress
-            data={shippingAddress}
-            onDataChange={handleShippingChange}
-            errors={shippingErrors}
-            saveAddress={saveShippingAddress}
-            onSaveAddressChange={setSaveShippingAddress}
-            showSavedAddresses={true}
-            savedAddresses={savedAddresses}
-            selectedSavedAddressId={selectedShippingAddressId}
-            onSavedAddressSelect={(address) => handleSavedAddressSelect(address, true)}
-            onValidation={handleShippingValidation}
-          />
-          <BillingAddress
-            data={sameAsShipping ? shippingAddress : billingAddress}
-            onDataChange={handleBillingChange}
-            errors={sameAsShipping ? shippingErrors : billingErrors}
-            sameAsShipping={sameAsShipping}
-            onSameAsShippingChange={setSameAsShipping}
-            saveAddress={saveBillingAddress}
-            onSaveAddressChange={setSaveBillingAddress}
-            showSavedAddresses={true}
-            savedAddresses={savedAddresses}
-            selectedSavedAddressId={selectedBillingAddressId}
-            onSavedAddressSelect={(address) => handleSavedAddressSelect(address, false)}
-            onValidation={handleBillingValidation}
-          />
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 50 : 0}
+    >
+      <SafeAreaView style={styles.container} edges={[]}>
+        <StatusBar barStyle='dark-content' />
+        <ScrollView
+          contentContainerStyle={{
+            ...styles.scrollContent,
+            paddingBottom: keyboardVisible ? 200 : 50,
+          }}
+          keyboardShouldPersistTaps='handled'
+          showsVerticalScrollIndicator={false}
+          automaticallyAdjustKeyboardInsets={true}
+        >
+          <View style={styles.content}>
+            <LoginStatus />
+            <ShippingAddress
+              data={shippingAddress}
+              onDataChange={handleShippingChange}
+              errors={shippingErrors}
+              saveAddress={saveShippingAddress}
+              onSaveAddressChange={setSaveShippingAddress}
+              showSavedAddresses={true}
+              savedAddresses={savedAddresses}
+              selectedSavedAddressId={selectedShippingAddressId}
+              onSavedAddressSelect={(address) => handleSavedAddressSelect(address, true)}
+              onValidation={handleShippingValidation}
+            />
+            <BillingAddress
+              data={sameAsShipping ? shippingAddress : billingAddress}
+              onDataChange={handleBillingChange}
+              errors={sameAsShipping ? shippingErrors : billingErrors}
+              sameAsShipping={sameAsShipping}
+              onSameAsShippingChange={setSameAsShipping}
+              saveAddress={saveBillingAddress}
+              onSaveAddressChange={setSaveBillingAddress}
+              showSavedAddresses={true}
+              savedAddresses={savedAddresses}
+              selectedSavedAddressId={selectedBillingAddressId}
+              onSavedAddressSelect={(address) => handleSavedAddressSelect(address, false)}
+              onValidation={handleBillingValidation}
+            />
 
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.backButton} onPress={handleBackToCart}>
-              <Text style={styles.backButtonText}>Back to Cart</Text>
-            </TouchableOpacity>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity style={styles.backButton} onPress={handleBackToCart}>
+                <Text style={styles.backButtonText}>Back to Cart</Text>
+              </TouchableOpacity>
 
-            <TouchableOpacity style={styles.paymentButton} onPress={handleProceedToPayment}>
-              <Text style={styles.paymentButtonText}>Go to Payment</Text>
-            </TouchableOpacity>
+              <TouchableOpacity style={styles.paymentButton} onPress={handleProceedToPayment}>
+                <Text style={styles.paymentButtonText}>Go to Payment</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+        </ScrollView>
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 }
