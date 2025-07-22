@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import {
-  View,
-  Text,
-  TouchableOpacity,
   Alert,
   ActivityIndicator,
-  ScrollView,
-  StatusBar,
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
-  Keyboard,
+  ScrollView,
+  StatusBar,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StripeProvider, CardField, useStripe } from '@stripe/stripe-react-native';
@@ -35,6 +35,9 @@ export default function PaymentScreen() {
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const { confirmPayment } = useStripe();
   const navigation = useNavigation<PaymentScreenNavigationProp>();
+  const { items, getCartTotal, shippingAddress, billingAddress, measurement, clearCart } =
+    useCart();
+  const { user, isAuthenticated } = useAuth();
 
   useEffect(() => {
     navigation.setOptions({
@@ -42,7 +45,7 @@ export default function PaymentScreen() {
       headerTitle: 'Payment',
       headerShadowVisible: true,
       headerBackTitle: 'Checkout',
-      headerBackTitleVisible: true,
+      headerBackVisible: true,
     });
 
     // Listen for keyboard events
@@ -58,9 +61,6 @@ export default function PaymentScreen() {
       keyboardDidShowListener.remove();
     };
   }, [navigation]);
-  const { items, getCartTotal, shippingAddress, billingAddress, measurement, clearCart } =
-    useCart();
-  const { user, isAuthenticated } = useAuth();
 
   // Utility to get the current logged-in customer from Firebase UID
   const getCurrentCustomer = async (): Promise<string | null> => {

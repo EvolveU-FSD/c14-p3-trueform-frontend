@@ -13,16 +13,16 @@ export interface OrderAddress {
   id: string;
   firstName: string;
   lastName: string;
-  company?: string;
   address1: string;
-  address2?: string;
   city: string;
   state: string;
   zipCode: string;
   country: string;
-  phone?: string;
   createdAt: string;
   updatedAt: string;
+  company?: string;
+  address2?: string;
+  phone?: string;
 }
 
 export interface OrderMeasurement {
@@ -40,9 +40,9 @@ export interface OrderItemCustomization {
   id: string;
   orderItemId: string;
   options: Record<string, any>;
-  notes?: string;
   createdAt: string;
   updatedAt: string;
+  notes?: string;
 }
 
 export interface OrderItem {
@@ -52,9 +52,9 @@ export interface OrderItem {
   quantity: number;
   price: number;
   customizations: OrderItemCustomization[];
-  product?: any; // Reference to clothing item
   createdAt: string;
   updatedAt: string;
+  product?: any; // Reference to clothing item
 }
 
 export interface Order {
@@ -72,22 +72,22 @@ export interface Order {
   measurements: OrderMeasurement[];
   shippingAddress: OrderAddress;
   billingAddress: OrderAddress;
-  customer?: any; // Reference to customer
   createdAt: string;
   updatedAt: string;
+  customer?: any; // Reference to customer
 }
 
 // DTO Types
 export interface CreateOrderAddressDTO {
   firstName: string;
   lastName: string;
-  company?: string;
   address1: string;
-  address2?: string;
   city: string;
   state: string;
   zipCode: string;
   country: string;
+  company?: string;
+  address2?: string;
   phone?: string;
 }
 
