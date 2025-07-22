@@ -20,6 +20,7 @@ import LoginScreen from './src/screens/LoginScreen';
 import AccountScreen from './src/screens/AccountScreen';
 import Items from 'screens/Items';
 import MeasurementScreen from 'screens/MeasurementScreen';
+import ConfirmationScreen from './src/screens/ConfirmationScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -77,6 +78,11 @@ function AppContent() {
         {/* Checkout related. */}
         <Stack.Screen name='Payment' component={PaymentScreen} options={{ title: 'Payment' }} />
         <Stack.Screen name='Checkout' component={CheckoutScreen} options={{ title: 'Checkout' }} />
+        <Stack.Screen
+          name='Confirmation'
+          component={ConfirmationScreen}
+          options={{ title: 'Confirmation' }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

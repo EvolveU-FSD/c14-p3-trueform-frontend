@@ -12,10 +12,17 @@ import { CustomerService } from '../services/customer.service';
 import { useAuth } from '../context/AuthContext';
 import { CreateAddressDTO } from '../types/address.types';
 import { AddressValidationErrors } from '../types/address.types';
+import { useCart } from '../context/CartContext';
+import { MeasurementService } from '../services/measurement.service';
 
 export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
   const styles = createStyles();
   const { isAuthenticated, user } = useAuth();
+  const {
+    setShippingAddress: setCartShippingAddress,
+    setBillingAddress: setCartBillingAddress,
+    setMeasurement: setCartMeasurement,
+  } = useCart();
 
   const [shippingAddress, setShippingAddress] = useState<Address>({
     id: '',
@@ -99,6 +106,23 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
 
     fetchSavedAddresses();
   }, [isAuthenticated, user]);
+
+  // Memoize the validation callbacks to prevent infinite re-renders
+  const handleShippingValidation = useCallback(
+    (isValid: boolean, errors: AddressValidationErrors) => {
+      setShippingErrors(errors);
+      setIsShippingValid(isValid);
+    },
+    [],
+  );
+
+  const handleBillingValidation = useCallback(
+    (isValid: boolean, errors: AddressValidationErrors) => {
+      setBillingErrors(errors);
+      setIsBillingValid(isValid);
+    },
+    [],
+  );
 
   const handleShippingChange = (field: keyof Address, value: string) => {
     setShippingAddress((prev) => ({ ...prev, [field]: value }));
@@ -264,25 +288,36 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
       }
     }
 
+    // Add addresses to cart context
+    setCartShippingAddress(shippingAddress);
+    setCartBillingAddress(sameAsShipping ? shippingAddress : billingAddress);
+
+    // Fetch and add latest scan measurement to cart context
+    if (isAuthenticated && user) {
+      try {
+        const customer = await CustomerService.getByFirebaseUid(user.uid);
+        if (customer) {
+          const measurements = await MeasurementService.getByCustomerId(customer.id);
+          // Find the latest scan measurement (standardType: 'SCAN' or similar)
+          const scanMeasurement = measurements
+            .filter((m) => m.standardType?.toUpperCase() === 'SCAN')
+            .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())[0];
+          if (scanMeasurement) {
+            setCartMeasurement({
+              customerId: scanMeasurement.customerId,
+              standardType: scanMeasurement.standardType,
+              unit: scanMeasurement.unit,
+              values: scanMeasurement.values,
+            });
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching scan measurement:', error);
+      }
+    }
+
     navigation.navigate('Payment');
   };
-
-  // Memoize the validation callbacks to prevent infinite re-renders
-  const handleShippingValidation = useCallback(
-    (isValid: boolean, errors: AddressValidationErrors) => {
-      setShippingErrors(errors);
-      setIsShippingValid(isValid);
-    },
-    [],
-  );
-
-  const handleBillingValidation = useCallback(
-    (isValid: boolean, errors: AddressValidationErrors) => {
-      setBillingErrors(errors);
-      setIsBillingValid(isValid);
-    },
-    [],
-  );
 
   return (
     <SafeAreaView style={styles.container} edges={[]}>
