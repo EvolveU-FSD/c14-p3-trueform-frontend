@@ -107,6 +107,23 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
     fetchSavedAddresses();
   }, [isAuthenticated, user]);
 
+  // Memoize the validation callbacks to prevent infinite re-renders
+  const handleShippingValidation = useCallback(
+    (isValid: boolean, errors: AddressValidationErrors) => {
+      setShippingErrors(errors);
+      setIsShippingValid(isValid);
+    },
+    [],
+  );
+
+  const handleBillingValidation = useCallback(
+    (isValid: boolean, errors: AddressValidationErrors) => {
+      setBillingErrors(errors);
+      setIsBillingValid(isValid);
+    },
+    [],
+  );
+
   const handleShippingChange = (field: keyof Address, value: string) => {
     setShippingAddress((prev) => ({ ...prev, [field]: value }));
     // Clear errors for this field when user starts typing
@@ -301,23 +318,6 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
 
     navigation.navigate('Payment');
   };
-
-  // Memoize the validation callbacks to prevent infinite re-renders
-  const handleShippingValidation = useCallback(
-    (isValid: boolean, errors: AddressValidationErrors) => {
-      setShippingErrors(errors);
-      setIsShippingValid(isValid);
-    },
-    [],
-  );
-
-  const handleBillingValidation = useCallback(
-    (isValid: boolean, errors: AddressValidationErrors) => {
-      setBillingErrors(errors);
-      setIsBillingValid(isValid);
-    },
-    [],
-  );
 
   return (
     <SafeAreaView style={styles.container} edges={[]}>
