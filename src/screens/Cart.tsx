@@ -7,7 +7,6 @@ import { RootStackParamList } from '../types/navigation';
 import { useCart } from '../context/CartContext';
 import CartItem from '../components/cart/CartItem';
 import CartSummary from '../components/cart/CartSummary';
-import CartMeasurementDisplay from '../components/cart/CartMeasurementDisplay';
 import createStyles from '../styles/CartScreenStyles';
 
 type CartScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Cart'>;
@@ -49,8 +48,6 @@ export default function Cart() {
         </View>
 
         <CartSummary />
-
-        <CartMeasurementDisplay />
 
         <TouchableOpacity style={styles.checkoutButton} onPress={handleProceedToCheckout}>
           <Text style={styles.checkoutButtonText}>Proceed to Checkout</Text>

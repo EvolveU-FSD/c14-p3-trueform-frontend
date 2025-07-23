@@ -5,9 +5,9 @@ import { RouteProp } from '@react-navigation/native';
 export type RootStackParamList = {
   Main: undefined;
   // Login related
+  Account: undefined;
   Login: { email?: string };
   Register: undefined;
-  Account: undefined;
   // Shopping related.
   Items: undefined;
   ItemDetails: { itemId: string };
@@ -17,6 +17,7 @@ export type RootStackParamList = {
   BodyScan: undefined;
   ManualMeasurementInput: undefined;
   // Checkout related.
+  Cart: undefined;
   Checkout: undefined;
   Payment: undefined;
   Confirmation: undefined;

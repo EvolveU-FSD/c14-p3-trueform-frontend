@@ -24,6 +24,8 @@ import { CreateAddressDTO } from '../types/address.types';
 import { AddressValidationErrors } from '../types/address.types';
 import { useCart } from '../context/CartContext';
 import { MeasurementService } from '../services/measurement.service';
+import { Measurement } from '../types/measurement.types';
+import CartMeasurementDisplay from '../components/cart/CartMeasurementDisplay';
 
 export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
   const styles = createStyles();
@@ -33,6 +35,7 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
     setBillingAddress: setCartBillingAddress,
     setMeasurement: setCartMeasurement,
   } = useCart();
+  const [measurements, setMeasurements] = useState<Measurement[]>([]);
 
   const [shippingAddress, setShippingAddress] = useState<Address>({
     id: '',
@@ -93,7 +96,7 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
       headerTitle: 'Checkout',
       headerShadowVisible: true,
       headerBackTitle: 'Cart',
-      headerBackTitleVisible: true,
+      headerBackVisible: true,
     });
 
     const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
@@ -130,6 +133,26 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
     };
 
     fetchSavedAddresses();
+  }, [isAuthenticated, user]);
+
+  // Fetch measurements when user is authenticated
+  useEffect(() => {
+    const fetchMeasurements = async () => {
+      if (isAuthenticated && user) {
+        try {
+          const customer = await CustomerService.getByFirebaseUid(user.uid);
+          if (customer && customer.id) {
+            const data = await MeasurementService.getByCustomerId(customer.id);
+            setMeasurements(data);
+          } else {
+            setMeasurements([]);
+          }
+        } catch (error) {
+          setMeasurements([]);
+        }
+      }
+    };
+    fetchMeasurements();
   }, [isAuthenticated, user]);
 
   // Memoize the validation callbacks to prevent infinite re-renders
@@ -344,6 +367,17 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
     navigation.navigate('Payment');
   };
 
+  const handleMeasurementSelect = (measurement?: Measurement) => {
+    if (measurement) {
+      setCartMeasurement({
+        customerId: measurement.customerId,
+        standardType: measurement.standardType,
+        unit: measurement.unit,
+        values: measurement.values,
+      });
+    }
+  };
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -388,6 +422,11 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
               selectedSavedAddressId={selectedBillingAddressId}
               onSavedAddressSelect={(address) => handleSavedAddressSelect(address, false)}
               onValidation={handleBillingValidation}
+            />
+
+            <CartMeasurementDisplay
+              measurements={measurements}
+              onMeasurementSelect={handleMeasurementSelect}
             />
 
             <View style={styles.buttonContainer}>
