@@ -18,8 +18,6 @@ import createStyles from '../../styles/CustomizationScreenStyles';
 import { ClothingService } from '../../services/clothing.service';
 import { useCart } from '../../context/CartContext';
 import { Clothing } from '../../types/clothing';
-import { Customization } from '../../types/customization';
-import { Selection } from '../../types/context/customization.types';
 import { CartCustomization } from '../../types/context/cart.types';
 import { getImageUrl } from '../../utils/imageHandling';
 
@@ -30,6 +28,35 @@ type CustomizationScreenNavigationProp = NativeStackNavigationProp<
   'Customization'
 >;
 
+// Helper to filter customizations based on conditionalOn and current selections
+function filterCustomizations(customizations: any[], selections: { [key: string]: string }) {
+  // Find the sleeve customization and the short sleeve option id
+  const sleeveCustomization = customizations.find(
+    (c) => c.name.toLowerCase() === 'sleeve'
+  );
+  let shortSleeveOptionId = undefined;
+  if (sleeveCustomization) {
+    const shortSleeveOption = sleeveCustomization.options.find(
+      (opt: any) => opt.name.toLowerCase().includes('short')
+    );
+    if (shortSleeveOption) {
+      shortSleeveOptionId = shortSleeveOption.id;
+    }
+  }
+
+  return customizations.filter((c) => {
+    if (!c.conditionalOn) return true;
+    // Only supporting { not: { sleeve: 'shortSleeve' } } for now
+    if (c.conditionalOn.not && c.conditionalOn.not.sleeve) {
+      // Use the actual sleeve customization id and short sleeve option id
+      if (sleeveCustomization && shortSleeveOptionId) {
+        return selections[sleeveCustomization.id] !== shortSleeveOptionId;
+      }
+    }
+    return true;
+  });
+}
+
 export default function CustomizationScreen() {
   const styles = createStyles();
   const route = useRoute<any>();
@@ -38,38 +65,11 @@ export default function CustomizationScreen() {
 
   const { selections, handleSelection } = useCustomization();
   const { addItem } = useCart();
-  const [customizations, setCustomizations] = useState<Customization[]>([]);
+  const [customizations, setCustomizations] = useState<any[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [clothingItem, setClothingItem] = useState<Clothing | null>(null);
   const scrollViewRef = useRef<ScrollView>(null);
   const [hasInitializedSelections, setHasInitializedSelections] = useState(false);
-
-  // Helper to filter customizations based on conditionalOn and current selections
-  function filterCustomizations(
-    customizations: Customization[],
-    selections: Selection,
-  ): Customization[] {
-    return customizations.filter((c) => {
-      if (!c.conditionalOn) return true;
-      // Handle 'not' conditions
-      if ((c.conditionalOn as any).not) {
-        for (const key in (c.conditionalOn as any).not) {
-          if (selections[key] === (c.conditionalOn as any).not[key]) {
-            return false;
-          }
-        }
-      }
-      // Handle 'equals' conditions (future-proof)
-      if ((c.conditionalOn as any).equals) {
-        for (const key in (c.conditionalOn as any).equals) {
-          if (selections[key] !== (c.conditionalOn as any).equals[key]) {
-            return false;
-          }
-        }
-      }
-      return true;
-    });
-  }
 
   // Constants for scroll calculation
   const STEP_ITEM_WIDTH = 80; // Approximate width of each step item including margins
@@ -111,8 +111,8 @@ export default function CustomizationScreen() {
         setCustomizations(response);
 
         // Auto-select the default option for each customization based on API response
-        const initialSelections: Selection = {};
-        response.forEach((customization: Customization) => {
+        const initialSelections: { [key: string]: string } = {};
+        response.forEach((customization: any) => {
           if (customization.options && customization.options.length > 0) {
             const defaultOptionId = customization.defaultValue || customization.options[0].id;
             const defaultOptionExists = customization.options.some(
@@ -193,7 +193,7 @@ export default function CustomizationScreen() {
         const cartCustomizations: CartCustomization[] = Object.entries(selections).map(
           ([customizationId, optionId]: [string, string]) => {
             const customization = customizations.find((c) => c.id === customizationId);
-            const option = customization?.options.find((o) => o.id === optionId);
+            const option = customization?.options.find((o: any) => o.id === optionId);
 
             return {
               customizationId,
@@ -210,7 +210,7 @@ export default function CustomizationScreen() {
       }
 
       // Navigate back to Main (BottomTabNavigator) and then to Cart tab
-      navigation.navigate('Main', { screen: 'Cart' });
+      (navigation as any).navigate('Main', { screen: 'Cart' });
     }
   };
 
@@ -267,7 +267,7 @@ export default function CustomizationScreen() {
 
           {/* Customization Options */}
           <ScrollView contentContainerStyle={styles.optionsContainer}>
-            {activeCustomization?.options.map((opt) => (
+            {activeCustomization?.options.map((opt: any) => (
               <TouchableOpacity
                 key={opt.id}
                 onPress={() => handleSelection(activeCustomization.id, opt.id)}
