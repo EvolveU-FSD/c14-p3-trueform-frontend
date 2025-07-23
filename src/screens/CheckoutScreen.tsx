@@ -34,6 +34,7 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
     setShippingAddress: setCartShippingAddress,
     setBillingAddress: setCartBillingAddress,
     setMeasurement: setCartMeasurement,
+    measurement,
   } = useCart();
   const [measurements, setMeasurements] = useState<Measurement[]>([]);
 
@@ -292,6 +293,27 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
   };
 
   const handleProceedToPayment = async () => {
+    // Check authentication
+    if (!isAuthenticated || !user) {
+      Alert.alert('Authentication Required', 'Please sign in to proceed to payment.', [
+        { text: 'OK' },
+      ]);
+      return;
+    }
+
+    // Check measurement selection from cart context
+    if (
+      !measurement ||
+      !measurement.customerId ||
+      !measurement.values ||
+      Object.keys(measurement.values).length === 0
+    ) {
+      Alert.alert('Measurement Required', 'Please select a measurement before proceeding.', [
+        { text: 'OK' },
+      ]);
+      return;
+    }
+
     if (!isShippingValid || (!sameAsShipping && !isBillingValid)) {
       Alert.alert('Validation Error', 'Please fix the highlighted fields before proceeding.', [
         { text: 'OK' },
