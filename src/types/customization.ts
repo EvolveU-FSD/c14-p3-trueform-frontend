@@ -15,6 +15,7 @@ export interface ConditionalOn {
 }
 
 export interface Customization {
+  id: string;
   name: string;
   clothingType: ClothingType;
   type: string;
