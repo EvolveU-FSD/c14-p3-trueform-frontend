@@ -20,6 +20,8 @@ import { useCart } from '../../context/CartContext';
 import { Clothing } from '../../types/clothing';
 import { CartCustomization } from '../../types/context/cart.types';
 import { getImageUrl } from '../../utils/imageHandling';
+import { Customization } from '../../types/customization';
+import { Selection } from '../../types/context/customization.types';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -65,7 +67,7 @@ export default function CustomizationScreen() {
 
   const { selections, handleSelection } = useCustomization();
   const { addItem } = useCart();
-  const [customizations, setCustomizations] = useState<any[]>([]);
+  const [customizations, setCustomizations] = useState<Customization[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [clothingItem, setClothingItem] = useState<Clothing | null>(null);
   const scrollViewRef = useRef<ScrollView>(null);
@@ -111,12 +113,12 @@ export default function CustomizationScreen() {
         setCustomizations(response);
 
         // Auto-select the default option for each customization based on API response
-        const initialSelections: { [key: string]: string } = {};
-        response.forEach((customization: any) => {
+        const initialSelections: Selection = {};
+        response.forEach((customization: Customization) => {
           if (customization.options && customization.options.length > 0) {
             const defaultOptionId = customization.defaultValue || customization.options[0].id;
             const defaultOptionExists = customization.options.some(
-              (opt: any) => opt.id === defaultOptionId,
+              (opt) => opt.id === defaultOptionId,
             );
             if (defaultOptionExists) {
               initialSelections[customization.id] = defaultOptionId;
@@ -193,7 +195,7 @@ export default function CustomizationScreen() {
         const cartCustomizations: CartCustomization[] = Object.entries(selections).map(
           ([customizationId, optionId]: [string, string]) => {
             const customization = customizations.find((c) => c.id === customizationId);
-            const option = customization?.options.find((o: any) => o.id === optionId);
+            const option = customization?.options.find((o) => o.id === optionId);
 
             return {
               customizationId,
@@ -210,7 +212,7 @@ export default function CustomizationScreen() {
       }
 
       // Navigate back to Main (BottomTabNavigator) and then to Cart tab
-      (navigation as any).navigate('Main', { screen: 'Cart' });
+      navigation.navigate('Main', { screen: 'Cart' });
     }
   };
 
@@ -267,7 +269,7 @@ export default function CustomizationScreen() {
 
           {/* Customization Options */}
           <ScrollView contentContainerStyle={styles.optionsContainer}>
-            {activeCustomization?.options.map((opt: any) => (
+            {activeCustomization?.options.map((opt) => (
               <TouchableOpacity
                 key={opt.id}
                 onPress={() => handleSelection(activeCustomization.id, opt.id)}
