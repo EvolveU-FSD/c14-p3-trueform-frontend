@@ -1,5 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, Alert, StatusBar } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  Alert,
+  StatusBar,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
+} from 'react-native';
 import createStyles from '../styles/CheckoutScreenStyles';
 import { Address } from '../types/address.types';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -12,10 +22,17 @@ import { CustomerService } from '../services/customer.service';
 import { useAuth } from '../context/AuthContext';
 import { CreateAddressDTO } from '../types/address.types';
 import { AddressValidationErrors } from '../types/address.types';
+import { useCart } from '../context/CartContext';
+import { MeasurementService } from '../services/measurement.service';
 
 export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
   const styles = createStyles();
   const { isAuthenticated, user } = useAuth();
+  const {
+    setShippingAddress: setCartShippingAddress,
+    setBillingAddress: setCartBillingAddress,
+    setMeasurement: setCartMeasurement,
+  } = useCart();
 
   const [shippingAddress, setShippingAddress] = useState<Address>({
     id: '',
@@ -67,6 +84,9 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
   const [isShippingValid, setIsShippingValid] = useState(false);
   const [isBillingValid, setIsBillingValid] = useState(false);
 
+  // Keyboard safe space state.
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
@@ -75,6 +95,18 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
       headerBackTitle: 'Cart',
       headerBackTitleVisible: true,
     });
+
+    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
+      setKeyboardVisible(true);
+    });
+    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+      setKeyboardVisible(false);
+    });
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
   }, [navigation]);
 
   // Fetch saved addresses when user is authenticated
@@ -99,6 +131,23 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
 
     fetchSavedAddresses();
   }, [isAuthenticated, user]);
+
+  // Memoize the validation callbacks to prevent infinite re-renders
+  const handleShippingValidation = useCallback(
+    (isValid: boolean, errors: AddressValidationErrors) => {
+      setShippingErrors(errors);
+      setIsShippingValid(isValid);
+    },
+    [],
+  );
+
+  const handleBillingValidation = useCallback(
+    (isValid: boolean, errors: AddressValidationErrors) => {
+      setBillingErrors(errors);
+      setIsBillingValid(isValid);
+    },
+    [],
+  );
 
   const handleShippingChange = (field: keyof Address, value: string) => {
     setShippingAddress((prev) => ({ ...prev, [field]: value }));
@@ -264,70 +313,95 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
       }
     }
 
+    // Add addresses to cart context
+    setCartShippingAddress(shippingAddress);
+    setCartBillingAddress(sameAsShipping ? shippingAddress : billingAddress);
+
+    // Fetch and add latest scan measurement to cart context
+    if (isAuthenticated && user) {
+      try {
+        const customer = await CustomerService.getByFirebaseUid(user.uid);
+        if (customer) {
+          const measurements = await MeasurementService.getByCustomerId(customer.id);
+          // Find the latest scan measurement (standardType: 'SCAN' or similar)
+          const scanMeasurement = measurements
+            .filter((m) => m.standardType?.toUpperCase() === 'SCAN')
+            .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())[0];
+          if (scanMeasurement) {
+            setCartMeasurement({
+              customerId: scanMeasurement.customerId,
+              standardType: scanMeasurement.standardType,
+              unit: scanMeasurement.unit,
+              values: scanMeasurement.values,
+            });
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching scan measurement:', error);
+      }
+    }
+
     navigation.navigate('Payment');
   };
 
-  // Memoize the validation callbacks to prevent infinite re-renders
-  const handleShippingValidation = useCallback(
-    (isValid: boolean, errors: AddressValidationErrors) => {
-      setShippingErrors(errors);
-      setIsShippingValid(isValid);
-    },
-    [],
-  );
-
-  const handleBillingValidation = useCallback(
-    (isValid: boolean, errors: AddressValidationErrors) => {
-      setBillingErrors(errors);
-      setIsBillingValid(isValid);
-    },
-    [],
-  );
-
   return (
-    <SafeAreaView style={styles.container} edges={[]}>
-      <StatusBar barStyle='dark-content' />
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.content}>
-          <LoginStatus />
-          <ShippingAddress
-            data={shippingAddress}
-            onDataChange={handleShippingChange}
-            errors={shippingErrors}
-            saveAddress={saveShippingAddress}
-            onSaveAddressChange={setSaveShippingAddress}
-            showSavedAddresses={true}
-            savedAddresses={savedAddresses}
-            selectedSavedAddressId={selectedShippingAddressId}
-            onSavedAddressSelect={(address) => handleSavedAddressSelect(address, true)}
-            onValidation={handleShippingValidation}
-          />
-          <BillingAddress
-            data={sameAsShipping ? shippingAddress : billingAddress}
-            onDataChange={handleBillingChange}
-            errors={sameAsShipping ? shippingErrors : billingErrors}
-            sameAsShipping={sameAsShipping}
-            onSameAsShippingChange={setSameAsShipping}
-            saveAddress={saveBillingAddress}
-            onSaveAddressChange={setSaveBillingAddress}
-            showSavedAddresses={true}
-            savedAddresses={savedAddresses}
-            selectedSavedAddressId={selectedBillingAddressId}
-            onSavedAddressSelect={(address) => handleSavedAddressSelect(address, false)}
-            onValidation={handleBillingValidation}
-          />
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 50 : 0}
+    >
+      <SafeAreaView style={styles.container} edges={[]}>
+        <StatusBar barStyle='dark-content' />
+        <ScrollView
+          contentContainerStyle={{
+            ...styles.scrollContent,
+            paddingBottom: keyboardVisible ? 200 : 50,
+          }}
+          keyboardShouldPersistTaps='handled'
+          showsVerticalScrollIndicator={false}
+          automaticallyAdjustKeyboardInsets={true}
+        >
+          <View style={styles.content}>
+            <LoginStatus />
+            <ShippingAddress
+              data={shippingAddress}
+              onDataChange={handleShippingChange}
+              errors={shippingErrors}
+              saveAddress={saveShippingAddress}
+              onSaveAddressChange={setSaveShippingAddress}
+              showSavedAddresses={true}
+              savedAddresses={savedAddresses}
+              selectedSavedAddressId={selectedShippingAddressId}
+              onSavedAddressSelect={(address) => handleSavedAddressSelect(address, true)}
+              onValidation={handleShippingValidation}
+            />
+            <BillingAddress
+              data={sameAsShipping ? shippingAddress : billingAddress}
+              onDataChange={handleBillingChange}
+              errors={sameAsShipping ? shippingErrors : billingErrors}
+              sameAsShipping={sameAsShipping}
+              onSameAsShippingChange={setSameAsShipping}
+              saveAddress={saveBillingAddress}
+              onSaveAddressChange={setSaveBillingAddress}
+              showSavedAddresses={true}
+              savedAddresses={savedAddresses}
+              selectedSavedAddressId={selectedBillingAddressId}
+              onSavedAddressSelect={(address) => handleSavedAddressSelect(address, false)}
+              onValidation={handleBillingValidation}
+            />
 
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.backButton} onPress={handleBackToCart}>
-              <Text style={styles.backButtonText}>Back to Cart</Text>
-            </TouchableOpacity>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity style={styles.backButton} onPress={handleBackToCart}>
+                <Text style={styles.backButtonText}>Back to Cart</Text>
+              </TouchableOpacity>
 
-            <TouchableOpacity style={styles.paymentButton} onPress={handleProceedToPayment}>
-              <Text style={styles.paymentButtonText}>Go to Payment</Text>
-            </TouchableOpacity>
+              <TouchableOpacity style={styles.paymentButton} onPress={handleProceedToPayment}>
+                <Text style={styles.paymentButtonText}>Go to Payment</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+        </ScrollView>
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 }

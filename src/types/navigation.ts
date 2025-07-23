@@ -19,6 +19,7 @@ export type RootStackParamList = {
   // Checkout related.
   Checkout: undefined;
   Payment: undefined;
+  Confirmation: undefined;
 };
 
 export type BottomTabParamList = {

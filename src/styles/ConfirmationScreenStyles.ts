@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { useTheme } from '../theme/ThemeContext';
-import { spacing, fontSizes, borderRadius } from '../utils/sizes';
+import { spacing, fontSizes, borderRadius, buttonHeights } from '../utils/sizes';
 
 export default function useCreateStyles() {
   const { theme } = useTheme();
@@ -10,27 +10,27 @@ export default function useCreateStyles() {
       flex: 1,
       backgroundColor: theme.backgroundColor,
     },
-    scrollContent: {
-      paddingBottom: spacing.sm,
-    },
     content: {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      paddingHorizontal: spacing.md,
+      paddingHorizontal: spacing.lg,
       paddingVertical: spacing.xl,
+    },
+    iconContainer: {
+      marginBottom: spacing.xl,
     },
     title: {
       fontSize: fontSizes.xxl,
       fontWeight: 'bold',
       color: theme.textColor,
-      marginBottom: spacing.md,
+      marginBottom: spacing.sm,
       textAlign: 'center',
     },
     subtitle: {
-      fontSize: fontSizes.xl,
+      fontSize: fontSizes.lg,
       fontWeight: '600',
-      color: theme.primaryColor,
+      color: '#4CAF50',
       marginBottom: spacing.lg,
       textAlign: 'center',
     },
@@ -40,31 +40,20 @@ export default function useCreateStyles() {
       textAlign: 'center',
       lineHeight: 24,
       marginBottom: spacing.xl,
+      maxWidth: 300,
     },
-    buttonContainer: {
-      width: '100%',
-      gap: spacing.md,
-    },
-    backButton: {
-      backgroundColor: theme.borderColor,
-      paddingVertical: spacing.lg,
-      borderRadius: borderRadius.md,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    backButtonText: {
-      color: theme.textColor,
-      fontSize: fontSizes.lg,
-      fontWeight: '600',
-    },
-    paymentButton: {
+    shopButton: {
       backgroundColor: theme.primaryColor,
       paddingVertical: spacing.lg,
+      paddingHorizontal: spacing.xl,
       borderRadius: borderRadius.md,
       alignItems: 'center',
       justifyContent: 'center',
+      minHeight: buttonHeights.lg,
+      width: '100%',
+      maxWidth: 280,
     },
-    paymentButtonText: {
+    shopButtonText: {
       color: '#ffffff',
       fontSize: fontSizes.lg,
       fontWeight: '600',

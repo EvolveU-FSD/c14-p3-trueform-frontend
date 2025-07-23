@@ -10,8 +10,10 @@ export const API_CONFIG = {
     CUSTOMIZATION: '/customization',
     VENDORS: '/vendor',
     CUSTOMERS: '/customer',
-    BODYSCAN: `/scan`,
+    BODYSCAN: '/scan',
     MEASUREMENTS: '/measurement',
+    ORDER: '/order',
+    PAYMENT: '/payment',
   },
   TIMEOUT: 10000,
   HEADERS: {

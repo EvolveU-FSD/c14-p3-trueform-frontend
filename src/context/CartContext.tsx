@@ -1,11 +1,16 @@
 import React, { createContext, useContext, useState } from 'react';
 import { Clothing } from '../types/clothing';
 import { CartCustomization, CartItem, CartContextType } from '../types/context/cart.types';
+import { Address } from '../types/address.types';
+import { CreateMeasurementDTO } from '../types/measurement.types';
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
+  const [shippingAddress, setShippingAddress] = useState<Partial<Address>>({});
+  const [billingAddress, setBillingAddress] = useState<Partial<Address>>({});
+  const [measurement, setMeasurement] = useState<Partial<CreateMeasurementDTO>>({});
 
   const calculatePrices = (
     clothing: Clothing,
@@ -23,7 +28,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   };
 
   const generateCartItemId = (clothing: Clothing, customizations: CartCustomization[]): string => {
-    // Create unique ID based on clothing item and customizations
     const customizationString = customizations
       .map((c) => `${c.customizationId}:${c.optionId}`)
       .sort()
@@ -43,7 +47,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       const existingItemIndex = prevItems.findIndex((item) => item.id === cartItemId);
 
       if (existingItemIndex !== -1) {
-        // Item with same customizations already exists, increase quantity
         const updatedItems = [...prevItems];
         const existingItem = updatedItems[existingItemIndex];
         const newQuantity = existingItem.quantity + 1;
@@ -57,7 +60,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
         return updatedItems;
       } else {
-        // Add new item
         const newItem: CartItem = {
           id: cartItemId,
           clothing,
@@ -100,6 +102,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const clearCart = () => {
     setItems([]);
+    setShippingAddress({});
+    setBillingAddress({});
+    setMeasurement({});
   };
 
   const getCartTotal = (): number => {
@@ -120,6 +125,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         clearCart,
         getCartTotal,
         getItemCount,
+        shippingAddress,
+        setShippingAddress,
+        billingAddress,
+        setBillingAddress,
+        measurement,
+        setMeasurement,
       }}
     >
       {children}
