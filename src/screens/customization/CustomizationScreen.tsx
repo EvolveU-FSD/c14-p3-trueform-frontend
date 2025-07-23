@@ -192,11 +192,14 @@ export default function CustomizationScreen() {
     } else {
       // Add item to cart when customization is complete
       if (clothingItem) {
-        const cartCustomizations: CartCustomization[] = Object.entries(selections).map(
-          ([customizationId, optionId]: [string, string]) => {
+        // Only include selections for customizations that are actually shown
+        const filteredIds = filteredCustomizations.map(c => c.id);
+        const cartCustomizations: CartCustomization[] = filteredIds
+          .filter(customizationId => selections[customizationId])
+          .map(customizationId => {
             const customization = customizations.find((c) => c.id === customizationId);
+            const optionId = selections[customizationId];
             const option = customization?.options.find((o) => o.id === optionId);
-
             return {
               customizationId,
               optionId,
@@ -205,8 +208,7 @@ export default function CustomizationScreen() {
               mediaUrl: option?.mediaUrl,
               priceModifier: option?.priceModifier || 0,
             };
-          },
-        );
+          });
 
         addItem(clothingItem, cartCustomizations);
       }
