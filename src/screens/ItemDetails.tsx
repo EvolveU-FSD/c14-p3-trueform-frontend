@@ -47,7 +47,7 @@ export default function ItemDetails() {
       headerTitle: 'Item Details',
       headerShadowVisible: true,
       headerBackTitle: 'Shop',
-      headerBackTitleVisible: true,
+      headerBackVisible: true,
     });
   }, [navigation]);
 
@@ -141,13 +141,13 @@ export default function ItemDetails() {
 
         {/* Item Details */}
         <View style={styles.detailsContainer}>
+          <View style={styles.metaContainer}>
+            {item.filter && <Text style={styles.meta}>Filters: {item.filter.join(', ')}</Text>}
+          </View>
+
           <Text style={styles.name}>{item.name}</Text>
           <Text style={styles.price}>${item.price}</Text>
           <Text style={styles.desc}>{item.description}</Text>
-
-          <View style={styles.metaContainer}>
-            {item.colors && <Text style={styles.meta}>Colors: {item.colors.join(', ')}</Text>}
-          </View>
 
           {/* Fabric Details Section */}
           <TouchableOpacity
@@ -161,7 +161,9 @@ export default function ItemDetails() {
           {showFabric && (
             <View style={styles.fabricSection}>
               <Text style={styles.fabricDetail}>
-                {item.description || 'Fabric details not available'}
+                Made from a lightweight, breathable cotton blend designed for all-day comfort.
+                Smooth to the touch with a crisp finish, this fabric offers durability and ease of
+                care—perfect for both casual and professional wear.
               </Text>
             </View>
           )}
