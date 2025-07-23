@@ -43,11 +43,10 @@ export default function useCreateStyles() {
     },
     primaryButton: {
       backgroundColor: theme.primaryColor,
-      paddingVertical: spacing.lg,
       borderRadius: borderRadius.md,
       alignItems: 'center',
       justifyContent: 'center',
-      height: buttonHeights.lg,
+      height: buttonHeights.xl,
     },
     primaryButtonText: {
       color: '#ffffff',
@@ -58,11 +57,10 @@ export default function useCreateStyles() {
       backgroundColor: 'transparent',
       borderWidth: 2,
       borderColor: theme.primaryColor,
-      paddingVertical: spacing.lg,
       borderRadius: borderRadius.md,
       alignItems: 'center',
       justifyContent: 'center',
-      height: buttonHeights.lg,
+      height: buttonHeights.xl,
     },
     secondaryButtonText: {
       color: theme.primaryColor,
