@@ -23,88 +23,107 @@ Before you begin, make sure you have:
 Clone the repository:
 
 ```bash
-git clone https://github.com/EvolveU-FSD/c14-p3-true-form-backend
+git clone https://github.com/EvolveU-FSD/c14-p3-trueform-frontend
 ```
 
-Install dependencies:
+Install dependencies (including peer dependencies):
 
 ```bash
-npm install
+npm install --legacy-peer-deps
 ```
+
+> **Note:** Use `--legacy-peer-deps` to resolve circular peer dependency issues between Expo, React, and TypeScript packages.
 
 ---
 
-## ▶️ Running the Application
+## ⚙️ Environment Variables
 
-```bash
-npx expo start
-```
+Copy `.env.example` or `.env.template` to `.env` and set your API keys and URLs.  
+For local backend testing, see the Ngrok section below.
 
-This will launch the app.
-Then you have to have an android emulator installed and started then press option 'a' to run it in the emulator
-
-Install 'android studio' to install an emulator.
-Or some ios version might work too.
-
-To start emulator automatically by pressing 'a' after 'npx expo start' you need to add the android sdk to path. These two folders are key. Usually found in: (after android studio installation)
-
-C:\Users\<YourUsername>\AppData\Local\Android\Sdk\emulator
-C:\Users\<YourUsername>\AppData\Local\Android\Sdk\platform-tools
-
----
-
-## 📁 Project Structure
+Example:
 
 ```
-TrueFormTSFE/
-├── src/
-│   ├── screens/       # Screen components
-│   ├── types/         # TypeScript definitions
-│   └── ...
-├── App.tsx            # Main application component
-├── package.json       # Project dependencies
-└── tsconfig.json      # TypeScript configuration
+EXPO_PUBLIC_API_BASE_URL=https://your-ngrok-url.ngrok.io
 ```
-
----
-
-## ✨ Features
-
-- ✅ **TypeScript** support for safer and cleaner code
-- 🔄 **React Navigation** for intuitive routing
-- 📱 **Expo** for cross-platform development
-- 🌐 **Web support** for easier debugging and testing
 
 ---
 
 ## 🛠 Development Commands
 
+- `npm run start` - Start the Expo development server
 - `npm run android` - Run the app on an Android emulator or connected device
 - `npm run ios` - Run the app on an iOS simulator or connected device
 - `npm run dev` - Run the app in an Expo tunnel that can be accessed from the outside world. Join from your local Expo Go app.
+- `npm run format` - Format code using Prettier
+- `npm run lint` - Lint and auto-fix code using ESLint
 
 ---
 
-## 🌐 Testing with Ngrok Tunnel
+## 📚 Dependencies & Tech Stack
 
-To test the app on physical devices while running your backend locally, you'll need to set up an ngrok tunnel.
+- **React Native** (`react-native`)
+- **Expo** (`expo`) - Version: `~53.0.15`
+- **React Navigation** (`@react-navigation/*`)
+- **Stripe** (`@stripe/stripe-react-native`)
+- **Firebase** (`firebase`)
+- **Axios** (`axios`)
+- **TypeScript** (`typescript`)
+- **Prettier** & **ESLint** for code style
 
-### Setting up Ngrok on Windows
+> **Expo Version:** This project uses Expo SDK `~53.0.15`. Ensure your global Expo CLI matches this version for best compatibility.
 
-1. Download and install ngrok from the official website:
+---
 
-   - Visit [https://ngrok.com/download](https://ngrok.com/download)
-   - Download the Windows version
-   - Extract the ngrok.exe file
-   - Add ngrok to your Windows PATH or move it to a location like `C:\Windows`
+## 🧪 Testing
 
-2. Open Command Prompt (cmd.exe) - **Note: Do not use Git Bash**:
-   ```cmd
-   # Start your backend server first (default port 3000)
-   # Then in a new CMD window, run:
-   ngrok http https://localhost:3000
-   ```
-3. Once ngrok is running, find the "Forwarding" line.
+Testing is currently performed at the API level in the backend.  
+No frontend unit or integration tests exist yet.
 
-- It will be in the format of {long url} -> https://localhost:3000
-- Copy the {long url}, and use it as the `EXPO_PUBLIC_API_BASE_URL` value in your .env file.
+---
+
+## 📁 Folder Structure
+
+```
+TrueFormTSFE/
+├── src/
+│   ├── components/      # Reusable UI components
+│   ├── config/          # Configuration files
+│   ├── context/         # React context providers
+│   ├── data/            # Static data
+│   ├── navigation/      # Navigation setup
+│   ├── screens/         # Screen components
+│   ├── services/        # API and business logic
+│   ├── styles/          # Style definitions
+│   ├── theme/           # Theme context
+│   ├── types/           # TypeScript definitions
+│   └── ...
+├── App.tsx              # Main application component
+├── package.json         # Project dependencies
+├── tsconfig.json        # TypeScript configuration
+└── .env                 # Environment variables
+```
+
+---
+
+## 🚦 Authentication & User Flow
+
+- Uses Firebase for user registration and login.
+- Guest checkout is supported.
+- User profile and addresses are managed via API.
+
+---
+
+## 📏 Measurement Features
+
+- Manual input of measurements via [`ManualMeasurementInput`](src/screens/ManualMeasurementInput.tsx)
+- Body scan measurement via [`BodyScanScreen`](src/screens/BodyScanScreen.tsx)
+- Measurements are saved and selectable during checkout.
+
+---
+
+## 🎨 Product Customization Flow
+
+- Customization options are fetched and managed via [`CustomizationService`](src/services/customization.service.ts)
+- Users select product customizations during the order process.
+- Customizations are linked to categories and products.
