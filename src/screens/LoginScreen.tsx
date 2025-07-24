@@ -74,6 +74,7 @@ function LoginScreen({ navigation, route }: LoginScreenProps) {
         onChangeText={setPassword}
         secureTextEntry
         autoFocus={false} // We'll handle focus via ref
+        autoCapitalize='none' // Prevents auto-capitalization on Android
       />
 
       <TouchableOpacity style={styles.button} onPress={handleLogin} disabled={isLoading}>
