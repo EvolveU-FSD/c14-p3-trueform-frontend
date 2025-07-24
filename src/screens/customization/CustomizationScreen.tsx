@@ -33,13 +33,11 @@ type CustomizationScreenNavigationProp = NativeStackNavigationProp<
 // Helper to filter customizations based on conditionalOn and current selections
 function filterCustomizations(customizations: any[], selections: { [key: string]: string }) {
   // Find the sleeve customization and the short sleeve option id
-  const sleeveCustomization = customizations.find(
-    (c) => c.name.toLowerCase() === 'sleeve'
-  );
+  const sleeveCustomization = customizations.find((c) => c.name.toLowerCase() === 'sleeve');
   let shortSleeveOptionId = undefined;
   if (sleeveCustomization) {
-    const shortSleeveOption = sleeveCustomization.options.find(
-      (opt: any) => opt.name.toLowerCase().includes('short')
+    const shortSleeveOption = sleeveCustomization.options.find((opt: any) =>
+      opt.name.toLowerCase().includes('short'),
     );
     if (shortSleeveOption) {
       shortSleeveOptionId = shortSleeveOption.id;
@@ -193,10 +191,10 @@ export default function CustomizationScreen() {
       // Add item to cart when customization is complete
       if (clothingItem) {
         // Only include selections for customizations that are actually shown
-        const filteredIds = filteredCustomizations.map(c => c.id);
+        const filteredIds = filteredCustomizations.map((c) => c.id);
         const cartCustomizations: CartCustomization[] = filteredIds
-          .filter(customizationId => selections[customizationId])
-          .map(customizationId => {
+          .filter((customizationId) => selections[customizationId])
+          .map((customizationId) => {
             const customization = customizations.find((c) => c.id === customizationId);
             const optionId = selections[customizationId];
             const option = customization?.options.find((o) => o.id === optionId);
