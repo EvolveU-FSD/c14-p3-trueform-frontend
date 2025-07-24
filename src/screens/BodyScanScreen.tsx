@@ -209,8 +209,6 @@ export default function BodyScanScreen() {
         return;
       }
 
-      console.log('bodygram response');
-      console.log(result);
       setMeasurements(result.measurements);
     } catch (error: any) {
       // Check for BodyGram rejection (502 with error details)
