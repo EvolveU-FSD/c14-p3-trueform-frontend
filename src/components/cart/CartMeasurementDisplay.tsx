@@ -25,7 +25,7 @@ export default function CartMeasurementDisplay({
   const [isPickerVisible, setIsPickerVisible] = useState(false);
 
   useEffect(() => {
-    if (measurements.length > 0 && !selectedMeasurementId) {
+    if (measurements?.length > 0 && !selectedMeasurementId) {
       setSelectedMeasurementId(measurements[0].id);
     }
   }, [measurements]);
