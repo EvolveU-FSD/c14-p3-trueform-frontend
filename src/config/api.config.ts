@@ -15,7 +15,7 @@ export const API_CONFIG = {
     ORDER: '/order',
     PAYMENT: '/payment',
   },
-  TIMEOUT: 10000,
+  TIMEOUT: 100000,
   HEADERS: {
     'Content-Type': 'application/json',
     Accept: 'application/json',
