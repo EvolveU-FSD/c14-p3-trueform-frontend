@@ -20,6 +20,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import createStyles from '../styles/BodyScanStyles';
 import { CrossImage } from '../components/CrossImage';
+import { useAuth } from '../context/AuthContext';
 import { showAlert } from '../utils/showAlerts';
 import { apiService } from '../services/api.service';
 import { API_CONFIG } from '../config/api.config';
@@ -33,6 +34,7 @@ const GENDER_OPTIONS = [
 
 export default function BodyScanScreen() {
   const styles = createStyles();
+  const { isAuthenticated } = useAuth();
   const navigation = useNavigation<BodyScanScreenNavigationProp>();
 
   // User information state
@@ -169,6 +171,13 @@ export default function BodyScanScreen() {
 
   // Handle form submission
   const handleSubmit = async () => {
+    if (!isAuthenticated) {
+      showAlert('Authentication Required', 'Please sign in to submit your scan.', () => {
+        navigation.navigate('Login');
+      });
+      return;
+    }
+
     if (!height || !weight || !frontImage || !profileImage) {
       showAlert('Missing Information', 'Please provide height, weight, and both photos');
       return;
