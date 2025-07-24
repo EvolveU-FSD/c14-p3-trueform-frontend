@@ -22,14 +22,12 @@ export default function useCreateStyles() {
     },
     imageGallery: {
       width: screenWidth,
-      height: 260,
       marginBottom: spacing.sm,
     },
     image: {
       width: screenWidth - spacing.lg * 2,
       height: 220,
       borderRadius: borderRadius.lg,
-      marginHorizontal: spacing.sm,
       backgroundColor: theme.borderColor,
     },
     imageIndicatorContainer: {
@@ -52,7 +50,7 @@ export default function useCreateStyles() {
     name: {
       fontSize: fontSizes.xl,
       fontWeight: 'bold',
-      marginBottom: spacing.sm,
+      marginBottom: spacing.xs,
       color: theme.textColor,
     },
     price: {
@@ -65,7 +63,7 @@ export default function useCreateStyles() {
       fontSize: fontSizes.md,
       color: theme.secondaryColor,
       lineHeight: 22,
-      marginBottom: spacing.md,
+      marginBottom: spacing.xs,
     },
     customizeBtn: {
       backgroundColor: theme.primaryColor,
@@ -73,7 +71,7 @@ export default function useCreateStyles() {
       borderRadius: borderRadius.md,
       alignItems: 'center',
       justifyContent: 'center',
-      marginTop: spacing.lg,
+      marginTop: spacing.xl,
     },
     customizeBtnText: {
       color: '#ffffff',
@@ -101,12 +99,11 @@ export default function useCreateStyles() {
       alignItems: 'center',
     },
     metaContainer: {
-      marginBottom: spacing.md,
+      marginBottom: spacing.xs,
     },
     meta: {
-      fontSize: fontSizes.sm,
+      fontSize: fontSizes.md,
       color: theme.secondaryColor,
-      marginBottom: spacing.xs,
     },
     customRow: {
       marginBottom: spacing.sm,
@@ -141,7 +138,6 @@ export default function useCreateStyles() {
     fabricSection: {
       width: '100%',
       marginTop: spacing.md,
-      marginBottom: spacing.sm,
       backgroundColor: theme.isDarkMode ? '#232323' : '#f9f9f9',
       borderRadius: borderRadius.md,
       padding: spacing.md,
