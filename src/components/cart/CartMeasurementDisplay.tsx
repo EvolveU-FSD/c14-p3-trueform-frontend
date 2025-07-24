@@ -30,6 +30,14 @@ export default function CartMeasurementDisplay({
     }
   }, [measurements]);
 
+  useEffect(() => {
+    if (onMeasurementSelect) {
+      onMeasurementSelect(selectedMeasurement);
+    }
+    // Only call when selection changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedMeasurement]);
+
   const handlePress = () => {
     (navigation as any).navigate('BodyScan');
   };
@@ -39,14 +47,6 @@ export default function CartMeasurementDisplay({
   };
 
   const selectedMeasurement = measurements.find((m) => m.id === selectedMeasurementId);
-
-  useEffect(() => {
-    if (onMeasurementSelect) {
-      onMeasurementSelect(selectedMeasurement);
-    }
-    // Only call when selection changes
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedMeasurement]);
 
   // iOS Modal Picker
   const renderIOSPicker = () => (
