@@ -24,6 +24,7 @@ import {
 } from '../types/measurement.types';
 import { useAuth } from '../context/AuthContext';
 import { showAlert } from '../utils/showAlerts';
+import { CustomerService } from '../services/customer.service';
 
 // Placeholder image for video
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -32,17 +33,17 @@ const videoPlaceholder = require('../../assets/images/measurementImage.jpeg');
 const measurementFields = [
   { key: 'neck', label: 'Neck' },
   { key: 'chest', label: 'Chest' },
-  { key: 'stomach', label: 'Stomach' },
+  { key: 'waist', label: 'Waist' },
   { key: 'hip', label: 'Hip' },
   { key: 'length', label: 'Length' },
-  { key: 'shoulder', label: 'Shoulder' },
-  { key: 'sleeve', label: 'Sleeve' },
+  { key: 'shoulders', label: 'Shoulder' },
+  { key: 'armLength', label: 'Sleeve' },
 ];
 
 export default function ManualMeasurementInput() {
   const styles = useManualMeasurementInputStyles();
   const { theme } = useTheme();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const navigation = useNavigation<ManualMeasurementInputNavigationProp>();
   const [unit, setUnit] = useState<'inch' | 'cm'>('inch');
   const [fit, setFit] = useState<'standard' | 'slim'>('standard');
@@ -56,7 +57,7 @@ export default function ManualMeasurementInput() {
       headerTitle: 'Manual Measurements',
       headerShadowVisible: true,
       headerBackTitle: 'Measurements',
-      headerBackTitleVisible: true,
+      headerBackVisible: true,
     });
 
     // Keyboard listeners for padding adjustment
@@ -84,7 +85,21 @@ export default function ManualMeasurementInput() {
       });
       return;
     }
+
+    if (!user) {
+      showAlert('Error', 'User information not available. Please try logging in again.');
+      return;
+    }
+
     try {
+      // Get the customer ID from the authenticated user
+      const customer = await CustomerService.getByFirebaseUid(user.uid);
+
+      if (!customer) {
+        showAlert('Error', 'Customer profile not found. Please contact support.');
+        return;
+      }
+
       // Convert measurements to numbers and create MeasurementValues object
       const measurementValues: MeasurementValues = {};
       Object.entries(measurements).forEach(([key, value]) => {
@@ -97,7 +112,7 @@ export default function ManualMeasurementInput() {
 
       // Create measurement data
       const measurementData: CreateMeasurementDTO = {
-        customerId: 'current-user-id', // Replace with actual customer ID from auth context
+        customerId: customer.id,
         standardType: fit === 'standard' ? 'US' : 'EU',
         unit: unit === 'inch' ? MeasurementUnit.INCHES : MeasurementUnit.CENTIMETERS,
         values: measurementValues,
