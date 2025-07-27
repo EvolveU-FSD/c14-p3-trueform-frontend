@@ -9,9 +9,10 @@ export type RootStackParamList = {
   Login: { email?: string };
   Register: undefined;
   // Shopping related.
-  Items: undefined;
+  Items: { slug?: string };
   ItemDetails: { itemId: string };
   Customization: { itemId: string };
+  Category: undefined;
   // Measurements related.
   Measure: undefined;
   BodyScan: undefined;
@@ -24,7 +25,7 @@ export type RootStackParamList = {
 };
 
 export type BottomTabParamList = {
-  Shop: { slug: string };
+  Shop: { slug?: string };
   Measure: undefined;
   Cart: undefined;
   Account: undefined;
@@ -55,6 +56,10 @@ export type ManualMeasurementInputNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   'ManualMeasurementInput'
 >;
+export type CategoryScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Category'
+>;
 
 // Bottom Tab Navigation prop types
 export type ShopTabNavigationProp = BottomTabNavigationProp<BottomTabParamList, 'Shop'>;
@@ -75,6 +80,7 @@ export type ManualMeasurementInputRouteProp = RouteProp<
   RootStackParamList,
   'ManualMeasurementInput'
 >;
+export type CategoryScreenRouteProp = RouteProp<RootStackParamList, 'Category'>;
 
 // Bottom Tab Route prop types
 export type MeasureTabRouteProp = RouteProp<BottomTabParamList, 'Measure'>;
@@ -120,16 +126,13 @@ export interface ManualMeasurementInputProps {
   route: ManualMeasurementInputRouteProp;
 }
 
+export interface CategoryScreenProps {
+  navigation: CategoryScreenNavigationProp;
+  route: CategoryScreenRouteProp;
+}
+
 // Bottom Tab Screen props interfaces
 export interface MeasureTabProps {
   navigation: MeasureTabNavigationProp;
   route: MeasureTabRouteProp;
-}
-
-// Category screen navigation types
-export type CategoryScreenNavigationProp = NativeStackNavigationProp<any, 'Category'>;
-export type CategoryScreenRouteProp = RouteProp<any, 'Category'>;
-
-export interface CategoryScreenProps {
-  navigation: CategoryScreenNavigationProp;
 }
