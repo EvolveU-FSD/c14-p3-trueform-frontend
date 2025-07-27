@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-import useManualMeasurementInputStyles from '../styles/ManualMeasurementInput';
+import useManualMeasurementInputStyles from '../styles/ManualMeasurementInputStyles';
 import { useTheme } from '../theme/ThemeContext';
 import { ManualMeasurementInputNavigationProp } from '../types/navigation';
 import { MeasurementService } from '../services/measurement.service';
@@ -270,10 +270,10 @@ export default function ManualMeasurementInput() {
           {/* Action Buttons */}
           <View style={styles.actionRow}>
             <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-              <Text style={styles.buttonText}>BACK TO DESIGN</Text>
+              <Text style={styles.backButtonText}>Back</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.addToCartButton} onPress={handleAddMeasurement}>
-              <Text style={styles.buttonText}>SAVE MEASUREMENTS</Text>
+              <Text style={styles.buttonText}>Save Measurements</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
