@@ -50,9 +50,6 @@ export default function BodyScanScreen() {
   // Loading state
   const [isLoading, setIsLoading] = useState(false);
 
-  // Measurements state
-  const [measurements, setMeasurements] = useState<any>(null);
-
   // Gender picker modal state
   const [isGenderModalVisible, setIsGenderModalVisible] = useState(false);
   const [tempGender, setTempGender] = useState(gender);
@@ -69,7 +66,7 @@ export default function BodyScanScreen() {
       headerTitle: 'Body Scan',
       headerShadowVisible: true,
       headerBackTitle: 'Measurements',
-      headerBackTitleVisible: true,
+      headerBackVisible: true,
     });
 
     // Keyboard listeners for padding adjustment
@@ -169,7 +166,16 @@ export default function BodyScanScreen() {
     }
   };
 
-  // Handle form submission
+  // Add navigation back function
+  const navigateBackToPreviousScreen = () => {
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+    } else {
+      navigation.navigate('Measure');
+    }
+  };
+
+  // Handle form submission with automatic navigation
   const handleSubmit = async () => {
     if (!isAuthenticated) {
       showAlert('Authentication Required', 'Please sign in to submit your scan.', () => {
@@ -218,7 +224,10 @@ export default function BodyScanScreen() {
         return;
       }
 
-      setMeasurements(result.measurements);
+      // Backend already saved the measurements, just navigate back
+      showAlert('Success', 'Body scan completed and measurements saved successfully!', () => {
+        navigateBackToPreviousScreen();
+      });
     } catch (error: any) {
       // Check for BodyGram rejection (502 with error details)
       if (
@@ -453,18 +462,6 @@ export default function BodyScanScreen() {
               <Text style={styles.submitButtonText}>Get Measurements</Text>
             )}
           </TouchableOpacity>
-
-          {measurements && (
-            <View style={styles.resultsSection}>
-              <Text style={styles.sectionTitle}>Your Measurements</Text>
-              {Object.entries(measurements).map(([key, value]: [any, any]) => (
-                <View key={key} style={styles.measurementRow}>
-                  <Text style={styles.measurementLabel}>{key}</Text>
-                  <Text style={styles.measurementValue}>{value}</Text>
-                </View>
-              ))}
-            </View>
-          )}
         </ScrollView>
       </SafeAreaView>
     </KeyboardAvoidingView>
