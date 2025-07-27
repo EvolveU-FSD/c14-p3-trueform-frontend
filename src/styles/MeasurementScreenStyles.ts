@@ -40,7 +40,7 @@ export default function useCreateStyles() {
     },
     primaryButton: {
       backgroundColor: theme.primaryColor,
-      height: buttonHeights.xl,
+      height: buttonHeights.xxl,
       borderRadius: borderRadius.md,
       justifyContent: 'center',
       alignItems: 'center',
@@ -62,7 +62,7 @@ export default function useCreateStyles() {
       backgroundColor: theme.backgroundColor,
       borderWidth: 2,
       borderColor: theme.primaryColor,
-      height: buttonHeights.xl,
+      height: buttonHeights.xxl,
       borderRadius: borderRadius.md,
       justifyContent: 'center',
       alignItems: 'center',
