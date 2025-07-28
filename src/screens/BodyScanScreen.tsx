@@ -247,7 +247,7 @@ export default function BodyScanScreen() {
     }
   };
 
-  // Render photo selection section with both options on mobile
+  // Render photo selection section with new layout
   const renderPhotoSection = (
     label: string,
     photoUri: string | null,
@@ -256,34 +256,36 @@ export default function BodyScanScreen() {
   ) => (
     <View style={styles.photoContainer}>
       <Text style={styles.photoLabel}>{label}</Text>
-      {photoUri ? (
-        <CrossImage source={photoUri} style={styles.previewImage} />
-      ) : (
-        <View style={styles.placeholderImage}>
-          <Text>{label}</Text>
+      <View style={styles.photoMainContainer}>
+        {/* Left side - Image (half screen) */}
+        <View style={styles.photoImageSection}>
+          {photoUri ? (
+            <CrossImage source={photoUri} style={styles.previewImage} />
+          ) : (
+            <View style={styles.placeholderImage}>
+              <Text>{label}</Text>
+            </View>
+          )}
         </View>
-      )}
 
-      {isMobile ? (
-        <View style={styles.photoButtonsRow}>
-          <TouchableOpacity
-            style={[styles.photoButton, styles.halfWidthButton]}
-            onPress={galleryPickFn}
-          >
-            <Text style={styles.photoButtonText}>Gallery</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.photoButton, styles.halfWidthButton]}
-            onPress={cameraPickFn}
-          >
-            <Text style={styles.photoButtonText}>Camera</Text>
-          </TouchableOpacity>
+        {/* Right side - Buttons (stacked vertically, center aligned) */}
+        <View style={styles.photoButtonSection}>
+          {isMobile ? (
+            <View style={styles.photoButtonsColumn}>
+              <TouchableOpacity style={styles.photoButton} onPress={galleryPickFn}>
+                <Text style={styles.photoButtonText}>Gallery</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.photoButton} onPress={cameraPickFn}>
+                <Text style={styles.photoButtonText}>Camera</Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <TouchableOpacity style={styles.photoButton} onPress={galleryPickFn}>
+              <Text style={styles.photoButtonText}>Select Photo</Text>
+            </TouchableOpacity>
+          )}
         </View>
-      ) : (
-        <TouchableOpacity style={styles.photoButton} onPress={galleryPickFn}>
-          <Text style={styles.photoButtonText}>Select Photo</Text>
-        </TouchableOpacity>
-      )}
+      </View>
     </View>
   );
 
@@ -434,8 +436,10 @@ export default function BodyScanScreen() {
           <View style={styles.formSection}>
             <Text style={styles.sectionTitle}>Photos</Text>
             <Text style={styles.photoInstructions}>
-              Please provide two full-body photos: one front-facing and one right-side profile. Wear
-              tight-fitting clothes for best results.
+              Please provide two full-body photos: one front-facing and one right-side profile.
+              {'\n'}
+              Wear tight-fitting clothes for best results.{'\n'}
+              Lift your arms 4-6 inches away from your body like an upside down Y.
             </Text>
 
             <View style={styles.photoSection}>
