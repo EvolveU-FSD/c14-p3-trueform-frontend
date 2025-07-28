@@ -79,7 +79,6 @@ export default function Items() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log(`items category: ${categoryId}`);
         setLoading(true);
         setError(null);
 
