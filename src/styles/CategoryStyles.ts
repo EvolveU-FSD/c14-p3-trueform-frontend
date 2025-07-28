@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { spacing, fontSizes } from '../utils/sizes';
+import { spacing, fontSizes, borderRadius } from '../utils/sizes';
 import { useTheme } from '../theme/ThemeContext';
 
 export default function useCreateStyles() {
@@ -10,38 +10,61 @@ export default function useCreateStyles() {
       flex: 1,
       backgroundColor: theme.backgroundColor,
     },
-    headerContainer: {
-      padding: spacing.md,
-      marginTop: spacing.sm,
-    },
-    categoryTitle: {
-      fontSize: fontSizes.xxl,
-      fontWeight: 'bold',
-      color: theme.textColor,
-      marginBottom: spacing.sm,
-    },
-    subtitle: {
-      fontSize: fontSizes.md,
-      color: theme.secondaryColor,
-    },
-    placeholderContainer: {
-      flex: 1,
-      padding: spacing.lg,
-      alignItems: 'center',
+    centerContent: {
       justifyContent: 'center',
-      marginTop: spacing.xl * 2,
+      alignItems: 'center',
     },
-    placeholderText: {
-      fontSize: fontSizes.lg,
-      fontWeight: 'bold',
-      color: theme.textColor,
-      textAlign: 'center',
+    gridContainer: {
+      padding: spacing.md,
+      paddingBottom: spacing.xl,
+    },
+    columnWrapper: {
+      justifyContent: 'space-between',
       marginBottom: spacing.md,
     },
-    placeholderSubtext: {
+    categoryCard: {
+      width: '48%',
+      backgroundColor: theme.backgroundColor,
+      borderRadius: borderRadius.md,
+      overflow: 'hidden',
+      shadowColor: theme.textColor,
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 4,
+      elevation: 3,
+      borderWidth: 1,
+      borderColor: theme.borderColor,
+    },
+    categoryImage: {
+      width: '100%',
+      height: 120,
+      backgroundColor: theme.borderColor,
+    },
+    categoryContent: {
+      padding: spacing.sm,
+    },
+    categoryName: {
       fontSize: fontSizes.md,
+      fontWeight: '600',
+      color: theme.textColor,
+      marginBottom: spacing.xs,
+    },
+    categoryType: {
+      fontSize: fontSizes.sm,
+      color: theme.primaryColor,
+      fontWeight: '500',
+      marginBottom: spacing.xs,
+    },
+    categoryDescription: {
+      fontSize: fontSizes.sm,
       color: theme.secondaryColor,
+      lineHeight: 18,
+    },
+    errorText: {
+      fontSize: fontSizes.lg,
+      color: 'red',
       textAlign: 'center',
+      marginTop: spacing.md,
     },
   });
 }

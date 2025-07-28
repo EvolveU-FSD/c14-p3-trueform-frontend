@@ -15,7 +15,9 @@ import type { RouteProp, NavigationProp } from '@react-navigation/native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import createStyles from '../styles/ItemStyle';
 import { ClothingService } from '../services/clothing.service';
+import { CategoryService } from '../services/category.service';
 import { Clothing } from '../types/clothing';
+import { Category } from '../types/category';
 import { getImageUrl } from '../utils/imageHandling';
 import { RootStackParamList } from '../types/navigation';
 import { useTheme } from '../theme/ThemeContext';
@@ -51,12 +53,13 @@ export default function Items() {
 
   const route = useRoute<RouteProp<RootStackParamList, 'Items'>>();
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const { slug: categoryId } = route.params;
+  const { categoryId: categoryId } = route.params;
 
   // States
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [clothingItems, setClothingItems] = useState<Clothing[]>([]);
+  const [category, setCategory] = useState<Category | null>(null);
   const [showSort, setShowSort] = useState(false);
   const [selectedSort, setSelectedSort] = useState('newest');
   const [showFilter, setShowFilter] = useState(false);
@@ -72,23 +75,51 @@ export default function Items() {
     { isOpen: showFilter, setIsOpen: setShowFilter },
   ]);
 
-  // Fetch clothing items
+  // Fetch category and clothing items
   useEffect(() => {
-    const fetchClothingItems = async () => {
+    const fetchData = async () => {
       try {
+        console.log(`items category: ${categoryId}`);
         setLoading(true);
         setError(null);
-        const items = await ClothingService.getAll();
-        setClothingItems(items);
+
+        // Fetch all items first
+        const allItems = await ClothingService.getAll();
+
+        if (categoryId && categoryId !== 'all') {
+          try {
+            // Fetch all categories to find the one with matching slug
+            const category = await CategoryService.getById(categoryId);
+
+            if (category) {
+              setCategory(category);
+
+              // Filter items by categoryId
+              const categoryItems = allItems.filter((item) => item.categoryId === categoryId);
+              setClothingItems(categoryItems);
+            } else {
+              // Category not found, show all items
+              setClothingItems(allItems);
+              setError('Category not found, showing all items');
+            }
+          } catch (categoryError) {
+            console.error('Failed to fetch category:', categoryError);
+            // If category fetch fails, show all items
+            setClothingItems(allItems);
+          }
+        } else {
+          // No specific category selected, show all items
+          setClothingItems(allItems);
+        }
       } catch (err) {
-        console.error('Failed to fetch clothing items:', err);
+        console.error('Failed to fetch data:', err);
         setError('Failed to load items');
       } finally {
         setLoading(false);
       }
     };
 
-    fetchClothingItems();
+    fetchData();
   }, [categoryId]);
 
   // Sort function
@@ -147,13 +178,16 @@ export default function Items() {
     }));
   };
 
+  // Set header title based on category
   useEffect(() => {
+    const headerTitle = category ? category.name : 'All Items';
+
     navigation.setOptions({
       headerShown: true,
-      headerTitle: 'TruForm Tailors',
+      headerTitle: headerTitle,
       headerShadowVisible: true,
     });
-  }, [navigation]);
+  }, [navigation, category]);
 
   if (loading) {
     return (
@@ -192,6 +226,7 @@ export default function Items() {
         {/* Items Count */}
         <Text style={styles.itemCount}>
           {displayItems.length} {displayItems.length === 1 ? 'item' : 'items'} found
+          {category && ` in ${category.name}`}
         </Text>
 
         {/* Sort Options Dropdown */}

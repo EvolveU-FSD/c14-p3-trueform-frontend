@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Text } from 'react-native';
-import Items from '../screens/Items';
+import CategoryScreen from '../screens/Category';
 import Cart from '../screens/Cart';
 import AccountScreen from '../screens/AccountScreen';
 import createStyles from '../styles/BottomTabNavigatorStyles';
@@ -24,7 +24,7 @@ export default function BottomTabNavigator() {
     >
       <Tab.Screen
         name='Shop'
-        component={Items}
+        component={CategoryScreen}
         initialParams={{ slug: 'all' }}
         options={{
           tabBarIcon: ({ color }) => <Text style={[styles.tabBarIcon, { color }]}>🛍️</Text>,
