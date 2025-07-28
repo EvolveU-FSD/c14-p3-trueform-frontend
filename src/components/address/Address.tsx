@@ -138,7 +138,7 @@ export default function Address({
               error={errors.zipCode}
               required
               keyboardType='numeric'
-              autoComplete='postal-code'
+              autoComplete='zip-code'
               style={styles.halfWidth}
               disabled={isAddressDisabled}
             />

@@ -94,7 +94,6 @@ export default function CategoryScreen() {
             <TouchableOpacity
               style={styles.categoryCard}
               onPress={() => {
-                console.log(item.id);
                 navigation.navigate('Items', { categoryId: item.id });
               }}
               activeOpacity={0.8}
@@ -110,7 +109,10 @@ export default function CategoryScreen() {
                 <Text style={styles.categoryName} numberOfLines={2}>
                   {item.name}
                 </Text>
-                <Text style={styles.categoryType}>{item.clothingType}</Text>
+                {/* TODO- Change the value passed to Items to be the ClothingType instead of the
+                name directly. This may need to be adjusted in the backend as well in order to pass
+                the clothingType field again. */}
+                {/* <Text style={styles.categoryType}>{item.clothingType}</Text> */}
               </View>
             </TouchableOpacity>
           );

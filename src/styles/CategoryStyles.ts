@@ -37,7 +37,7 @@ export default function useCreateStyles() {
     },
     categoryImage: {
       width: '100%',
-      height: 120,
+      height: 200,
       backgroundColor: theme.borderColor,
     },
     categoryContent: {
@@ -54,11 +54,6 @@ export default function useCreateStyles() {
       color: theme.primaryColor,
       fontWeight: '500',
       marginBottom: spacing.xs,
-    },
-    categoryDescription: {
-      fontSize: fontSizes.sm,
-      color: theme.secondaryColor,
-      lineHeight: 18,
     },
     errorText: {
       fontSize: fontSizes.lg,

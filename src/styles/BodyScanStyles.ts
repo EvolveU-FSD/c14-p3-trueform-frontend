@@ -3,6 +3,7 @@ import { useTheme } from '../theme/ThemeContext';
 import { spacing, fontSizes, borderRadius, buttonHeights } from '../utils/sizes';
 
 const screenHeight = Dimensions.get('window').height;
+const screenWidth = Dimensions.get('window').width;
 
 export default function useCreateStyles() {
   const { theme } = useTheme();
@@ -144,6 +145,21 @@ export default function useCreateStyles() {
       gap: spacing.lg,
     },
     photoContainer: {
+      alignItems: 'flex-start',
+    },
+    photoMainContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      width: '100%',
+    },
+    photoImageSection: {
+      width: screenWidth * 0.45, // Half the screen width minus padding
+      alignItems: 'center',
+    },
+    photoButtonSection: {
+      flex: 1,
+      paddingLeft: spacing.lg,
+      justifyContent: 'center',
       alignItems: 'center',
     },
     photoLabel: {
@@ -151,16 +167,17 @@ export default function useCreateStyles() {
       fontWeight: '500',
       color: theme.textColor,
       marginBottom: spacing.sm,
+      alignSelf: 'flex-start',
     },
     previewImage: {
-      width: 150,
-      height: 200,
+      width: '100%',
+      aspectRatio: 9 / 16, // Maintain aspect ratio
       borderRadius: borderRadius.md,
       marginBottom: spacing.sm,
     },
     placeholderImage: {
-      width: 150,
-      height: 200,
+      width: '100%',
+      aspectRatio: 9 / 16, // Maintain aspect ratio
       borderWidth: 2,
       borderColor: theme.borderColor,
       borderStyle: 'dashed',
@@ -170,16 +187,21 @@ export default function useCreateStyles() {
       marginBottom: spacing.sm,
       backgroundColor: theme.isDarkMode ? '#232323' : '#f9f9f9',
     },
+    photoButtonsColumn: {
+      gap: spacing.md,
+      width: '100%',
+    },
     photoButtonsRow: {
       flexDirection: 'row',
       gap: spacing.sm,
     },
     photoButton: {
       backgroundColor: theme.primaryColor,
-      paddingVertical: spacing.sm,
+      paddingVertical: spacing.md,
       paddingHorizontal: spacing.lg,
       borderRadius: borderRadius.md,
       alignItems: 'center',
+      minWidth: 100,
     },
     halfWidthButton: {
       flex: 1,
