@@ -26,6 +26,7 @@ import { useCart } from '../context/CartContext';
 import { MeasurementService } from '../services/measurement.service';
 import { Measurement } from '../types/measurement.types';
 import CartMeasurementDisplay from '../components/cart/CartMeasurementDisplay';
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
   const styles = createStyles();
@@ -155,6 +156,27 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
     };
     fetchMeasurements();
   }, [isAuthenticated, user]);
+
+  // Add focus effect to refresh measurements when returning to screen
+  useFocusEffect(
+    useCallback(() => {
+      const refreshMeasurements = async () => {
+        if (isAuthenticated && user) {
+          try {
+            const customer = await CustomerService.getByFirebaseUid(user.uid);
+            if (customer && customer.id) {
+              const data = await MeasurementService.getByCustomerId(customer.id);
+              setMeasurements(data);
+            }
+          } catch (error) {
+            console.error('Error refreshing measurements on focus:', error);
+          }
+        }
+      };
+
+      refreshMeasurements();
+    }, [isAuthenticated, user]),
+  );
 
   // Memoize the validation callbacks to prevent infinite re-renders
   const handleShippingValidation = useCallback(
