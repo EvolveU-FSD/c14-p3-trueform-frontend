@@ -159,7 +159,7 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
 
   // Add focus effect to refresh measurements when returning to screen
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       const refreshMeasurements = async () => {
         if (isAuthenticated && user) {
           try {
