@@ -195,6 +195,7 @@ export default function PaymentScreen() {
     <StripeProvider
       publishableKey={process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY || ''}
       urlScheme='your-app-scheme'
+      locale='en-US'
     >
       <KeyboardAvoidingView
         style={{ flex: 1 }}

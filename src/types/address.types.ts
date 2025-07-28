@@ -80,7 +80,7 @@ export interface AddressFieldProps {
     | 'street-address'
     | 'address-line1'
     | 'address-line2'
-    | 'postal-code'
+    | 'zip-code'
     | 'country'
     | 'tel';
   keyboardType?: 'default' | 'email-address' | 'numeric' | 'phone-pad';
